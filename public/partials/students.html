@@ -1,0 +1,175 @@
+﻿<div ng-controller="StudentsController">
+    <div id="alunos-container" class="topic transition selected {{cfg.information.alunos.classeBorda}}">
+        <h1>{{cfg.information.alunos.nome}} <span class="text-almost-invisible">{{alunos.length}} alunos</span></h1>
+        <p>tenha total controle sobre todas as informações dos alunos cadastrados.</p>
+        <p>{{cfg.information.alunos.resumo}}</p>
+        <button type="button" class="btn btn-default pull-right" id="#adicionarAluno"
+                ng-click="openModalToRegisterStudent()">
+            cadastrar aluno
+        </button>
+        <input type="text" class="form-control fc-search" placeholder="procurar aluno" ng-model="alunoProcurado" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
+    </div>
+
+    <div class="modal fade" id="modal-register-student">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Cadastrar aluno {{novoAluno.name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <label>nome</label>
+                    <input type="text" class="form-control" ng-model="novoAluno.name" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
+                    <br/>
+                    <label>email</label>
+                    <input type="text" class="form-control" ng-model="novoAluno.email" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_EMAIL}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>data de nascimento</label>
+                            <input type="date" class="form-control" ng-model="novoAluno.birthDate" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_DATA}}"/>
+                        </aside>
+                    </div>
+                    <label>endereço</label>
+                    <input type="text" class="form-control" ng-model="novoAluno.address" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_ENDERECO}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>tel. residencial</label>
+                            <input type="text" class="form-control" ng-model="novoAluno.phone" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>celular</label>
+                            <input type="text" class="form-control" ng-model="novoAluno.mobilePhone" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
+                        </aside>
+                    </div>
+                    <label>turma</label>
+                    <br/>
+                    <select ng-model="novoAluno.class" ng-options="turma.name for turma in turmasCadastradas"></select>
+                    <br/><br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>disponibilidade</label>
+                            <input type="time" class="form-control" ng-model="novoAluno.availability" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>status</label>
+                            <select ng-model="novoAluno.status" ng-options="s.nome for s in cfg.status"></select>
+                        </aside>
+                    </div>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>tipo de contrato</label>
+                            <select ng-model="novoAluno.contract" ng-options="c.nome for c in cfg.contracts"></select>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>data do contrato</label>
+                            <input type="date" class="form-control" ng-model="novoAluno.contractDate" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
+                        </aside>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            ng-disabled="!(!!novoAluno.name && novoAluno.birthDate && !!novoAluno.availability && !!novoAluno.status)"
+                            ng-click="registerNewStudent(novoAluno)">
+                        cadastrar
+                    </button>
+                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-edit-student">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Ediar aluno {{alunoEscolhido.name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <label>nome</label>
+                    <input type="text" class="form-control" ng-model="alunoEscolhido.name" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
+                    <br/>
+                    <label>email</label>
+                    <input type="text" class="form-control" ng-model="alunoEscolhido.email" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_EMAIL}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>data de nascimento</label>
+                            <input type="date" class="form-control" ng-model="alunoEscolhido.birthDate" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_DATA}}"/>
+                        </aside>
+                    </div>
+                    <label>endereço</label>
+                    <input type="text" class="form-control" ng-model="alunoEscolhido.address" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_ENDERECO}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>tel. residencial</label>
+                            <input type="text" class="form-control" ng-model="alunoEscolhido.phone" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>celular</label>
+                            <input type="text" class="form-control" ng-model="alunoEscolhido.mobilePhone" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
+                        </aside>
+                    </div>
+                    <label>turma</label>
+                    <br/>
+                    <select ng-model="alunoEscolhido.class" ng-options="turma.name for turma in turmasCadastradas"></select>
+                    <br/><br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>disponibilidade</label>
+                            <input type="time" class="form-control" ng-model="alunoEscolhido.availability" maxlength="15"/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>status</label>
+                            <select ng-model="alunoEscolhido.status" ng-options="s.nome for s in cfg.status"></select>
+                        </aside>
+                    </div>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>tipo de contrato</label>
+                            <select ng-model="alunoEscolhido.contract" ng-options="c.nome for c in cfg.contracts"></select>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>data do contrato</label>
+                            <input type="date" class="form-control" ng-model="alunoEscolhido.contractDate" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
+                        </aside>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            ng-disabled="!(!!alunoEscolhido.name && alunoEscolhido.birthDate && !!alunoEscolhido.availability && !!alunoEscolhido.status)"
+                            ng-click="editStudent(alunoEscolhido)">
+                        editar
+                    </button>
+                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <delete-info directiveid="modal-delete-student" title="aluno" objectname="{{alunoEscolhido.name}}" objectid="{{alunoEscolhido._id}}" delete="deleteStudent(id)"></delete-info>
+
+    <div class="info-card transition" ng-repeat="aluno in alunos | filter: alunoProcurado">
+        <plus-less-info-element elementToToggle="student-toggle-{{$index}}"></plus-less-info-element>
+        <h3>{{aluno.name}}</h3>
+        <div id="student-toggle-{{$index}}" class="collapse">
+            <p class="text-almost-invisible">email: <a href="mailto:{{aluno.email}}">{{aluno.email}}</a></p>
+            <p class="text-almost-invisible">endereço: <span class="text-almost-black">{{aluno.address}}</span></p>
+            <p class="text-almost-invisible">data de nascimento: <span class="text-almost-black">{{aluno.birthDate | date : 'dd/MM/yyyy'}}</span></p>
+            <p class="text-almost-invisible">tel. residencial: <span class="text-almost-black">{{aluno.phone}}</span></p>
+            <p class="text-almost-invisible">celular: <span class="text-almost-black">{{aluno.mobilePhone}}</span></p>
+            <p class="text-almost-invisible">turma: <span class="text-almost-black">{{aluno.class}}</span></p>
+            <p class="text-almost-invisible">disponibilidade: <span class="text-almost-black">{{aluno.availability | date : 'hh:mm:ss'}}</span></p>
+            <p class="text-almost-invisible">tipo do contrato: <span class="text-almost-black">{{aluno.contract}}</span></p>
+            <p class="text-almost-invisible">data do contrato: <span class="text-almost-black">{{aluno.contractDate | date : 'dd/MM/yyyy'}}</span></p>
+            <p class="text-almost-invisible">status: <span class="text-almost-black">{{aluno.status}}</span></p>
+            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteStudent(aluno, $index)">excluir</button>
+            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditStudent(aluno, $index)">editar</button>
+        </div>
+    </div>
+</div>

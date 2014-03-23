@@ -1,0 +1,16 @@
+﻿<div ng-controller="StatisticsController">
+        <div id="estatisticas-container" class="topic transition selected {{cfg.information.estatisticas.classeBorda}}">
+            <h1>estatísticas</h1>
+            <p>analise todos os dados pertinentes para a melhor gestão de seu curso.</p>
+            <p>{{cfg.information.estatisticas.resumo}}</p>
+        </div>
+
+        <earnings-stats></earnings-stats>
+        <interested-students-per-month></interested-students-per-month>
+
+        <div class="info-card transition" ng-hide=true>
+            <h3>alunos cadastrados x interessados</h3>
+            <div id="line-chart" class="chart"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+@media (min-width: 30em)
+{
+    #login {width: 80%; border-radius: 3px;}
+    #login .project {font-size: 6.5em;}
+    #login .login-container {border-radius: 3px; border: 7px outset #b2dba1;}
+    .middle-modal aside {display: inline-block; margin-bottom: 1em;}
+    .middle-modal aside.pull-left {float: left !important;}
+    .middle-modal aside.pull-right {float: right !important;}
+    .topic {border-left-width: 20px;}
+    .topic:hover {border-left-width: 10px;}
+    .topic.selected, .topic.selected:hover {border-left-width: 0px;}
+    .created.alert.alert-danger {left: 30%;}
+}
+
+@media (min-width: 45em)
+{
+    .big-text {font-size: 3em;}
+    .welcome-container .general-info {font-size: 1.3em;}
+}
+
+@media (min-width: 70em)
+{
+    .to-the-top {bottom: 1em; right: 1em;}
+}

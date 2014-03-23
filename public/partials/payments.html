@@ -1,0 +1,99 @@
+﻿<div ng-controller="PaymentsController">
+    <div id="pagamentos-container" class="topic transition selected {{cfg.information.pagamentos.classeBorda}}">
+        <h1>{{cfg.information.pagamentos.nome}}</h1>
+        <p>tenha total controle sobre todos os pagamentos que são feitos.</p>
+        <p>{{cfg.information.estatisticas.resumo}}</p>
+        <button type="button" class="btn btn-default pull-right" id="#adicionarLivro"
+                ng-click="openModalToRegisterPayment()">
+            realizar pagamento
+        </button>
+        <input type="text" class="form-control fc-search" placeholder="procurar pagamento" ng-model="pagamentoProcurado" maxlength="100" autofocus/>
+    </div>
+
+    <div class="modal fade" id="modal-pay">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">realizar pagamento</h4>
+                </div>
+                <div class="modal-body">
+                    <label>nome do aluno</label>
+                    <br/>
+                    <select ng-model="alunoPagando.name" ng-options="pagamento.name for pagamento in pagamentos"></select>
+                    <br/><br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>forma de pagamento</label>
+                            <input type="text" class="form-control" maxlength="50" ng-model="alunoPagando.paidWithWhat"/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>mês</label>
+                            <select ng-model="alunoPagando.paymentMonth" ng-options="m.nome for m in cfg.months"></select>
+                        </aside>
+                    </div>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>quantia</label>
+                            <input type="text" class="form-control" maxlength="10" ng-model="alunoPagando.amountPaid" numbers-only/>
+                        </aside>
+                    </div>
+                    <label>observação</label>
+                    <textarea type="text" class="form-control" rows="5" spellcheck="true" ng-model="alunoPagando.observation" maxlength="333"></textarea>
+                    <br/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="pay(alunoPagando)" data-dismiss="modal"
+                            ng-disabled="!(!!alunoPagando.name && !!alunoPagando.amountPaid && !!alunoPagando.paidWithWhat && !!alunoPagando.paymentMonth)">
+                        pagar
+                    </button>
+                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-edit-payment">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Título</h4>
+                </div>
+                <div class="modal-body">
+                    <p>edit - fino body {{pagamentoEscolhido}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default">continuar</button>
+                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-card transition" ng-repeat="pagamento in pagamentos | filter: pagamentoProcurado">
+        <plus-less-info-element elementToToggle="payment-toggle-{{$index}}"></plus-less-info-element>
+        <h3>{{pagamento.name}}</h3>
+        <div id="payment-toggle-{{$index}}" class="collapse">
+            <p class="text-almost-invisible">turma: <span class="text-almost-black">{{pagamento.class}}</span></p>
+            <p class="text-almost-invisible">email: <a href="mailto:{{pagamento.email}}">{{pagamento.email}}</a></p>
+            <p class="text-almost-invisible">celular: <a href="mailto:{{pagamento.mobilePhone}}">{{pagamento.mobilePhone}}</a></p>
+            <p class="text-almost-invisible">tipo de contrato: <span class="text-almost-black">{{pagamento.contract}}</span></p>
+            <p class="text-almost-invisible">data do contrato: <span class="text-almost-black">{{pagamento.contractDate}}</span></p>
+            <p class="text-almost-invisible">vencimento: <span class="text-almost-black">{{pagamento.untilWhen}}</span></p>
+            <a href data-toggle="collapse" data-target="#historico{{$index}}" ng-show="isHistoricoVisible(pagamento)">histórico de pagamento</a>
+            <div id="historico{{$index}}" class="collapse">
+                <div ng-repeat="historico in pagamento.payments">
+                    <hr/>
+                    <p class="text-almost-invisible">mês do pagamento: <span class="text-almost-black">{{historico.paymentMonth}}</span></p>
+                    <p class="text-almost-invisible">quantia: <span class="text-almost-black">{{historico.amountPaid}}</span></p>
+                    <p class="text-almost-invisible">forma de pagamento: <span class="text-almost-black">{{historico.paidWithWhat}}</span></p>
+                    <p class="text-almost-invisible">observação: <span class="text-almost-black">{{historico.observation}}</span></p>
+                </div>
+            </div>
+            <button type="button" class="btn btn-link pull-right" ng-click="deleteBook(livro)">excluir</button>
+            <button type="button" class="btn btn-default pull-right" ng-click="editBook(livro)">editar</button>
+        </div>
+    </div>
+</div>

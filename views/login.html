@@ -1,0 +1,52 @@
+<!doctype html>
+<html ng-app="myClass">
+    <head>
+        <title>my class | login</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="css/positioning.css"/>
+        <link rel="stylesheet" type="text/css" href="css/media_queries.css"/>
+    </head>
+    <body class="default-bckg">
+        <div id="login" ng-controller="LoginController">
+            <div class="login-container bckg-neutro">
+                <h1 class="project">my class</h1>
+                <form class="form">
+                    <div class="alert alert-danger hidden" id="erroLogin">
+                        <p>usuário não encontrado</p>
+                    </div>
+                    <input type="text" class="form-control" placeholder="usuário" id="username" ng-model="user.username"/>
+                    <input type="password" class="form-control" placeholder="senha" id="password" ng-model="user.password"/>
+                    <button type="button" class="btn btn-lg btn-success" id="btnLogar"
+                            ng-disabled="!(!!user.username && !!user.password)"
+                            ng-click="validaUser(user)">
+                        entrar
+                    </button>
+                </form>
+            </div>
+            <footer class="transition">
+                <span class="text-almost-invisible" ng-cloak>{{cfg.author}}</span>
+            </footer>
+        </div>
+
+        <!-- frameworks-->
+        <script type="text/javascript" src="js/framework/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="js/framework/angular.min.js"></script>
+        <script type="text/javascript" src="js/framework/angular-route.min.js"></script>
+        <script type="text/javascript" src="js/framework/bootstrap.min.js"></script>
+
+        <!-- services -->
+        <script type="text/javascript" src="js/application/services/config.js"></script>
+        <script type="text/javascript" src="js/application/services/services.js"></script>
+
+        <!-- application -->
+        <script type="text/javascript" src="js/application/app.js"></script>
+
+        <!-- controllers -->
+        <script type="text/javascript" src="js/application/controllers/LoginController.js"></script>
+
+        <!-- directives -->
+    </body>
+</html>

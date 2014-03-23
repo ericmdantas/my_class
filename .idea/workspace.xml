@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="91da7609-2d8d-4b22-a840-2b9eac97ef7b" name="Default" comment="" />
+    <ignored path="classes.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="classes" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="79" column="105" selection-start="4704" selection-end="4704" vertical-scroll-proportion="-24.434782" vertical-offset="544" max-vertical-offset="1218">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="classes.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/partials/classes.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="84" column="62" selection-start="4797" selection-end="4797" vertical-scroll-proportion="0.0" vertical-offset="1176" max-vertical-offset="1876">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="teachers.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/partials/teachers.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="156" column="10" selection-start="10471" selection-end="10471" vertical-scroll-proportion="0.8289703" vertical-offset="1709" max-vertical-offset="2282">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/routes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="18" selection-start="1016" selection-end="1016" vertical-scroll-proportion="0.0" vertical-offset="387" max-vertical-offset="980">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/tests/backend/model/TeacherModel_test.js" />
+        <option value="$PROJECT_DIR$/tests/backend/model/StatisticModel_test.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/pageConfig_test.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/earnings-stats_test.js" />
+        <option value="$PROJECT_DIR$/public/js/application/directives/plus-less-info-directive.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/plus-less-info_test.js" />
+        <option value="$PROJECT_DIR$/public/js/application/directives/hours-minutes-directive.js" />
+        <option value="$PROJECT_DIR$/views/index.html" />
+        <option value="$PROJECT_DIR$/public/partials/payments.html" />
+        <option value="$PROJECT_DIR$/controllers/UserController.js" />
+        <option value="$PROJECT_DIR$/tests/backend/lib/lib_test.js" />
+        <option value="$PROJECT_DIR$/karma.conf.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/EarningStatsController_test.js" />
+        <option value="$PROJECT_DIR$/tests/backend/model/UserModel_test.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/LoginController_test.js" />
+        <option value="$PROJECT_DIR$/public/js/application/controllers/LoginController.js" />
+        <option value="$PROJECT_DIR$/public/js/application/controllers/MainController.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/MainController_test.js" />
+        <option value="$PROJECT_DIR$/public/js/application/controllers/PaymentsController.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/PaymentsController_test.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/UserController_test.js" />
+        <option value="$PROJECT_DIR$/models/books.js" />
+        <option value="$PROJECT_DIR$/tests/backend/routes/routes.js" />
+        <option value="$PROJECT_DIR$/tests/backend/routes/content_test.js" />
+        <option value="$PROJECT_DIR$/tests/backend/model/BookModel_test.js" />
+        <option value="$PROJECT_DIR$/tests/backend/lib/libDB_test.js" />
+        <option value="$PROJECT_DIR$/tests/backend/routes/routes_test.js" />
+        <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/routes/routes.js" />
+        <option value="$PROJECT_DIR$/public/js/application/services/config.js" />
+        <option value="$PROJECT_DIR$/public/js/application/services/services.js" />
+        <option value="$PROJECT_DIR$/public/css/positioning.css" />
+        <option value="$PROJECT_DIR$/public/css/media_queries.css" />
+        <option value="$PROJECT_DIR$/public/css/style.css" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/lib_frontend_test.js" />
+        <option value="$PROJECT_DIR$/models/stats.js" />
+        <option value="$PROJECT_DIR$/views/login.html" />
+        <option value="$PROJECT_DIR$/public/js/application/directives/delete-info-directive.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/BooksController_test.js" />
+        <option value="$PROJECT_DIR$/public/js/application/controllers/BooksController.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/ClassesController_test.js" />
+        <option value="$PROJECT_DIR$/public/js/application/controllers/ClassesController.js" />
+        <option value="$PROJECT_DIR$/public/partials/books.html" />
+        <option value="$PROJECT_DIR$/public/partials/students.html" />
+        <option value="$PROJECT_DIR$/public/js/application/controllers/StudentsController.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/StudentsController_test.js" />
+        <option value="$PROJECT_DIR$/public/js/application/controllers/TeachersController.js" />
+        <option value="$PROJECT_DIR$/public/partials/classes.html" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/TeachersController_test.js" />
+        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/delete-info_test.js" />
+        <option value="$PROJECT_DIR$/public/partials/teachers.html" />
+      </list>
+    </option>
+  </component>
+  <component name="JsKarmaPackageDirSetting">
+    <data>C:\Users\Eric\Documents\eric\projects\my_class\node_modules\karma</data>
+  </component>
+  <component name="NodeJsMochaPackageDirSetting">
+    <data>C:\Users\Eric\AppData\Roaming\npm\node_modules\mocha</data>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1456" />
+    <option name="height" value="886" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="classes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="classes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="my_class" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="classes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="my_class" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jasmine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="classes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="my_class" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jasmine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spec" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="classes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="my_class" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="diff" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="FullScreen" value="false" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="SearchEverywhereHistory" value="HOR&#10;//&#10;get" />
+    <property name="recentsLimit" value="5" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="auto.test.manager.delay" value="1000" />
+    <property name="TODO_SCOPE" value="All" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Eric\Documents\eric\projects\my_class\public\js\application\controllers" />
+      <recent name="C:\Users\Eric\Documents\eric\projects\my_class\views" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Karma.karma.conf.js">
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="name" value="Dart" />
+      <option name="saveOutputToFile" value="false" />
+      <option name="showConsoleOnStdErr" value="false" />
+      <option name="showConsoleOnStdOut" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
+      <setting name="configLocationType" value="CONFIG_FILE" />
+      <setting name="settingsFile" value="" />
+      <setting name="serverType" value="INTERNAL" />
+      <setting name="preferredDebugBrowser" value="CHROME" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeunitConfigurationType" factoryName="Nodeunit">
+      <setting name="nodePath" value="C:/Program Files/nodejs/node" />
+      <envs />
+      <setting name="passParentEnvVars" value="true" />
+      <setting name="nodeunitModuleDir" value="" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <setting name="testType" value="JS_FILE" />
+      <setting name="jsFile" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
+      <node-js-remote-debug />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <test-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>BDD</ui>
+      <require />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="true" type="XSLT" factoryName="XSLT">
+      <option name="myOutputFile" />
+      <option name="myOpenOutputFile" value="false" />
+      <option name="myOpenInBrowser" value="false" />
+      <option name="mySmartErrorHandling" value="true" />
+      <option name="myRunnerPort" value="34873" />
+      <option name="myVmArguments" />
+      <option name="myWorkingDirectory" />
+      <option name="myModule" />
+      <option name="myJdk" />
+      <parameters />
+      <OutputType value="CONSOLE" save-to-file="false" />
+      <FileType name="XML" />
+      <JdkChoice value="FROM_MODULE" />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <browser start="false" url="" with-js-debugger="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="karma.conf.js" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="$PROJECT_DIR$/karma.conf.js">
+      <envs />
+      <RunnerSettings RunnerId="KarmaCoverageProgramRunner" />
+      <RunnerSettings RunnerId="KarmaJavaScriptTestRunnerDebug" />
+      <RunnerSettings RunnerId="KarmaJavaScriptTestRunnerRun" />
+      <ConfigurationWrapper RunnerId="KarmaCoverageProgramRunner" />
+      <ConfigurationWrapper RunnerId="KarmaJavaScriptTestRunnerDebug" />
+      <ConfigurationWrapper RunnerId="KarmaJavaScriptTestRunnerRun" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Karma.karma.conf.js" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="91da7609-2d8d-4b22-a840-2b9eac97ef7b" name="Default" comment="" />
+      <created>1388774438641</created>
+      <updated>1388774438641</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TodoView" selected-index="2">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1456" height="886" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13915417" sideWeight="0.49964765" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287858" sideWeight="0.49964765" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980973" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32831737" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15143247" sideWeight="0.5003524" order="10" side_tool="true" content_ui="tabs" x="1101" y="284" width="339" height="515" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891247" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USERS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/earnings-stats_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="602" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/interceptor_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="574" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/pageConfig_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1456" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/NavController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="728" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/supertest/node_modules/superagent/node_modules/reduce-component/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="3" selection-start="113" selection-end="113" vertical-scroll-proportion="0.24034335" vertical-offset="0" max-vertical-offset="466" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/model/UserModel_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="2" selection-start="743" selection-end="743" vertical-scroll-proportion="0.5833333" vertical-offset="0" max-vertical-offset="624" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/LoginController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="12" selection-start="424" selection-end="465" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="980" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/LoginController_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="33" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0" vertical-offset="504" max-vertical-offset="1078" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/MainController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="87" selection-start="906" selection-end="906" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="574" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/MainController_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="52" selection-start="3259" selection-end="3259" vertical-scroll-proportion="0.46153846" vertical-offset="1010" max-vertical-offset="2758" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/PaymentsController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="55" selection-start="1667" selection-end="1667" vertical-scroll-proportion="0.0" vertical-offset="249" max-vertical-offset="854" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/PaymentsController_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="62" selection-start="3937" selection-end="3937" vertical-scroll-proportion="0.0" vertical-offset="1341" max-vertical-offset="1890" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/UserController_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="5" selection-start="1089" selection-end="1089" vertical-scroll-proportion="0.7166948" vertical-offset="51" max-vertical-offset="644" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/UserController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="22" selection-start="140" selection-end="140" vertical-scroll-proportion="0.09443507" vertical-offset="0" max-vertical-offset="593" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/routes/content_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="43" selection-start="606" selection-end="606" vertical-scroll-proportion="0.41584158" vertical-offset="0" max-vertical-offset="707" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/model/BookModel_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="6" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/books.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="8" selection-start="923" selection-end="923" vertical-scroll-proportion="0.6425532" vertical-offset="37" max-vertical-offset="742" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/libDB.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="53" selection-start="162" selection-end="169" vertical-scroll-proportion="0.15886524" vertical-offset="0" max-vertical-offset="1246" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/configurator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="705" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/lib/libDB_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="19" selection-start="1259" selection-end="1264" vertical-scroll-proportion="0.93333334" vertical-offset="0" max-vertical-offset="980" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/routes/routes_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="43" selection-start="1538" selection-end="1538" vertical-scroll-proportion="0.8411347" vertical-offset="121" max-vertical-offset="826" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/content.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="0" selection-start="580" selection-end="580" vertical-scroll-proportion="0.61560285" vertical-offset="0" max-vertical-offset="705" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="68" selection-end="68" vertical-scroll-proportion="0.07082631" vertical-offset="0" max-vertical-offset="593" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/services/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="79" selection-start="2158" selection-end="2158" vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="700" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/positioning.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="77" selection-start="1346" selection-end="1423" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="518" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/media_queries.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="44" selection-start="576" selection-end="576" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="406" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="31" selection-start="3561" selection-end="3561" vertical-scroll-proportion="0.88195616" vertical-offset="401" max-vertical-offset="1008" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/lib/lib_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="33" selection-start="1940" selection-end="1940" vertical-scroll-proportion="0.29173693" vertical-offset="415" max-vertical-offset="1722" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lib.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="48" selection-start="1267" selection-end="1291" vertical-scroll-proportion="0.8735244" vertical-offset="42" max-vertical-offset="1316" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/stats.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="48" selection-start="730" selection-end="730" vertical-scroll-proportion="0.59865093" vertical-offset="9" max-vertical-offset="770" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/lib_frontend_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="50" selection-start="970" selection-end="970" vertical-scroll-proportion="0.66104555" vertical-offset="0" max-vertical-offset="966" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="73" selection-start="571" selection-end="571" vertical-scroll-proportion="0.40134907" vertical-offset="0" max-vertical-offset="593" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/services/services.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="100" column="76" selection-start="3259" selection-end="3259" vertical-scroll-proportion="0.5750422" vertical-offset="1059" max-vertical-offset="1652" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="14" selection-start="1641" selection-end="1641" vertical-scroll-proportion="0.40175438" vertical-offset="205" max-vertical-offset="798" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="18" selection-start="1016" selection-end="1016" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="980">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/BooksController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="13" selection-start="2828" selection-end="2828" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1428" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/BooksController_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="125" column="57" selection-start="5244" selection-end="5254" vertical-scroll-proportion="0.39314845" vertical-offset="1509" max-vertical-offset="2170" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/ClassesController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="14" selection-start="2538" selection-end="2538" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1428" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/ClassesController_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="11" selection-start="3619" selection-end="3619" vertical-scroll-proportion="0.58615136" vertical-offset="840" max-vertical-offset="2002" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/StudentsController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="95" selection-start="3276" selection-end="3276" vertical-scroll-proportion="0.6167472" vertical-offset="863" max-vertical-offset="1484" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/StudentsController_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="141" column="75" selection-start="6382" selection-end="6382" vertical-scroll-proportion="0.0" vertical-offset="1605" max-vertical-offset="2268" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/partials/books.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="173" selection-start="4007" selection-end="4176" vertical-scroll-proportion="0.6020067" vertical-offset="634" max-vertical-offset="1232" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/partials/students.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="154" column="158" selection-start="9556" selection-end="9556" vertical-scroll-proportion="0.39130434" vertical-offset="1922" max-vertical-offset="2520" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="105" selection-start="4704" selection-end="4704" vertical-scroll-proportion="-24.434782" vertical-offset="544" max-vertical-offset="1218">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/partials/classes.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="62" selection-start="4797" selection-end="4797" vertical-scroll-proportion="0.0" vertical-offset="1176" max-vertical-offset="1876">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/TeachersController_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="139" column="0" selection-start="6053" selection-end="6053" vertical-scroll-proportion="1.4297254" vertical-offset="1061" max-vertical-offset="2100" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/TeachersController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="18" selection-start="2446" selection-end="2446" vertical-scroll-proportion="0.68659127" vertical-offset="737" max-vertical-offset="1400" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/plus-less-info_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.01754386" vertical-offset="19" max-vertical-offset="700" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/delete-info_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="58" selection-start="1843" selection-end="1843" vertical-scroll-proportion="0.75838923" vertical-offset="66" max-vertical-offset="672">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/directives/delete-info-directive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="1374" selection-end="1374" vertical-scroll-proportion="0.5402685" vertical-offset="0" max-vertical-offset="596">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/partials/teachers.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="156" column="10" selection-start="10471" selection-end="10471" vertical-scroll-proportion="0.8289703" vertical-offset="1709" max-vertical-offset="2282">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+

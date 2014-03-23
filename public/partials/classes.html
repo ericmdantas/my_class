@@ -1,0 +1,129 @@
+﻿<div ng-controller="ClassesController">
+    <div id="turmas-container" class="topic transition selected {{cfg.information.turmas.classeBorda}}">
+        <h1>{{cfg.information.turmas.nome}} <span class="text-almost-invisible">{{turmas.length}} turmas</span></h1>
+        <p>Tenha total controle sobre toda a informação das turmas cadastradas.</p>
+        <p>{{cfg.information.turmas.resumo}}</p>
+        <button type="button" class="btn btn-default pull-right" id="#adicionarTurma"
+                ng-click="openModalToRegisterClass()">
+            cadastrar turma
+        </button>
+        <input type="text" class="form-control fc-search" placeholder="procurar turma" ng-model="turmaProcurada" maxlength="100" autofocus/>
+    </div>
+
+    <div class="modal fade" id="modal-register-class">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">cadastrar turma {{novaTurma.name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>para cadastrar a turma, favor preencher as informações abaixo:</p>
+                    <label>nome</label>
+                    <input type="text" class="form-control" ng-model="novaTurma.name" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>quantidade de alunos</label>
+                            <input type="text" class="form-control" ng-model="novaTurma.studentsQuantity" maxlength="6" numbers-only/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>horário</label>
+                            <input type="time" class="form-control" ng-model="novaTurma.time" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
+                        </aside>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            ng-disabled="!(!!novaTurma.name && !!novaTurma.time)"
+                            ng-click="registerClass (novaTurma)">
+                        cadastrar
+                    </button>
+                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-edit-class">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">editar {{turmaEscolhida.name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Para editar a turma escolhida, favor preencher as informações abaixo:</p>
+                    <label>nome</label>
+                    <input type="text" class="form-control" ng-model="turmaEscolhida.name" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>quantidade de alunos</label>
+                            <input type="text" class="form-control" ng-model="turmaEscolhida.studentsQuantity" maxlength="6"/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>horário</label>
+                            <input type="time" class="form-control" ng-model="turmaEscolhida.time" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
+                        </aside>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            ng-disabled="!(!!turmaEscolhida.name && !!turmaEscolhida.time)"
+                            ng-click="editClass(turmaEscolhida)">
+                        continuar
+                    </button>
+                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <delete-info directiveid="modal-delete-class" title="turma" objectname="{{turmaEscolhida.name}}" objectid="{{turmaEscolhida._id}}" delete="deleteClass(id)"></delete-info>
+
+    <div class="info-card transition" ng-repeat="turma in turmas | filter: turmaProcurada">
+        <plus-less-info-element elementToToggle="class-toggle-{{$index}}"></plus-less-info-element>
+        <h3>{{turma.name}}</h3>
+        <div id="class-toggle-{{$index}}" class="collapse">
+            <p class="text-almost-invisible">alunos: <span class="text-almost-black">{{turma.studentsQuantity}}</span></p>
+            <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
+
+            <div class="text-center" ng-show=isHistoricoVisible(turma.historico.length)>
+                <span class="select-data">
+                    <button type="button" class="btn btn-default btn-sm" ng-click="changeDate(turma.data, 'add')">&#171;</button>
+                    {{turma.data}}
+                    <button type="button" class="btn btn-default btn-sm" ng-click="changeDate(turma.data, 'subtract')">&#187;</button>
+                </span>
+
+                <table class="table table-condensed table-bordered big-espaco-top">
+                    <thead>
+                        <tr>
+                            <td>dia</td>
+                            <td>par.</td>
+                            <td>última palavra</td>
+                            <td>leitura</td>
+                            <td>dicção</td>
+                            <td>professor</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="info in turma.historico">
+                            <td>{{info.dia}}</td>
+                            <td>{{info.paragrafo}}</td>
+                            <td>{{info.ultimaPalavra}}</td>
+                            <td>{{info.leitura}}</td>
+                            <td>{{info.diccao}}</td>
+                            <td>{{info.professor}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteClass(turma, $index)">fechar</button>
+            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditClass(turma, $index)">editar</button>
+        </div>
+    </div>
+</div>

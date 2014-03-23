@@ -1,0 +1,158 @@
+<div ng-controller="TeachersController">
+    <div id="alunos-container" class="topic transition selected {{cfg.information.professores.classeBorda}}">
+        <h1>{{cfg.information.professores.nome}} <span class="text-almost-invisible">{{professores.length}} professores</span></h1>
+        <p>tenha total controle sobre todas as informações dos professores cadastrados.</p>
+        <p>{{cfg.information.professores.resumo}}</p>
+        <button type="button" class="btn btn-default pull-right"
+                ng-click="openModalToRegisterTeacher()">
+            cadastrar professor
+        </button>
+        <input type="text" class="form-control fc-search" placeholder="procurar professor" ng-model="professorProcurado" maxlength="100" autofocus/>
+    </div>
+
+    <div class="modal fade" id="modal-register-teacher">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Cadastrar professor {{novoProfessor.name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <label>nome</label>
+                    <input type="text" class="form-control" ng-model="novoProfessor.name" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_NOME}}" autofocus/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>data de nascimento</label>
+                            <input type="date" class="form-control" ng-model="novoProfessor.birthDate" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_DATA}}"/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>data de admissão</label>
+                            <input type="date" class="form-control" ng-model="novoProfessor.admission" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_DATA}}"/>
+                        </aside>
+                    </div>
+                    <br/>
+                    <label>email</label>
+                    <input type="text" class="form-control" ng-model="novoProfessor.email" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_EMAIL}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>tel. residencial</label>
+                            <input type="text" class="form-control" ng-model="novoProfessor.phone" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_TELEFONE}}" numbers-only/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>celular</label>
+                            <input type="text" class="form-control" ng-model="novoProfessor.mobilePhone" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_TELEFONE}}" numbers-only/>
+                        </aside>
+                    </div>
+                    <br/>
+                    <label>endereço</label>
+                    <input type="text" class="form-control" ng-model="novoProfessor.address" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_NOME}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>disponibilidade</label>
+                            <input type="time" class="form-control" ng-model="novoProfessor.availability" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_HORARIO}}"/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>salário</label>
+                            <input type="text" class="form-control" ng-model="novoProfessor.salary" numbers-only maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_QUANTIA}}"/>
+                        </aside>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            ng-disabled="!(!!novoProfessor.name && novoProfessor.birthDate && !!novoProfessor.address)"
+                            ng-click="registerNewTeacher(novoProfessor)">
+                        cadastrar
+                    </button>
+                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-edit-teacher">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Editar {{professorEscolhido.name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Para cadastrar o aluno, favor preencher as informações abaixo:</p>
+                    <label>nome</label>
+                    <input type="text" class="form-control" ng-model="professorEscolhido.name" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_NOME}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>data de nascimento</label>
+                            <input type="date" class="form-control" ng-model="professorEscolhido.birthDate" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_DATA}}"/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>data de admissão</label>
+                            <input type="date" class="form-control" ng-model="novoProfessor.admission" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_DATA}}"/>
+                        </aside>
+                    </div>
+                    <br/>
+                    <label>email</label>
+                    <input type="text" class="form-control" ng-model="professorEscolhido.email" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_EMAIL}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>tel. residencial</label>
+                            <input type="text" class="form-control" ng-model="professorEscolhido.phone" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_TELEFONE}}"/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>celular</label>
+                            <input type="text" class="form-control" ng-model="professorEscolhido.mobilePhone" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_TELEFONE}}"/>
+                        </aside>
+                    </div>
+                    <br/>
+                    <label>endereço</label>
+                    <input type="text" class="form-control" ng-model="professorEscolhido.address" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_ENDERECO}}"/>
+                    <br/>
+                    <div class="middle-modal">
+                        <aside class="pull-left">
+                            <label>disponibilidade</label>
+                            <input type="time" class="form-control" ng-model="professorEscolhido.availability" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_HORARIO}}"/>
+                        </aside>
+                        <aside class="pull-right">
+                            <label>salário</label>
+                            <input type="text" class="form-control" ng-model="professorEscolhido.salary" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_QUANTIA}}"/>
+                        </aside>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            ng-disabled="!(!!professorEscolhido.name && !!professorEscolhido.birthDate && !!professorEscolhido.address)"
+                            ng-click="editTeacher(professorEscolhido)">
+                        continuar
+                    </button>
+                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <delete-info directiveid="modal-delete-teacher" title="professor" objectname="{{professorEscolhido.name}}" objectid="{{professorEscolhido._id}}" delete="deleteTeacher(id)"></delete-info>
+
+    <div class="info-card transition" ng-repeat="professor in professores | filter: professorProcurado">
+        <plus-less-info-element elementToToggle="teacher-toggle-{{$index}}"></plus-less-info-element>
+        <h3>{{professor.name}}</h3>
+        <div id="teacher-toggle-{{$index}}" class="collapse">
+            <p class="text-almost-invisible">data de nascimento: <span class="text-almost-black">{{professor.birthDate | date: 'dd/MM/YYYY'}}</span></p>
+            <p class="text-almost-invisible">data de admissão: <span class="text-almost-black">{{professor.admission | date: 'dd/MM/YYYY'}}</span></p>
+            <p class="text-almost-invisible">email: <a href="mailto:{{aluno.email}}">{{professor.email}}</a></p>
+            <p class="text-almost-invisible">tel. residencial: <span class="text-almost-black">{{professor.phone}}</span></p>
+            <p class="text-almost-invisible">celular: <span class="text-almost-black">{{professor.mobilePhone}}</span></p>
+            <p class="text-almost-invisible">endereço: <span class="text-almost-black">{{professor.address}}</span></p>
+            <p class="text-almost-invisible">salário: <span class="text-almost-black">{{professor.salary}}</span></p>
+            <p class="text-almost-invisible">disponilibidade: <span class="text-almost-black">{{professor.availability}}</span></p>
+            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteTeacher(professor, $index)">excluir</button>
+            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditTeacher(professor, $index)">editar</button>
+        </div>
+    </div>
+</div>
