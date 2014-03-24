@@ -1,8 +1,8 @@
 "use strict";
 
-var User = require('../models/users');
+var User = require('../models/User');
 
-function UserCtrl()
+var UserCtrl = function()
 {
     function validaUsuario(req, res)
     {
@@ -28,8 +28,7 @@ function UserCtrl()
             res.json({resultado: informationCounter})
         }
 
-
-        user.findUserByUsername(username, callback);
+        user.countInfoByUsername(username, callback);
     }
 
     function deslogar(req, res)

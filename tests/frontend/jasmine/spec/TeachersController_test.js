@@ -104,7 +104,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if the get is being used - respond with resultado only', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachers?u=eric3').respond({resultado: {}});
+            httpMock.expectGET('/api/getTeachers?u=eric3').respond({resultado: []});
             $controller('TeachersController', {$scope: scope});
             httpMock.flush();
             expect(scope.professores.length).toBe(0);
@@ -113,7 +113,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         it('checks if the get is being used', inject(function($controller)
         {
             $controller('TeachersController', {$scope: scope});
-            httpMock.expectGET('/api/getTeachers?u=eric3').respond({resultado: {teachers: ['somebody here', 'somebody else in here']}});
+            httpMock.expectGET('/api/getTeachers?u=eric3').respond({resultado: ['somebody here', 'somebody else in here']});
             httpMock.flush();
             expect(scope.professores.length).toBe(2);
         }))

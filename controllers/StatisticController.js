@@ -1,6 +1,6 @@
 "use strict";
 
-var StatisticsModel = require('../models/stats');
+var StatisticsModel = require('../models/Statistic');
 
 function Statistics()
 {

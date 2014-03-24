@@ -1,17 +1,18 @@
 "use strict";
 
-var TeacherModel = require('../models/teachers');
+var TeacherModel = require('../models/Teacher');
 
 function Teacher()
 {
     function getTeachersInfo(req, res)
     {
         var usuario = req.query.u;
+        var teacher = new TeacherModel();
 
-        TeacherModel.findAllTeachersByUser(usuario, function(doc)
+        teacher.findAllTeachersByUser(usuario, function(teachers)
         {
-            doc ? res.json({resultado: doc})
-                : res.json({resultado: []})
+            teachers ? res.json({resultado: teachers})
+                     : res.json({resultado: []})
         });
     }
 
@@ -19,28 +20,32 @@ function Teacher()
     {
         var usuario = req.query.u;
         var professor = req.body;
+        var teacher = new TeacherModel();
 
-        TeacherModel.registerNewTeacher(usuario, professor, function(){res.end()});
+        teacher.registerNewTeacher(usuario, professor, function(){res.end()});
     }
 
     function editTeacher(req, res)
     {
         var usuario = req.query.u;
         var professor = req.body;
+        var teacher = new TeacherModel();
 
         function callback()
         {
             res.end();
         }
 
-        TeacherModel.editTeacher(usuario, professor, callback);
+        teacher.editTeacher(usuario, professor, callback);
     }
 
     function deleteTeacher(req, res)
     {
         var usuario = req.query.u;
         var identificacaoProfessor = req.query.p;
-        TeacherModel.deleteTeacher(usuario, identificacaoProfessor, function(){res.end()});
+        var teacher = new TeacherModel();
+
+        teacher.deleteTeacher(usuario, identificacaoProfessor, function(){res.end()});
     }
 
     return {

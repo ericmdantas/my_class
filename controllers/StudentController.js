@@ -1,12 +1,13 @@
 "use strict";
 
-var StudentModel = require('../models/students');
+var StudentModel = require('../models/Student');
 
 function Student()
 {
     function pegaInformacaoDeTodosAlunos(req, res)
     {
         var usuario = req.query.u;
+        var student = new StudentModel();
 
         function callback(doc)
         {
@@ -14,55 +15,62 @@ function Student()
                 : res.json({students: []});
         }
 
-        StudentModel.findAllStudentsByUser(usuario, callback);
+        student.findAllStudentsByUser(usuario, callback);
     }
 
     function pegaInformacaoTodosPagamentos(req, res)
     {
         var usuario = req.query.u;
+        var student = new StudentModel();
 
-        var callback = function(doc)
+        var callback = function(students)
         {
-            doc ? res.json({resultado: doc.students})
-                : res.json({resultado: []})
+            students ? res.json({resultado: students})
+                     : res.json({resultado: []})
         }
 
-        StudentModel.findAllPaymentsByUser(usuario, callback);
+        student.findAllPaymentsByUser(usuario, callback);
     }
 
     function cadastraNovoEstudante(req, res)
     {
         var usuario = req.query.u;
         var aluno = req.body;
+        var student = new StudentModel();
 
-        StudentModel.registerNewStudent(usuario, aluno, function(){res.end()})
+        student.registerNewStudent(usuario, aluno, function(){res.end()})
     }
 
     function fazPagamento(req, res)
     {
         var usuario = req.query.u;
         var pagamento = req.body;
-        StudentModel.registerNewPayment(usuario, pagamento, function(){res.end()});
+        var student = new StudentModel();
+
+        student.registerNewPayment(usuario, pagamento, function(){res.end()});
     }
 
     function editaAlunoEscolhido(req, res)
     {
         var usuario = req.query.u;
         var aluno = req.body;
+        var student = new StudentModel();
 
         function callback()
         {
             res.end();
         }
 
-        StudentModel.editStudent(usuario, aluno, callback);
+        student.editStudent(usuario, aluno, callback);
     }
 
     function removeAlunoEscolhido(req, res)
     {
         var usuario = req.query.u;
         var identificacaoAluno = req.query.s;
-        StudentModel.deleteStudent(usuario, identificacaoAluno, function(){res.end()});
+        var student = new StudentModel();
+
+        student.deleteStudent(usuario, identificacaoAluno, function(){res.end()});
     }
 
     return {

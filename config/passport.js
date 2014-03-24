@@ -1,7 +1,7 @@
 "use strict";
 
 var LocalStrategy = require('passport-local').Strategy,
-    User = require('../models/users');
+    User = require('../models/User');
 
 module.exports = function(passport)
 {
@@ -27,7 +27,7 @@ module.exports = function(passport)
     }, function(req, username, password, done)
        {
             var query = {username: username, password: password};
-            var projection = {classes: 0, teachers: 0, students: 0, books: 0};
+            var projection = {};
 
             User.findOne(query, projection)
                 .exec(function(err, user)

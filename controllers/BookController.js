@@ -1,17 +1,18 @@
 "use strict";
 
-var BookModel = require('../models/books');
+var BookModel = require('../models/Book');
 
 function Book()
 {
     function pegaInformacoesLivros(req, res)
     {
         var usuario = req.query.u;
+        var book = new BookModel();
 
-        BookModel.findAllBooksByUser(usuario, function(doc)
+        book.findAllBooksByUser(usuario, function(books)
         {
-            doc ? res.json({books: doc.books})
-                : res.json({books: []})
+            books ? res.json({books: books})
+                  : res.json({books: []})
         });
     }
 
@@ -19,28 +20,32 @@ function Book()
     {
         var usuario = req.query.u;
         var livro = req.body;
+        var book = new BookModel();
 
-        BookModel.registerNewBook(usuario, livro, function(){res.end()});
+        book.registerNewBook(usuario, livro, function(){res.end()});
     }
 
     function editaLivro(req, res)
     {
         var usuario = req.query.u;
         var livro = req.body;
+        var book = new BookModel();
 
         function callback()
         {
             res.end();
         }
 
-        BookModel.editBook(usuario, livro, callback);
+        book.editBook(usuario, livro, callback);
     }
 
     function removeLivro(req, res)
     {
         var usuario = req.query.u;
         var identificacaoLivro = req.query.b;
-        BookModel.deleteBook(usuario, identificacaoLivro, function(){res.end()});
+        var book = new BookModel();
+
+        book.deleteBook(usuario, identificacaoLivro, function(){res.end()});
     }
 
 

@@ -13,7 +13,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
         $http.get('/api/getTeachers?u=eric3')
              .success(function(data)
                       {
-                          $scope.professores = (data && data.resultado && data.resultado.teachers) ? data.resultado.teachers : [];
+                          $scope.professores = (data && data.resultado) ? data.resultado : [];
                       })
     }
 

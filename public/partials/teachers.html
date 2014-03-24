@@ -143,8 +143,8 @@
         <plus-less-info-element elementToToggle="teacher-toggle-{{$index}}"></plus-less-info-element>
         <h3>{{professor.name}}</h3>
         <div id="teacher-toggle-{{$index}}" class="collapse">
-            <p class="text-almost-invisible">data de nascimento: <span class="text-almost-black">{{professor.birthDate | date: 'dd/MM/YYYY'}}</span></p>
-            <p class="text-almost-invisible">data de admissão: <span class="text-almost-black">{{professor.admission | date: 'dd/MM/YYYY'}}</span></p>
+            <p class="text-almost-invisible">data de nascimento: <span class="text-almost-black">{{professor.birthDate | date: 'dd/MM/yyyy'}}</span></p>
+            <p class="text-almost-invisible">data de admissão: <span class="text-almost-black">{{professor.admission | date: 'dd/MM/yyyy'}}</span></p>
             <p class="text-almost-invisible">email: <a href="mailto:{{aluno.email}}">{{professor.email}}</a></p>
             <p class="text-almost-invisible">tel. residencial: <span class="text-almost-black">{{professor.phone}}</span></p>
             <p class="text-almost-invisible">celular: <span class="text-almost-black">{{professor.mobilePhone}}</span></p>

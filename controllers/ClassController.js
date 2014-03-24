@@ -1,17 +1,18 @@
 "use strict";
 
-var ClazzModel = require('../models/classes');
+var ClazzModel = require('../models/Clazz');
 
 function Clazz()
 {
     function getClassesInfo(req, res)
     {
         var usuario = req.query.u;
+        var clazz = new ClazzModel();
 
-        ClazzModel.findAllClassesByUser(usuario, function(doc)
+        clazz.findAllClassesByUser(usuario, function(classes)
         {
-            doc ? res.json({classes: doc.classes})
-                : res.json({classes: []})
+            classes ? res.json({classes: classes})
+                    : res.json({classes: []})
         })
     }
 
@@ -19,28 +20,32 @@ function Clazz()
     {
         var usuario = req.query.u;
         var turma = req.body;
+        var clazz = new ClazzModel();
 
-        ClazzModel.registerNewClass(usuario, turma, function(){res.end()});
+        clazz.registerNewClass(usuario, turma, function(){res.end()});
     }
 
     function editClass(req, res)
     {
         var usuario = req.query.u;
         var turma = req.body;
+        var clazz = new ClazzModel();
 
         function callback()
         {
             res.end();
         }
 
-        ClazzModel.updateClass(usuario, turma, callback);
+        clazz.editClass(usuario, turma, callback);
     }
 
     function deleteClass(req, res)
     {
         var usuario = req.query.u;
         var identificacaoTurma = req.query.c;
-        ClazzModel.deleteClass(usuario, identificacaoTurma, function(){res.end()});
+        var clazz = new ClazzModel();
+
+        clazz.deleteClass(usuario, identificacaoTurma, function(){res.end()});
     }
 
     return {
