@@ -10,7 +10,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         httpMock.when('GET', '/api/getBooks?u=eric3').respond({books: [{name: 'A', quantity: 5}]});;
         httpMock.when('POST', '/api/registerBook?u=eric3').respond(200);
         httpMock.when('POST', '/api/editBook?u=eric3').respond({});
-        httpMock.when('DELETE', '/api/deleteBook?u=eric3&b=livro1').respond(200);
+        httpMock.when('DELETE', '/api/deleteBook/livro1?u=eric3').respond(200);
         scope = $injector.get('$rootScope').$new();
     }))
 

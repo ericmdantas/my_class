@@ -85,7 +85,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete('/api/deleteTeacher?u=eric3&p='+id)
+        $http.delete('/api/deleteTeacher/'+id+'?u=eric3')
              .success(function()
                      {
                          escondeModal('#modal-delete-teacher');

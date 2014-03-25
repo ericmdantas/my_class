@@ -14,8 +14,8 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
         $http.get('/api/getStudents?u=eric3')
              .success(function(data)
                       {
-                            $scope.alunos = (data && data.students && data.students.students) ? data.students.students : [];
-                            $scope.turmasCadastradas = (data && data.students && data.students.classes) ? data.students.classes : [];
+                            $scope.alunos = (data && data.students) ? data.students : [];
+                            $scope.turmasCadastradas = (data && data.classes) ? data.classes : [];
                       })
     }
 
@@ -90,7 +90,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
             throw new Error('Não foi possível realizar a deleção do aluno. O ID está errado.');
 
         $scope.isLoadingVisible.modal = true;
-        $http.delete('/api/deleteStudent?u=eric3&s='+id)
+        $http.delete('/api/deleteStudent/'+id+'?u=eric3')
              .success(function()
                     {
                         $scope.getStudents();

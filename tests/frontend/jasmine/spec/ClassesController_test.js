@@ -11,7 +11,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         httpMock.when('GET', '/api/getClasses?u=eric3').respond({classes: [{name: 'a'}, {name: 'b'}]});
         httpMock.when('POST', '/api/registerClass?u=eric3').respond(200);
         httpMock.when('POST', '/api/editClass?u=eric3').respond(200);
-        httpMock.when('DELETE', '/api/deleteClass?u=eric3&c=A').respond(200);
+        httpMock.when('DELETE', '/api/deleteClass/A?u=eric3').respond(200);
     }))
 
     describe('elements creation', function()

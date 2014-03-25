@@ -42,7 +42,7 @@ function Book()
     function removeLivro(req, res)
     {
         var usuario = req.query.u;
-        var identificacaoLivro = req.query.b;
+        var identificacaoLivro = req.params.id;
         var book = new BookModel();
 
         book.deleteBook(usuario, identificacaoLivro, function(){res.end()});

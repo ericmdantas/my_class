@@ -9,10 +9,10 @@ function Student()
         var usuario = req.query.u;
         var student = new StudentModel();
 
-        function callback(doc)
+        function callback(students)
         {
-            doc ? res.json({students: doc})
-                : res.json({students: []});
+            students ? res.json({students: students})
+                     : res.json({students: []});
         }
 
         student.findAllStudentsByUser(usuario, callback);
@@ -38,7 +38,12 @@ function Student()
         var aluno = req.body;
         var student = new StudentModel();
 
-        student.registerNewStudent(usuario, aluno, function(){res.end()})
+        function callback()
+        {
+            res.end();
+        }
+
+        student.registerStudent(usuario, aluno, callback)
     }
 
     function fazPagamento(req, res)
@@ -67,7 +72,7 @@ function Student()
     function removeAlunoEscolhido(req, res)
     {
         var usuario = req.query.u;
-        var identificacaoAluno = req.query.s;
+        var identificacaoAluno = req.params.id;
         var student = new StudentModel();
 
         student.deleteStudent(usuario, identificacaoAluno, function(){res.end()});

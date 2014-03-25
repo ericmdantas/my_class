@@ -45,10 +45,11 @@
 
     clazzSchema.methods.editClass = function(usuario, turma, done)
     {
-        var query = {username: usuario, 'classes._id': turma._id};
-        var updt = {"classes.$": turma}
+        var query = {usersAllowed: {$in: [usuario]}, _id: turma._id};
+        delete turma._id;
+        var updt = turma;
 
-        Clazz.update(query, updt)
+        Clazz.findOneAndUpdate(query, updt)
              .exec(function(err, updated)
                    {
                       if (err)
@@ -60,30 +61,16 @@
 
     clazzSchema.methods.deleteClass = function(user, identificacaoTurma, done)
     {
-        var query = {username: user, "classes._id": identificacaoTurma};
-        var projection = {students: 0, teachers: 0, books: 0};
-        Clazz.findOne(query, projection)
-            .exec(function(err, foundDoc)
-            {
-                if (err)
-                    throw err;
+        var query = {usersAllowed: {$in: [user]}, _id: identificacaoTurma};
 
-                for (var i = 0; i < foundDoc.classes.length; i++)
-                {
-                    if (id === foundDoc.classes[i]._id.toString())
-                    {
-                        foundDoc.classes.splice(i, 1);
+        Clazz.findOneAndRemove(query)
+             .exec(function(err, deleted)
+                  {
+                     if (err)
+                         throw err;
 
-                        foundDoc.save(function(err, saved)
-                        {
-                            if (err)
-                                throw err;
-
-                            done();
-                        })
-                    }
-                }
-            })
+                     done();
+                  })
     }
 
     var Clazz = mongoose.model('Clazz', clazzSchema);

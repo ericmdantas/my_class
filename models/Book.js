@@ -43,45 +43,31 @@
 
     bookSchema.methods.editBook = function(usuario, livro, done)
     {
-        var query = {username: usuario, "books._id": livro._id};
-        var updt = {"books.$": livro};
+        var query = {usersAllowed: {$in: [usuario]}, _id: livro._id};
+        delete livro._id;
+        var updt = livro;
 
-        Book.update(query, updt)
+        Book.findOneAndUpdate(query, updt)
             .exec(function(err, updated)
+                 {
+                     if (err)
+                         throw err;
+
+                     done();
+                 })
+    }
+
+    bookSchema.methods.deleteBook = function(user, identificacaoLivro, done)
+    {
+        var query = {usersAllowed: {$in: [user]}, _id: identificacaoLivro};
+
+        Book.findOneAndRemove(query)
+            .exec(function(err, deleted)
             {
                 if (err)
                     throw err;
 
                 done();
-            })
-    }
-
-    bookSchema.methods.deleteBook = function(user, identificacaoLivro, done)
-    {
-        var query = {username: user, "books._id" : identificacaoLivro};
-        var projection = {students: 0, classes: 0, teachers: 0};
-
-        Book.findOne(query, projection)
-            .exec(function(err, foundDoc)
-            {
-                if (err)
-                    throw err;
-
-                for (var i = 0; i < foundDoc.books.length; i++)
-                {
-                    if (id === foundDoc.books[i]._id.toString())
-                    {
-                        foundDoc.books.splice(i, 1);
-
-                        foundDoc.save(function(err, saved)
-                        {
-                            if (err)
-                                throw err;
-
-                            done();
-                        })
-                    }
-                }
             })
     }
 

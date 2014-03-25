@@ -133,7 +133,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         it('checks if the deletion is working', inject(function($controller)
         {
             httpMock.expectGET('/api/getTeachers?u=eric3').respond({resultado: {teachers: []}});
-            httpMock.expectDELETE('/api/deleteTeacher?u=eric3&p=123').respond({});
+            httpMock.expectDELETE('/api/deleteTeacher/123?u=eric3').respond({});
             $controller('TeachersController', {$scope: scope});
 
             var professor = {nome: "fulano", _id: 123};

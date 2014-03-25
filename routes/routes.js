@@ -28,19 +28,19 @@ var isLoggedIn = require('./session');
         app.get('/api/getClasses', isLoggedIn, classes.getClassesInfo);
         app.post('/api/registerClass', isLoggedIn, classes.registerClass);
         app.post('/api/editClass', isLoggedIn, classes.editClass);
-        app.delete('/api/deleteClass', isLoggedIn, classes.deleteClass);
+        app.delete('/api/deleteClass/:id', isLoggedIn, classes.deleteClass);
 
         //TEACHERS
         app.get('/api/getTeachers', isLoggedIn, teachers.getTeachersInfo);
         app.post('/api/registerTeacher', isLoggedIn, teachers.registerTeacher);
         app.post('/api/editTeacher', isLoggedIn, teachers.editTeacher);
-        app.delete('/api/deleteTeacher', isLoggedIn, teachers.deleteTeacher);
+        app.delete('/api/deleteTeacher/:id', isLoggedIn, teachers.deleteTeacher);
 
         //STUDENTS
         app.get('/api/getStudents', isLoggedIn, students.getInfoFromAllStudents);
         app.post('/api/registerStudent', isLoggedIn, students.registerStudent);
         app.post('/api/editStudent', isLoggedIn, students.editStudent);
-        app.delete('/api/deleteStudent', isLoggedIn, students.deleteStudent);
+        app.delete('/api/deleteStudent/:id', isLoggedIn, students.deleteStudent);
 
         //PAYMENTS
         app.get('/api/getPayments', isLoggedIn, students.getPaymentsInfo);
@@ -50,13 +50,13 @@ var isLoggedIn = require('./session');
         app.get('/api/getBooks', isLoggedIn, books.getBooksInfo);
         app.post('/api/registerBook', isLoggedIn, books.registerBook);
         app.post('/api/editBook', isLoggedIn, books.editBook);
-        app.delete('/api/deleteBook', isLoggedIn, books.deleteBook);
+        app.delete('/api/deleteBook/:id', isLoggedIn, books.deleteBook);
 
         //STATS
         app.get('/api/getEarningByTrimester', isLoggedIn, stats.getEarningByTrimesterInfo);
         app.get('/api/getInterestedStudentsPerMonth', isLoggedIn, stats.getInterestedStudentsPerMonth);
 
-        //ERROR
+        //ERROR - SEND HTML
         app.get('/*', isLoggedIn, content.mainPage);
     }
 

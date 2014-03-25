@@ -23,9 +23,12 @@ myClass.controller('UserController', ['$scope', '$http', '$window', function($sc
     function kickarSessao()
     {
         $http.post('/api/logout', {user: usuarioLogado})
-             .success(function()
-                      {
-                          $window.location.href = '/';
-                      })
+             .success(redirecionaLogin)
+             .error(redirecionaLogin)
+    }
+
+    function redirecionaLogin()
+    {
+        $window.location.href = '/';
     }
 }])

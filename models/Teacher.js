@@ -50,45 +50,31 @@
 
     teacherSchema.methods.editTeacher = function(usuario, professor, done)
     {
-        var query = {username: usuario, 'teachers._id': professor._id};
-        var updt = {'teachers.$': professor};
+        var query = {usersAllowed: {$in: [usuario]}, _id: professor._id};
+        delete professor._id;
+        var updt = professor;
 
-        Teacher.update(query, updt)
+        Teacher.findOneAndUpdate(query, updt)
                .exec(function(err, updated)
+                    {
+                        if (err)
+                            throw err;
+
+                        done();
+                    })
+    }
+
+    teacherSchema.methods.deleteTeacher = function(user, identificacaoProfessor, done)
+    {
+        var query = {usersAllowed: {$in: [user]}, _id: identificacaoProfessor};
+
+        Teacher.findOneAndRemove(query)
+               .exec(function(err, deleted)
                {
                    if (err)
                        throw err;
 
                    done();
-               })
-    }
-
-    teacherSchema.methods.deleteTeacher = function(user, identificacaoProfessor, done)
-    {
-        var query = {username: user, "teachers._id": identificacaoProfessor};
-        var projection = {students: 0, classes: 0, books: 0};
-
-        Teacher.findOne(query, projection)
-               .exec(function(err, foundDoc)
-               {
-                   if (err)
-                       throw err;
-
-                   for (var i = 0; i < foundDoc.teachers.length; i++)
-                   {
-                       if (id === foundDoc.teachers[i]._id.toString())
-                       {
-                           foundDoc.teachers.splice(i, 1);
-
-                           foundDoc.save(function(err, saved)
-                           {
-                               if (err)
-                                   throw err;
-
-                               done();
-                           })
-                       }
-                   }
                })
     }
 

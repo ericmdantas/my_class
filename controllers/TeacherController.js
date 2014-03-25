@@ -42,7 +42,7 @@ function Teacher()
     function deleteTeacher(req, res)
     {
         var usuario = req.query.u;
-        var identificacaoProfessor = req.query.p;
+        var identificacaoProfessor = req.params.id;
         var teacher = new TeacherModel();
 
         teacher.deleteTeacher(usuario, identificacaoProfessor, function(){res.end()});

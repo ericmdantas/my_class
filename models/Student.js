@@ -2,7 +2,7 @@
 
 //students
 
-(function(mongoose, ObjectId)
+(function(mongoose)
 {
     var paymentsSchema = mongoose.Schema({
         paymentMonth: {type: String, required: true},
@@ -38,21 +38,21 @@
         var projection = {usersAllowed: 0};
 
         Student.find(query, projection)
-               .exec(function(err, doc)
+               .exec(function(err, students)
                     {
                         if (err || !done)
                             throw err;
 
-                        done(doc);
+                        done(students);
                     })
     }
 
     studentSchema.methods.registerStudent = function(usuario, aluno, done)
     {
-        aluno.usersAllowedd = [aluno];
+        aluno.usersAllowed = [usuario];
         var student = new Student(aluno);
 
-        student.save(function(err, updated)
+        student.save(function(err, saved)
                     {
                         if (err)
                             throw err;
@@ -63,10 +63,11 @@
 
     studentSchema.methods.editStudent = function(usuario, aluno, done)
     {
-        var query = {username: usuario, 'students._id': aluno._id};
-        var updt = {'students.$': aluno};
+        var query = {usersAllowed: {$in: [usuario]}, _id: aluno._id};
+        delete aluno._id;
+        var updt = aluno;
 
-        Student.update(query, updt)
+        Student.findOneAndUpdate(query, updt)
                .exec(function(err, updated)
                      {
                          if (err)
@@ -78,37 +79,22 @@
 
     studentSchema.methods.deleteStudent = function(user, identificacaoAluno, done)
     {
-        var query = {username: user, "students._id": ObjectId(identificacaoAluno)};
-        var projection = {classes: 0, teachers: 0, books: 0, payments: 0};
+        var query = {usersAllowed: {$in: [user]}, _id: identificacaoAluno};
 
-        Student.findOne(query, projection)
+        Student.findOneAndRemove(query)
                .exec(function(err, foundDoc)
                     {
                         if (err)
                             throw err;
 
-                        for (var i = 0; i < foundDoc.students.length; i++)
-                        {
-                            if (id === foundDoc.students[i]._id.toString())
-                            {
-                                foundDoc.students.splice(i, 1);
-
-                                foundDoc.save(function(err, saved)
-                                {
-                                    if (err)
-                                        throw err;
-
-                                    done();
-                                })
-                            }
-                        }
+                        done();
                     })
     }
 
     studentSchema.methods.findAllPaymentsByUser = function(user, done)
     {
-        var query = {username: user};
-        var projection = {students: 1};
+        var query = {usersAllowed: {$in: [user]}};
+        var projection = {};
 
         Student.findOne(query, projection)
                .exec(function(err, doc)
@@ -139,4 +125,4 @@
 
     module.exports = Student;
 
-}(require('mongoose'), require('mongoose').Types.ObjectId))
+}(require('mongoose')))

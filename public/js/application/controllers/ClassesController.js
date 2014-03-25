@@ -75,7 +75,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete('/api/deleteClass?u=eric3&c='+id)
+        $http.delete('/api/deleteClass/'+id+'?u=eric3')
             .success(function()
             {
                 $scope.getClasses();

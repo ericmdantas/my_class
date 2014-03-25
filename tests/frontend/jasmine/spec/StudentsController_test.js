@@ -9,9 +9,9 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
         lib_frontend = $injector.get('lib_frontend');
-        httpMock.when('GET', '/api/getStudents?u=eric3').respond({students: {students: [{nome: 'aluno qualquer'}]}});
+        httpMock.when('GET', '/api/getStudents?u=eric3').respond({students: [{nome: 'aluno qualquer'}]});
         httpMock.when('POST', '/api/registerStudent?u=eric3').respond(200);
-        httpMock.when('DELETE', '/api/deleteStudent?u=eric3&s=1').respond(200);
+        httpMock.when('DELETE', '/api/deleteStudent/1?u=eric3').respond(200);
     }))
 
     describe('elements creation', function()
@@ -92,7 +92,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
         it('checks if addition is working', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudents?u=eric3').respond({students: {students: [{name: 'A'}]}});
+            httpMock.expectGET('/api/getStudents?u=eric3').respond({students: [{name: 'A'}]});
             $controller('StudentsController', {$scope: scope});
             var obj = {name: 'A', class: {name: 'B'}, status: {nome: 'C'}, availability: 'D'};
             scope.registerNewStudent(obj);
@@ -122,7 +122,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         it('should edit successfully and return one students on /api/getStudents', inject(function($controller)
         {
             httpMock.expectPOST('/api/editStudent?u=eric3').respond();
-            httpMock.expectGET('/api/getStudents?u=eric3').respond({students: {students: [{name: 'nome'}]}});
+            httpMock.expectGET('/api/getStudents?u=eric3').respond({students: [{name: 'nome'}]});
             $controller('StudentsController', {$scope: scope});
             var student = {name: 'e', class: '', status: '', contract: ''};
             scope.editStudent(student);

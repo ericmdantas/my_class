@@ -42,7 +42,7 @@ function Clazz()
     function deleteClass(req, res)
     {
         var usuario = req.query.u;
-        var identificacaoTurma = req.query.c;
+        var identificacaoTurma = req.params.id;
         var clazz = new ClazzModel();
 
         clazz.deleteClass(usuario, identificacaoTurma, function(){res.end()});
