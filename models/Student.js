@@ -96,7 +96,7 @@
         var query = {usersAllowed: {$in: [user]}};
         var projection = {};
 
-        Student.findOne(query, projection)
+        Student.find(query, projection)
                .exec(function(err, doc)
                     {
                         if (err || !done)

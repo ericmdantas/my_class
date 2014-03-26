@@ -1,7 +1,7 @@
 "use strict";
 
 var assert = require('assert'),
-    StatisticModel = require('../../../models/stats');
+    StatisticModel = require('../../../models/Statistic');
 
 describe('Testing StatisticModel', function()
 {

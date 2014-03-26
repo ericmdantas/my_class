@@ -1,7 +1,7 @@
 "use strict";
 
 var assert = require('assert'),
-    UserModel = require('../../../models/users');
+    UserModel = require('../../../models/User');
 
 describe('Testing UserModel', function()
 {
@@ -21,7 +21,7 @@ describe('Testing UserModel', function()
         it('checks if findUserByUsername was created', function()
         {
             var user = new UserModel();
-            assert.strictEqual(typeof user.findUserByUsername, "function");
+            assert.strictEqual(typeof user.countInfoByUsername, "function");
         })
     })
 })

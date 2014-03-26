@@ -1,7 +1,7 @@
 "use strict";
 
 var assert = require('assert'),
-    BookModel = require('../../../models/books');
+    BookModel = require('../../../models/Book');
 
 describe('Testing BookModel', function()
 {
@@ -9,32 +9,31 @@ describe('Testing BookModel', function()
     {
         it('checks if BookModel was created', function()
         {
-            assert.strictEqual(typeof BookModel, "object");
-        })
-
-        it('checks if BookModel.bookSchema was created', function()
-        {
-            assert.strictEqual(typeof BookModel.bookSchema, "object");
+            assert.strictEqual(typeof BookModel, "function");
         })
 
         it('checks if BookModel.findAllBooksByUser was created', function()
         {
-            assert.strictEqual(typeof BookModel.findAllBooksByUser, "function");
+            var book = new BookModel();
+            assert.strictEqual(typeof book.findAllBooksByUser, "function");
         })
 
         it('checks if BookModel.registerNewBook was created', function()
         {
-            assert.strictEqual(typeof BookModel.registerNewBook, "function");
+            var book = new BookModel();
+            assert.strictEqual(typeof book.registerNewBook, "function");
         })
 
         it('checks if BookModel.editBook was created', function()
         {
-            assert.strictEqual(typeof BookModel.editBook, "function");
+            var book = new BookModel();
+            assert.strictEqual(typeof book.editBook, "function");
         })
 
         it('checks if BookModel.deleteBook was created', function()
         {
-            assert.strictEqual(typeof BookModel.deleteBook, "function");
+            var book = new BookModel();
+            assert.strictEqual(typeof book.deleteBook, "function");
         })
     })
 })

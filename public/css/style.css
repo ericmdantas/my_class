@@ -19,16 +19,16 @@
 .topic.selected:hover {cursor: auto;}
 .info-card:nth-of-type(even) {background-color: #eee;}
 .info-card:nth-of-type(odd) {background-color: #fff;}
-.info-card:hover .plus-less-info {opacity: .7;}
+.info-card:hover .plus-less-info {opacity: .9;}
 .modal-header, .modal-footer {background-color: #f9f9f9;}
 .loading-view {text-align: center; opacity: .5; color: #fff;}
 .neutral-bckg, .default-bckg {background: url(../img/bg.jpg);}
 .topic .text-almost-invisible {font-size: .6em;  text-shadow: none;}
 .to-the-top {background-color: black; color: white; opacity: .6; border-radius: 100%;}
 .to-the-top:hover {cursor: pointer; opacity: .7;}
-.plus-less-info {font-size: 4em; opacity: .2; border-radius: 100%; border: 1px solid lightgray;}
-.plus-less-info:hover {cursor: pointer; }
-.plus-less-info:active {background-color: gray; color: #fff;}
+.plus-less-info {font-size: 4em; opacity: .5; border: 1px solid lightgray; margin: -16px;}
+.plus-less-info:hover {cursor: pointer;}
+.plus-less-info:active {background-color: #b2dba1; color: #fff;}
 .welcome-container {background-color: #fff;}
 .welcome-container .big-text {border-bottom: 3px dashed #b2dba1;}
 .big-text {color: #666; font-size: 2em;}

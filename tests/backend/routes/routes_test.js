@@ -12,11 +12,11 @@ var agent = supertest.agent(app);
 
 describe('routes.js being tested', function()
 {
-    before(function(done)
+    /*before(function(done)
     {
         mongoose.connect('mongodb://localhost/myclass');
         done();
-    })
+    })*/
 
     describe('checks elements creation', function()
     {
@@ -31,7 +31,7 @@ describe('routes.js being tested', function()
         })
     })
 
-    describe('checks if the routes are working', function()
+    /*describe('checks if the routes are working', function()
     {
         it('checks if route login is working', function(done)
         {
@@ -50,5 +50,5 @@ describe('routes.js being tested', function()
         })
 
         //TODO IMPLEMENT REAL URL CONSUMING
-    })
+    })*/
 })

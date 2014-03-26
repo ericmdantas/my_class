@@ -22,7 +22,12 @@ function Book()
         var livro = req.body;
         var book = new BookModel();
 
-        book.registerNewBook(usuario, livro, function(){res.end()});
+        function callback()
+        {
+            res.end();
+        }
+
+        book.registerNewBook(usuario, livro, callback);
     }
 
     function editaLivro(req, res)
@@ -45,7 +50,12 @@ function Book()
         var identificacaoLivro = req.params.id;
         var book = new BookModel();
 
-        book.deleteBook(usuario, identificacaoLivro, function(){res.end()});
+        function callback()
+        {
+            res.end();
+        }
+
+        book.deleteBook(usuario, identificacaoLivro, callback);
     }
 
 

@@ -1,7 +1,7 @@
 "use strict";
 
 var assert = require('assert'),
-    TeacherModel = require('../../../models/teachers');
+    TeacherModel = require('../../../models/Teacher');
 
 describe('Testing TeacherModel', function()
 {
@@ -9,32 +9,31 @@ describe('Testing TeacherModel', function()
     {
         it('checks if TeacherModel was created', function()
         {
-            assert.strictEqual(typeof TeacherModel, "object");
-        })
-
-        it('checks if TeacherModel.teacherSchema was created', function()
-        {
-            assert.strictEqual(typeof TeacherModel.teacherSchema, "object");
+            assert.strictEqual(typeof TeacherModel, "function");
         })
 
         it('checks if TeacherModel.deleteTeacher was created', function()
         {
-            assert.strictEqual(typeof TeacherModel.deleteTeacher, "function");
+            var teacher = new TeacherModel();
+            assert.strictEqual(typeof teacher.deleteTeacher, "function");
         })
 
         it('checks if TeacherModel.findAllTeachersByUser was created', function()
         {
-            assert.strictEqual(typeof TeacherModel.findAllTeachersByUser, "function");
+            var teacher = new TeacherModel();
+            assert.strictEqual(typeof teacher.findAllTeachersByUser, "function");
         })
 
         it('checks if TeacherModel.editTeacher was created', function()
         {
-            assert.strictEqual(typeof TeacherModel.editTeacher, "function");
+            var teacher = new TeacherModel();
+            assert.strictEqual(typeof teacher.editTeacher, "function");
         })
 
         it('checks if TeacherModel.registerNewTeacher was created', function()
         {
-            assert.strictEqual(typeof TeacherModel.registerNewTeacher, "function");
+            var teacher = new TeacherModel();
+            assert.strictEqual(typeof teacher.registerNewTeacher, "function");
         })
     })
 })

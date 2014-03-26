@@ -87,12 +87,20 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
         $scope.isLoadingVisible.modal = true;
 
         $http.delete(deleteURL + '/' + id + usernameParam)
-            .success(function()
-            {
-                $scope.isLoadingVisible.modal = false;
-                $('#modal-delete-book').modal('hide');
-                $scope.getBooks();
-                $scope.livroEscolhido = {};
-            });
+             .success(function()
+                    {
+                        $scope.isLoadingVisible.modal = false;
+                        $('#modal-delete-book').modal('hide');
+                        $scope.getBooks();
+                        $scope.livroEscolhido = {};
+                    });
+    }
+
+    function onDeletionSuccess()
+    {
+        $scope.isLoadingVisible.modal = false;
+        $('#modal-delete-book').modal('hide');
+        $scope.getBooks();
+        $scope.livroEscolhido = {};
     }
 }])

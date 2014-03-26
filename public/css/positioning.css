@@ -25,7 +25,7 @@
 .middle-modal {overflow: hidden;}
 .middle-modal aside {display: block; float: none !important; margin-bottom: 1em;}
 .to-the-top {position: fixed; bottom: 0; right: 40%; padding: 15px 20px;}
-.plus-less-info {line-height: 1; padding: 0 15px;}
+.plus-less-info {line-height: 1; padding: 11px 15px;}
 .welcome-container, .info-card {padding: 1em;}
 .created.alert.alert-danger {position: fixed; left: 0; top: 20%; z-index: 1;}
 
