@@ -20,12 +20,12 @@
         var projection = {usersAllowed: 0};
 
         Clazz.find(query, projection)
-             .exec(function(err, doc)
+             .exec(function(err, clazzes)
                    {
-                       if (err || !done)
-                           throw err;
+                       if (err)
+                           return done(err, null);
 
-                        done(doc);
+                        done(null, clazzes);
                    })
     }
 
@@ -37,9 +37,9 @@
         clazz.save(function(err, saved)
         {
             if (err)
-                throw err;
+                return done(err);
 
-            done();
+            done(null);
         })
     }
 
@@ -53,7 +53,7 @@
              .exec(function(err, updated)
                    {
                       if (err)
-                          throw err;
+                          return done(err);
 
                       done();
                    })
@@ -67,7 +67,7 @@
              .exec(function(err, deleted)
                   {
                      if (err)
-                         throw err;
+                         return done(err);
 
                      done();
                   })

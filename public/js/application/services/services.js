@@ -91,16 +91,19 @@ services.lib = function()
         return obj;
     }
 
-    function criaAlerta(status)
+    function criaAlerta(status, mensagem)
     {
         if ($('.alert').length)
             return;
 
-        var problema = status || 'desconhecido';
+        var problemaStatus = status || 'desconhecido';
+        var problemaMensagem = mensagem || 'Aconteceu algo inesperado. Por favor, tente novamente mais tarde ';
+        var mensagemCompleta = problemaMensagem + ' ('+problemaStatus+').';
 
-        $('#warning').append('<div class="alert alert-danger fade in created">'+
+
+        $('#warning').append('<div class="alert alert-danger fade in created centered">'+
                                   '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
-                                  '<strong>Oops!</strong> Aconteceu algo inesperado. Por favor, tente novamente mais tarde ('+problema+').'+
+                                  '<strong>Oops!</strong> '+mensagemCompleta+
                              '</div>');
 
         $('.alert').alert();

@@ -40,10 +40,10 @@
         Student.find(query, projection)
                .exec(function(err, students)
                     {
-                        if (err || !done)
-                            throw err;
+                        if (err)
+                            return done(err, null);
 
-                        done(students);
+                        done(null, students);
                     })
     }
 
@@ -55,7 +55,7 @@
         student.save(function(err, saved)
                     {
                         if (err)
-                            throw err;
+                            return done(err);
 
                         done();
                     })
@@ -71,7 +71,7 @@
                .exec(function(err, updated)
                      {
                          if (err)
-                             throw err;
+                             return done(err);
 
                          done();
                      })
@@ -85,7 +85,7 @@
                .exec(function(err, foundDoc)
                     {
                         if (err)
-                            throw err;
+                            return done(err);
 
                         done();
                     })
@@ -99,23 +99,23 @@
         Student.find(query, projection)
                .exec(function(err, doc)
                     {
-                        if (err || !done)
-                            throw err;
+                        if (err)
+                            return done(err, null);
 
-                        done(doc);
+                        done(null, doc);
                     })
     }
 
     studentSchema.methods.registerNewPayment = function(usuario, pagamento, done)
     {
-        var query = {username: usuario, "students.name": pagamento.name};
-        var updt = {$push: {"students.$.payments": pagamento}};
+        var query = {usersAllowed: {$in: [usuario]}, "name": pagamento.name};
+        var updt = {$push: {"payments": pagamento}};
 
         Student.update(query, updt)
                .exec(function(err, updated)
                     {
                         if (err)
-                            throw err;
+                            return done(err);
 
                         done();
                     })

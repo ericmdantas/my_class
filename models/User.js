@@ -12,21 +12,6 @@
         type: String
     });
 
-    userSchema.methods.findAllUsers = function(user, pass, done)
-    {
-        var query = {username: user, password: pass};
-        var projection = {};
-
-        User.findOne(query, projection)
-            .exec(function(err, doc)
-            {
-                if (err || !done)
-                    throw err;
-
-                done(doc);
-            })
-    }
-
     userSchema.methods.countInfoByUsername = function(user, done)
     {
         var query = {username: user};
@@ -35,10 +20,10 @@
         User.findOne(query, projection)
             .exec(function(err, doc)
                   {
-                     if (err || !done)
-                         throw err;
+                     if (err)
+                         return done(err, null);
 
-                         done(doc);
+                         done(null, doc);
                   })
     }
 

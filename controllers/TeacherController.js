@@ -1,6 +1,7 @@
 "use strict";
 
 var TeacherModel = require('../models/Teacher');
+var ErrorHandler = require('../lib/ErrorHandler');
 
 function Teacher()
 {
@@ -9,11 +10,21 @@ function Teacher()
         var usuario = req.query.u;
         var teacher = new TeacherModel();
 
-        teacher.findAllTeachersByUser(usuario, function(teachers)
+        function callback(error, teachers)
         {
-            teachers ? res.json({resultado: teachers})
-                     : res.json({resultado: []})
-        });
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de professores'));
+            }
+            else
+            {
+                teachers ? res.json({resultado: teachers})
+                         : res.json({resultado: []});
+            }
+        }
+
+        teacher.findAllTeachersByUser(usuario, callback);
     }
 
     function registerTeacher(req, res)
@@ -22,7 +33,18 @@ function Teacher()
         var professor = req.body;
         var teacher = new TeacherModel();
 
-        teacher.registerNewTeacher(usuario, professor, function(){res.end()});
+        function callback(error)
+        {
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'cadastro de professor'));
+            }
+            else
+                res.end();
+        }
+
+        teacher.registerNewTeacher(usuario, professor, callback);
     }
 
     function editTeacher(req, res)
@@ -31,9 +53,15 @@ function Teacher()
         var professor = req.body;
         var teacher = new TeacherModel();
 
-        function callback()
+        function callback(error)
         {
-            res.end();
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'edição de professor'));
+            }
+            else
+                res.end();
         }
 
         teacher.editTeacher(usuario, professor, callback);
@@ -45,7 +73,18 @@ function Teacher()
         var identificacaoProfessor = req.params.id;
         var teacher = new TeacherModel();
 
-        teacher.deleteTeacher(usuario, identificacaoProfessor, function(){res.end()});
+        function callback(error)
+        {
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'deleção de professor'));
+            }
+            else
+                res.end();
+        }
+
+        teacher.deleteTeacher(usuario, identificacaoProfessor, callback);
     }
 
     return {

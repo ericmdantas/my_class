@@ -1,6 +1,7 @@
 "use strict";
 
 var User = require('../models/User');
+var ErrorHandler = require('../lib/ErrorHandler');
 
 var UserCtrl = function()
 {
@@ -18,14 +19,22 @@ var UserCtrl = function()
         var informationCounter = {classes: 0, teachers: 0, students: 0, books: 0};
         var user = new User();
 
-        function callback(doc)
+        function callback(error, doc)
         {
-            informationCounter.classes = (doc && doc.classes) ? doc.classes.length : 0;
-            informationCounter.teachers = (doc && doc.teachers) ? doc.teachers.length : 0;
-            informationCounter.students = (doc && doc.students) ? doc.students.length: 0;
-            informationCounter.books = (doc && doc.books) ? doc.books.length : 0;
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de informações do usuário'));
+            }
+            else
+            {
+                informationCounter.classes = (doc && doc.classes) ? doc.classes.length : 0;
+                informationCounter.teachers = (doc && doc.teachers) ? doc.teachers.length : 0;
+                informationCounter.students = (doc && doc.students) ? doc.students.length: 0;
+                informationCounter.books = (doc && doc.books) ? doc.books.length : 0;
 
-            res.json({resultado: informationCounter})
+                res.json({resultado: informationCounter})
+            }
         }
 
         user.countInfoByUsername(username, callback);

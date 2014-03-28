@@ -97,6 +97,179 @@ describe('checks if lib\'s doing good', function()
             assert.strictEqual(undefined, lib_backend.getMonthInDate(true));
             assert.strictEqual(undefined, lib_backend.getMonthInDate(false));
         })
+
+        it('checks getMonthInDate when the parameter is correct - January', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('January, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var janeiro = porcentagemAlunos[0];
+            assert.strictEqual(janeiro.contador, 1);
+            assert.strictEqual(janeiro.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - February', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('February, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var fevereiro = porcentagemAlunos[1];
+            assert.strictEqual(fevereiro.contador, 1);
+            assert.strictEqual(fevereiro.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - March', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('March, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var marco = porcentagemAlunos[2];
+            assert.strictEqual(marco.contador, 1);
+            assert.strictEqual(marco.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - April', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('April, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var abril = porcentagemAlunos[3];
+            assert.strictEqual(abril.contador, 1);
+            assert.strictEqual(abril.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - May', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('May, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var maio = porcentagemAlunos[4];
+            assert.strictEqual(maio.contador, 1);
+            assert.strictEqual(maio.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - June', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('June, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var junho = porcentagemAlunos[5];
+            assert.strictEqual(junho.contador, 1);
+            assert.strictEqual(junho.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - July', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('July, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var julho = porcentagemAlunos[6];
+            assert.strictEqual(julho.contador, 1);
+            assert.strictEqual(julho.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - August', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('August, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var agosto = porcentagemAlunos[7];
+            assert.strictEqual(agosto.contador, 1);
+            assert.strictEqual(agosto.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - September', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('September, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var setembro = porcentagemAlunos[8];
+            assert.strictEqual(setembro.contador, 1);
+            assert.strictEqual(setembro.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - October', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('October, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var outubro = porcentagemAlunos[9];
+            assert.strictEqual(outubro.contador, 1);
+            assert.strictEqual(outubro.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - November', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('November, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var novembro = porcentagemAlunos[10];
+            assert.strictEqual(novembro.contador, 1);
+            assert.strictEqual(novembro.porcentagem, 100);
+        })
+
+        it('checks getMonthInDate when the parameter is correct - December', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('December, 20 2014')}];
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+            var dezembro = porcentagemAlunos[11];
+            assert.strictEqual(dezembro.contador, 1);
+            assert.strictEqual(dezembro.porcentagem, 100);
+        })
+
+        it('checks if getMonthInDate is working when there are more than 3 months specified', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('January, 20 2014')}, {registered: new Date('May, 20 2014')},
+                                              {registered: new Date('June, 20 2014')}, {registered: new Date('December, 20 2014')}];
+
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+
+            var janeiro = porcentagemAlunos[0];
+            var junho = porcentagemAlunos[5];
+            var maio = porcentagemAlunos[4];
+            var dezembro = porcentagemAlunos[11];
+
+            assert.strictEqual(janeiro.contador, 1);
+            assert.strictEqual(janeiro.porcentagem, 25);
+
+            assert.strictEqual(junho.contador, 1);
+            assert.strictEqual(junho.porcentagem, 25);
+
+            assert.strictEqual(maio.contador, 1);
+            assert.strictEqual(maio.porcentagem, 25);
+
+            assert.strictEqual(dezembro.contador, 1);
+            assert.strictEqual(dezembro.porcentagem, 25);
+        })
+
+        it('checks if getMonthInDate is working when there are more than one register for some month', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('January, 20 2014')}, {registered: new Date('January, 20 2014')},
+                                              {registered: new Date('January, 20 2014')}, {registered: new Date('January, 20 2014')},
+                                              {registered: new Date('June, 20 2014')}];
+
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+
+            var janeiro = porcentagemAlunos[0];
+            var junho = porcentagemAlunos[5];
+
+            assert.strictEqual(janeiro.contador, 4);
+            assert.strictEqual(janeiro.porcentagem, 80);
+
+            assert.strictEqual(junho.contador, 1);
+            assert.strictEqual(junho.porcentagem, 20);
+        })
+
+        it('checks if getMonthInDate is working when there are decimal percentage', function()
+        {
+            var objetoComInformacaoDeMeses = [{registered: new Date('January, 20 2014')}, {registered: new Date('February, 20 2014')},
+                                              {registered: new Date('May, 20 2014')}];
+
+            var porcentagemAlunos = lib_backend.getMonthInDate(objetoComInformacaoDeMeses);
+
+            var janeiro = porcentagemAlunos[0];
+            var fevereiro = porcentagemAlunos[1];
+            var maio = porcentagemAlunos[4];
+
+
+            assert.strictEqual(janeiro.contador, 1);
+            assert.strictEqual(janeiro.porcentagem, 33.33);
+
+            assert.strictEqual(fevereiro.contador, 1);
+            assert.strictEqual(fevereiro.porcentagem, 33.33);
+
+            assert.strictEqual(maio.contador, 1);
+            assert.strictEqual(maio.porcentagem, 33.33);
+        })
     })
 
     describe('checks getPercentage', function()

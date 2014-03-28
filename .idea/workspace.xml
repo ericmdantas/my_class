@@ -23,82 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="routes.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/routes.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="35" selection-start="2083" selection-end="2093" vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="980">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="7" selection-start="4816" selection-end="4816" vertical-scroll-proportion="-27.0" vertical-offset="527" max-vertical-offset="1232">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/login.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="8" selection-start="1938" selection-end="2021" vertical-scroll-proportion="-19.47826" vertical-offset="70" max-vertical-offset="812">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="payments.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/partials/payments.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="46" selection-start="1970" selection-end="1970" vertical-scroll-proportion="-20.695652" vertical-offset="0" max-vertical-offset="1456">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Clazz.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/Clazz.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="40" selection-start="689" selection-end="689" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Student.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/Student.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="127" column="23" selection-start="3831" selection-end="3831" vertical-scroll-proportion="0.0" vertical-offset="1134" max-vertical-offset="1862">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BooksController.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/application/controllers/BooksController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="96" column="5" selection-start="3086" selection-end="3086" vertical-scroll-proportion="0.0" vertical-offset="826" max-vertical-offset="1554">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/application/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="59" selection-start="314" selection-end="314" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="168">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="services.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/js/application/services/services.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="98" column="48" selection-start="3181" selection-end="3181" vertical-scroll-proportion="1.8846154" vertical-offset="0" max-vertical-offset="1652">
+            <state vertical-scroll-proportion="0.19971469" vertical-offset="0" max-vertical-offset="1232">
+              <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -114,23 +43,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/public/js/application/services/config.js" />
-        <option value="$PROJECT_DIR$/public/css/media_queries.css" />
-        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/lib_frontend_test.js" />
-        <option value="$PROJECT_DIR$/models/stats.js" />
-        <option value="$PROJECT_DIR$/public/partials/books.html" />
-        <option value="$PROJECT_DIR$/public/partials/students.html" />
-        <option value="$PROJECT_DIR$/public/partials/classes.html" />
-        <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/delete-info_test.js" />
-        <option value="$PROJECT_DIR$/models/Books.js" />
-        <option value="$PROJECT_DIR$/controllers/StatisticController.js" />
-        <option value="$PROJECT_DIR$/lib/libDB.js" />
         <option value="$PROJECT_DIR$/public/js/application/controllers/MainController.js" />
         <option value="$PROJECT_DIR$/config/passport.js" />
-        <option value="$PROJECT_DIR$/controllers/UserController.js" />
-        <option value="$PROJECT_DIR$/models/User.js" />
-        <option value="$PROJECT_DIR$/public/partials/teachers.html" />
         <option value="$PROJECT_DIR$/public/js/application/controllers/UserController.js" />
         <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/BooksController_test.js" />
         <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/ClassesController_test.js" />
@@ -140,31 +54,46 @@
         <option value="$PROJECT_DIR$/public/js/application/controllers/StudentsController.js" />
         <option value="$PROJECT_DIR$/tests/frontend/jasmine/spec/StudentsController_test.js" />
         <option value="$PROJECT_DIR$/public/js/application/directives/delete-info-directive.js" />
-        <option value="$PROJECT_DIR$/models/Teacher.js" />
-        <option value="$PROJECT_DIR$/models/Book.js" />
         <option value="$PROJECT_DIR$/controllers/ClassController.js" />
-        <option value="$PROJECT_DIR$/controllers/StudentController.js" />
-        <option value="$PROJECT_DIR$/controllers/TeacherController.js" />
         <option value="$PROJECT_DIR$/public/partials/payments.html" />
-        <option value="$PROJECT_DIR$/public/css/positioning.css" />
-        <option value="$PROJECT_DIR$/public/css/style.css" />
         <option value="$PROJECT_DIR$/tests/backend/model/StatisticModel_test.js" />
-        <option value="$PROJECT_DIR$/tests/backend/model/UserModel_test.js" />
         <option value="$PROJECT_DIR$/tests/backend/model/StudentModel_test.js" />
         <option value="$PROJECT_DIR$/tests/backend/model/ClassModel_test.js" />
         <option value="$PROJECT_DIR$/tests/backend/model/BookModel_test.js" />
         <option value="$PROJECT_DIR$/tests/backend/model/TeacherModel_test.js" />
         <option value="$PROJECT_DIR$/tests/backend/lib/libDB_test.js" />
         <option value="$PROJECT_DIR$/tests/backend/routes/routes_test.js" />
-        <option value="$PROJECT_DIR$/models/Clazz.js" />
-        <option value="$PROJECT_DIR$/models/Student.js" />
-        <option value="$PROJECT_DIR$/controllers/BookController.js" />
-        <option value="$PROJECT_DIR$/views/index.html" />
-        <option value="$PROJECT_DIR$/views/login.html" />
-        <option value="$PROJECT_DIR$/routes/routes.js" />
-        <option value="$PROJECT_DIR$/public/js/application/services/services.js" />
         <option value="$PROJECT_DIR$/public/js/application/controllers/BooksController.js" />
         <option value="$PROJECT_DIR$/public/js/application/app.js" />
+        <option value="$PROJECT_DIR$/views/login.html" />
+        <option value="$PROJECT_DIR$/tests/backend/lib/lib_test.js" />
+        <option value="$PROJECT_DIR$/public/partials/teachers.html" />
+        <option value="$PROJECT_DIR$/lib/lib.js" />
+        <option value="$PROJECT_DIR$/public/js/application/services/config.js" />
+        <option value="$PROJECT_DIR$/public/css/media_queries.css" />
+        <option value="$PROJECT_DIR$/tests/backend/lib/errorHandler_test.js" />
+        <option value="$PROJECT_DIR$/lib/errorHandler.js" />
+        <option value="$PROJECT_DIR$/lib/ErrorHandler.js" />
+        <option value="$PROJECT_DIR$/public/js/application/services/services.js" />
+        <option value="$PROJECT_DIR$/tests/backend/lib/ErrorHandler_test.js" />
+        <option value="$PROJECT_DIR$/models/Book.js" />
+        <option value="$PROJECT_DIR$/routes/routes.js" />
+        <option value="$PROJECT_DIR$/tests/backend/controllers/ClazzController_test.js" />
+        <option value="$PROJECT_DIR$/public/css/style.css" />
+        <option value="$PROJECT_DIR$/controllers/BookController.js" />
+        <option value="$PROJECT_DIR$/controllers/ClazzController.js" />
+        <option value="$PROJECT_DIR$/models/Clazz.js" />
+        <option value="$PROJECT_DIR$/public/css/positioning.css" />
+        <option value="$PROJECT_DIR$/models/Student.js" />
+        <option value="$PROJECT_DIR$/controllers/StudentController.js" />
+        <option value="$PROJECT_DIR$/models/Teacher.js" />
+        <option value="$PROJECT_DIR$/controllers/TeacherController.js" />
+        <option value="$PROJECT_DIR$/models/Statistic.js" />
+        <option value="$PROJECT_DIR$/controllers/StatisticController.js" />
+        <option value="$PROJECT_DIR$/controllers/UserController.js" />
+        <option value="$PROJECT_DIR$/models/User.js" />
+        <option value="$PROJECT_DIR$/tests/backend/model/UserModel_test.js" />
+        <option value="$PROJECT_DIR$/views/index.html" />
       </list>
     </option>
   </component>
@@ -180,6 +109,22 @@
     <option name="width" value="1456" />
     <option name="height" value="886" />
   </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>CoffeeScript</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
@@ -194,7 +139,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -206,7 +151,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -238,12 +182,22 @@
               <option name="myItemId" value="tests" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
+              <option name="myItemId" value="classes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="my_class" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jasmine" />
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -261,40 +215,23 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
+              <option name="myItemId" value="backend" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jasmine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spec" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="classes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="my_class" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="diff" />
+    <property name="options.lastSelected" value="JavaScript.Libraries" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
@@ -313,6 +250,14 @@
     </key>
   </component>
   <component name="RunManager" selected="Karma.karma.conf.js">
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -323,27 +268,21 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
+    <configuration default="true" type="CucumberJavaScriptRunConfigurationType" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" />
+      <option name="executablePath" />
       <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
       <setting name="configLocationType" value="CONFIG_FILE" />
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
-      <setting name="preferredDebugBrowser" value="CHROME" />
+      <setting name="preferredDebugBrowser" value="Chrome" />
       <method />
     </configuration>
-    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
-      <node-js-remote-debug />
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="NodeunitConfigurationType" factoryName="Nodeunit">
@@ -356,21 +295,22 @@
       <setting name="jsFile" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
+      <node-js-remote-debug />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
     <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
-      <test-directory />
       <pass-parent-env>true</pass-parent-env>
       <envs />
       <ui>BDD</ui>
-      <require />
+      <extra-mocha-options />
+      <test-directory />
       <recursive>false</recursive>
-      <method />
-    </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
-      <browser start="false" url="" with-js-debugger="false" />
       <method />
     </configuration>
     <configuration default="true" type="XSLT" factoryName="XSLT">
@@ -389,6 +329,9 @@
       <JdkChoice value="FROM_MODULE" />
       <method />
     </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <method />
+    </configuration>
     <configuration default="false" name="karma.conf.js" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="$PROJECT_DIR$/karma.conf.js">
       <envs />
       <RunnerSettings RunnerId="KarmaCoverageProgramRunner" />
@@ -404,22 +347,8 @@
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
-    <option name="USER" value="" />
-    <option name="PASSWORD" value="" />
-    <option name="mySSHConnectionTimeout" value="30000" />
-    <option name="mySSHReadTimeout" value="30000" />
-    <option name="LAST_MERGED_REVISION" />
-    <option name="MERGE_DRY_RUN" value="false" />
-    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
-    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
-    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
-    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
-    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
-    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
-    <option name="FORCE_UPDATE" value="false" />
-    <option name="IGNORE_EXTERNALS" value="false" />
-    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  <component name="SvnConfiguration" myUseAcceleration="nothing">
+    <configuration>C:\Users\Eric\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -456,24 +385,27 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13816689" sideWeight="0.49964765" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287858" sideWeight="0.49964765" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3275862" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32712767" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24930556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980973" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1923077" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24403183" sideWeight="0.5003524" order="10" side_tool="true" content_ui="tabs" x="1101" y="284" width="339" height="515" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24335106" sideWeight="0.5003524" order="10" side_tool="true" content_ui="tabs" x="1101" y="284" width="339" height="515" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USERS">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
       <collection />
     </option>
   </component>
@@ -491,323 +423,390 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/lib_frontend_test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="50" selection-start="970" selection-end="970" vertical-scroll-proportion="0.66104555" vertical-offset="0" max-vertical-offset="966" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="73" selection-start="571" selection-end="571" vertical-scroll-proportion="0.40134907" vertical-offset="0" max-vertical-offset="593" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/partials/students.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="154" column="158" selection-start="9556" selection-end="9556" vertical-scroll-proportion="0.39130434" vertical-offset="1922" max-vertical-offset="2520" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/partials/classes.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="62" selection-start="4797" selection-end="4797" vertical-scroll-proportion="0.0" vertical-offset="1176" max-vertical-offset="1876" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/plus-less-info_test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.01754386" vertical-offset="19" max-vertical-offset="700" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/delete-info_test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="58" selection-start="1843" selection-end="1843" vertical-scroll-proportion="0.75838923" vertical-offset="66" max-vertical-offset="672" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/StatisticController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.17872341" vertical-offset="0" max-vertical-offset="705" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Statistic.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.09219858" vertical-offset="65" max-vertical-offset="770" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/passport.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="43" selection-start="805" selection-end="805" vertical-scroll-proportion="0.61560285" vertical-offset="0" max-vertical-offset="705" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/User.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="50" selection-start="1134" selection-end="1134" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="756">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/libDB.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="23" selection-start="281" selection-end="281" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="266" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/partials/teachers.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="138" selection-start="9272" selection-end="9272" vertical-scroll-proportion="0.6652047" vertical-offset="1575" max-vertical-offset="2282" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/MainController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="21" selection-start="957" selection-end="957" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="574" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/UserController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="24" selection-start="207" selection-end="207" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="546" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/BooksController_test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="55" selection-start="511" selection-end="511" vertical-scroll-proportion="0.36363637" vertical-offset="0" max-vertical-offset="2170">
-          <folding />
+        <state vertical-scroll-proportion="0.36363637" vertical-offset="0" max-vertical-offset="2170">
+          <caret line="12" column="55" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/application/controllers/ClassesController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="36" selection-start="2414" selection-end="2414" vertical-scroll-proportion="0.77272725" vertical-offset="763" max-vertical-offset="1428">
-          <folding />
+        <state vertical-scroll-proportion="0.77272725" vertical-offset="763" max-vertical-offset="1428">
+          <caret line="80" column="36" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/ClassesController_test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="9" selection-start="1417" selection-end="1417" vertical-scroll-proportion="1.1212121" vertical-offset="0" max-vertical-offset="2002" />
+        <state vertical-scroll-proportion="1.1212121" vertical-offset="0" max-vertical-offset="2002">
+          <caret line="37" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/TeachersController_test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="135" column="2" selection-start="5839" selection-end="5839" vertical-scroll-proportion="0.0" vertical-offset="1624" max-vertical-offset="2100" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1624" max-vertical-offset="2100">
+          <caret line="135" column="2" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/frontend/jasmine/spec/StudentsController_test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="47" selection-start="1035" selection-end="1083" vertical-scroll-proportion="0.0" vertical-offset="336" max-vertical-offset="2268" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="336" max-vertical-offset="2268">
+          <caret line="27" column="47" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/partials/books.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="127" selection-start="4116" selection-end="4130" vertical-scroll-proportion="-21.304348" vertical-offset="504" max-vertical-offset="1232">
-          <folding />
+        <state vertical-scroll-proportion="-21.304348" vertical-offset="504" max-vertical-offset="1232">
+          <caret line="71" column="127" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Teacher.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="53" selection-start="2077" selection-end="2077" vertical-scroll-proportion="0.0" vertical-offset="462" max-vertical-offset="1260">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Book.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="51" selection-start="1441" selection-end="1459" vertical-scroll-proportion="0.0" vertical-offset="434" max-vertical-offset="1162">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/UserController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="42" selection-start="360" selection-end="368" vertical-scroll-proportion="0.30769232" vertical-offset="0" max-vertical-offset="728" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/application/directives/delete-info-directive.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="109" selection-start="974" selection-end="974" vertical-scroll-proportion="0.30769232" vertical-offset="0" max-vertical-offset="728" />
+        <state vertical-scroll-proportion="0.30769232" vertical-offset="0" max-vertical-offset="728">
+          <caret line="16" column="109" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/application/controllers/TeachersController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="56" selection-start="2592" selection-end="2592" vertical-scroll-proportion="0.75" vertical-offset="672" max-vertical-offset="1400">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/StudentController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="43" selection-start="1770" selection-end="1770" vertical-scroll-proportion="1.2692307" vertical-offset="112" max-vertical-offset="1344">
-          <folding />
+        <state vertical-scroll-proportion="0.75" vertical-offset="672" max-vertical-offset="1400">
+          <caret line="87" column="56" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/application/controllers/PaymentsController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="18" selection-start="362" selection-end="362" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="854">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/TeacherController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="50" selection-start="1070" selection-end="1070" vertical-scroll-proportion="0.0" vertical-offset="168" max-vertical-offset="896">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="854">
+          <caret line="11" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/application/controllers/NavController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="728">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/ClassController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="43" selection-start="1002" selection-end="1002" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="896">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/positioning.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="44" selection-start="1218" selection-end="1218" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="518">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="43" selection-start="1735" selection-end="1735" vertical-scroll-proportion="0.5769231" vertical-offset="0" max-vertical-offset="1008">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/StudentsController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="26" selection-start="528" selection-end="528" vertical-scroll-proportion="-0.26923078" vertical-offset="420" max-vertical-offset="1484">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/backend/model/UserModel_test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="62" selection-start="708" selection-end="708" vertical-scroll-proportion="0.44230768" vertical-offset="0" max-vertical-offset="728">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="728">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/backend/model/StudentModel_test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="61" selection-start="339" selection-end="339" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/backend/model/StatisticModel_test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="2" selection-start="793" selection-end="793" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616">
+          <caret line="11" column="61" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/backend/model/ClassModel_test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="9" selection-start="1029" selection-end="1029" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616">
+          <caret line="33" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/backend/model/TeacherModel_test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="61" selection-start="337" selection-end="337" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616">
+          <caret line="11" column="61" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/backend/lib/libDB_test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="31" selection-start="89" selection-end="89" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="350">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="350">
+          <caret line="3" column="31" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/backend/model/BookModel_test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="64" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616">
+          <caret line="35" column="64" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/backend/routes/routes_test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="8" selection-start="523" selection-end="523" vertical-scroll-proportion="0.21153846" vertical-offset="98" max-vertical-offset="826">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Clazz.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="40" selection-start="689" selection-end="689" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="8" selection-start="1938" selection-end="2021" vertical-scroll-proportion="-19.47826" vertical-offset="70" max-vertical-offset="812">
-          <folding />
+        <state vertical-scroll-proportion="0.21153846" vertical-offset="98" max-vertical-offset="826">
+          <caret line="18" column="8" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/partials/payments.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="46" selection-start="1970" selection-end="1970" vertical-scroll-proportion="-20.695652" vertical-offset="0" max-vertical-offset="1456">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="476" max-vertical-offset="1456">
+          <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/BookController.js">
+    <entry file="file://$PROJECT_DIR$/public/js/application/controllers/StudentsController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="28" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.88461536" vertical-offset="322" max-vertical-offset="1050">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Student.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="23" selection-start="3831" selection-end="3831" vertical-scroll-proportion="0.0" vertical-offset="1078" max-vertical-offset="1862">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="7" selection-start="4816" selection-end="4816" vertical-scroll-proportion="-27.0" vertical-offset="527" max-vertical-offset="1232">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="35" selection-start="2083" selection-end="2093" vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="980">
+        <state vertical-scroll-proportion="0.36740333" vertical-offset="0" max-vertical-offset="1484">
+          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/application/controllers/BooksController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="5" selection-start="3086" selection-end="3086" vertical-scroll-proportion="0.0" vertical-offset="826" max-vertical-offset="1554">
+        <state vertical-scroll-proportion="0.5801105" vertical-offset="0" max-vertical-offset="1554">
+          <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/application/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="59" selection-start="314" selection-end="314" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="168">
+        <state vertical-scroll-proportion="0.1160221" vertical-offset="0" max-vertical-offset="724">
+          <caret line="6" column="59" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.69900143" vertical-offset="0" max-vertical-offset="812">
+          <caret line="35" column="64" selection-start-line="35" selection-start-column="57" selection-end-line="35" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/model/StatisticModel_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4640884" vertical-offset="0" max-vertical-offset="724">
+          <caret line="24" column="2" selection-start-line="24" selection-start-column="2" selection-end-line="24" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/lib/lib_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6519337" vertical-offset="3420" max-vertical-offset="4144">
+          <caret line="278" column="12" selection-start-line="278" selection-start-column="12" selection-end-line="278" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lib.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.77348065" vertical-offset="0" max-vertical-offset="1358">
+          <caret line="40" column="85" selection-start-line="40" selection-start-column="85" selection-end-line="40" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/media_queries.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="392">
+          <caret line="10" column="68" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/lib/ErrorHandler_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.75414366" vertical-offset="0" max-vertical-offset="868">
+          <caret line="39" column="107" selection-start-line="39" selection-start-column="107" selection-end-line="39" selection-end-column="107" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/application/services/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7154696" vertical-offset="0" max-vertical-offset="724">
+          <caret line="37" column="87" selection-start-line="37" selection-start-column="87" selection-end-line="37" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ErrorHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7154696" vertical-offset="0" max-vertical-offset="724">
+          <caret line="37" column="28" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/application/services/services.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="98" column="48" selection-start="3181" selection-end="3181" vertical-scroll-proportion="1.8846154" vertical-offset="0" max-vertical-offset="1652">
+        <state vertical-scroll-proportion="0.6519337" vertical-offset="928" max-vertical-offset="1694">
+          <caret line="100" column="75" selection-start-line="100" selection-start-column="75" selection-end-line="100" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29005525" vertical-offset="0" max-vertical-offset="724">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/partials/teachers.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.03994294" vertical-offset="0" max-vertical-offset="2282">
+          <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/partials/classes.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22681883" vertical-offset="1157" max-vertical-offset="1876">
+          <caret line="94" column="29" selection-start-line="94" selection-start-column="29" selection-end-line="94" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2320442" vertical-offset="0" max-vertical-offset="1008">
+          <caret line="12" column="64" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8839779" vertical-offset="256" max-vertical-offset="980">
+          <caret line="64" column="31" selection-start-line="64" selection-start-column="31" selection-end-line="64" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/controllers/ClazzController_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27071825" vertical-offset="0" max-vertical-offset="724">
+          <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Book.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.019337017" vertical-offset="0" max-vertical-offset="1162">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/positioning.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="724">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/ClazzController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="718" max-vertical-offset="1442">
+          <caret line="21" column="52" selection-start-line="21" selection-start-column="52" selection-end-line="21" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Clazz.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="42" max-vertical-offset="1190">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/StudentController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1334" max-vertical-offset="2058">
+          <caret line="132" column="67" selection-start-line="132" selection-start-column="40" selection-end-line="132" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Student.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1138" max-vertical-offset="1862">
+          <caret line="127" column="21" selection-start-line="127" selection-start-column="21" selection-end-line="127" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/TeacherController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1442">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Teacher.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="536" max-vertical-offset="1260">
+          <caret line="84" column="23" selection-start-line="84" selection-start-column="23" selection-end-line="84" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Statistic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="784">
+          <caret line="21" column="56" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/StatisticController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.019337017" vertical-offset="0" max-vertical-offset="770">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/BookController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32872927" vertical-offset="0" max-vertical-offset="1484">
+          <caret line="17" column="81" selection-start-line="17" selection-start-column="81" selection-end-line="17" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/backend/model/UserModel_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2320442" vertical-offset="0" max-vertical-offset="724">
+          <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/passport.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6767956" vertical-offset="0" max-vertical-offset="724">
+          <caret line="35" column="41" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/User.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27071825" vertical-offset="0" max-vertical-offset="724">
+          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/UserController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.019337017" vertical-offset="0" max-vertical-offset="854">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19971469" vertical-offset="0" max-vertical-offset="1232">
+          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
           <folding />
         </state>
       </provider>

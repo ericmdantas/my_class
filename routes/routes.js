@@ -61,5 +61,5 @@ var isLoggedIn = require('./session');
     }
 
     exports.init = init;
-}(require('./content'), require('../controllers/UserController'), require('../controllers/ClassController'),
+}(require('./content'), require('../controllers/UserController'), require('../controllers/ClazzController'),
   require('../controllers/TeacherController'), require('../controllers/StudentController'), require('../controllers/BookController'), require('../controllers/StatisticController')))

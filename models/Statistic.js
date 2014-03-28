@@ -2,49 +2,50 @@
 
 //stats
 
-(function(User, lib)
+(function(Student, lib)
 {
     function findAllEarningsByTrimester(user, done)
     {
-        User.aggregate({$match: {username: user}},
-            {$unwind: "$students"},
-            {$unwind: "$students.payments"},
-            {$group: {
-                _id: {
-                    mes_de_pagamento: "$students.payments.paymentMonth",
-                    valor: "$students.payments.amountPaid"
-                }
-            }
-            },
-            {$project: {_id: 0, mes: "$_id.mes_de_pagamento", valor: "$_id.valor"}},
-            function(err, doc)
-            {
-                var trimestres;
+        Student.aggregate({$match: {usersAllowed: {$in: [user]}}},
+                          {$unwind: "$payments"},
+                          {$group: {
+                              _id: {
+                                  mes_de_pagamento: "$payments.paymentMonth",
+                                  valor: "$payments.amountPaid"
+                              }
+                          }
+                          },
+                          {$project: {_id: 0, mes: "$_id.mes_de_pagamento", valor: "$_id.valor"}},
+                          function(err, doc)
+                          {
+                              if (err)
+                                 return done(err, null);
 
-                if (err)
-                    throw err;
+                              var trimestres;
+                              trimestres = lib.getValuesByTrimester(doc);
 
-                trimestres = lib.getValuesByTrimester(doc);
-
-                done(trimestres);
-            })
+                              done(null, trimestres);
+                          })
     }
 
     function findAllInterestedStudentsPerMonth(user, done)
     {
-        User.findOne({username: user}, {"students.lastModified": 1})
-            .exec(function(err, doc)
-            {
-                if (err)
-                    throw err;
+        var query = {usersAllowed: {$in: [user]}};
+        var projection = {registered: 1};
 
-                var meses = lib.getMonthInDate(doc);
+        Student.find(query, projection)
+               .exec(function(err, doc)
+               {
+                   if (err)
+                       return done(err, null);
 
-                done(meses);
-            })
+                   var meses = lib.getMonthInDate(doc);
+
+                   done(null, meses);
+                })
     }
 
     exports.findAllEarningsByTrimester = findAllEarningsByTrimester;
     exports.findAllInterestedStudentsPerMonth = findAllInterestedStudentsPerMonth;
 
-}(require('../lib/libDB').User, require('../lib/lib')))
+}(require('../models/Student'), require('../lib/lib')))

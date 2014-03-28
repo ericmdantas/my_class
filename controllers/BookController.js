@@ -1,6 +1,7 @@
 "use strict";
 
 var BookModel = require('../models/Book');
+var ErrorHandler = require('../lib/errorHandler');
 
 function Book()
 {
@@ -9,11 +10,22 @@ function Book()
         var usuario = req.query.u;
         var book = new BookModel();
 
-        book.findAllBooksByUser(usuario, function(books)
+        function callback(error, books)
         {
-            books ? res.json({books: books})
-                  : res.json({books: []})
-        });
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de livros'));
+            }
+
+            else
+            {
+                books ? res.json({books: books})
+                      : res.json({books: []})
+            }
+        }
+
+        book.findAllBooksByUser(usuario, callback)
     }
 
     function cadastraLivro(req, res)
@@ -22,9 +34,16 @@ function Book()
         var livro = req.body;
         var book = new BookModel();
 
-        function callback()
+        function callback(error)
         {
-            res.end();
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'cadastro de livros'));
+            }
+            else
+                res.end();
+
         }
 
         book.registerNewBook(usuario, livro, callback);
@@ -36,9 +55,15 @@ function Book()
         var livro = req.body;
         var book = new BookModel();
 
-        function callback()
+        function callback(error)
         {
-            res.end();
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'edição de livros'));
+            }
+            else
+                res.end();
         }
 
         book.editBook(usuario, livro, callback);
@@ -50,9 +75,15 @@ function Book()
         var identificacaoLivro = req.params.id;
         var book = new BookModel();
 
-        function callback()
+        function callback(error)
         {
-            res.end();
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'deleção de livros'));
+            }
+            else
+                res.end();
         }
 
         book.deleteBook(usuario, identificacaoLivro, callback);

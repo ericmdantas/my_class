@@ -35,7 +35,7 @@ configuration.interceptors = ['$provide', '$httpProvider', function($provide, $h
                                          },
                                          responseError: function(rejection)
                                          {
-                                             lib.createAlert(rejection.status);
+                                             lib.createAlert(rejection.data.errorStatus, rejection.data.errorMessage);
                                              return $q.reject(rejection);
                                          }
                                     };
