@@ -8,10 +8,10 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
     {
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
-        httpMock.when('GET', '/api/getClasses?u=eric3').respond({classes: [{name: 'a'}, {name: 'b'}]});
-        httpMock.when('POST', '/api/registerClass?u=eric3').respond(200);
-        httpMock.when('POST', '/api/editClass?u=eric3').respond(200);
-        httpMock.when('DELETE', '/api/deleteClass/A?u=eric3').respond(200);
+        httpMock.when('GET', '/api/getClasses').respond({classes: [{name: 'a'}, {name: 'b'}]});
+        httpMock.when('POST', '/api/registerClass').respond(200);
+        httpMock.when('POST', '/api/editClass').respond(200);
+        httpMock.when('DELETE', '/api/deleteClass/A').respond(200);
     }))
 
     describe('elements creation', function()

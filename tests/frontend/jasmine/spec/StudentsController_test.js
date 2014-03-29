@@ -9,9 +9,9 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
         lib_frontend = $injector.get('lib_frontend');
-        httpMock.when('GET', '/api/getStudents?u=eric3').respond({students: [{nome: 'aluno qualquer'}]});
-        httpMock.when('POST', '/api/registerStudent?u=eric3').respond(200);
-        httpMock.when('DELETE', '/api/deleteStudent/1?u=eric3').respond(200);
+        httpMock.when('GET', '/api/getStudents').respond({students: [{nome: 'aluno qualquer'}]});
+        httpMock.when('POST', '/api/registerStudent').respond(200);
+        httpMock.when('DELETE', '/api/deleteStudent/1').respond(200);
     }))
 
     describe('elements creation', function()
@@ -58,7 +58,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
     {
         it('checks if scope.alunos is being fed correctly even when there\'s no response', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudents?u=eric3').respond({});
+            httpMock.expectGET('/api/getStudents').respond({});
             $controller('StudentsController', {$scope: scope});
             httpMock.flush();
             expect(scope.alunos.length).toEqual(0);
@@ -66,7 +66,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
         it('checks if scope.alunos is being fed correctly even when there\'s only the object students - no array', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudents?u=eric3').respond({students: []});
+            httpMock.expectGET('/api/getStudents').respond({students: []});
             $controller('StudentsController', {$scope: scope});
             httpMock.flush();
             expect(scope.alunos.length).toEqual(0);
@@ -92,7 +92,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
         it('checks if addition is working', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudents?u=eric3').respond({students: [{name: 'A'}]});
+            httpMock.expectGET('/api/getStudents').respond({students: [{name: 'A'}]});
             $controller('StudentsController', {$scope: scope});
             var obj = {name: 'A', class: {name: 'B'}, status: {nome: 'C'}, availability: 'D'};
             scope.registerNewStudent(obj);
@@ -112,7 +112,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
     {
         it('tries to edit a student with an empty object', inject(function($controller)
         {
-            httpMock.expectPOST('/api/editStudent?u=eric3', undefined).respond();
+            httpMock.expectPOST('/api/editStudent', undefined).respond();
             $controller('StudentsController', {$scope: scope});
             expect(function(){scope.editStudent(null)}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
             expect(function(){scope.editStudent(undefined)}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
@@ -121,8 +121,8 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
         it('should edit successfully and return one students on /api/getStudents', inject(function($controller)
         {
-            httpMock.expectPOST('/api/editStudent?u=eric3').respond();
-            httpMock.expectGET('/api/getStudents?u=eric3').respond({students: [{name: 'nome'}]});
+            httpMock.expectPOST('/api/editStudent').respond();
+            httpMock.expectGET('/api/getStudents').respond({students: [{name: 'nome'}]});
             $controller('StudentsController', {$scope: scope});
             var student = {name: 'e', class: '', status: '', contract: ''};
             scope.editStudent(student);
@@ -144,7 +144,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
         it('checks if deletion is working - if there were 3 students, should be 2 after deletion', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudents?u=eric3').respond({students: {students: []}});
+            httpMock.expectGET('/api/getStudents').respond({students: {students: []}});
             $controller('StudentsController', {$scope: scope});
             scope.alunos = [{name: 1, idade: 1, _id: 1}];
             var quantidadeDeAlunosAntesDaDelecao = scope.alunos.length;

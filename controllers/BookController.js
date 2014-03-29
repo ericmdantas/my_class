@@ -7,7 +7,7 @@ function Book()
 {
     function pegaInformacoesLivros(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var book = new BookModel();
 
         function callback(error, books)
@@ -30,7 +30,7 @@ function Book()
 
     function cadastraLivro(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var livro = req.body;
         var book = new BookModel();
 
@@ -51,7 +51,7 @@ function Book()
 
     function editaLivro(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var livro = req.body;
         var book = new BookModel();
 
@@ -71,7 +71,7 @@ function Book()
 
     function removeLivro(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var identificacaoLivro = req.params.id;
         var book = new BookModel();
 

@@ -7,7 +7,7 @@ function Student()
 {
     function pegaInformacaoDeTodosAlunos(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var student = new StudentModel();
 
         function callback(error, students)
@@ -29,7 +29,7 @@ function Student()
 
     function pegaInformacaoTodosPagamentos(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var student = new StudentModel();
 
         var callback = function(error, students)
@@ -51,7 +51,7 @@ function Student()
 
     function cadastraNovoEstudante(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var aluno = req.body;
         var student = new StudentModel();
 
@@ -71,7 +71,7 @@ function Student()
 
     function fazPagamento(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var pagamento = req.body;
         var student = new StudentModel();
 
@@ -91,7 +91,7 @@ function Student()
 
     function editaAlunoEscolhido(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var aluno = req.body;
         var student = new StudentModel();
 
@@ -111,7 +111,7 @@ function Student()
 
     function removeAlunoEscolhido(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var identificacaoAluno = req.params.id;
         var student = new StudentModel();
 

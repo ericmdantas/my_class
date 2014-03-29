@@ -11,7 +11,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.getStudents = function()
     {
-        $http.get('/api/getStudents?u=eric3')
+        $http.get('/api/getStudents')
              .success(function(data)
                       {
                             $scope.alunos = (data && data.students) ? data.students : [];
@@ -53,7 +53,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
         aluno.contract = aluno.contract ? aluno.contract.nome : '';
         aluno = lib_frontend.removeWhiteSpaces(aluno);
 
-        $http.post('/api/registerStudent?u=eric3', aluno)
+        $http.post('/api/registerStudent', aluno)
              .success(function()
                       {
                           $scope.getStudents();
@@ -74,7 +74,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
         aluno.status = aluno.status ? aluno.status.nome : '';
         aluno.contract = aluno.contract ? aluno.contract.nome : '';
 
-        $http.post('/api/editStudent?u=eric3', aluno)
+        $http.post('/api/editStudent', aluno)
              .success(function()
                       {
                             $scope.getStudents();
@@ -90,7 +90,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
             throw new Error('Não foi possível realizar a deleção do aluno. O ID está errado.');
 
         $scope.isLoadingVisible.modal = true;
-        $http.delete('/api/deleteStudent/'+id+'?u=eric3')
+        $http.delete('/api/deleteStudent/'+id)
              .success(function()
                     {
                         $scope.getStudents();

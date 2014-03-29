@@ -7,7 +7,7 @@ function Teacher()
 {
     function getTeachersInfo(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var teacher = new TeacherModel();
 
         function callback(error, teachers)
@@ -29,7 +29,7 @@ function Teacher()
 
     function registerTeacher(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var professor = req.body;
         var teacher = new TeacherModel();
 
@@ -49,7 +49,7 @@ function Teacher()
 
     function editTeacher(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var professor = req.body;
         var teacher = new TeacherModel();
 
@@ -69,7 +69,7 @@ function Teacher()
 
     function deleteTeacher(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var identificacaoProfessor = req.params.id;
         var teacher = new TeacherModel();
 

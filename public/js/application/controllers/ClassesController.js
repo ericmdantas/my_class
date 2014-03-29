@@ -10,7 +10,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
     $scope.getClasses = function()
     {
-        $http.get('/api/getClasses?u=eric3')
+        $http.get('/api/getClasses')
              .success(function(data)
                       {
                           $scope.turmas = data.classes;
@@ -45,7 +45,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     {
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/registerClass?u=eric3', turma)
+        $http.post('/api/registerClass', turma)
             .success(function()
             {
                 $scope.isLoadingVisible.modal = false;
@@ -59,7 +59,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     {
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/editClass?u=eric3', turma)
+        $http.post('/api/editClass', turma)
              .success(function()
                       {
                           $scope.getClasses();
@@ -75,7 +75,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete('/api/deleteClass/'+id+'?u=eric3')
+        $http.delete('/api/deleteClass/'+id)
             .success(function()
             {
                 $scope.getClasses();

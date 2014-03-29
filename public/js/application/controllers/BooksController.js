@@ -9,12 +9,11 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
     $scope.isLoadingVisible = {modal: false};
     var getURL = '/api/getBooks',
         registerURL = '/api/registerBook',
-        deleteURL = '/api/deleteBook',
-        usernameParam = '?u=eric3';
+        deleteURL = '/api/deleteBook'
 
     $scope.getBooks = function()
     {
-        $http.get(getURL + usernameParam)
+        $http.get(getURL)
              .success(function(data)
                       {
                           $scope.livros = (data && data.books) ? data.books : [];
@@ -52,7 +51,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.post(registerURL + usernameParam, livro)
+        $http.post(registerURL, livro)
             .success(function()
             {
                 $('#modal-register-book').modal('hide');
@@ -70,7 +69,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/editBook?u=eric3', livro)
+        $http.post('/api/editBook', livro)
              .success(function()
                       {
                             $('#modal-edit-book').modal('hide');
@@ -86,7 +85,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete(deleteURL + '/' + id + usernameParam)
+        $http.delete(deleteURL + '/' + id)
              .success(function()
                     {
                         $scope.isLoadingVisible.modal = false;

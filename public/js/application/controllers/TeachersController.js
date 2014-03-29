@@ -10,7 +10,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.getTeachers = function()
     {
-        $http.get('/api/getTeachers?u=eric3')
+        $http.get('/api/getTeachers')
              .success(function(data)
                       {
                           $scope.professores = (data && data.resultado) ? data.resultado : [];
@@ -53,7 +53,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
     {
         $scope.isLoadingVisible.modal = true;
         professor = lib_fronted.removeWhiteSpaces(professor);
-        $http.post('/api/registerTeacher?u=eric3', professor)
+        $http.post('/api/registerTeacher', professor)
             .success(function()
             {
                 escondeModal('#modal-register-teacher');
@@ -68,7 +68,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
         $scope.isLoadingVisible.modal = true;
         professor = lib_fronted.removeWhiteSpaces(professor);
 
-        $http.post('/api/editTeacher?u=eric3', professor)
+        $http.post('/api/editTeacher', professor)
              .success(function()
                        {
                            escondeModal('#modal-edit-teacher');
@@ -85,7 +85,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete('/api/deleteTeacher/'+id+'?u=eric3')
+        $http.delete('/api/deleteTeacher/'+id)
              .success(function()
                      {
                          escondeModal('#modal-delete-teacher');

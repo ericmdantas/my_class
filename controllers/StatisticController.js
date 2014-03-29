@@ -7,7 +7,7 @@ function Statistics()
 {
     function getEarningByTrimesterInfo(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
 
         var callback = function(error, doc)
         {
@@ -25,7 +25,7 @@ function Statistics()
 
     function getInterestedStudentsPerMonth(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
 
         var callback = function(error, doc)
         {

@@ -7,10 +7,10 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
     beforeEach(inject(function($injector)
     {
         httpMock = $injector.get('$httpBackend');
-        httpMock.when('GET', '/api/getBooks?u=eric3').respond({books: [{name: 'A', quantity: 5}]});;
-        httpMock.when('POST', '/api/registerBook?u=eric3').respond(200);
-        httpMock.when('POST', '/api/editBook?u=eric3').respond({});
-        httpMock.when('DELETE', '/api/deleteBook/livro1?u=eric3').respond(200);
+        httpMock.when('GET', '/api/getBooks').respond({books: [{name: 'A', quantity: 5}]});;
+        httpMock.when('POST', '/api/registerBook').respond(200);
+        httpMock.when('POST', '/api/editBook').respond({});
+        httpMock.when('DELETE', '/api/deleteBook/livro1').respond(200);
         scope = $injector.get('$rootScope').$new();
     }))
 
@@ -52,7 +52,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
     {
         it('scope.livros should be an empty array', inject(function($controller)
         {
-            httpMock.expectGET('/api/getBooks?u=eric3').respond();
+            httpMock.expectGET('/api/getBooks').respond();
             $controller('BooksController', {$scope: scope});
             expect(scope.livros.length).toEqual(0);
         }))
@@ -68,7 +68,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
 
         it('should return an empty string', inject(function($controller)
         {
-            httpMock.expectGET('/api/getBooks?u=eric3');
+            httpMock.expectGET('/api/getBooks');
             $controller('BooksController', {$scope: scope});
             httpMock.flush();
             expect(scope.livros).toBeDefined();

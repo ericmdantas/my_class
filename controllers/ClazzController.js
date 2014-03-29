@@ -7,7 +7,7 @@ function Clazz()
 {
     function getClassesInfo(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var clazz = new ClazzModel();
 
         function callback(error, clazzes)
@@ -29,7 +29,7 @@ function Clazz()
 
     function registerClass(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var turma = req.body;
         var clazz = new ClazzModel();
 
@@ -49,7 +49,7 @@ function Clazz()
 
     function editClass(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var turma = req.body;
         var clazz = new ClazzModel();
 
@@ -69,7 +69,7 @@ function Clazz()
 
     function deleteClass(req, res)
     {
-        var usuario = req.query.u;
+        var usuario = req.session.passport.user;
         var identificacaoTurma = req.params.id;
         var clazz = new ClazzModel();
 

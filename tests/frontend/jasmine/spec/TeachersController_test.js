@@ -10,7 +10,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
     {
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
-        httpMock.when('GET', '/api/getTeachers?u=eric3').respond();
+        httpMock.when('GET', '/api/getTeachers').respond();
         httpMock.when('DELETE', '/api/deleteTeacher').respond();
     }))
 
@@ -96,7 +96,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
     {
         it('checks if the get is being used - respond nothing', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachers?u=eric3').respond({});
+            httpMock.expectGET('/api/getTeachers').respond({});
             $controller('TeachersController', {$scope: scope});
             httpMock.flush();
             expect(scope.professores.length).toBe(0);
@@ -104,7 +104,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if the get is being used - respond with resultado only', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachers?u=eric3').respond({resultado: []});
+            httpMock.expectGET('/api/getTeachers').respond({resultado: []});
             $controller('TeachersController', {$scope: scope});
             httpMock.flush();
             expect(scope.professores.length).toBe(0);
@@ -113,7 +113,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         it('checks if the get is being used', inject(function($controller)
         {
             $controller('TeachersController', {$scope: scope});
-            httpMock.expectGET('/api/getTeachers?u=eric3').respond({resultado: ['somebody here', 'somebody else in here']});
+            httpMock.expectGET('/api/getTeachers').respond({resultado: ['somebody here', 'somebody else in here']});
             httpMock.flush();
             expect(scope.professores.length).toBe(2);
         }))
@@ -132,8 +132,8 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if the deletion is working', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachers?u=eric3').respond({resultado: {teachers: []}});
-            httpMock.expectDELETE('/api/deleteTeacher/123?u=eric3').respond({});
+            httpMock.expectGET('/api/getTeachers').respond({resultado: {teachers: []}});
+            httpMock.expectDELETE('/api/deleteTeacher/123').respond({});
             $controller('TeachersController', {$scope: scope});
 
             var professor = {nome: "fulano", _id: 123};

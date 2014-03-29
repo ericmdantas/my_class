@@ -12,7 +12,7 @@ describe('EARNINGSTATS BEING TESTED', function()
         compile = $injector.get('$compile');
         template = '<earnings-stats></earnings-stats>';
         element = compile(template)(scope);
-        httpMock.when('GET', '/api/getEarningByTrimester?u=eric3')
+        httpMock.when('GET', '/api/getEarningByTrimester')
                 .respond({});
         scope.$digest();
     }))
