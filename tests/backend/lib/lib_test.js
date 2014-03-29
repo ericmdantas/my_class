@@ -274,12 +274,17 @@ describe('checks if lib\'s doing good', function()
 
     describe('checks getPercentage', function()
     {
+        it('checks if getPercentage is working with wrong parameters - should throw an error', function()
+        {
+            assert.throws(function(){lib_backend.getPercentage('not a number', {a: '1'})}, 'Não é possível retornar porcentagem de parâmetros não numéricos.');
+            assert.throws(function(){lib_backend.getPercentage(undefined, null)}, 'Não é possível retornar porcentagem de parâmetros não numéricos.');
+            assert.throws(function(){lib_backend.getPercentage([], true)}, 'Não é possível retornar porcentagem de parâmetros não numéricos.');
+        })
+
         it('checks if getPercentage is working with wrong parameters - should return 0', function()
         {
-            assert.strictEqual(0, lib_backend.getPercentage('not a number', {a: '1'}));
-            assert.strictEqual(0, lib_backend.getPercentage(undefined, null));
-            assert.strictEqual(0, lib_backend.getPercentage([], true));
             assert.strictEqual(0, lib_backend.getPercentage(0, 0));
+            assert.strictEqual(0, lib_backend.getPercentage(-1, -100));
         })
 
         it('checks if getPercentage is working with correct parameters', function()

@@ -10,6 +10,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         httpMock = $injector.get('$httpBackend');
         lib_frontend = $injector.get('lib_frontend');
         httpMock.when('GET', '/api/getStudents').respond({students: [{nome: 'aluno qualquer'}]});
+        httpMock.when('GET', '/api/getClassesNames').respond({classes: [{name: 'aluno qualquer'}]});
         httpMock.when('POST', '/api/registerStudent').respond(200);
         httpMock.when('DELETE', '/api/deleteStudent/1').respond(200);
     }))
@@ -52,6 +53,18 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
             expect(scope.isLoadingVisible).toBeDefined();
             expect(scope.isLoadingVisible.modal).toEqual(false);
         }))
+
+        it('checks if $scope.getStudents is defined', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+            expect(scope.getStudents).toBeDefined();
+        }))
+
+        it('checks if $scope.getClassesName is defined', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+            expect(scope.getClassesNames).toBeDefined();
+        }))
     })
 
     describe('/getStudents', (function()
@@ -79,6 +92,11 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
             expect(scope.alunos.length).toEqual(1);
         }))
     }))
+
+    describe('/getClassesNames', function()
+    {
+
+    })
 
     describe('/registerStudent', function()
     {

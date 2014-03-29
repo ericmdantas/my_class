@@ -46,7 +46,6 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
     {
         preparaAberturaModal('#modal-delete-teacher');
         $scope.professorEscolhido = professor;
-        $scope.professorEscolhido.index = i;
     }
 
     $scope.registerNewTeacher = function(professor)
@@ -56,11 +55,9 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
         $http.post('/api/registerTeacher', professor)
             .success(function()
             {
-                escondeModal('#modal-register-teacher');
-                $scope.getTeachers();
+                closesModal('#modal-register-teacher');
+                emptyProperty('novoProfessor');
             })
-
-        $scope.novoProfessor = {};
     }
 
     $scope.editTeacher = function(professor)
@@ -71,8 +68,8 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
         $http.post('/api/editTeacher', professor)
              .success(function()
                        {
-                           escondeModal('#modal-edit-teacher');
-                           $scope.getTeachers();
+                           closesModal('#modal-edit-teacher');
+                           emptyProperty('professorEscolhido');
                        })
 
         $scope.professorEscolhido = {};
@@ -88,8 +85,19 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
         $http.delete('/api/deleteTeacher/'+id)
              .success(function()
                      {
-                         escondeModal('#modal-delete-teacher');
-                         $scope.getTeachers();
+                         closesModal('#modal-delete-teacher');
+                         emptyProperty('professorEscolhido');
                      })
+    }
+
+    function closesModal(modalID)
+    {
+        $scope.getTeachers();
+        escondeModal(modalID);
+    }
+
+    function emptyProperty(propertyToBeEmpty)
+    {
+        $scope[propertyToBeEmpty] = {};
     }
 }])

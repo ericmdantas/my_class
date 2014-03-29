@@ -76,8 +76,8 @@
         <h3 class="titulo">{{livro.name}}</h3>
         <div id="book-toggle-{{$index}}" class="collapse">
             <p class="text-almost-invisible">quantidade: <span class="text-almost-black">{{livro.quantity}}</span></p>
-            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteBook(livro, $index)">excluir</button>
-            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditBook(livro, $index)">editar</button>
+            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteBook(livro)">excluir</button>
+            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditBook(livro)">editar</button>
         </div>
     </div>
 </div>

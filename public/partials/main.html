@@ -9,31 +9,37 @@
     <br/>
 
 	<div id="turmas-container" class="topic transition {{cfg.information.turmas.classeBorda}}" ng-click="redirectTo('turmas')">
-		<h1>{{cfg.information.turmas.nome}} <span class="text-almost-invisible">{{turmas}} turmas</span></h1>
+        <img src="../img/class.png" class="pull-right transition container-icon hidden-xs"/>
+		<h1>{{cfg.information.turmas.nome}}</h1>
         <p>{{cfg.information.turmas.resumo}}</p>
 	</div>
 
     <div id="professores-container" class="topic transition {{cfg.information.professores.classeBorda}}" ng-click="redirectTo('professores')">
-        <h1>{{cfg.information.professores.nome}} <span class="text-almost-invisible">{{professores}} professores</span></h1>
+        <img src="../img/teacher.png" class="pull-right transition container-icon hidden-xs"/>
+        <h1>{{cfg.information.professores.nome}}</h1>
         <p>{{cfg.information.professores.resumo}}</p>
     </div>
 
 	<div id="alunos-container" class="topic transition {{cfg.information.alunos.classeBorda}}" ng-click="redirectTo('alunos')">
-		<h1>{{cfg.information.alunos.nome}} <span class="text-almost-invisible">{{alunos}} alunos</span></h1>
+        <img src="../img/student.png" class="pull-right transition container-icon hidden-xs"/>
+		<h1>{{cfg.information.alunos.nome}}</h1>
 		<p>{{cfg.information.alunos.resumo}}</p>
 	</div>
 
 	<div id="livros-container" class="topic transition {{cfg.information.livros.classeBorda}}" ng-click="redirectTo('livros')">
-		<h1>{{cfg.information.livros.nome}} <span class="text-almost-invisible">{{livros}} livros</span></h1>
+        <img src="../img/book.png" class="pull-right transition container-icon hidden-xs"/>
+		<h1>{{cfg.information.livros.nome}}</h1>
 		<p>{{cfg.information.livros.resumo}}</p>
 	</div>
 
 	<div id="pagamentos-container" class="topic transition {{cfg.information.pagamentos.classeBorda}}" ng-click="redirectTo('pagamentos')">
+        <img src="../img/payment.png" class="pull-right transition container-icon hidden-xs"/>
 		<h1>{{cfg.information.pagamentos.nome}}</h1>
 		<p>{{cfg.information.pagamentos.resumo}}</p>
 	</div>
 
 	<div id="estatisticas-container" class="topic transition {{cfg.information.estatisticas.classeBorda}}" ng-click="redirectTo('estatisticas')">
+        <img src="../img/statistics.png" class="pull-right transition container-icon hidden-xs"/>
 		<h1>estatísticas</h1>
 		<p>{{cfg.information.estatisticas.resumo}}</p>
 	</div>

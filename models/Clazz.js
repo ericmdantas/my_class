@@ -29,6 +29,21 @@
                    })
     }
 
+    clazzSchema.methods.findAllClassesNamesByUser = function(user, done)
+    {
+        var query = {usersAllowed: {$in: [user]}};
+        var projection = {name: 1};
+
+        Clazz.find(query, projection)
+             .exec(function(err, classes)
+                  {
+                        if (err)
+                            return done(err, null);
+
+                        done(null, classes);
+                  })
+    }
+
     clazzSchema.methods.registerNewClass = function(usuario, turma, done)
     {
         turma.usersAllowed = [usuario];

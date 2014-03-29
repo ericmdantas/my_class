@@ -13,6 +13,18 @@ myClass.controller('PaymentsController', ['$scope', '$http', 'pageConfig', funct
                         $scope.pagamentos = (data && data.resultado) ? data.resultado : [];
                  })
 
+    function preparaAberturaModal(idModal)
+    {
+        $scope.isLoadingVisible.modal = false;
+        $(idModal).modal('show');
+    }
+
+    function escondeModal(idModal)
+    {
+        $(idModal).modal('hide');
+        $scope.isLoadingVisible.modal = false;
+    }
+
     $scope.isHistoricoVisible = function(pagamento)
     {
         pagamento = pagamento || {};
@@ -24,8 +36,7 @@ myClass.controller('PaymentsController', ['$scope', '$http', 'pageConfig', funct
 
     $scope.openModalToRegisterPayment = function()
     {
-        $scope.isLoadingVisible.modal = false;
-        $('#modal-pay').modal({keyboard: true});
+        preparaAberturaModal('#modal-pay');
     }
 
     $scope.pay = function(pagamento)
@@ -41,8 +52,7 @@ myClass.controller('PaymentsController', ['$scope', '$http', 'pageConfig', funct
         $http.post('/api/registerPayment', pagamento)
              .success(function()
                      {
-                         $scope.isLoadingVisible.modal = false;
-                         $('#modal-pay').modal('hide');
+                         escondeModal('#modal-pay');
                      })
 
         for (var i = 0; i < $scope.pagamentos.length; i++)

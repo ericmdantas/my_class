@@ -91,7 +91,7 @@
             <p class="text-almost-invisible">alunos: <span class="text-almost-black">{{turma.studentsQuantity}}</span></p>
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
 
-            <div class="text-center" ng-show=isHistoricoVisible(turma.historico.length)>
+            <div class="text-center" ng-show=isHistoricoVisible(5)>
                 <span class="select-data">
                     <button type="button" class="btn btn-default btn-sm" ng-click="changeDate(turma.data, 'add')">&#171;</button>
                     {{turma.data}}
@@ -122,8 +122,8 @@
                 </table>
             </div>
 
-            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteClass(turma, $index)">fechar</button>
-            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditClass(turma, $index)">editar</button>
+            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteClass(turma)">fechar</button>
+            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditClass(turma)">editar</button>
         </div>
     </div>
 </div>

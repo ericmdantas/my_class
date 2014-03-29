@@ -168,8 +168,8 @@
             <p class="text-almost-invisible">tipo do contrato: <span class="text-almost-black">{{aluno.contract}}</span></p>
             <p class="text-almost-invisible">data do contrato: <span class="text-almost-black">{{aluno.contractDate | date : 'dd/MM/yyyy'}}</span></p>
             <p class="text-almost-invisible">status: <span class="text-almost-black">{{aluno.status}}</span></p>
-            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteStudent(aluno, $index)">excluir</button>
-            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditStudent(aluno, $index)">editar</button>
+            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteStudent(aluno)">excluir</button>
+            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditStudent(aluno)">editar</button>
         </div>
     </div>
 </div>

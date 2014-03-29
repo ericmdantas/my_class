@@ -19,26 +19,33 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
     $scope.getClasses();
 
-    $scope.openModalToEditClass = function(myClass, i)
+    function preparaAberturaModal(idModal)
     {
         $scope.isLoadingVisible.modal = false;
-        $('#modal-edit-class').modal({keyboard: true});
-        $scope.turmaEscolhida = myClass;
-        $scope.turmaEscolhida.index = i;
+        $(idModal).modal('show');
     }
 
-    $scope.openModalToDeleteClass = function(myClass, i)
+    function escondeModal(idModal)
     {
+        $(idModal).modal('hide');
         $scope.isLoadingVisible.modal = false;
-        $('#modal-delete-class').modal({keyboard: true});
+    }
+
+    $scope.openModalToEditClass = function(myClass)
+    {
+        preparaAberturaModal('#modal-edit-class');
         $scope.turmaEscolhida = myClass;
-        $scope.turmaEscolhida.index = i;
+    }
+
+    $scope.openModalToDeleteClass = function(myClass)
+    {
+        preparaAberturaModal('#modal-delete-class');
+        $scope.turmaEscolhida = myClass;
     }
 
     $scope.openModalToRegisterClass = function()
     {
-        $scope.isLoadingVisible.modal = false;
-        $('#modal-register-class').modal({keyboard: true});
+        preparaAberturaModal('#modal-register-class');
     }
 
     $scope.registerClass = function(turma)
@@ -48,10 +55,8 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
         $http.post('/api/registerClass', turma)
             .success(function()
             {
-                $scope.isLoadingVisible.modal = false;
-                $('#modal-register-class').modal('hide');
-                $scope.getClasses();
-                $scope.novaTurma = {};
+                closesModal('#modal-register-class');
+                emptyProperty('novaTurma');
             })
     }
 
@@ -61,11 +66,10 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
         $http.post('/api/editClass', turma)
              .success(function()
-                      {
-                          $scope.getClasses();
-                          $('#modal-edit-class').modal('hide');
-                          $scope.isLoadingVisible.modal = false;
-                      })
+                     {
+                         closesModal('#modal-edit-class');
+                         emptyProperty('turmaEscolhida');
+                     })
     }
 
     $scope.deleteClass = function(id)
@@ -77,11 +81,21 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
         $http.delete('/api/deleteClass/'+id)
             .success(function()
-            {
-                $scope.getClasses();
-                $('modal-delete-class').modal('hide');
-                $scope.isLoadingVisible.modal = false;
-            })
+                    {
+                        closesModal('#modal-delete-class');
+                        emptyProperty('turmaEscolhida');
+                    })
+    }
+
+    function closesModal(modalID)
+    {
+        escondeModal(modalID);
+        $scope.getClasses();
+    }
+
+    function emptyProperty(propertyToBeEmpty)
+    {
+        $scope[propertyToBeEmpty] = {};
     }
 
     $scope.changeDate = function(data, tipo)

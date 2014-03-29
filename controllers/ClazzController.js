@@ -27,6 +27,26 @@ function Clazz()
         clazz.findAllClassesByUser(usuario, callback);
     }
 
+    function getClassesNames(req, res)
+    {
+        var usuario = req.session.passport.user;
+        var clazz = new ClazzModel();
+
+        function callback(error, clazzes)
+        {
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta dos nomes das turmas'));
+            }
+            else
+                clazzes ? res.json({classes: clazzes})
+                        : res.json({classes: []})
+        }
+
+        clazz.findAllClassesNamesByUser(usuario, callback);
+    }
+
     function registerClass(req, res)
     {
         var usuario = req.session.passport.user;
@@ -89,6 +109,7 @@ function Clazz()
 
     return {
                 getClassesInfo: getClassesInfo,
+                getClassesNames: getClassesNames,
                 registerClass: registerClass,
                 editClass: editClass,
                 deleteClass: deleteClass

@@ -7,13 +7,10 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
     $scope.livroEscolhido = {};
     $scope.novoLivro = {};
     $scope.isLoadingVisible = {modal: false};
-    var getURL = '/api/getBooks',
-        registerURL = '/api/registerBook',
-        deleteURL = '/api/deleteBook'
 
     $scope.getBooks = function()
     {
-        $http.get(getURL)
+        $http.get('/api/getBooks')
              .success(function(data)
                       {
                           $scope.livros = (data && data.books) ? data.books : [];
@@ -22,26 +19,33 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
     $scope.getBooks();
 
-    $scope.openModalToEditBook = function(livro, i)
+    function preparaAberturaModal(idModal)
     {
-        $('#modal-edit-book').modal({keyboard: true});
         $scope.isLoadingVisible.modal = false;
-        $scope.livroEscolhido = livro;
-        $scope.livroEscolhido.index = i;
+        $(idModal).modal('show');
     }
 
-    $scope.openModalToDeleteBook = function(livro, i)
+    function escondeModal(idModal)
     {
-        $('#modal-delete-book').modal({keyboard: true});
+        $(idModal).modal('hide');
         $scope.isLoadingVisible.modal = false;
+    }
+
+    $scope.openModalToEditBook = function(livro)
+    {
+        preparaAberturaModal('#modal-edit-book');
         $scope.livroEscolhido = livro;
-        $scope.livroEscolhido.index = i;
+    }
+
+    $scope.openModalToDeleteBook = function(livro)
+    {
+        preparaAberturaModal('#modal-delete-book');
+        $scope.livroEscolhido = livro;
     }
 
     $scope.openModalToRegisterBook = function()
     {
-        $('#modal-register-book').modal({keyboard: true});
-        $scope.isLoadingVisible.modal = false;
+        preparaAberturaModal('#modal-register-book');
     }
 
     $scope.registerBook = function(livro)
@@ -51,15 +55,12 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.post(registerURL, livro)
-            .success(function()
-            {
-                $('#modal-register-book').modal('hide');
-                $scope.isLoadingVisible.modal = false;
-                $scope.getBooks();
-            });
-
-        $scope.novoLivro = {};
+        $http.post('/api/registerBook', livro)
+             .success(function()
+                     {
+                         closesModal('#modal-register-book');
+                         emptyProperty('novoLivro');
+                     });
     }
 
     $scope.editBook = function(livro)
@@ -71,11 +72,10 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $http.post('/api/editBook', livro)
              .success(function()
-                      {
-                            $('#modal-edit-book').modal('hide');
-                            $scope.isLoadingVisible.modal = false;
-                            $scope.getBooks();
-                      })
+                     {
+                         closesModal('#modal-edit-book');
+                         emptyProperty('livroEscolhido');
+                     })
     }
 
     $scope.deleteBook = function(id)
@@ -85,21 +85,22 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete(deleteURL + '/' + id)
+        $http.delete('/api/deleteBook/'+id)
              .success(function()
-                    {
-                        $scope.isLoadingVisible.modal = false;
-                        $('#modal-delete-book').modal('hide');
-                        $scope.getBooks();
-                        $scope.livroEscolhido = {};
-                    });
+                      {
+                          closesModal('#modal-delete-book');
+                          emptyProperty('livroEscolhido');
+                      });
     }
 
-    function onDeletionSuccess()
+    function closesModal(modalID)
     {
-        $scope.isLoadingVisible.modal = false;
-        $('#modal-delete-book').modal('hide');
         $scope.getBooks();
-        $scope.livroEscolhido = {};
+        escondeModal(modalID);
+    }
+
+    function emptyProperty(propertyToBeEmpty)
+    {
+        $scope[propertyToBeEmpty] = {};
     }
 }])

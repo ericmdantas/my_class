@@ -15,31 +15,48 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
              .success(function(data)
                       {
                             $scope.alunos = (data && data.students) ? data.students : [];
-                            $scope.turmasCadastradas = (data && data.classes) ? data.classes : [];
                       })
     }
 
-    $scope.getStudents();
-
-    $scope.openModalToDeleteStudent = function(aluno, i)
+    $scope.getClassesNames = function()
     {
-        $scope.isLoadingVisible.modal = false;
-        $("#modal-delete-student").modal({keyboard: true});
-        $scope.alunoEscolhido = aluno;
-        $scope.alunoEscolhido.index = i;
+        $http.get('/api/getClassesNames')
+             .success(function(data)
+                     {
+                         $scope.turmasCadastradas = (data && data.classes) ? data.classes : [];
+                     })
     }
 
-    $scope.openModalToEditStudent = function(aluno, i)
+    $scope.getStudents();
+    $scope.getClassesNames();
+
+    function preparaAberturaModal(idModal)
     {
         $scope.isLoadingVisible.modal = false;
-        $("#modal-edit-student").modal({keyboard: true});
+        $(idModal).modal('show');
+    }
+
+    function escondeModal(idModal)
+    {
+        $(idModal).modal('hide');
+        $scope.isLoadingVisible.modal = false;
+    }
+
+    $scope.openModalToDeleteStudent = function(aluno)
+    {
+        preparaAberturaModal('#modal-delete-student');
         $scope.alunoEscolhido = aluno;
-        $scope.alunoEscolhido.index = i;
+    }
+
+    $scope.openModalToEditStudent = function(aluno)
+    {
+        preparaAberturaModal('#modal-edit-student');
+        $scope.alunoEscolhido = aluno;
     }
 
     $scope.openModalToRegisterStudent = function()
     {
-        $('#modal-register-student').modal({keyboard: true});
+        preparaAberturaModal('#modal-register-student');
     }
 
     $scope.registerNewStudent = function(aluno)
@@ -56,10 +73,8 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
         $http.post('/api/registerStudent', aluno)
              .success(function()
                       {
-                          $scope.getStudents();
-                          $scope.isLoadingVisible.modal = false;
-                          $('#modal-register-student').modal('hide');
-                          $scope.novoAluno = {};
+                          closesModal('#modal-register-student');
+                          emptyProperty('novoAluno');
                       })
     }
 
@@ -77,10 +92,8 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
         $http.post('/api/editStudent', aluno)
              .success(function()
                       {
-                            $scope.getStudents();
-                            $scope.isLoadingVisible.modal = false;
-                            $('#modal-edit-student').modal('hide');
-                            $scope.alunoEscolhido = {};
+                            closesModal('#modal-edit-student');
+                            emptyProperty('alunoEscolhido ');
                       })
     }
 
@@ -93,9 +106,19 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
         $http.delete('/api/deleteStudent/'+id)
              .success(function()
                     {
-                        $scope.getStudents();
-                        $('#modal-delete-student').modal('hide');
-                        $scope.isLoadingVisible.modal = false;
+                        closesModal('#modal-delete-student');
+                        emptyProperty('alunoEscolhido');
                     })
+    }
+
+    function closesModal(modalID)
+    {
+        $scope.getStudents();
+        escondeModal(modalID);
+    }
+
+    function emptyProperty(propertyToBeEmpty)
+    {
+        $scope[propertyToBeEmpty] = {};
     }
 }])
