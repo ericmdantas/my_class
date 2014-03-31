@@ -1,7 +1,6 @@
 {
   "name": "my_class",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
   "main": "server.js",
   "directories": {
     "test": "tests"
@@ -33,5 +32,13 @@
     "my_class"
   ],
   "author": "Eric Mendes Dantas",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ericmdantas/my_class.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ericmdantas/my_class/issues"
+  },
+  "homepage": "https://github.com/ericmdantas/my_class"
 }

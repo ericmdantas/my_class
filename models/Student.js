@@ -47,6 +47,21 @@
                     })
     }
 
+    studentSchema.methods.findAllStudentsNames = function(user, turma, done)
+    {
+        var query = {usersAllowed: {$in: [user]}, class: turma};
+        var projection = {name: 1};
+
+        Student.find(query, projection)
+               .exec(function(err, teachers)
+               {
+                   if (err)
+                       return done(err, null);
+
+                   done(null, teachers)
+               })
+    }
+
     studentSchema.methods.registerStudent = function(usuario, aluno, done)
     {
         aluno.usersAllowed = [usuario];

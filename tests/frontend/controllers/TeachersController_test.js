@@ -90,6 +90,79 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
             expect(scope.registerNewTeacher).toBeDefined();
             expect(typeof scope.registerNewTeacher).toBe('function');
         }))
+
+        it('checks if modals are ready to be opened - openModalToDeleteTeacher', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+            expect(scope.openModalToDeleteTeacher).toBeDefined();
+            expect(typeof scope.openModalToDeleteTeacher).toEqual('function');
+        }))
+
+        it('checks if modals are ready to be opened - openModalToRegisterTeacher', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+            expect(scope.openModalToRegisterTeacher).toBeDefined();
+            expect(typeof scope.openModalToRegisterTeacher).toEqual('function');
+        }))
+
+        it('checks if modals are ready to be opened - openModalToEditTeacher', inject(function($controller)
+        {
+            scope.professorEscolhido = {};
+
+            $controller('TeachersController', {$scope: scope});
+            expect(scope.openModalToEditTeacher).toBeDefined();
+            expect(typeof scope.openModalToEditTeacher).toEqual('function');
+        }))
+    })
+
+    describe('checks if the edition to open the modal is working', function()
+    {
+        it('checks if a empty object is clicked, the professorEscolhido object is working', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+
+            var professorEditado = {};
+
+            scope.openModalToEditTeacher(professorEditado);
+
+            expect(scope.professorEscolhido).toEqual(professorEditado);
+        }))
+
+        it('checks if a filled object is clicked, the professorEscolhido object is working', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+
+            var professorEditado = {name: "Fulano", salary: 123};
+
+            scope.openModalToEditTeacher(professorEditado);
+
+            expect(scope.professorEscolhido).toEqual(professorEditado);
+        }))
+    })
+
+    describe('checks if the deletion to open the modal is working', function()
+    {
+        it('checks if a empty object is clicked, the professorEscolhido object is working', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+
+            var professorEditado = {};
+
+            scope.openModalToEditTeacher(professorEditado);
+
+            expect(scope.professorEscolhido).toEqual(professorEditado);
+        }))
+
+        it('checks if a empty object is clicked, the professorEscolhido object is working', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+
+            var professorEditado = {_id: '123a'};
+
+            scope.openModalToEditTeacher(professorEditado);
+
+            expect(scope.professorEscolhido).toEqual(professorEditado);
+        }))
     })
 
     describe('checks http.get', function()

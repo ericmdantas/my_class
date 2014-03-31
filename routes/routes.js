@@ -33,12 +33,14 @@ var isLoggedIn = require('./session');
 
         //TEACHERS
         app.get('/api/getTeachers', isLoggedIn, teachers.getTeachersInfo);
+        app.get('/api/getTeachersNames', isLoggedIn, teachers.getTeachersNames);
         app.post('/api/registerTeacher', isLoggedIn, teachers.registerTeacher);
         app.post('/api/editTeacher', isLoggedIn, teachers.editTeacher);
         app.delete('/api/deleteTeacher/:id', isLoggedIn, teachers.deleteTeacher);
 
         //STUDENTS
         app.get('/api/getStudents', isLoggedIn, students.getInfoFromAllStudents);
+        app.get('/api/getStudentsNames/:turma', isLoggedIn, students.getStudentsNames);
         app.post('/api/registerStudent', isLoggedIn, students.registerStudent);
         app.post('/api/editStudent', isLoggedIn, students.editStudent);
         app.delete('/api/deleteStudent/:id', isLoggedIn, students.deleteStudent);

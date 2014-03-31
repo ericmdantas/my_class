@@ -39,5 +39,18 @@ describe('DELETE-INFO BEING TESTED', function()
         {
             expect(element).toBeDefined();
         })
+
+        it('checks if element is populated', function()
+        {
+
+            expect(element.text()).toContain('Tem certeza que deseja excluir');
+        })
+
+        it('finds exclusão', function()
+        {
+            //scope.directiveid = 'a'
+            //console.log(element.isola().directiveid);
+            //expect(element.toContain('Exclusão')).toBe(true);
+        })
     })
 })

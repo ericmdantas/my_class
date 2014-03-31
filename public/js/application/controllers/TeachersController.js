@@ -42,7 +42,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
         $scope.professorEscolhido = professor;
     }
 
-    $scope.openModalToDeleteTeacher = function(professor, i)
+    $scope.openModalToDeleteTeacher = function(professor)
     {
         preparaAberturaModal('#modal-delete-teacher');
         $scope.professorEscolhido = professor;

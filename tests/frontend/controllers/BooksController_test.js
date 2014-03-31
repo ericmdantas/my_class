@@ -46,6 +46,65 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
             expect(scope.getBooks).toBeDefined();
             expect(typeof scope.getBooks).toBe('function');
         }))
+
+        it('checks if modals are ready to be opened - openModalToDeleteBook', inject(function($controller)
+        {
+            $controller('BooksController', {$scope: scope});
+            expect(scope.openModalToDeleteBook).toBeDefined();
+            expect(typeof scope.openModalToDeleteBook).toEqual('function');
+        }))
+
+        it('checks if modals are ready to be opened - openModalToRegisterBook', inject(function($controller)
+        {
+            $controller('BooksController', {$scope: scope});
+            expect(scope.openModalToRegisterBook).toBeDefined();
+            expect(typeof scope.openModalToRegisterBook).toEqual('function');
+        }))
+
+        it('checks if modals are ready to be opened - openModalToEditBook', inject(function($controller)
+        {
+            $controller('BooksController', {$scope: scope});
+            expect(scope.openModalToEditBook).toBeDefined();
+            expect(typeof scope.openModalToEditBook).toEqual('function');
+        }))
+    })
+
+    describe('checks if the modal opening to edit is working properly', function()
+    {
+        it('checks if an empty object is being past correctly ', inject(function($controller)
+        {
+            $controller('BooksController', {$scope: scope});
+            var livroEditado = {};
+            scope.openModalToEditBook(livroEditado);
+            expect(scope.livroEscolhido).toEqual(livroEditado);
+        }))
+
+        it('checks if an filled object is being past correctly ', inject(function($controller)
+        {
+            $controller('BooksController', {$scope: scope});
+            var livroEditado = {_id: 'a'};
+            scope.openModalToEditBook(livroEditado);
+            expect(scope.livroEscolhido).toEqual(livroEditado);
+        }))
+    })
+
+    describe('checks if modal opening to delete book is working properly', function()
+    {
+        it('checks if an empty object is being past correctly ', inject(function($controller)
+        {
+            $controller('BooksController', {$scope: scope});
+            var livroEditado = {};
+            scope.openModalToDeleteBook(livroEditado);
+            expect(scope.livroEscolhido).toEqual(livroEditado);
+        }))
+
+        it('checks if an filled object is being past correctly ', inject(function($controller)
+        {
+            $controller('BooksController', {$scope: scope});
+            var livroEditado = {_id: 'a'};
+            scope.openModalToDeleteBook(livroEditado);
+            expect(scope.livroEscolhido).toEqual(livroEditado);
+        }))
     })
 
     describe('checking $http.get on books', function()

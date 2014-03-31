@@ -10,6 +10,34 @@
         <input type="text" class="form-control fc-search" placeholder="procurar turma" ng-model="turmaProcurada" maxlength="100" autofocus/>
     </div>
 
+    <div class="modal fade" id="modal-day-by-day">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{turmaEscolhida.name}} no dia XX-YY-ZZ</h4>
+                </div>
+                <div class="modal-body">
+                    <label>professor responsável</label>
+                    <input type="text" class="form-control" ng-model="turmaEscolhida.teacher" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
+                    <br/>
+                    <label>alunos presentes</label>
+                    <p ng-repeat="aluno in alunos">{{aluno.name}} <input type="checkbox" checked/></p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            ng-disabled="!(!!novaTurma.name && !!novaTurma.time)"
+                            ng-click="registerClass (novaTurma)">
+                        cadastrar
+                    </button>
+                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="modal-register-class">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -91,7 +119,7 @@
             <p class="text-almost-invisible">alunos: <span class="text-almost-black">{{turma.studentsQuantity}}</span></p>
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
 
-            <div class="text-center" ng-show=isHistoricoVisible(5)>
+            <div class="text-center" ng-show=isHistoricoVisible(0)>
                 <span class="select-data">
                     <button type="button" class="btn btn-default btn-sm" ng-click="changeDate(turma.data, 'add')">&#171;</button>
                     {{turma.data}}
@@ -124,6 +152,7 @@
 
             <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteClass(turma)">fechar</button>
             <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditClass(turma)">editar</button>
+            <button type="button" class="btn btn-success pull-right" ng-click="openModalToRegisterDayByDay(turma); getStudentsNames(turma.name)">dia a dia</button>
         </div>
     </div>
 </div>

@@ -6,6 +6,8 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     $scope.cfg = pageConfig;
     $scope.novaTurma = {};
     $scope.turmaEscolhida = {};
+    $scope.alunos = {};
+    $scope.professores = {};
     $scope.isLoadingVisible = {modal: false};
 
     $scope.getClasses = function()
@@ -17,7 +19,26 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
                       })
     }
 
+    $scope.getStudentsNames = function(turma)
+    {
+        $http.get('/api/getStudentsNames/'+turma)
+             .success(function(data)
+                    {
+                        $scope.alunos = (data && data.students) ? data.students : [];
+                    })
+    }
+
+    $scope.getTeachersNames = function()
+    {
+        $http.get('/api/getTeachersNames')
+            .success(function(data)
+            {
+                $scope.professores = (data && data.resultado) ? data.resultado : [];
+            })
+    }
+
     $scope.getClasses();
+    $scope.getTeachersNames();
 
     function preparaAberturaModal(idModal)
     {
@@ -29,6 +50,12 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     {
         $(idModal).modal('hide');
         $scope.isLoadingVisible.modal = false;
+    }
+
+    $scope.openModalToRegisterDayByDay = function(myClass)
+    {
+        preparaAberturaModal('#modal-day-by-day');
+        $scope.turmaEscolhida = myClass;
     }
 
     $scope.openModalToEditClass = function(myClass)

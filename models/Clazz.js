@@ -4,6 +4,14 @@
 
 (function(mongoose)
 {
+    /*var momentInTimeSchema = mongoose.schema
+    ({
+        year: {type: Date, required: true, default: new Date},
+        month: {type: Date, required: true, default: new Date},
+        day: {type: Date, required: true, default: new Date},
+
+    })*/
+
     var clazzSchema = mongoose.Schema
     ({
         name: {type: String, trim: true, required: true},

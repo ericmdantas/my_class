@@ -1,7 +1,7 @@
 "use strict";
 
 var BookModel = require('../models/Book');
-var ErrorHandler = require('../lib/errorHandler');
+var ErrorHandler = require('../lib/ErrorHandler');
 
 function Book()
 {

@@ -36,8 +36,7 @@ myClass.directive('plusLessInfoElement', function()
     return {
                 restrict: 'E',
                 template: temp,
-                link: link,
-                controller: ctrl
+                controller: ctrl,
+                link: link
            }
-
 })

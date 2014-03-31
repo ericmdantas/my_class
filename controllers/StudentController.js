@@ -27,6 +27,29 @@ function Student()
         student.findAllStudentsByUser(usuario, callback);
     }
 
+    function pegaTodosOsNomesDeAlunos(req, res)
+    {
+        var usuario = req.session.passport.user;
+        var turma = req.params.turma;
+        var student = new StudentModel();
+
+        function callback(error, students)
+        {
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de nomes de alunos'));
+            }
+            else
+            {
+                students ? res.json({students: students})
+                         : res.json({students: []});
+            }
+        }
+
+        student.findAllStudentsNames(usuario, turma, callback);
+    }
+
     function pegaInformacaoTodosPagamentos(req, res)
     {
         var usuario = req.session.passport.user;
@@ -131,6 +154,7 @@ function Student()
 
     return {
                 getInfoFromAllStudents: pegaInformacaoDeTodosAlunos,
+                getStudentsNames: pegaTodosOsNomesDeAlunos,
                 registerStudent: cadastraNovoEstudante,
                 editStudent: editaAlunoEscolhido,
                 deleteStudent: removeAlunoEscolhido,

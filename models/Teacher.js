@@ -34,6 +34,21 @@
                })
     }
 
+    teacherSchema.methods.findAllTeachersNames = function(user, done)
+    {
+        var query = {usersAllowed: {$in: [user]}};
+        var projection = {name: 1};
+
+        Teacher.find(query, projection)
+               .exec(function(err, teachers)
+                    {
+                        if (err)
+                            return done(err, null);
+
+                        done(null, teachers)
+                    })
+    }
+
     teacherSchema.methods.registerNewTeacher = function(usuario, professor, done)
     {
         professor.usersAllowed = [usuario];

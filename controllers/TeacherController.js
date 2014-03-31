@@ -27,6 +27,28 @@ function Teacher()
         teacher.findAllTeachersByUser(usuario, callback);
     }
 
+    function getTeachersNames(req, res)
+    {
+        var usuario = req.session.passport.user;
+        var teacher = new TeacherModel();
+
+        function callback(error, teachers)
+        {
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta dos nomes dos professores'));
+            }
+            else
+            {
+                teachers ? res.json({resultado: teachers})
+                         : res.json({resultado: []});
+            }
+        }
+
+        teacher.findAllTeachersNames(usuario, callback);
+    }
+
     function registerTeacher(req, res)
     {
         var usuario = req.session.passport.user;
@@ -89,6 +111,7 @@ function Teacher()
 
     return {
                 getTeachersInfo: getTeachersInfo,
+                getTeachersNames: getTeachersNames,
                 registerTeacher: registerTeacher,
                 editTeacher: editTeacher,
                 deleteTeacher: deleteTeacher

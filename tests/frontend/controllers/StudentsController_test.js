@@ -65,6 +65,65 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
             $controller('StudentsController', {$scope: scope});
             expect(scope.getClassesNames).toBeDefined();
         }))
+
+        it('checks if modals are ready to be opened - openModalToDeleteStudent', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+            expect(scope.openModalToDeleteStudent).toBeDefined();
+            expect(typeof scope.openModalToDeleteStudent).toEqual('function');
+        }))
+
+        it('checks if modals are ready to be opened - openModalToRegisterStudent', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+            expect(scope.openModalToRegisterStudent).toBeDefined();
+            expect(typeof scope.openModalToRegisterStudent).toEqual('function');
+        }))
+
+        it('checks if modals are ready to be opened - openModalToEditStudent', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+            expect(scope.openModalToEditStudent).toBeDefined();
+            expect(typeof scope.openModalToEditStudent).toEqual('function');
+        }))
+    })
+
+    describe('checks if opening modal to edit student is working properly', function()
+    {
+        it('checks if opening student and passing an empty object is behaving ok', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+            var chosenStudent = {};
+            scope.openModalToEditStudent(chosenStudent);
+            expect(scope.alunoEscolhido).toEqual(chosenStudent);
+        }))
+
+        it('checks if opening student and passing an empty object is behaving ok', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+            var chosenStudent = {_id: 'abc', name: 'Turma1'};
+            scope.openModalToEditStudent(chosenStudent);
+            expect(scope.alunoEscolhido).toEqual(chosenStudent);
+        }))
+    })
+
+    describe('checks if opening modal to delete class is working properly', function()
+    {
+        it('checks if opening student and passing an empty object is behaving ok', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+            var chosenStudent = {};
+            scope.openModalToDeleteStudent(chosenStudent);
+            expect(scope.alunoEscolhido).toEqual(chosenStudent);
+        }))
+
+        it('checks if opening student and passing an empty object is behaving ok', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+            var chosenStudent = {_id: 'abc', name: 'Turma1'};
+            scope.openModalToDeleteStudent(chosenStudent);
+            expect(scope.alunoEscolhido).toEqual(chosenStudent);
+        }))
     })
 
     describe('/getStudents', (function()

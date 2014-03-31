@@ -10,8 +10,12 @@ describe('PLUSLESSINFO BEING TESTED', function()
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
         compile = $injector.get('$compile');
-        html = '<plusLessInfoElement><span class="plus-less-info pull-right transition" data-toggle="collapse" data-target="#{{elementToToggle}}">{{symbol}}</span></plusLessInfoElement>';
-        element = compile(html)(scope);
+
+        html = '<plusLessInfoElement>' +
+                    '<span class="plus-less-info pull-right transition" data-toggle="collapse" data-target="#{{elementToToggle}}">{{symbol}}</span>' +
+               '</plusLessInfoElement>';
+
+        element = compile(angular.element(html))(scope);
         scope.$digest();
     }));
 

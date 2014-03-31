@@ -7,8 +7,6 @@ myClass.directive('earningsStats', function()
                '<div id="column-chart" class="chart"></div>'+
                '</div>';
 
-    var requireCtrl = '?StatisticsController';
-
     var ctrl = ['$scope', '$http', function ($scope, $http)
     {
         $scope.valoresTrimestre = [];
@@ -16,13 +14,15 @@ myClass.directive('earningsStats', function()
         $http.get('/api/getEarningByTrimester')
              .success(function(data)
              {
-                 if (!data.resultado)
-                     throw Error('nenhum dado recebido');
-
-                 $scope.valoresTrimestre.push(data.resultado.valorPrimeiroTrimestre);
-                 $scope.valoresTrimestre.push(data.resultado.valorSegundoTrimestre);
-                 $scope.valoresTrimestre.push(data.resultado.valorTerceiroTrimestre);
-                 $scope.valoresTrimestre.push(data.resultado.valorQuartoTrimestre);
+                 if (!data || !data.resultado)
+                     $scope.valoresTrimestre = [0, 0, 0, 0];
+                 else
+                 {
+                     $scope.valoresTrimestre = [data.resultado.valorPrimeiroTrimestre,
+                                                data.resultado.valorSegundoTrimestre,
+                                                data.resultado.valorTerceiroTrimestre,
+                                                data.resultado.valorQuartoTrimestre];
+                 }
 
                  desenhaGrafico();
              })
@@ -61,7 +61,6 @@ myClass.directive('earningsStats', function()
     return {
                 restrict: 'AE',
                 template: temp,
-                require: requireCtrl,
                 controller: ctrl
            }
 
