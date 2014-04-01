@@ -28,5 +28,7 @@
 .plus-less-info {line-height: 1; padding: 12px 15px;}
 .welcome-container, .info-card {padding: 1em;}
 .created.alert.alert-danger {position: fixed; top: 30%; z-index: 1; width: 75%; left: 50%; margin: 0 0 0 -37.5%; text-align: center;}
+.presenca {padding: 6px 5px;}
 
 footer {float: right; padding: 3px 7px; margin: 3em 1em 0;}
+input[type=checkbox] {width: 25px; height: 25px; margin: 0;}

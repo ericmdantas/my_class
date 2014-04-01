@@ -9,6 +9,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     $scope.alunos = {};
     $scope.professores = {};
     $scope.isLoadingVisible = {modal: false};
+    $scope.monthYear = moment().format('MM/YYYY');
 
     $scope.getClasses = function()
     {
@@ -19,12 +20,27 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
                       })
     }
 
+    $scope.test = function(x, a)
+    {
+        console.log('oi, %s. você estava presente? %s', x, a);
+    }
+
     $scope.getStudentsNames = function(turma)
     {
         $http.get('/api/getStudentsNames/'+turma)
              .success(function(data)
                     {
-                        $scope.alunos = (data && data.students) ? data.students : [];
+                        if (data && data.students)
+                        {
+                            $scope.alunos = data.students;
+
+                            for (var x in $scope.alunos)
+                            {
+                                $scope.alunos[x].isPresente = true;
+                            }
+                        }
+                        else
+                            $scope.alunos = [];
                     })
     }
 
@@ -127,7 +143,12 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
     $scope.changeDate = function(data, tipo)
     {
-        return moment()[tipo]('months', 1).calendar();
+        if (!tipo || !data)
+            return;
+
+        tipo = tipo.toLowerCase();
+
+        $scope.monthYear = moment()[tipo]('months', 1).calendar();
     }
 
     $scope.isHistoricoVisible = function(historico)
