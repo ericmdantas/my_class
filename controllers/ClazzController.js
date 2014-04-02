@@ -47,6 +47,26 @@ function Clazz()
         clazz.findAllClassesNamesByUser(usuario, callback);
     }
 
+    function registerClassMomentInTime(req, res)
+    {
+        var usuario = req.session.passport.user;
+        var moment = req.body;
+        var clazz = new ClazzModel();
+
+        function callback(error)
+        {
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(errorHandler.createSimpleErrorObject(500, 'cadastro do dia a dia da turma'));
+            }
+            else
+                res.end();
+        }
+
+        clazz.registerClassMomentInTime(usuario, moment, callback);
+    }
+
     function registerClass(req, res)
     {
         var usuario = req.session.passport.user;
@@ -111,6 +131,7 @@ function Clazz()
                 getClassesInfo: getClassesInfo,
                 getClassesNames: getClassesNames,
                 registerClass: registerClass,
+                registerClassMomentInTime: registerClassMomentInTime,
                 editClass: editClass,
                 deleteClass: deleteClass
            }

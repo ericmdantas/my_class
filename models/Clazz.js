@@ -4,13 +4,15 @@
 
 (function(mongoose)
 {
-    /*var momentInTimeSchema = mongoose.schema
+    var momentInTimeSchema = mongoose.Schema
     ({
-        year: {type: Date, required: true, default: new Date},
-        month: {type: Date, required: true, default: new Date},
-        day: {type: Date, required: true, default: new Date},
-
-    })*/
+        teacher: {type: String, trim: true, required: true},
+        date: {type: Date, required: true},
+        lastModified: {type: Date, required: true, default: new Date},
+        studentsInTheClass: [{name: String, isInClass: Boolean}],
+        subject: {type: String, trim: true, required: true},
+        observation: {type: String, trim: true}
+    })
 
     var clazzSchema = mongoose.Schema
     ({
@@ -19,7 +21,8 @@
         time: {type: String, required: true},
         registered: {type: Date, default: new Date},
         lastModified: Date,
-        usersAllowed: []
+        usersAllowed: [],
+        momentTime: [momentInTimeSchema]
     });
 
     clazzSchema.methods.findAllClassesByUser = function(user, done)
@@ -35,6 +38,21 @@
 
                         done(null, clazzes);
                    })
+    }
+
+    clazzSchema.methods.registerClassMomentInTime = function(user, moment, done)
+    {
+        var query = {usersAllowed: {$in: [user]}};
+        var updt = {$push: {momentTime: moment}};
+
+        Clazz.update(query, updt)
+             .exec(function(err, updated)
+                  {
+                      if (err)
+                         return done(err)
+
+                      done(null);
+                  })
     }
 
     clazzSchema.methods.findAllClassesNamesByUser = function(user, done)

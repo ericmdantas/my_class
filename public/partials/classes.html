@@ -15,26 +15,32 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{turmaDiaDia.name}} no dia XX-YY-ZZ</h4>
+                    <h4 class="modal-title">{{turmaDiaDia.name}} ({{turmaDiaDia.time}}) no dia {{turmaDiaDia.date | date: 'dd/MM/yyyy'}}</h4>
                 </div>
                 <div class="modal-body">
                     <label>professor responsável</label>
-                    <input type="text" class="form-control" ng-model="turmaDiaDia.teacher" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
+                    <input type="text" class="form-control" ng-model="turmaDiaDia.teacher" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
+                    <br/>
+                    <label>data</label>
+                    <input type="date" class="form-control date-width" ng-model="turmaDiaDia.date" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_DATA}}"/>
                     <br/>
                     <label>presença</label>
                     <p ng-repeat="aluno in alunos" class="presenca transition">{{aluno.name}}
-                        <input type="checkbox" class="pull-right" ng-model="aluno.isPresente" ng-click="test(aluno.name, aluno.isPresente)"/>
+                        <input type="checkbox" class="pull-right" ng-model="aluno.isInClass"/>
                     </p>
                     <br/>
                     <label>matéria</label>
-                    <textarea type="text" rows="5" class="form-control" ng-model="turmaDiaDia.subject" spellcheck="true" max-length="333"></textarea>
+                    <input type="text" class="form-control" ng-model="turmaDiaDia.subject" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
+                    <br/>
+                    <label>observação</label>
+                    <textarea type="text" rows="5" class="form-control" ng-model="turmaDiaDia.observation" spellcheck="true" max-length="333"></textarea>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
-                            ng-disabled="!(!!novaTurma.name && !!novaTurma.time)"
-                            ng-click="registerClass (novaTurma)">
-                        cadastrar
+                            ng-disabled="!(!!turmaDiaDia.teacher && !!turmaDiaDia.subject)"
+                            ng-click="registerClassMomentInTime(turmaDiaDia, alunos)">
+                        registrar
                     </button>
                     <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
                     <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
@@ -124,14 +130,35 @@
             <p class="text-almost-invisible">alunos: <span class="text-almost-black">{{turma.studentsQuantity}}</span></p>
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
 
-            <div class="text-center" ng-show=isHistoricoVisible(3)>
-                <span class="select-data">
+            <div ng-show=isHistoricoVisible(turma.momentTime.length)>
+                <div class="select-data" align="center">
                     <button type="button" class="btn btn-default btn-sm" ng-click="changeDate(monthYear, 'add')">&#171;</button>
                     {{monthYear}}
                     <button type="button" class="btn btn-default btn-sm" ng-click="changeDate(monthYear, 'subtract')">&#187;</button>
-                </span>
+                </div>
 
-                <h5>nothing to see here, move along</h5>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <td>dia</td>
+                            <td>matéria</td>
+                            <td>professor</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="momento in turma.momentTime">
+                            <td>{{momento.date | date: 'dd'}}</td>
+                            <td>{{momento.subject}}</td>
+                            <td>{{momento.teacher}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div ng-repeat="momento in turma.momentTime">
+                    <div ng-repeat="aluno in momento.studentsInTheClass">
+                        <p class="text-almost-invisible">aluno: <span class="text-almost-black">{{aluno.name}}</span><is-ok-disc situation="{{aluno.isInClass}}" when="{{momento.date}}"></is-ok-disc></p>
+                    </div>
+                </div>
             </div>
 
             <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteClass(turma)">fechar</button>

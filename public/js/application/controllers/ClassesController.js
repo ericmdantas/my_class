@@ -20,9 +20,28 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
                       })
     }
 
-    $scope.test = function(x, a)
+    $scope.registerClassMomentInTime = function(turma, alunos)
     {
-        console.log('oi, %s. você estava presente? %s', x, a);
+        if (!turma  || !alunos || !turma.teacher || !turma.date || !turma.subject)
+            throw new Error('Não será possível continuar, pois alguns parâmetros não foram informados.');
+
+        var moment = {};
+
+        moment.teacher = turma.teacher;
+        moment.date = turma.date;
+        moment.subject = turma.subject;
+        moment.observation = turma.observation;
+        moment.studentsInTheClass = alunos;
+
+        $scope.isLoadingVisible.modal = true;
+
+        $http.post('/api/registerClassMomentInTime', moment)
+             .success(function()
+                     {
+                         closesModal('#modal-day-by-day');
+                         emptyProperty('turmaDiaDia');
+                         $scope.getClasses();
+                     })
     }
 
     $scope.getStudentsNames = function(turma)
@@ -36,7 +55,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
                             for (var x in $scope.alunos)
                             {
-                                $scope.alunos[x].isPresente = true;
+                                $scope.alunos[x].isInClass = true;
                             }
                         }
                         else
@@ -71,7 +90,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     $scope.openModalToRegisterDayByDay = function(myClass)
     {
         preparaAberturaModal('#modal-day-by-day');
-        $scope.turmaEscolhida = myClass;
+        $scope.turmaDiaDia = myClass;
     }
 
     $scope.openModalToEditClass = function(myClass)

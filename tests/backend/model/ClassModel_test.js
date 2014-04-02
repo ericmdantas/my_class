@@ -9,31 +9,37 @@ describe('Testing ClassModel', function()
     {
         it('checks if ClassModel was created', function()
         {
-            assert.equal(typeof ClassModel, "function");
+            assert.strictEqual(typeof ClassModel, "function");
         })
 
         it('checks if ClassModel.deleteClass was created', function()
         {
             var clazz = new ClassModel();
-            assert.equal(typeof clazz.deleteClass, "function");
+            assert.strictEqual(typeof clazz.deleteClass, "function");
         })
 
         it('checks if ClassModel.editClass was created', function()
         {
             var clazz = new ClassModel();
-            assert.equal(typeof clazz.editClass, "function");
+            assert.strictEqual(typeof clazz.editClass, "function");
         })
 
         it('checks if ClassModel.findAllClassesByUser was created', function()
         {
             var clazz = new ClassModel();
-            assert.equal(typeof clazz.findAllClassesByUser, "function");
+            assert.strictEqual(typeof clazz.findAllClassesByUser, "function");
         })
 
         it('checks if ClassModel.registerNewClass was created', function()
         {
             var clazz = new ClassModel();
-            assert.equal(typeof clazz.registerNewClass, "function");
+            assert.strictEqual(typeof clazz.registerNewClass, "function");
+        })
+
+        it('checks if ClassModel.registerMomentInTime was created', function()
+        {
+            var clazz = new ClassModel();
+            assert.strictEqual(typeof clazz.registerClassMomentInTime, 'function');
         })
     })
 })
