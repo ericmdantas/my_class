@@ -9,10 +9,10 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
         lib_frontend = $injector.get('lib_frontend');
-        httpMock.when('GET', '/api/getStudents').respond({students: [{nome: 'aluno qualquer'}]});
-        httpMock.when('GET', '/api/getClassesNames').respond({classes: [{name: 'aluno qualquer'}]});
-        httpMock.when('POST', '/api/registerStudent').respond(200);
-        httpMock.when('DELETE', '/api/deleteStudent/1').respond(200);
+        httpMock.when('GET', '/api/students').respond({students: [{nome: 'aluno qualquer'}]});
+        httpMock.when('GET', '/api/classes/name').respond({classes: [{name: 'turma qualquer'}]});
+        httpMock.when('POST', '/api/students').respond(200);
+        httpMock.when('DELETE', '/api/students/1').respond(200);
     }))
 
     describe('elements creation', function()
@@ -126,11 +126,11 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('/getStudents', (function()
+    describe('GET /api/students', (function()
     {
         it('checks if scope.alunos is being fed correctly even when there\'s no response', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudents').respond({});
+            httpMock.expectGET('/api/students').respond({});
             $controller('StudentsController', {$scope: scope});
             httpMock.flush();
             expect(scope.alunos.length).toEqual(0);
@@ -138,7 +138,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
         it('checks if scope.alunos is being fed correctly even when there\'s only the object students - no array', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudents').respond({students: []});
+            httpMock.expectGET('/api/students').respond({students: []});
             $controller('StudentsController', {$scope: scope});
             httpMock.flush();
             expect(scope.alunos.length).toEqual(0);
@@ -152,12 +152,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         }))
     }))
 
-    describe('/getClassesNames', function()
-    {
-
-    })
-
-    describe('/registerStudent', function()
+    describe('POST /api/students', function()
     {
         it('checks if after registering, the scope.novoAluno is an empty object', inject(function($controller)
         {
@@ -169,7 +164,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
         it('checks if addition is working', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudents').respond({students: [{name: 'A'}]});
+            httpMock.expectGET('/api/students').respond({students: [{name: 'A'}]});
             $controller('StudentsController', {$scope: scope});
             var obj = {name: 'A', class: {name: 'B'}, status: {nome: 'C'}, availability: 'D'};
             scope.registerNewStudent(obj);
@@ -185,23 +180,24 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('/editStudent', function()
+    describe('PUT /api/students/:id', function()
     {
-        it('tries to edit a student with an empty object', inject(function($controller)
+        it('tries to edit a student with an empty object - throws exception', inject(function($controller)
         {
-            httpMock.expectPOST('/api/editStudent', undefined).respond();
+            httpMock.expectPUT('/api/students/1', undefined).respond();
             $controller('StudentsController', {$scope: scope});
             expect(function(){scope.editStudent(null)}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
             expect(function(){scope.editStudent(undefined)}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
             expect(function(){scope.editStudent()}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
+            expect(function(){scope.editStudent({})}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
         }))
 
-        it('should edit successfully and return one students on /api/getStudents', inject(function($controller)
+        it('should edit successfully and return students on /api/students', inject(function($controller)
         {
-            httpMock.expectPOST('/api/editStudent').respond();
-            httpMock.expectGET('/api/getStudents').respond({students: [{name: 'nome'}]});
+            httpMock.expectPUT('/api/students/1').respond();
+            httpMock.expectGET('/api/students').respond({students: [{name: 'nome'}]});
             $controller('StudentsController', {$scope: scope});
-            var student = {name: 'e', class: '', status: '', contract: ''};
+            var student = {_id: 1, name: 'e', class: '', status: '', contract: ''};
             scope.editStudent(student);
             httpMock.flush();
             expect(scope.alunos).toBeDefined();
@@ -209,7 +205,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('/deleteStudent', function()
+    describe('DELETE /api/students/:id', function()
     {
         it('tries to delete a student with wrong parameters', inject(function($controller)
         {
@@ -221,7 +217,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
         it('checks if deletion is working - if there were 3 students, should be 2 after deletion', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudents').respond({students: {students: []}});
+            httpMock.expectGET('/api/students').respond({students: {students: []}});
             $controller('StudentsController', {$scope: scope});
             scope.alunos = [{name: 1, idade: 1, _id: 1}];
             var quantidadeDeAlunosAntesDaDelecao = scope.alunos.length;

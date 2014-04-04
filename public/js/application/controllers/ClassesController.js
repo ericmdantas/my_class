@@ -13,7 +13,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
     $scope.getClasses = function()
     {
-        $http.get('/api/getClasses')
+        $http.get('/api/classes')
              .success(function(data)
                       {
                           $scope.turmas = data.classes;
@@ -35,7 +35,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/registerClassMomentInTime', moment)
+        $http.post('/api/classesMoment', moment)
              .success(function()
                      {
                          closesModal('#modal-day-by-day');
@@ -46,7 +46,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
     $scope.getStudentsNames = function(turma)
     {
-        $http.get('/api/getStudentsNames/'+turma)
+        $http.get('/api/students/name/'+turma)
              .success(function(data)
                     {
                         if (data && data.students)
@@ -65,7 +65,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
     $scope.getTeachersNames = function()
     {
-        $http.get('/api/getTeachersNames')
+        $http.get('/api/teachers/name')
             .success(function(data)
             {
                 $scope.professores = (data && data.resultado) ? data.resultado : [];
@@ -114,7 +114,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     {
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/registerClass', turma)
+        $http.post('/api/classes', turma)
             .success(function()
             {
                 closesModal('#modal-register-class');
@@ -126,7 +126,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     {
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/editClass', turma)
+        $http.put('/api/classes/'+turma._id, turma)
              .success(function()
                      {
                          closesModal('#modal-edit-class');
@@ -141,7 +141,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete('/api/deleteClass/'+id)
+        $http.delete('/api/classes/'+id)
             .success(function()
                     {
                         closesModal('#modal-delete-class');

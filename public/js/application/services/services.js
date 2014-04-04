@@ -79,7 +79,7 @@ services.lib = function()
 {
     function removeEspacosEmBranco(obj)
     {
-        if (!obj)
+        if ((!obj) || ("object" !== typeof obj) || (!Object.keys(obj).length))
             throw new Error('problema na remoção de espaços em branco (obj == undefined)');
 
         for (var i in obj)

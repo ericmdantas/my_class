@@ -155,9 +155,14 @@
                 </table>
 
                 <div ng-repeat="momento in turma.momentTime">
-                    <div ng-repeat="aluno in momento.studentsInTheClass">
-                        <p class="text-almost-invisible">aluno: <span class="text-almost-black">{{aluno.name}}</span><is-ok-disc situation="{{aluno.isInClass}}" when="{{momento.date}}"></is-ok-disc></p>
-                    </div>
+                    <table class="table">
+                        <tbody>
+                            <tr ng-repeat="aluno in momento.studentsInTheClass">
+                                <td>{{aluno.name}}</td>
+                                <td><is-ok-disc situation="{{aluno.isInClass}}" when="momento.date"></is-ok-disc></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

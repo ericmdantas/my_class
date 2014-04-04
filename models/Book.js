@@ -41,9 +41,9 @@
         })
     }
 
-    bookSchema.methods.editBook = function(usuario, livro, done)
+    bookSchema.methods.editBook = function(usuario, livro, id, done)
     {
-        var query = {usersAllowed: {$in: [usuario]}, _id: livro._id};
+        var query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete livro._id;
         var updt = livro;
 

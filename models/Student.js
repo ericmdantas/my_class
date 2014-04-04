@@ -47,18 +47,18 @@
                     })
     }
 
-    studentSchema.methods.findAllStudentsNames = function(user, turma, done)
+    studentSchema.methods.findAllStudentsNamesByClass = function(user, done)
     {
         var query = {usersAllowed: {$in: [user]}, class: turma};
         var projection = {name: 1};
 
         Student.find(query, projection)
-               .exec(function(err, teachers)
+               .exec(function(err, students)
                {
                    if (err)
                        return done(err, null);
 
-                   done(null, teachers)
+                   done(null, students)
                })
     }
 
@@ -76,9 +76,9 @@
                     })
     }
 
-    studentSchema.methods.editStudent = function(usuario, aluno, done)
+    studentSchema.methods.editStudent = function(usuario, aluno, id, done)
     {
-        var query = {usersAllowed: {$in: [usuario]}, _id: aluno._id};
+        var query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete aluno._id;
         var updt = aluno;
 

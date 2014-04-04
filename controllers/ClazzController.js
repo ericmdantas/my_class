@@ -90,6 +90,7 @@ function Clazz()
     function editClass(req, res)
     {
         var usuario = req.session.passport.user;
+        var turmaID = req.params.id;
         var turma = req.body;
         var clazz = new ClazzModel();
 
@@ -104,7 +105,7 @@ function Clazz()
                 res.end();
         }
 
-        clazz.editClass(usuario, turma, callback);
+        clazz.editClass(usuario, turma, turmaID, callback);
     }
 
     function deleteClass(req, res)

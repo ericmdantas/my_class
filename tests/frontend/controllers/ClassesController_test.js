@@ -8,13 +8,13 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
     {
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
-        httpMock.when('GET', '/api/getClasses').respond({classes: [{name: 'a'}, {name: 'b'}]});
-        httpMock.when('GET', '/api/getStudentsNames/aluno1').respond({});
-        httpMock.when('GET', '/api/getTeachersNames').respond({});
-        httpMock.when('POST', '/api/registerClass').respond(200);
-        httpMock.when('POST', '/api/editClass').respond(200);
-        httpMock.when('POST', '/api/registerClassMomentInTime').respond(200);
-        httpMock.when('DELETE', '/api/deleteClass/A').respond(200);
+        httpMock.when('GET', '/api/classes').respond({classes: [{name: 'a'}, {name: 'b'}]});
+        httpMock.when('GET', '/api/students/name/turma1').respond({});
+        httpMock.when('GET', '/api/teachers/name').respond({});
+        httpMock.when('POST', '/api/classes').respond(200);
+        httpMock.when('PUT', '/api/classes').respond(200);
+        httpMock.when('POST', '/api/classesMoment').respond(200);
+        httpMock.when('DELETE', '/api/classes/A').respond(200);
     }))
 
     describe('elements creation', function()
@@ -149,7 +149,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('/api/registerClassMomentInTime', function()
+    describe('POST /api/classesMoment', function()
     {
         it('shouldn\'t fetch request - empty parameters', inject(function($controller)
         {
@@ -198,21 +198,21 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('/api/getStudentsNames', function()
+    describe('GET /api/students/name', function()
     {
         it('checks if the request is being made', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudentsNames/aluno1').respond({});
+            httpMock.expectGET('/api/students/name/turma1').respond({});
             $controller('ClassesController', {$scope: scope});
-            scope.getStudentsNames('aluno1');
+            scope.getStudentsNames('turma1');
             httpMock.flush();
         }))
 
         it('checks if /getStudentsNames is working even when there\'s no response', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudentsNames/aluno1').respond({});
+            httpMock.expectGET('/api/students/name/turma1').respond({});
             $controller('ClassesController', {$scope: scope});
-            scope.getStudentsNames('aluno1');
+            scope.getStudentsNames('turma1');
             httpMock.flush();
             expect(scope.alunos).toBeDefined();
             expect(typeof scope.alunos).toEqual('object');
@@ -220,9 +220,9 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
 
         it('checks if /getStudentsNames is working even when the response isn\'t complete', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudentsNames/aluno1').respond({students: []});
+            httpMock.expectGET('/api/students/name/turma1').respond({students: []});
             $controller('ClassesController', {$scope: scope});
-            scope.getStudentsNames('aluno1');
+            scope.getStudentsNames('turma1');
             httpMock.flush();
             expect(scope.alunos).toBeDefined();
             expect(typeof scope.alunos).toEqual('object');
@@ -230,29 +230,29 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
 
         it('checks if /getStudentsNames is working when the response is complete', inject(function($controller)
         {
-            httpMock.expectGET('/api/getStudentsNames/aluno1').respond({students: [{name: 'aluno1'}]});
+            httpMock.expectGET('/api/students/name/turma1').respond({students: [{name: 'turma1'}]});
             $controller('ClassesController', {$scope: scope});
-            scope.getStudentsNames('aluno1');
+            scope.getStudentsNames('turma1');
             httpMock.flush();
             expect(scope.alunos).toBeDefined();
             expect(typeof scope.alunos).toEqual('object');
-            expect(scope.alunos[0].name).toEqual('aluno1');
+            expect(scope.alunos[0].name).toEqual('turma1');
             expect(scope.alunos.length).toEqual(1);
         }))
     })
 
-    describe('/api/getTeachersNames', function()
+    describe('GET /api/teachers/name', function()
     {
         it('checks if the request is being made', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachersNames').respond({});
+            httpMock.expectGET('/api/teachers/name').respond({});
             $controller('ClassesController', {$scope: scope});
             httpMock.flush();
         }))
 
         it('checks if /getTeachersNames is working even when there\'s no response', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachersNames').respond({});
+            httpMock.expectGET('/api/teachers/name').respond({});
             $controller('ClassesController', {$scope: scope});
             httpMock.flush();
             expect(scope.professores).toBeDefined();
@@ -261,7 +261,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
 
         it('checks if /getTeachersNames is working even when the response isn\'t complete', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachersNames').respond({students: []});
+            httpMock.expectGET('/api/teachers/name').respond({students: []});
             $controller('ClassesController', {$scope: scope});
             httpMock.flush();
             expect(scope.professores).toBeDefined();
@@ -270,7 +270,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
 
         it('checks if /getTeachersNames is working when the response is complete', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachersNames').respond({resultado: [{name: 'professor1'}]});
+            httpMock.expectGET('/api/teachers/name').respond({resultado: [{name: 'professor1'}]});
             $controller('ClassesController', {$scope: scope});
             httpMock.flush();
             expect(scope.professores).toBeDefined();
@@ -314,7 +314,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         }))
     })*/
 
-    describe('/api/deleteClass', function()
+    describe('DELETE /api/delete/:id', function()
     {
         it('tries to delete a class passing wrong ids', inject(function($controller)
         {
@@ -337,7 +337,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('/api/registerClass', function()
+    describe('POST /api/classes', function()
     {
         it('checks if adding a class is working - if there were 3 classes, should be 4 after the adition', inject(function($controller)
         {

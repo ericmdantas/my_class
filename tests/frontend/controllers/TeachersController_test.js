@@ -10,8 +10,10 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
     {
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
-        httpMock.when('GET', '/api/getTeachers').respond();
-        httpMock.when('DELETE', '/api/deleteTeacher').respond();
+        httpMock.when('GET', '/api/teachers').respond();
+        httpMock.when('POST', '/api/teachers').respond();
+        httpMock.when('PUT', '/api/teachers/123').respond();
+        httpMock.when('DELETE', '/api/teachers').respond();
     }))
 
     describe('checks elements creation', function()
@@ -165,11 +167,11 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('checks http.get', function()
+    describe('GET /api/teachers', function()
     {
         it('checks if the get is being used - respond nothing', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachers').respond({});
+            httpMock.expectGET('/api/teachers').respond({});
             $controller('TeachersController', {$scope: scope});
             httpMock.flush();
             expect(scope.professores.length).toBe(0);
@@ -177,7 +179,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if the get is being used - respond with resultado only', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachers').respond({resultado: []});
+            httpMock.expectGET('/api/teachers').respond({resultado: []});
             $controller('TeachersController', {$scope: scope});
             httpMock.flush();
             expect(scope.professores.length).toBe(0);
@@ -185,14 +187,63 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if the get is being used', inject(function($controller)
         {
+            httpMock.expectGET('/api/teachers').respond({resultado: ['somebody here', 'somebody else in here']});
             $controller('TeachersController', {$scope: scope});
-            httpMock.expectGET('/api/getTeachers').respond({resultado: ['somebody here', 'somebody else in here']});
             httpMock.flush();
             expect(scope.professores.length).toBe(2);
         }))
     })
 
-    describe('checks http.post', function()
+    describe('POST /api/teachers', function()
+    {
+        it('try to post a teacher without any info - throws error', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+            expect(function(){scope.registerNewTeacher()}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
+            expect(function(){scope.registerNewTeacher(null)}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
+            expect(function(){scope.registerNewTeacher(undefined)}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
+            expect(function(){scope.registerNewTeacher([])}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
+            expect(function(){scope.registerNewTeacher({})}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
+        }))
+
+        it('registers a ok teacher', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+            var teacher = {name: 'professor', salary: 123};
+            scope.registerNewTeacher(teacher);
+            httpMock.flush();
+        }))
+    })
+
+    describe('PUT /api/teachers/:id', function()
+    {
+        it('try to edit a teacher without any info', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+            expect(function(){scope.editTeacher()}).toThrow(new Error('Não é possível editar um professor sem informações.'));
+            expect(function(){scope.editTeacher(null)}).toThrow(new Error('Não é possível editar um professor sem informações.'));
+            expect(function(){scope.editTeacher(undefined)}).toThrow(new Error('Não é possível editar um professor sem informações.'));
+            expect(function(){scope.editTeacher([])}).toThrow(new Error('Não é possível editar um professor sem informações.'));
+            expect(function(){scope.editTeacher({})}).toThrow(new Error('Não é possível editar um professor sem informações.'));
+        }))
+
+        it('try to edit a teacher without any id', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+            var teacher = {name: 'Professor', salary: 123};
+            expect(function(){scope.editTeacher(teacher)}).toThrow(new Error('Não é possível editar um professor sem informações.'));
+        }))
+
+        it('edit a teacher successfully', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: scope});
+            var teacher = {_id: 123, name: 'Professor', salary: 1};
+            scope.editTeacher(teacher);
+            httpMock.flush();
+        }))
+    })
+
+    describe('DELETE /api/teachers/:id', function()
     {
         it('tries to delete a teacher with wrong id', inject(function($controller)
         {
@@ -205,8 +256,8 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if the deletion is working', inject(function($controller)
         {
-            httpMock.expectGET('/api/getTeachers').respond({resultado: {teachers: []}});
-            httpMock.expectDELETE('/api/deleteTeacher/123').respond({});
+            httpMock.expectGET('/api/teachers').respond({resultado: {teachers: []}});
+            httpMock.expectDELETE('/api/teachers/123').respond({});
             $controller('TeachersController', {$scope: scope});
 
             var professor = {nome: "fulano", _id: 123};

@@ -52,6 +52,7 @@ function Book()
     function editaLivro(req, res)
     {
         var usuario = req.session.passport.user;
+        var livroID = req.params.id;
         var livro = req.body;
         var book = new BookModel();
 
@@ -66,7 +67,7 @@ function Book()
                 res.end();
         }
 
-        book.editBook(usuario, livro, callback);
+        book.editBook(usuario, livro, livroID, callback);
     }
 
     function removeLivro(req, res)

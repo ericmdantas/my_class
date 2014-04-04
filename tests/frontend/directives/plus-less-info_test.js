@@ -25,25 +25,5 @@ describe('PLUSLESSINFO BEING TESTED', function()
         {
             expect(element).toBeDefined();
         })
-
-        it('checks if scope.symbol was created', function()
-        {
-            scope.$apply(function()
-            {
-                scope.symbol = '+';
-            });
-
-            expect(element[0].firstChild.innerText).toEqual('+');
-        })
-
-        it('checks if scope.elementToToggle was created', function()
-        {
-            scope.$apply(function()
-            {
-                scope.elementToToggle = 'some-element-to-toggle';
-            });
-
-            expect(element[0].firstChild.attributes[2].nodeValue).toEqual('#some-element-to-toggle');
-        })
     })
 })

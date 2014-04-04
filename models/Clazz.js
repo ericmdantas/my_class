@@ -9,7 +9,7 @@
         teacher: {type: String, trim: true, required: true},
         date: {type: Date, required: true},
         lastModified: {type: Date, required: true, default: new Date},
-        studentsInTheClass: [{name: String, isInClass: Boolean}],
+        studentsInTheClass: [{name: String}],
         subject: {type: String, trim: true, required: true},
         observation: {type: String, trim: true}
     })
@@ -84,9 +84,9 @@
         })
     }
 
-    clazzSchema.methods.editClass = function(usuario, turma, done)
+    clazzSchema.methods.editClass = function(usuario, turma, id, done)
     {
-        var query = {usersAllowed: {$in: [usuario]}, _id: turma._id};
+        var query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete turma._id;
         var updt = turma;
 

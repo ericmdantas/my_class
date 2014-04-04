@@ -10,8 +10,8 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
     {
         httpMock = $injector.get('$httpBackend');
         scope = $injector.get('$rootScope').$new();
-        httpMock.when('GET', '/api/getPayments').respond();
-        httpMock.when('POST', '/api/registerPayment', undefined).respond();
+        httpMock.when('GET', '/api/payments').respond();
+        httpMock.when('POST', '/api/payments', undefined).respond();
     }))
 
     describe('checks elements creation', function()
@@ -47,7 +47,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('/getPayments', function()
+    describe('GET /api/payments', function()
     {
         it('should fetch the get correctly', inject(function($controller)
         {
@@ -65,7 +65,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
 
         it('should fetch the get correctly - only resultado response', inject(function($controller)
         {
-            httpMock.expectGET('/api/getPayments').respond({resultado: []});
+            httpMock.expectGET('/api/payments').respond({resultado: []});
             $controller('PaymentsController', {$scope: scope});
             httpMock.flush();
             expect(scope.pagamentos).toBeDefined();
@@ -74,7 +74,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
 
         it('should fetch the get correctly - only complete response', inject(function($controller)
         {
-            httpMock.expectGET('/api/getPayments').respond({resultado: [{name: 'aluno'}]});
+            httpMock.expectGET('/api/payments').respond({resultado: [{name: 'aluno'}]});
             $controller('PaymentsController', {$scope: scope});
             httpMock.flush();
             expect(scope.pagamentos).toBeDefined();
@@ -83,7 +83,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('/registerPayment', function()
+    describe('POST /api/payments', function()
     {
         it('shouldn\'t continue, because payment is undefined', inject(function($controller)
         {
@@ -96,7 +96,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
 
         it('should registerPayment successfully', inject(function($controller)
         {
-            httpMock.expectPOST('/api/registerPayment').respond(200);
+            httpMock.expectPOST('/api/payments').respond(200);
             $controller('PaymentsController', {$scope: scope});
             var pagamento = {name: 'eric', class: '', paymentMonth: ''};
             scope.pay(pagamento);

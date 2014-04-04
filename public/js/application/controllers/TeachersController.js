@@ -10,7 +10,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.getTeachers = function()
     {
-        $http.get('/api/getTeachers')
+        $http.get('/api/teachers')
              .success(function(data)
                       {
                           $scope.professores = (data && data.resultado) ? data.resultado : [];
@@ -51,8 +51,13 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
     $scope.registerNewTeacher = function(professor)
     {
         $scope.isLoadingVisible.modal = true;
+
+        if ((!professor) || ("object" !== typeof professor) || !Object.keys(professor).length)
+            throw new Error('Não é possível cadastrar um professor sem informações.');
+
         professor = lib_fronted.removeWhiteSpaces(professor);
-        $http.post('/api/registerTeacher', professor)
+
+        $http.post('/api/teachers', professor)
             .success(function()
             {
                 closesModal('#modal-register-teacher');
@@ -63,9 +68,13 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
     $scope.editTeacher = function(professor)
     {
         $scope.isLoadingVisible.modal = true;
+
+        if ((!professor) || ("object" !== typeof professor) || (!professor._id) || (!Object.keys(professor).length))
+            throw new Error('Não é possível editar um professor sem informações.');
+
         professor = lib_fronted.removeWhiteSpaces(professor);
 
-        $http.post('/api/editTeacher', professor)
+        $http.put('/api/teachers/'+professor._id, professor)
              .success(function()
                        {
                            closesModal('#modal-edit-teacher');
@@ -82,7 +91,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete('/api/deleteTeacher/'+id)
+        $http.delete('/api/teachers/'+id)
              .success(function()
                      {
                          closesModal('#modal-delete-teacher');

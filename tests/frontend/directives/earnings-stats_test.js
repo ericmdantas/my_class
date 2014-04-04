@@ -10,7 +10,7 @@ describe('EARNINGSTATS BEING TESTED', function()
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
         compile = $injector.get('$compile');
-        httpMock.when('GET', '/api/getEarningByTrimester').respond({});
+        httpMock.when('GET', '/api/earnings/trimester').respond({});
         var html = '<earnings-stats>' +
                         '<div class="info-card transition">'+
                             '<h3>arrecadação por trimestre</h3>'+

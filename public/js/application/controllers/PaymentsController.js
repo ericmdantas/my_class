@@ -7,7 +7,7 @@ myClass.controller('PaymentsController', ['$scope', '$http', 'pageConfig', funct
     $scope.isLoadingVisible = {modal: false};
     $scope.cfg = pageConfig;
 
-    $http.get('/api/getPayments')
+    $http.get('/api/payments')
          .success(function(data)
                  {
                         $scope.pagamentos = (data && data.resultado) ? data.resultado : [];
@@ -49,7 +49,7 @@ myClass.controller('PaymentsController', ['$scope', '$http', 'pageConfig', funct
         pagamento.class = pagamento.class ? pagamento.class.class : '';
         pagamento.paymentMonth = pagamento.paymentMonth ? pagamento.paymentMonth.nome : '';
 
-        $http.post('/api/registerPayment', pagamento)
+        $http.post('/api/payments', pagamento)
              .success(function()
                      {
                          escondeModal('#modal-pay');

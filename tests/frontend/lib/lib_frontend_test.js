@@ -32,9 +32,16 @@ describe('LIB_FRONTEND BEING TESTED', function()
 
     describe('checks if removeWhiteSpaces is working', function()
     {
-        it('should check if removeWhiteSpaces is working', function()
+        it('should check if removeWhiteSpaces is working - invalid parameters', function()
         {
+            expect(function(){lib_frontend.removeWhiteSpaces()}).toThrow(new Error('problema na remoção de espaços em branco (obj == undefined)'));
+            expect(function(){lib_frontend.removeWhiteSpaces("")}).toThrow(new Error('problema na remoção de espaços em branco (obj == undefined)'));
+            expect(function(){lib_frontend.removeWhiteSpaces(null)}).toThrow(new Error('problema na remoção de espaços em branco (obj == undefined)'));
             expect(function(){lib_frontend.removeWhiteSpaces(undefined)}).toThrow(new Error('problema na remoção de espaços em branco (obj == undefined)'));
+            expect(function(){lib_frontend.removeWhiteSpaces({})}).toThrow(new Error('problema na remoção de espaços em branco (obj == undefined)'));
+            expect(function(){lib_frontend.removeWhiteSpaces([])}).toThrow(new Error('problema na remoção de espaços em branco (obj == undefined)'));
+            expect(function(){lib_frontend.removeWhiteSpaces(true)}).toThrow(new Error('problema na remoção de espaços em branco (obj == undefined)'));
+            expect(function(){lib_frontend.removeWhiteSpaces(false)}).toThrow(new Error('problema na remoção de espaços em branco (obj == undefined)'));
         })
 
         it('should check if removeWhiteSpaces is working - undefined', function()
@@ -59,6 +66,13 @@ describe('LIB_FRONTEND BEING TESTED', function()
         {
             var obj = {nome: " eric  ", vivo: true, idade: 24, idk: undefined, altura: 1.703232322323232};
             expect(lib_frontend.removeWhiteSpaces(obj).nome).toBe('eric');
+        })
+
+        it('should check if removeWhiteSpaces is working - decimals', function()
+        {
+            var obj = {nome: " eric  ", sobrenome: 'dantas      ', vivo: true, idade: 24, idk: undefined, altura: 1.703232322323232};
+            expect(lib_frontend.removeWhiteSpaces(obj).nome).toBe('eric');
+            expect(lib_frontend.removeWhiteSpaces(obj).sobrenome).toBe('dantas');
         })
     })
 })

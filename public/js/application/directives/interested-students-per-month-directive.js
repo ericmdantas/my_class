@@ -11,7 +11,7 @@ myClass.directive('interestedStudentsPerMonth', function()
     {
         $scope.alunosInteressadosPorMes = [];
 
-        $http.get('/api/getInterestedStudentsPerMonth')
+        $http.get('/api/interestedStudents/month')
              .success(function(data)
                       {
                             if (!data || !data.resultado)

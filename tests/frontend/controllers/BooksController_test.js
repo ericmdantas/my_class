@@ -7,10 +7,10 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
     beforeEach(inject(function($injector)
     {
         httpMock = $injector.get('$httpBackend');
-        httpMock.when('GET', '/api/getBooks').respond({books: [{name: 'A', quantity: 5}]});;
-        httpMock.when('POST', '/api/registerBook').respond(200);
-        httpMock.when('POST', '/api/editBook').respond({});
-        httpMock.when('DELETE', '/api/deleteBook/livro1').respond(200);
+        httpMock.when('GET', '/api/books').respond({books: [{name: 'A', quantity: 5}]});;
+        httpMock.when('POST', '/api/books').respond(200);
+        httpMock.when('PUT', '/api/books/123').respond({});
+        httpMock.when('DELETE', '/api/books/livro1').respond(200);
         scope = $injector.get('$rootScope').$new();
     }))
 
@@ -107,11 +107,11 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('checking $http.get on books', function()
+    describe('GET /api/books', function()
     {
         it('scope.livros should be an empty array', inject(function($controller)
         {
-            httpMock.expectGET('/api/getBooks').respond();
+            httpMock.expectGET('/api/books').respond();
             $controller('BooksController', {$scope: scope});
             expect(scope.livros.length).toEqual(0);
         }))
@@ -127,14 +127,14 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
 
         it('should return an empty string', inject(function($controller)
         {
-            httpMock.expectGET('/api/getBooks');
+            httpMock.expectGET('/api/books');
             $controller('BooksController', {$scope: scope});
             httpMock.flush();
             expect(scope.livros).toBeDefined();
         }))
     })
 
-    describe('registering books', function()
+    describe('POST /api/books', function()
     {
         it('should not register a book with empty object', inject(function($controller)
         {
@@ -155,7 +155,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('editting books', function()
+    describe('PUT /api/books/:id', function()
     {
         it('should throw an exception when trying to edit a non existed book', inject(function($controller)
         {
@@ -163,12 +163,13 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
             expect(function(){scope.editBook(undefined)}).toThrow(new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.'));
             expect(function(){scope.editBook(null)}).toThrow(new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.'));
             expect(function(){scope.editBook()}).toThrow(new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.'));
+            expect(function(){scope.editBook({name: 'a'})}).toThrow(new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.'));
         }))
 
         it('should change the book name', inject(function($controller)
         {
             $controller('BooksController', {$scope: scope});
-            var livroEditado = {name: 'outro nome', quantity: 7};
+            var livroEditado = {_id: 123, name: 'outro nome', quantity: 7};
             scope.editBook(livroEditado);
             httpMock.flush();
             expect(scope.livros[0].name).toBe('A');
@@ -176,7 +177,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('removing books', function()
+    describe('DELETE /api/books/:id', function()
     {
         it('trying to delete book without _id', inject(function($controller)
         {

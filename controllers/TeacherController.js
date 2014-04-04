@@ -72,6 +72,7 @@ function Teacher()
     function editTeacher(req, res)
     {
         var usuario = req.session.passport.user;
+        var professorID = req.params.id;
         var professor = req.body;
         var teacher = new TeacherModel();
 
@@ -86,7 +87,7 @@ function Teacher()
                 res.end();
         }
 
-        teacher.editTeacher(usuario, professor, callback);
+        teacher.editTeacher(usuario, professor, professorID, callback);
     }
 
     function deleteTeacher(req, res)

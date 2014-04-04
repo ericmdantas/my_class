@@ -4,6 +4,7 @@
     {
         application.use(exp.static(dir + '/public'));
         application.use(exp.logger());
+        application.use(exp.compress());
         application.use(exp.bodyParser());
         application.use(exp.cookieParser('112233'));
         application.use(exp.session({secret: 'somethingthatshouldbeasecr3t'}));

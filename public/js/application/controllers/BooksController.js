@@ -10,7 +10,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
     $scope.getBooks = function()
     {
-        $http.get('/api/getBooks')
+        $http.get('/api/books')
              .success(function(data)
                       {
                           $scope.livros = (data && data.books) ? data.books : [];
@@ -55,7 +55,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/registerBook', livro)
+        $http.post('/api/books', livro)
              .success(function()
                      {
                          closesModal('#modal-register-book');
@@ -65,12 +65,12 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
     $scope.editBook = function(livro)
     {
-        if ((!livro) || ("object" !== typeof livro))
+        if ((!livro) || ("object" !== typeof livro) || (!livro._id))
             throw new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.');
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/editBook', livro)
+        $http.put('/api/books/'+livro._id, livro)
              .success(function()
                      {
                          closesModal('#modal-edit-book');
@@ -85,7 +85,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete('/api/deleteBook/'+id)
+        $http.delete('/api/books/'+id)
              .success(function()
                       {
                           closesModal('#modal-delete-book');

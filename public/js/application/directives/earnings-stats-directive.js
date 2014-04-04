@@ -11,7 +11,7 @@ myClass.directive('earningsStats', function()
     {
         $scope.valoresTrimestre = [];
 
-        $http.get('/api/getEarningByTrimester')
+        $http.get('/api/earnings/trimester')
              .success(function(data)
              {
                  if (!data || !data.resultado)

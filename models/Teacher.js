@@ -63,9 +63,9 @@
                     })
     }
 
-    teacherSchema.methods.editTeacher = function(usuario, professor, done)
+    teacherSchema.methods.editTeacher = function(usuario, professor, id, done)
     {
-        var query = {usersAllowed: {$in: [usuario]}, _id: professor._id};
+        var query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete professor._id;
         var updt = professor;
 

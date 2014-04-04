@@ -10,7 +10,7 @@ describe('interested students per month being tested', function()
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
         compile = $injector.get('$compile');
-        httpMock.when('GET', '/api/getInterestedStudentsPerMonth').respond({});
+        httpMock.when('GET', '/api/interestedStudents/month').respond({});
 
         var html = '<interested-students-per-month>'
                        '<div class="info-card transition">'+
