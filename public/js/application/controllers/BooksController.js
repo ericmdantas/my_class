@@ -50,7 +50,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
     $scope.registerBook = function(livro)
     {
-        if ((!livro) || (typeof livro !== "object"))
+        if ((!livro) || (typeof livro !== "object") || (!Object.keys(livro).length))
            throw new Error('Não foi possível cadastrar este livro, pois o mesmo não existe.')
 
         $scope.isLoadingVisible.modal = true;
@@ -80,7 +80,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
     $scope.deleteBook = function(id)
     {
-        if ((!id) || "object" === typeof id)
+        if ((!id) || ("object" === typeof id))
             throw new Error('Ocorreu um erro na deleção do livro. Não há um id identificado.');
 
         $scope.isLoadingVisible.modal = true;

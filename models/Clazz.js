@@ -9,7 +9,7 @@
         teacher: {type: String, trim: true, required: true},
         date: {type: Date, required: true},
         lastModified: {type: Date, required: true, default: new Date},
-        studentsInTheClass: [{name: String}],
+        studentsInTheClass: [{name: String, presence: [{isInClass: Boolean}]}],
         subject: {type: String, trim: true, required: true},
         observation: {type: String, trim: true}
     })

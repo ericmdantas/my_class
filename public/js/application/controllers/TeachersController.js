@@ -52,7 +52,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
     {
         $scope.isLoadingVisible.modal = true;
 
-        if ((!professor) || ("object" !== typeof professor) || !Object.keys(professor).length)
+        if ((!professor) || ("object" !== typeof professor) || (!Object.keys(professor).length))
             throw new Error('Não é possível cadastrar um professor sem informações.');
 
         professor = lib_fronted.removeWhiteSpaces(professor);
@@ -86,7 +86,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.deleteTeacher = function(id)
     {
-        if ((!id) || ("object" === typeof id))
+        if (("string" !== typeof id) || (!id))
             throw new Error('Não foi possível deletar este professor. Pois o ID está errado.');
 
         $scope.isLoadingVisible.modal = true;

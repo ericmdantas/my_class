@@ -42,6 +42,7 @@
 .border-left-color-laranja:hover {border-left-color: rgba(255, 80, 0, .5);}
 .border-left-color-roxo:hover {border-left-color: rgba(128, 0, 128, .6);}
 .border-left-color-rosa:hover {border-left-color: rgba(255, 13, 97, .6);}
+.border-left-color-avermelhado:hover {border-left-color: rgba(128, 0, 0, .6);}
 .topic.selected h1 {color: white; text-shadow: 1px 3px #666;}
 .topic.selected.border-left-color-verde h1 {background-color: rgba(0, 100, 0, .6);}
 .topic.selected.selected.border-left-color-azul h1 {background-color: rgba(0, 0, 255, .6);}
@@ -49,6 +50,7 @@
 .topic.selected.border-left-color-laranja h1 {background-color: rgba(255, 80, 0, .5);}
 .topic.selected.border-left-color-roxo h1 {background-color: rgba(128, 0, 128, .6);}
 .topic.selected.border-left-color-rosa h1 {background-color: rgba(255, 13, 97, .6);}
+.topic.selected.border-left-color-avermelhado h1 {background-color: rgba(128, 0, 0, .6);}
 .container-icon {opacity: .4}
 .presenca:hover {background-color: #eee;}
 .is-ok-disc {border-radius: 100%; background-color: red;}

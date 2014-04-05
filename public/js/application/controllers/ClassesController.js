@@ -9,71 +9,36 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     $scope.alunos = {};
     $scope.professores = {};
     $scope.isLoadingVisible = {modal: false};
-    $scope.monthYear = moment().format('MM/YYYY');
 
     $scope.getClasses = function()
     {
         $http.get('/api/classes')
              .success(function(data)
                       {
-                          $scope.turmas = data.classes;
+                          $scope.turmas = (data && data.classes) ? data.classes : [];
                       })
-    }
-
-    $scope.registerClassMomentInTime = function(turma, alunos)
-    {
-        if (!turma  || !alunos || !turma.teacher || !turma.date || !turma.subject)
-            throw new Error('Não será possível continuar, pois alguns parâmetros não foram informados.');
-
-        var moment = {};
-
-        moment.teacher = turma.teacher;
-        moment.date = turma.date;
-        moment.subject = turma.subject;
-        moment.observation = turma.observation;
-        moment.studentsInTheClass = alunos;
-
-        $scope.isLoadingVisible.modal = true;
-
-        $http.post('/api/classesMoment', moment)
-             .success(function()
-                     {
-                         closesModal('#modal-day-by-day');
-                         emptyProperty('turmaDiaDia');
-                         $scope.getClasses();
-                     })
     }
 
     $scope.getStudentsNames = function(turma)
     {
         $http.get('/api/students/name/'+turma)
-             .success(function(data)
-                    {
-                        if (data && data.students)
-                        {
-                            $scope.alunos = data.students;
-
-                            for (var x in $scope.alunos)
-                            {
-                                $scope.alunos[x].isInClass = true;
-                            }
-                        }
-                        else
-                            $scope.alunos = [];
-                    })
-    }
-
-    $scope.getTeachersNames = function()
-    {
-        $http.get('/api/teachers/name')
             .success(function(data)
             {
-                $scope.professores = (data && data.resultado) ? data.resultado : [];
+                if (data && data.students)
+                {
+                    $scope.alunos = data.students;
+
+                    for (var x in $scope.alunos)
+                    {
+                        $scope.alunos[x].isInClass = true;
+                    }
+                }
+                else
+                    $scope.alunos = [];
             })
     }
 
     $scope.getClasses();
-    $scope.getTeachersNames();
 
     function preparaAberturaModal(idModal)
     {
@@ -85,12 +50,6 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     {
         $(idModal).modal('hide');
         $scope.isLoadingVisible.modal = false;
-    }
-
-    $scope.openModalToRegisterDayByDay = function(myClass)
-    {
-        preparaAberturaModal('#modal-day-by-day');
-        $scope.turmaDiaDia = myClass;
     }
 
     $scope.openModalToEditClass = function(myClass)
@@ -114,6 +73,9 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     {
         $scope.isLoadingVisible.modal = true;
 
+        if ((!turma) || ("object" !== typeof turma) || (!Object.keys(turma).length))
+            throw new Error('Não foi possível registrar esta turma.');
+
         $http.post('/api/classes', turma)
             .success(function()
             {
@@ -126,6 +88,9 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     {
         $scope.isLoadingVisible.modal = true;
 
+        if ((!turma) || ("object" !== typeof turma) || (!Object.keys(turma).length) || (!turma._id))
+            throw new Error('Não foi possível editar esta turma.');
+
         $http.put('/api/classes/'+turma._id, turma)
              .success(function()
                      {
@@ -136,7 +101,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
     $scope.deleteClass = function(id)
     {
-        if ((!id) || ("object" === typeof id))
+        if (("string" !== typeof id) || (!id))
             throw new Error('Não foi possível deletar esta turma, pois o id está errado.');
 
         $scope.isLoadingVisible.modal = true;
@@ -158,21 +123,5 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
     function emptyProperty(propertyToBeEmpty)
     {
         $scope[propertyToBeEmpty] = {};
-    }
-
-    $scope.changeDate = function(data, tipo)
-    {
-        if (!tipo || !data)
-            return;
-
-        tipo = tipo.toLowerCase();
-
-        $scope.monthYear = moment()[tipo]('months', 1).calendar();
-    }
-
-    $scope.isHistoricoVisible = function(historico)
-    {
-        var periodoEscolhido = (historico) && ("number" === typeof historico)? historico : 0;
-        return periodoEscolhido > 0 ? true : false;
     }
 }])

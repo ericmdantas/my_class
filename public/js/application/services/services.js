@@ -14,6 +14,12 @@ services.pageConfig = function()
 
     var info =
     {
+        aulas:
+        {
+            nome: "aulas",
+            resumo: "gerencie informações como: professores que deram aulas, alunos presentes, matérias, etc.",
+            classeBorda: 'border-left-color-avermelhado'
+        },
         turmas:
         {
             nome: "turmas",

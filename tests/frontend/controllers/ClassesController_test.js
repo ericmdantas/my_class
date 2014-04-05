@@ -9,11 +9,8 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
         httpMock.when('GET', '/api/classes').respond({classes: [{name: 'a'}, {name: 'b'}]});
-        httpMock.when('GET', '/api/students/name/turma1').respond({});
-        httpMock.when('GET', '/api/teachers/name').respond({});
         httpMock.when('POST', '/api/classes').respond(200);
-        httpMock.when('PUT', '/api/classes').respond(200);
-        httpMock.when('POST', '/api/classesMoment').respond(200);
+        httpMock.when('PUT', '/api/classes/123').respond(200);
         httpMock.when('DELETE', '/api/classes/A').respond(200);
     }))
 
@@ -23,18 +20,6 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         {
             $controller('ClassesController', {$scope: scope});
             expect('ClassesController').toBeDefined();
-        }))
-
-        it('checks if registerClassMomentInTime is defined', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: scope});
-            expect(scope.registerClassMomentInTime).toBeDefined();
-        }))
-
-        it('checks if monthYear is defined', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: scope});
-            expect(scope.monthYear).toBeDefined();
         }))
 
         it('checks if $scope.novaTurma exists', inject(function($controller)
@@ -102,13 +87,6 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             expect(scope.getStudentsNames).toBeDefined();
             expect(typeof scope.getStudentsNames).toEqual('function');
         }))
-
-        it('checks if getTeachersNames is defined', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: scope});
-            expect(scope.getTeachersNames).toBeDefined();
-            expect(typeof scope.getTeachersNames).toEqual('function');
-        }))
     })
 
     describe('checks if opening modal to edit class is working properly', function()
@@ -127,156 +105,6 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             var chosenClass = {_id: 'abc', name: 'Turma1'};
             scope.openModalToEditClass(chosenClass);
             expect(scope.turmaEscolhida).toEqual(chosenClass);
-        }))
-    })
-
-    describe('checks if opening modal to set work is working properly', function()
-    {
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: scope});
-            var chosenClass = {};
-            scope.openModalToRegisterDayByDay(chosenClass);
-            expect(scope.turmaDiaDia).toEqual(chosenClass);
-        }))
-
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: scope});
-            var chosenClass = {_id: 'abc', name: 'Turma1'};
-            scope.openModalToRegisterDayByDay(chosenClass);
-            expect(scope.turmaDiaDia).toEqual(chosenClass);
-        }))
-    })
-
-    describe('POST /api/classesMoment', function()
-    {
-        it('shouldn\'t fetch request - empty parameters', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: scope});
-            expect(function(){scope.registerClassMomentInTime(undefined, undefined)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
-            expect(function(){scope.registerClassMomentInTime(null, null)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
-            expect(function(){scope.registerClassMomentInTime({}, {})}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
-            expect(function(){scope.registerClassMomentInTime([], [])}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
-            expect(function(){scope.registerClassMomentInTime(true, false)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
-        }))
-
-        it('shouldn\'t fetch request - wrong obligatory parameters', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: scope});
-
-            var turma = {teacher: "professor", data: new Date(), subject: 'matéria', observation: 'observação'};
-            var alunos = {studentsInClass: [{name: 'Abc', isInClass: false}]};
-
-            expect(function(){scope.registerClassMomentInTime(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
-
-            var turma = {teache: "professor", date: new Date(), subject: 'matéria', observation: 'observação'};
-            var alunos = {studentsInClass: [{name: 'Abc', isInClass: false}]};
-
-            expect(function(){scope.registerClassMomentInTime(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
-
-            var turma = {teacher: "professor", date: new Date(), subjecto: 'matéria', observation: 'observação'};
-            var alunos = {studentsInClass: [{name: 'Abc', isInClass: false}]};
-
-            expect(function(){scope.registerClassMomentInTime(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
-
-            var turma = {teache: "professor", date: new Date(), subject: 'matéria', observation: 'observação'};
-            var alunos = {studentsInClass: [{nome: 'Abc', inClass: false}]};
-
-            expect(function(){scope.registerClassMomentInTime(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
-        }))
-
-        it('should fetch request', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: scope});
-
-            var turma = {teacher: "professor", date: new Date(), subject: 'matéria', observation: 'observação'};
-            var alunos = {studentsInClass: [{name: 'Abc', isInClass: false}]};
-
-            scope.registerClassMomentInTime(turma, alunos);
-            httpMock.flush();
-        }))
-    })
-
-    describe('GET /api/students/name', function()
-    {
-        it('checks if the request is being made', inject(function($controller)
-        {
-            httpMock.expectGET('/api/students/name/turma1').respond({});
-            $controller('ClassesController', {$scope: scope});
-            scope.getStudentsNames('turma1');
-            httpMock.flush();
-        }))
-
-        it('checks if /getStudentsNames is working even when there\'s no response', inject(function($controller)
-        {
-            httpMock.expectGET('/api/students/name/turma1').respond({});
-            $controller('ClassesController', {$scope: scope});
-            scope.getStudentsNames('turma1');
-            httpMock.flush();
-            expect(scope.alunos).toBeDefined();
-            expect(typeof scope.alunos).toEqual('object');
-        }))
-
-        it('checks if /getStudentsNames is working even when the response isn\'t complete', inject(function($controller)
-        {
-            httpMock.expectGET('/api/students/name/turma1').respond({students: []});
-            $controller('ClassesController', {$scope: scope});
-            scope.getStudentsNames('turma1');
-            httpMock.flush();
-            expect(scope.alunos).toBeDefined();
-            expect(typeof scope.alunos).toEqual('object');
-        }))
-
-        it('checks if /getStudentsNames is working when the response is complete', inject(function($controller)
-        {
-            httpMock.expectGET('/api/students/name/turma1').respond({students: [{name: 'turma1'}]});
-            $controller('ClassesController', {$scope: scope});
-            scope.getStudentsNames('turma1');
-            httpMock.flush();
-            expect(scope.alunos).toBeDefined();
-            expect(typeof scope.alunos).toEqual('object');
-            expect(scope.alunos[0].name).toEqual('turma1');
-            expect(scope.alunos.length).toEqual(1);
-        }))
-    })
-
-    describe('GET /api/teachers/name', function()
-    {
-        it('checks if the request is being made', inject(function($controller)
-        {
-            httpMock.expectGET('/api/teachers/name').respond({});
-            $controller('ClassesController', {$scope: scope});
-            httpMock.flush();
-        }))
-
-        it('checks if /getTeachersNames is working even when there\'s no response', inject(function($controller)
-        {
-            httpMock.expectGET('/api/teachers/name').respond({});
-            $controller('ClassesController', {$scope: scope});
-            httpMock.flush();
-            expect(scope.professores).toBeDefined();
-            expect(typeof scope.professores).toEqual('object');
-        }))
-
-        it('checks if /getTeachersNames is working even when the response isn\'t complete', inject(function($controller)
-        {
-            httpMock.expectGET('/api/teachers/name').respond({students: []});
-            $controller('ClassesController', {$scope: scope});
-            httpMock.flush();
-            expect(scope.professores).toBeDefined();
-            expect(typeof scope.professores).toEqual('object');
-        }))
-
-        it('checks if /getTeachersNames is working when the response is complete', inject(function($controller)
-        {
-            httpMock.expectGET('/api/teachers/name').respond({resultado: [{name: 'professor1'}]});
-            $controller('ClassesController', {$scope: scope});
-            httpMock.flush();
-            expect(scope.professores).toBeDefined();
-            expect(typeof scope.professores).toEqual('object');
-            expect(scope.professores[0].name).toEqual('professor1');
-            expect(scope.professores.length).toEqual(1);
         }))
     })
 
@@ -299,46 +127,47 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         }))
     })
 
-    /*describe('changing dates', function()
+    describe('GET /api/classes', function()
     {
-        it('checks if adding advancing a month is working', inject(function($controller)
+        it('should get response from the server with empty object', inject(function($controller)
         {
-            $controller('ClassesController', {$scope: scope})
-            expect(scope.changeDate(moment().format('MM/YYYY'), 'add')).toBe(moment().add('months', 1).calendar());
-        }))
-
-        it('checks if adding reducing a month is working', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: scope})
-            expect(scope.changeDate(moment().format('MM/YYYY'), 'subtract')).toBe(moment().subtract('months', 1).calendar());
-        }))
-    })*/
-
-    describe('DELETE /api/delete/:id', function()
-    {
-        it('tries to delete a class passing wrong ids', inject(function($controller)
-        {
+            httpMock.expectGET('/api/classes').respond();
             $controller('ClassesController', {$scope: scope});
-            expect(function(){scope.deleteClass({});}).toThrow(new Error('Não foi possível deletar esta turma, pois o id está errado.'));
-            expect(function(){scope.deleteClass(undefined);}).toThrow(new Error('Não foi possível deletar esta turma, pois o id está errado.'));
-            expect(function(){scope.deleteClass(null);}).toThrow(new Error('Não foi possível deletar esta turma, pois o id está errado.'));
-        }))
-
-        it('checks if deleting a class is working - if there were 3 classes, should be 2 after the deletion', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: scope});
-            scope.turmas = [{name: 'A', index: 0, _id: 'A'}, {name: 2, index: 3, _id: 1}, {name: 3, index: 2, _id: 2}];
-
-            var quantidadeDeTurmasAntesDaDelecao = scope.turmas.length;
-            scope.deleteClass(scope.turmas[0]._id);
             httpMock.flush();
-            var quantidadeDeTurmasDepoisDaDelecao = scope.turmas.length;
-            expect(quantidadeDeTurmasAntesDaDelecao).toBeGreaterThan(quantidadeDeTurmasDepoisDaDelecao);
+            expect(scope.turmas).toEqual([]);
+        }))
+
+        it('should get response from the server with filled object', inject(function($controller)
+        {
+            httpMock.expectGET('/api/classes').respond({classes: []});
+            $controller('ClassesController', {$scope: scope});
+            httpMock.flush();
+            expect(scope.turmas).toEqual([]);
+        }))
+
+        it('should get response from the server with filled object and subdocs', inject(function($controller)
+        {
+            httpMock.expectGET('/api/classes').respond({classes: [{name: 'A'}, {name: 'B'}]});
+            $controller('ClassesController', {$scope: scope});
+            httpMock.flush();
+            expect(scope.turmas).toEqual([{name: 'A'}, {name: 'B'}]);
         }))
     })
 
     describe('POST /api/classes', function()
     {
+        it('tries to register a class with wrong params', inject(function($controller)
+        {
+            $controller('ClassesController', {$scope: scope});
+
+            var wrongParams = [undefined, null, true, false, [], {}];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.registerClass(wrongParams[i])}).toThrow(new Error('Não foi possível registrar esta turma.'));
+            }
+        }))
+
         it('checks if adding a class is working - if there were 3 classes, should be 4 after the adition', inject(function($controller)
         {
             $controller('ClassesController', {$scope: scope});
@@ -350,27 +179,60 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('historico should be visible/invisible', function()
+    describe('PUT /api/classes/:id', function()
     {
-        it('checks if historico is visible - passing undefined values', inject(function($controller)
+        it('shouldn\'t be able to edit class', inject(function($controller)
         {
             $controller('ClassesController', {$scope: scope});
-            expect(function(){scope.isHistoricoVisible(undefined)}).not.toThrow(new Error('Este valor não é um número'));
-            expect(function(){scope.isHistoricoVisible(null)}).not.toThrow(new Error('Este valor não é um número'));
+
+            var wrongParams = [undefined, null, true, false, [], {}];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.editClass(wrongParams[i])}).toThrow(new Error('Não foi possível editar esta turma.'));
+            }
         }))
 
-        it('checks if historico is visible - shouldn\'t be visible', inject(function($controller)
+        it('shouldn\'t be able to edit a class without id', inject(function($controller)
         {
             $controller('ClassesController', {$scope: scope});
-            expect(scope.isHistoricoVisible(0)).toBe(false);
-            expect(scope.isHistoricoVisible(-1)).toBe(false);
+            var turma = {name: 'A'};
+
+            expect(function(){scope.editClass(turma)}).toThrow(new Error('Não foi possível editar esta turma.'));
         }))
 
-        it('checks if historico is visible - should be visible', inject(function($controller)
+        it('should be able to edit successfully', inject(function($controller)
         {
             $controller('ClassesController', {$scope: scope});
-            expect(scope.isHistoricoVisible(1)).toBe(true);
-            expect(scope.isHistoricoVisible(12)).toBe(true);
+            var turma = {name: 'A', _id: '123'};
+            scope.editClass(turma);
+            httpMock.flush();
+        }))
+    })
+
+    describe('DELETE /api/delete/:id', function()
+    {
+        it('tries to delete a class passing wrong ids', inject(function($controller)
+        {
+            $controller('ClassesController', {$scope: scope});
+
+            var wrongParams = [undefined, , null, {}, [], true, false];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.deleteClass(wrongParams[i]);}).toThrow(new Error('Não foi possível deletar esta turma, pois o id está errado.'));
+            }
+        }))
+
+        it('checks if deleting a class is working - if there were 3 classes, should be 2 after the deletion', inject(function($controller)
+        {
+            $controller('ClassesController', {$scope: scope});
+            scope.turmas = [{name: 'A', index: 0, _id: 'A'}, {name: 2, index: 3, _id: 1}, {name: 3, index: 2, _id: 2}];
+
+            var quantidadeDeTurmasAntesDaDelecao = scope.turmas.length;
+            scope.deleteClass(scope.turmas[0]._id);
+            httpMock.flush();
+            expect(quantidadeDeTurmasAntesDaDelecao).toBeGreaterThan(0);
         }))
     })
 });

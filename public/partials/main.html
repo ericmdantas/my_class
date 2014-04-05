@@ -8,39 +8,45 @@
 
     <br/>
 
+    <div id="aulas-container" class="topic transition {{cfg.information.aulas.classeBorda}}" ng-click="redirectTo('aulas')">
+        <img src="../img/clazzDay.png" class="pull-right transition container-icon hidden-xs"/>
+        <h1>{{cfg.information.aulas.nome}}</h1>
+        <p class="hidden-small-phone">{{cfg.information.aulas.resumo}}</p>
+    </div>
+
 	<div id="turmas-container" class="topic transition {{cfg.information.turmas.classeBorda}}" ng-click="redirectTo('turmas')">
-        <img src="../img/class.png" class="pull-right transition container-icon hidden-xs"/>
+        <img src="../img/clazz.png" class="pull-right transition container-icon hidden-xs"/>
 		<h1>{{cfg.information.turmas.nome}}</h1>
-        <p>{{cfg.information.turmas.resumo}}</p>
+        <p class="hidden-small-phone">{{cfg.information.turmas.resumo}}</p>
 	</div>
 
     <div id="professores-container" class="topic transition {{cfg.information.professores.classeBorda}}" ng-click="redirectTo('professores')">
         <img src="../img/teacher.png" class="pull-right transition container-icon hidden-xs"/>
         <h1>{{cfg.information.professores.nome}}</h1>
-        <p>{{cfg.information.professores.resumo}}</p>
+        <p class="hidden-small-phone">{{cfg.information.professores.resumo}}</p>
     </div>
 
 	<div id="alunos-container" class="topic transition {{cfg.information.alunos.classeBorda}}" ng-click="redirectTo('alunos')">
         <img src="../img/student.png" class="pull-right transition container-icon hidden-xs"/>
 		<h1>{{cfg.information.alunos.nome}}</h1>
-		<p>{{cfg.information.alunos.resumo}}</p>
+		<p class="hidden-small-phone">{{cfg.information.alunos.resumo}}</p>
 	</div>
 
 	<div id="livros-container" class="topic transition {{cfg.information.livros.classeBorda}}" ng-click="redirectTo('livros')">
         <img src="../img/book.png" class="pull-right transition container-icon hidden-xs"/>
 		<h1>{{cfg.information.livros.nome}}</h1>
-		<p>{{cfg.information.livros.resumo}}</p>
+		<p class="hidden-small-phone">{{cfg.information.livros.resumo}}</p>
 	</div>
 
 	<div id="pagamentos-container" class="topic transition {{cfg.information.pagamentos.classeBorda}}" ng-click="redirectTo('pagamentos')">
         <img src="../img/payment.png" class="pull-right transition container-icon hidden-xs"/>
 		<h1>{{cfg.information.pagamentos.nome}}</h1>
-		<p>{{cfg.information.pagamentos.resumo}}</p>
+		<p class="hidden-small-phone">{{cfg.information.pagamentos.resumo}}</p>
 	</div>
 
 	<div id="estatisticas-container" class="topic transition {{cfg.information.estatisticas.classeBorda}}" ng-click="redirectTo('estatisticas')">
         <img src="../img/statistics.png" class="pull-right transition container-icon hidden-xs"/>
 		<h1>estatísticas</h1>
-		<p>{{cfg.information.estatisticas.resumo}}</p>
+		<p class="hidden-small-phone">{{cfg.information.estatisticas.resumo}}</p>
 	</div>
 </div>

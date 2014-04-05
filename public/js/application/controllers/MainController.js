@@ -7,6 +7,12 @@ myClass.controller('MainController', ['$scope', '$http', '$location', '$interval
 
     $scope.redirectTo = function(url)
     {
+        if ((!url) || ("string" !== typeof url) || (!url.length))
+        {
+            $location.path('principal');
+            return;
+        }
+
         $location.path(url);
     }
 

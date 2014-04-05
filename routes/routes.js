@@ -28,7 +28,7 @@ var isLoggedIn = require('./session');
         app.get('/api/classes', isLoggedIn, classes.getClassesInfo);
         app.get('/api/classes/name', isLoggedIn, classes.getClassesNames);
         app.post('/api/classes', isLoggedIn, classes.registerClass);
-        app.post('/api/classesMoment', isLoggedIn, classes.registerClassMomentInTime);
+        app.post('/api/classes/moment', isLoggedIn, classes.registerClassMomentInTime);
         app.put('/api/classes/:id', isLoggedIn, classes.editClass);
         app.delete('/api/classes/:id', isLoggedIn, classes.deleteClass);
 

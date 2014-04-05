@@ -42,7 +42,7 @@ describe('Testing StudentsModel', function()
 
         it('checks if StudentsModel findAllStudentsNames was created', function()
         {
-            assert.strictEqual(typeof student.findAllStudentsNames, "function");
+            assert.strictEqual(typeof student.findAllStudentsNamesByClass, "function");
         })
     })
 })

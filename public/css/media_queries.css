@@ -9,6 +9,8 @@
     .topic {border-left-width: 20px;}
     .topic:hover {border-left-width: 10px;}
     .topic.selected, .topic.selected:hover {border-left-width: 0px;}
+    .nav.navbar-right {margin-right: .5em !important;}
+    .hidden-small-phone {display: block;}
 }
 
 @media (min-width: 45em)
@@ -20,4 +22,5 @@
 @media (min-width: 70em)
 {
     .to-the-top {bottom: 1em; right: 1em;}
+    #view {margin-bottom: 0;}
 }

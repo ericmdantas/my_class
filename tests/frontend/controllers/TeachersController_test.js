@@ -199,11 +199,13 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         it('try to post a teacher without any info - throws error', inject(function($controller)
         {
             $controller('TeachersController', {$scope: scope});
-            expect(function(){scope.registerNewTeacher()}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
-            expect(function(){scope.registerNewTeacher(null)}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
-            expect(function(){scope.registerNewTeacher(undefined)}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
-            expect(function(){scope.registerNewTeacher([])}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
-            expect(function(){scope.registerNewTeacher({})}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
+
+            var wrongParams = [, undefined, null, {}, [], true, false];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.registerNewTeacher(wrongParams[i])}).toThrow(new Error('Não é possível cadastrar um professor sem informações.'));
+            }
         }))
 
         it('registers a ok teacher', inject(function($controller)
@@ -220,11 +222,13 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         it('try to edit a teacher without any info', inject(function($controller)
         {
             $controller('TeachersController', {$scope: scope});
-            expect(function(){scope.editTeacher()}).toThrow(new Error('Não é possível editar um professor sem informações.'));
-            expect(function(){scope.editTeacher(null)}).toThrow(new Error('Não é possível editar um professor sem informações.'));
-            expect(function(){scope.editTeacher(undefined)}).toThrow(new Error('Não é possível editar um professor sem informações.'));
-            expect(function(){scope.editTeacher([])}).toThrow(new Error('Não é possível editar um professor sem informações.'));
-            expect(function(){scope.editTeacher({})}).toThrow(new Error('Não é possível editar um professor sem informações.'));
+
+            var wrongParams = [, undefined, null, {}, [], true, false];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.editTeacher(wrongParams[i])}).toThrow(new Error('Não é possível editar um professor sem informações.'));
+            }
         }))
 
         it('try to edit a teacher without any id', inject(function($controller)
@@ -248,10 +252,13 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         it('tries to delete a teacher with wrong id', inject(function($controller)
         {
             $controller('TeachersController', {$scope: scope});
-            expect(function(){scope.deleteTeacher()}).toThrow(new Error('Não foi possível deletar este professor. Pois o ID está errado.'));
-            expect(function(){scope.deleteTeacher(null)}).toThrow(new Error('Não foi possível deletar este professor. Pois o ID está errado.'));
-            expect(function(){scope.deleteTeacher(undefined)}).toThrow(new Error('Não foi possível deletar este professor. Pois o ID está errado.'));
-            expect(function(){scope.deleteTeacher({})}).toThrow(new Error('Não foi possível deletar este professor. Pois o ID está errado.'));
+
+            var wrongParams = [, undefined, null, {}, [], true, false];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.deleteTeacher(wrongParams[i])}).toThrow(new Error('Não foi possível deletar este professor. Pois o ID está errado.'));
+            }
         }))
 
         it('checks if the deletion is working', inject(function($controller)
@@ -260,7 +267,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
             httpMock.expectDELETE('/api/teachers/123').respond({});
             $controller('TeachersController', {$scope: scope});
 
-            var professor = {nome: "fulano", _id: 123};
+            var professor = {nome: "fulano", _id: "123"};
 
             scope.deleteTeacher(professor._id);
             httpMock.flush();

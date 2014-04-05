@@ -8,8 +8,8 @@ describe('NAVCONTROLLER BEING TESTED', function()
 
     beforeEach(inject(function($injector)
     {
-        rootScope = $injector.get('$rootScope');
-        scope = rootScope.$new();
+        rootScope = $injector.get('$rootScope').$new();
+        scope = rootScope;
         locationMock = $injector.get('$location');
     }))
 
@@ -48,7 +48,7 @@ describe('NAVCONTROLLER BEING TESTED', function()
 
             rootScope.$apply(function()
             {
-                locationMock.path('/no_existe');
+                locationMock.path('/no_ecziste');
             });
 
             for (var i = 0; i < scope.items.length; i++)
@@ -57,13 +57,13 @@ describe('NAVCONTROLLER BEING TESTED', function()
             }
         }))
 
-        it ('should activate the right url - turmas', inject(function($controller)
+        it ('should activate the right url - aulas', inject(function($controller)
         {
             $controller('NavController', {$scope: scope});
 
             rootScope.$apply(function()
             {
-                locationMock.path('/turmas');
+                locationMock.path('/aulas');
             });
 
             expect(scope.items[0].active).toBe('active');
@@ -75,10 +75,22 @@ describe('NAVCONTROLLER BEING TESTED', function()
 
             rootScope.$apply(function()
             {
-                locationMock.path('/professores');
+                locationMock.path('/turmas');
             });
 
             expect(scope.items[1].active).toBe('active');
+        }))
+
+        it ('should activate the right url - turmas', inject(function($controller)
+        {
+            $controller('NavController', {$scope: scope});
+
+            rootScope.$apply(function()
+            {
+                locationMock.path('/professores');
+            });
+
+            expect(scope.items[2].active).toBe('active');
         }))
 
         it ('should activate the right url - alunos', inject(function($controller)
@@ -90,7 +102,7 @@ describe('NAVCONTROLLER BEING TESTED', function()
                 locationMock.path('/alunos');
             });
 
-            expect(scope.items[2].active).toBe('active');
+            expect(scope.items[3].active).toBe('active');
         }))
 
         it ('should activate the right url - livros', inject(function($controller)
@@ -102,7 +114,7 @@ describe('NAVCONTROLLER BEING TESTED', function()
                 locationMock.path('/livros');
             });
 
-            expect(scope.items[3].active).toBe('active');
+            expect(scope.items[4].active).toBe('active');
         }))
 
         it ('should activate the right url - pagamentos', inject(function($controller)
@@ -114,7 +126,7 @@ describe('NAVCONTROLLER BEING TESTED', function()
                 locationMock.path('/pagamentos');
             });
 
-            expect(scope.items[4].active).toBe('active');
+            expect(scope.items[5].active).toBe('active');
         }))
 
         it ('should activate the right url - estatisticas', inject(function($controller)
@@ -126,12 +138,24 @@ describe('NAVCONTROLLER BEING TESTED', function()
                 locationMock.path('/estatisticas');
             });
 
-            expect(scope.items[5].active).toBe('active');
+            expect(scope.items[6].active).toBe('active');
         }))
     })
 
     describe('checks if the document title is being changed', function()
     {
+        it('should change the title to aulas', inject(function($controller)
+        {
+            $controller('NavController', {$scope: scope});
+
+            rootScope.$apply(function()
+            {
+                locationMock.path('/aulas');
+            });
+
+            expect(document.title).toContain('aulas');
+        }))
+
         it('should change the title to turmas', inject(function($controller)
         {
             $controller('NavController', {$scope: scope});
