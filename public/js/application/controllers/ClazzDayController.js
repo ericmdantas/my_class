@@ -2,15 +2,14 @@
 
 myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', function ($scope, $http, pageConfig)
 {
-    $scope.turmas = [];
     $scope.cfg = pageConfig;
     $scope.aulaEscolhida = {};
-    $scope.alunos = {};
-    $scope.professores = {};
+    $scope.alunos = [];
+    $scope.professores = [];
     $scope.isLoadingVisible = {modal: false};
     $scope.hoje = moment().format('DD/MM/YYYY');
     $scope.monthYear = moment().format('MM/YYYY');
-    $scope.turmasCadastradas = {};
+    $scope.turmasCadastradas = [];
 
     $scope.getClasses = function()
     {
@@ -21,56 +20,30 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
             })
     }
 
-    $scope.registerClassMomentInTime = function(turma, alunos)
-    {
-        if (!turma  || !alunos || !turma.teacher || !turma.date || !turma.subject)
-            throw new Error('Não será possível continuar, pois alguns parâmetros não foram informados.');
-
-        var moment = {};
-
-        moment.teacher = turma.teacher;
-        moment.date = turma.date;
-        moment.subject = turma.subject;
-        moment.observation = turma.observation;
-        moment.studentsInTheClass = alunos;
-
-        $scope.isLoadingVisible.modal = true;
-
-        $http.post('/api/classes/moment', moment)
-            .success(function()
-            {
-                closesModal('#modal-clazz-day');
-                emptyProperty('turmaDiaDia');
-                $scope.getClasses();
-            })
-    }
-
     $scope.getStudentsNamesByClass = function(turma)
     {
-        $http.get('/api/students/name/'+turma)
-            .success(function(data)
-            {
-                if (data && data.students)
-                {
-                    $scope.alunos = data.students;
+        if ((!turma) || ("string" !== typeof turma))
+            throw new Error('Não foi possível pegar os nomes dos alunos.');
 
-                    for (var x in $scope.alunos)
-                    {
-                        $scope.alunos[x].isInClass = true;
-                    }
-                }
-                else
-                    $scope.alunos = [];
-            })
+        $http.get('/api/students/name/'+turma)
+             .success(function(data)
+                     {
+                         $scope.alunos = (data && data.students) ? data.students : [];
+
+                         for (var i = 0; i < $scope.alunos.length; i++)
+                         {
+                             $scope.alunos[i].wasInClass = true;
+                         }
+                     })
     }
 
     $scope.getTeachersNames = function()
     {
         $http.get('/api/teachers/name')
-            .success(function(data)
-            {
-                $scope.professores = (data && data.resultado) ? data.resultado : [];
-            })
+             .success(function(data)
+                     {
+                          $scope.professores = (data && data.resultado) ? data.resultado : [];
+                     })
     }
 
     $scope.getClasses();
@@ -78,26 +51,34 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
 
     $scope.registerClazzDay = function(turma, alunos)
     {
-        if (!turma  || !alunos || !turma.teacher || !turma.date || !turma.subject)
+        var problemasAlunos = ((!alunos) || ("object" !== typeof alunos) || (!Object.keys(alunos).length));
+        var problemasTurma = (!turma)  || ("object" !== typeof turma) || (!turma.teacher) || (!turma.subject) || (!Object.keys(turma).length);
+
+        if (problemasAlunos || problemasTurma)
             throw new Error('Não será possível continuar, pois alguns parâmetros não foram informados.');
 
-        var moment = {};
+        var _moment = {};
 
-        moment.teacher = turma.teacher;
-        moment.date = turma.date;
-        moment.subject = turma.subject;
-        moment.observation = turma.observation;
-        moment.studentsInTheClass = alunos;
+        _moment.clazzName = turma.name;
+        _moment.monthYear = moment().format('MM/YYYY');
+        _moment.observation = turma.observation;
+
+        for (var i = 0; i < alunos.length; i++)
+        {
+            alunos[i].date = new Date();
+        }
+
+        _moment.dailyInfo = {teacher: turma.teacherName, subject: turma.subject, studentByDay: alunos};
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/classes/moment', moment)
-            .success(function()
-            {
-                closesModal('#modal-clazz-day');
-                emptyProperty('turmaDiaDia');
-                $scope.getClasses();
-            })
+        $http.post('/api/classes/moment', _moment)
+             .success(function()
+                     {
+                         closesModal('#modal-clazz-day');
+                         emptyProperty('turmaDiaDia');
+                         $scope.getClasses();
+                     })
     }
 
     function preparaAberturaModal(idModal)
@@ -135,11 +116,11 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
         $scope.isLoadingVisible.modal = true;
 
         $http.post('/api/classes', turma)
-            .success(function()
-            {
-                closesModal('#modal-clazz-day');
-                emptyProperty('novaTurma');
-            })
+             .success(function()
+                     {
+                         closesModal('#modal-clazz-day');
+                         emptyProperty('novaTurma');
+                     })
     }
 
     $scope.editClazzDay = function(turma)
@@ -147,11 +128,11 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
         $scope.isLoadingVisible.modal = true;
 
         $http.put('/api/classes/'+turma._id, turma)
-            .success(function()
-            {
-                closesModal('#modal-edit-clazz-day');
-                emptyProperty('turmaEscolhida');
-            })
+             .success(function()
+                     {
+                         closesModal('#modal-edit-clazz-day');
+                         emptyProperty('turmaEscolhida');
+                     })
     }
 
     $scope.deleteClazzDay = function(id)
@@ -162,11 +143,11 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
         $scope.isLoadingVisible.modal = true;
 
         $http.delete('/api/classes/'+id)
-            .success(function()
-            {
-                closesModal('#modal-delete-clazz-day');
-                emptyProperty('turmaEscolhida');
-            })
+             .success(function()
+                     {
+                         closesModal('#modal-delete-clazz-day');
+                         emptyProperty('turmaEscolhida');
+                     })
     }
 
     function closesModal(modalID)
@@ -192,7 +173,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
 
     $scope.isHistoricoVisible = function(historico)
     {
-        var periodoEscolhido = (historico) && ("number" === typeof historico)? historico : 0;
+        var periodoEscolhido = (historico) && ("number" === typeof historico) ? historico : 0;
         return periodoEscolhido > 0 ? true : false;
     }
 }])

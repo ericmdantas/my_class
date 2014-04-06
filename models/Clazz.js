@@ -6,12 +6,18 @@
 {
     var momentInTimeSchema = mongoose.Schema
     ({
-        teacher: {type: String, trim: true, required: true},
-        date: {type: Date, required: true},
+        monthYear: {type: String, required: true},
         lastModified: {type: Date, required: true, default: new Date},
-        studentsInTheClass: [{name: String, presence: [{isInClass: Boolean}]}],
-        subject: {type: String, trim: true, required: true},
-        observation: {type: String, trim: true}
+        observation: {type: String, trim: true},
+        studentName: [{name: {type: String, trim: true}}],
+        dailyInfo: [{
+                        teacherName: {type: String, trim: true, required: true},
+                        subject: {type: String, trim: true, required: true},
+                        studentByDay: [{
+                                            wasInClass: {type: Boolean},
+                                            date: {type: Date}
+                                      }]
+                   }]
     })
 
     var clazzSchema = mongoose.Schema
@@ -42,16 +48,19 @@
 
     clazzSchema.methods.registerClassMomentInTime = function(user, moment, done)
     {
-        var query = {usersAllowed: {$in: [user]}};
-        var updt = {$push: {momentTime: moment}};
+        var query = {usersAllowed: {$in: [user]}, name: moment.clazzName};
+        var projection = {};
 
-        Clazz.update(query, updt)
-             .exec(function(err, updated)
+        Clazz.findOne(query, projection)
+             .exec(function(err, found)
                   {
                       if (err)
-                         return done(err)
+                          return done(err)
 
-                      done(null);
+                      if (found.momentTime.length === 0)
+                          criaNovoMomentTime(found, moment, done);
+                      else
+                          preencheMomentExistente(found, moment, done);
                   })
     }
 
@@ -112,6 +121,47 @@
 
                      done();
                   })
+    }
+
+    function criaNovoMomentTime(found, moment, done)
+    {
+        found.momentTime.push(moment);
+
+        found.save(function(err, saved)
+        {
+            if (err)
+                return done(err);
+
+            return done(null)
+        })
+    }
+
+    function preencheMomentExistente(found, moment, done)
+    {
+        for (var i = 0; i < found.momentTime.length; i++)
+        {
+            if (found.momentTime[i].monthYear === moment.monthYear)
+            {
+                for (var j = 0; j < found.momentTime[i].dailyInfo.length; j++)
+                {
+                    for (var h = 0; h < moment.dailyInfo.length; h++)
+                    {
+                        if (found.momentTime[i].dailyInfo[j].studentName === moment.dailyInfo[h].studentName)
+                        {
+                            found.momentTime[i].dailyInfo[j].studentByDay.push(moment.dailyInfo[h].date, moment.dailyInfo[h].wasInClass);
+
+                            found.save(function(err, saved)
+                            {
+                                if (err)
+                                    return done(err);
+
+                                return done(null);
+                            })
+                        }
+                    }
+                }
+            }
+        }
     }
 
     var Clazz = mongoose.model('Clazz', clazzSchema);

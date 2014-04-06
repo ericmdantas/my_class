@@ -30,7 +30,7 @@ function Student()
     function pegaTodosOsNomesDeAlunosPorTurma(req, res)
     {
         var usuario = req.session.passport.user;
-        var turma = req.params.class;
+        var turma = req.params.clazz;
         var student = new StudentModel();
 
         function callback(error, students)

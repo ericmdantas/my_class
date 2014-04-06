@@ -47,7 +47,7 @@
                     })
     }
 
-    studentSchema.methods.findAllStudentsNamesByClass = function(user, done)
+    studentSchema.methods.findAllStudentsNamesByClass = function(user, turma, done)
     {
         var query = {usersAllowed: {$in: [user]}, class: turma};
         var projection = {name: 1};

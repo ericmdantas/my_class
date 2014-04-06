@@ -23,7 +23,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             expect('ClassesController').toBeDefined();
         }))
 
-        it('checks if registerClassMomentInTime is defined', inject(function($controller)
+        it('checks if registerClazzDay is defined', inject(function($controller)
         {
             $controller('ClazzDayController', {$scope: scope});
             expect(scope.registerClazzDay).toBeDefined();
@@ -33,12 +33,6 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         {
             $controller('ClazzDayController', {$scope: scope});
             expect(typeof scope.aulaEscolhida).toEqual('object');
-        }));
-
-        it('checks scope.turmas', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: scope});
-            expect(scope.turmas).toBeDefined();
         }));
 
         it('checks if scope.isLoadingVisible created', inject(function($controller)
@@ -170,8 +164,8 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(function(){scope.registerClassMomentInTime(wrongParams[i], wrongParams[i])})
-                                .toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
+                expect(function(){scope.registerClazzDay(wrongParams[i], wrongParams[i])})
+                                 .toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
             }
         }))
 
@@ -179,25 +173,20 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         {
             $controller('ClazzDayController', {$scope: scope});
 
-            var turma = {teacher: "professor", data: new Date(), subject: 'matéria', observation: 'observação'};
-            var alunos = {studentsInClass: [{name: 'Abc', isInClass: false}]};
-
-            expect(function(){scope.registerClassMomentInTime(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
-
             var turma = {teache: "professor", date: new Date(), subject: 'matéria', observation: 'observação'};
             var alunos = {studentsInClass: [{name: 'Abc', isInClass: false}]};
 
-            expect(function(){scope.registerClassMomentInTime(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
+            expect(function(){scope.registerClazzDay(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
 
-            var turma = {teacher: "professor", date: new Date(), subjecto: 'matéria', observation: 'observação'};
-            var alunos = {studentsInClass: [{name: 'Abc', isInClass: false}]};
+            turma = {teacher: "professor", date: new Date(), subjecto: 'matéria', observation: 'observação'};
+            alunos = {studentsInClass: [{name: 'Abc', isInClass: false}]};
 
-            expect(function(){scope.registerClassMomentInTime(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
+            expect(function(){scope.registerClazzDay(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
 
-            var turma = {teache: "professor", date: new Date(), subject: 'matéria', observation: 'observação'};
-            var alunos = {studentsInClass: [{nome: 'Abc', inClass: false}]};
+            turma = {teache: "professor", date: new Date(), subject: 'matéria', observation: 'observação'};
+            alunos = {studentsInClass: [{nome: 'Abc', inClass: false}]};
 
-            expect(function(){scope.registerClassMomentInTime(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
+            expect(function(){scope.registerClazzDay(turma, alunos)}).toThrow(new Error('Não será possível continuar, pois alguns parâmetros não foram informados.'));
         }))
 
         it('should fetch request', inject(function($controller)
@@ -207,13 +196,25 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             var turma = {teacher: "professor", date: new Date(), subject: 'matéria', observation: 'observação'};
             var alunos = {studentsInClass: [{name: 'Abc', isInClass: false}]};
 
-            scope.registerClassMomentInTime(turma, alunos);
+            scope.registerClazzDay(turma, alunos);
             httpMock.flush();
         }))
     })
 
-    describe('GET /api/students/name', function()
+    describe('GET /api/students/name/:turma', function()
     {
+        it('tries to make a request passing the wrong parameters', inject(function($controller)
+        {
+            $controller('ClazzDayController', {$scope: scope});
+
+            var wrongParams = [null, undefined, {}, [], true, false];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.getStudentsNamesByClass(wrongParams[i])}).toThrow(new Error('Não foi possível pegar os nomes dos alunos.'));
+            }
+        }))
+
         it('checks if the request is being made', inject(function($controller)
         {
             httpMock.expectGET('/api/students/name/turma1').respond({});
@@ -222,7 +223,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             httpMock.flush();
         }))
 
-        it('checks if /getStudentsNamesByClass is working even when there\'s no response', inject(function($controller)
+        it('checks if /students/name/:turma is working even when there\'s no response', inject(function($controller)
         {
             httpMock.expectGET('/api/students/name/turma1').respond({});
             $controller('ClazzDayController', {$scope: scope});

@@ -61,7 +61,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.registerNewStudent = function(aluno)
     {
-        if (!aluno)
+        if ((!aluno) || ("object" !== typeof aluno) || (!Object.keys(aluno).length))
             throw new Error('erro: aluno nao informado - registerNewStudent');
 
         $scope.isLoadingVisible.modal = true;
@@ -99,7 +99,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.deleteStudent = function(id)
     {
-        if ((!id) || ("object" === typeof id))
+        if ((!id) || ("string" !== typeof id))
             throw new Error('Não foi possível realizar a deleção do aluno. O ID está errado.');
 
         $scope.isLoadingVisible.modal = true;

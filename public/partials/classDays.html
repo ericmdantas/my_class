@@ -20,17 +20,14 @@
                 <div class="modal-body">
                     <label>turma</label>
                     <br/>
-                    <select ng-model="clazz" ng-options="turma.name for turma in turmasCadastradas"></select>
+                    <select ng-model="turmaDiaDia" ng-options="turma.name for turma in turmasCadastradas" ng-change="getStudentsNamesByClass(turmaDiaDia.name)"></select>
                     <br/><br/>
                     <label>professor responsável</label>
                     <input type="text" class="form-control" ng-model="turmaDiaDia.teacher" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
                     <br/>
-                    <label>data</label>
-                    <input type="date" class="form-control date-width" ng-model="turmaDiaDia.date" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_DATA}}"/>
-                    <br/>
                     <label>presença</label>
                     <p ng-repeat="aluno in alunos" class="presenca transition">{{aluno.name}}
-                        <input type="checkbox" class="pull-right" ng-model="aluno.isInClass"/>
+                        <input type="checkbox" class="pull-right" ng-model="aluno.wasInClass"/>
                     </p>
                     <br/>
                     <label>matéria</label>
@@ -43,7 +40,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             ng-disabled="!(!!turmaDiaDia.teacher && !!turmaDiaDia.subject)"
-                            ng-click="registerClassMomentInTime(turmaDiaDia, alunos)">
+                            ng-click="registerClazzDay(turmaDiaDia, alunos)">
                         registrar
                     </button>
                     <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
@@ -128,7 +125,9 @@
                         <tbody>
                             <tr ng-repeat="aluno in momento.studentsInTheClass">
                                 <td>{{aluno.name}}</td>
-                                <td><is-ok-disc situation="{{aluno.isInClass}}" when="momento.date"></is-ok-disc></td>
+                                <td ng-repeat="presence in aluno.presence">
+                                    <is-ok-disc situation="{{presence.wasInClass}}" when="presence.date"></is-ok-disc>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

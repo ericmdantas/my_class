@@ -12,6 +12,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         httpMock.when('GET', '/api/students').respond({students: [{nome: 'aluno qualquer'}]});
         httpMock.when('GET', '/api/classes/name').respond({classes: [{name: 'turma qualquer'}]});
         httpMock.when('POST', '/api/students').respond(200);
+        httpMock.when('PUT', '/api/students/1').respond();
         httpMock.when('DELETE', '/api/students/1').respond(200);
     }))
 
@@ -154,6 +155,18 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
     describe('POST /api/students', function()
     {
+        it('shouldn\'t allow a student to be registered without info', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+
+            var wrongParams = [null, undefined, 1, true, false, [], {}];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.registerNewStudent(wrongParams[i])}).toThrow(new Error('erro: aluno nao informado - registerNewStudent'));
+            }
+        }))
+
         it('checks if after registering, the scope.novoAluno is an empty object', inject(function($controller)
         {
             $controller('StudentsController', {$scope: scope});
@@ -172,24 +185,28 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
             var quantidadeDeAlunosDepoisDaAdicao = scope.alunos.length;
             expect(quantidadeDeAlunosDepoisDaAdicao).toBeGreaterThan(0);
         }))
-
-        it('shouldn\'t allow a student to be registered without info', inject(function($controller)
-        {
-            $controller('StudentsController', {$scope: scope});
-            expect(function(){scope.registerNewStudent(undefined)}).toThrow(new Error('erro: aluno nao informado - registerNewStudent'));
-        }))
     })
 
     describe('PUT /api/students/:id', function()
     {
         it('tries to edit a student with an empty object - throws exception', inject(function($controller)
         {
-            httpMock.expectPUT('/api/students/1', undefined).respond();
             $controller('StudentsController', {$scope: scope});
-            expect(function(){scope.editStudent(null)}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
-            expect(function(){scope.editStudent(undefined)}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
-            expect(function(){scope.editStudent()}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
-            expect(function(){scope.editStudent({})}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
+
+            var wrongParams = [null, undefined, {}, [], true, false, '', 1];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.editStudent(wrongParams[i])}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
+            }
+        }))
+
+        it('tries to edit a student without _id', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: scope});
+            var studentWithoutId = {name: 'A', age: '123'};
+
+            expect(function(){scope.editStudent(studentWithoutId)}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
         }))
 
         it('should edit successfully and return students on /api/students', inject(function($controller)
@@ -210,16 +227,20 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         it('tries to delete a student with wrong parameters', inject(function($controller)
         {
             $controller('StudentsController', {$scope: scope});
-            expect(function(){scope.deleteStudent(null)}).toThrow(new Error('Não foi possível realizar a deleção do aluno. O ID está errado.'));
-            expect(function(){scope.deleteStudent(undefined)}).toThrow(new Error('Não foi possível realizar a deleção do aluno. O ID está errado.'));
-            expect(function(){scope.deleteStudent({})}).toThrow(new Error('Não foi possível realizar a deleção do aluno. O ID está errado.'));
+
+            var wrongParams = [null, undefined, 1, {}, [], '', true, false];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.deleteStudent(wrongParams[i])}).toThrow(new Error('Não foi possível realizar a deleção do aluno. O ID está errado.'));
+            }
         }))
 
         it('checks if deletion is working - if there were 3 students, should be 2 after deletion', inject(function($controller)
         {
             httpMock.expectGET('/api/students').respond({students: {students: []}});
             $controller('StudentsController', {$scope: scope});
-            scope.alunos = [{name: 1, idade: 1, _id: 1}];
+            scope.alunos = [{name: 1, idade: 1, _id: "1"}];
             var quantidadeDeAlunosAntesDaDelecao = scope.alunos.length;
             scope.deleteStudent(scope.alunos[0]._id);
             httpMock.flush();

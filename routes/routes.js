@@ -1,8 +1,6 @@
 "use strict";
 
-var isLoggedIn = require('./session');
-
-(function(content, users, classes, teachers, students, books, stats)
+(function(isLoggedIn, content, users, classes, teachers, students, books, stats)
 {
     var app, authentication;
 
@@ -41,7 +39,7 @@ var isLoggedIn = require('./session');
 
         //STUDENTS
         app.get('/api/students', isLoggedIn, students.getInfoFromAllStudents);
-        app.get('/api/students/name', isLoggedIn, students.getStudentsNamesByClass);
+        app.get('/api/students/name/:clazz', isLoggedIn, students.getStudentsNamesByClass);
         app.post('/api/students', isLoggedIn, students.registerStudent);
         app.put('/api/students/:id', isLoggedIn, students.editStudent);
         app.delete('/api/students/:id', isLoggedIn, students.deleteStudent);
@@ -65,5 +63,5 @@ var isLoggedIn = require('./session');
     }
 
     exports.init = init;
-}(require('./content'), require('../controllers/UserController'), require('../controllers/ClazzController'),
+}(require('./session'), require('./content'), require('../controllers/UserController'), require('../controllers/ClazzController'),
   require('../controllers/TeacherController'), require('../controllers/StudentController'), require('../controllers/BookController'), require('../controllers/StatisticController')))
