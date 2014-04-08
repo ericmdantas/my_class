@@ -9,11 +9,11 @@
         monthYear: {type: String, required: true},
         lastModified: {type: Date, required: true, default: new Date},
         observation: {type: String, trim: true},
-        studentName: [{name: {type: String, trim: true}}],
         dailyInfo: [{
                         teacherName: {type: String, trim: true, required: true},
                         subject: {type: String, trim: true, required: true},
                         studentByDay: [{
+                                            studentName: {type: String, trim: true},
                                             wasInClass: {type: Boolean},
                                             date: {type: Date}
                                       }]
@@ -49,18 +49,23 @@
     clazzSchema.methods.registerClassMomentInTime = function(user, moment, done)
     {
         var query = {usersAllowed: {$in: [user]}, name: moment.clazzName};
-        var projection = {};
+        var updt = {$push: {momentTime: moment}};
+        var options = {new: true};
 
-        Clazz.findOne(query, projection)
-             .exec(function(err, found)
+        Clazz.findOneAndUpdate(query, updt, options)
+             .exec(function(err, updated)
                   {
                       if (err)
                           return done(err)
 
-                      if (found.momentTime.length === 0)
+                      console.log(updated);
+
+                      return done(null);
+
+                      /*if (found.momentTime.length === 0)
                           criaNovoMomentTime(found, moment, done);
                       else
-                          preencheMomentExistente(found, moment, done);
+                          preencheMomentExistente(found, moment, done);*/
                   })
     }
 
@@ -125,14 +130,21 @@
 
     function criaNovoMomentTime(found, moment, done)
     {
-        found.momentTime.push(moment);
+        //Clazz.update
 
-        found.save(function(err, saved)
+        found.momentTime.push(moment);
+        found.momentTime[0].dailyInfo.push(moment.dailyInfo);
+
+
+        var clazzMoment = new Clazz();
+        clazzMoment.momentTime = found;
+
+        clazzMoment.save(function(err, saved)
         {
             if (err)
                 return done(err);
 
-            return done(null)
+            return done(null);
         })
     }
 
@@ -140,15 +152,26 @@
     {
         for (var i = 0; i < found.momentTime.length; i++)
         {
+            console.log('oi1')
+
             if (found.momentTime[i].monthYear === moment.monthYear)
             {
+                console.log('oi2')
+
                 for (var j = 0; j < found.momentTime[i].dailyInfo.length; j++)
                 {
+
+                    console.log('oi3')
+
                     for (var h = 0; h < moment.dailyInfo.length; h++)
                     {
+                        console.log('oi4')
+
                         if (found.momentTime[i].dailyInfo[j].studentName === moment.dailyInfo[h].studentName)
                         {
-                            found.momentTime[i].dailyInfo[j].studentByDay.push(moment.dailyInfo[h].date, moment.dailyInfo[h].wasInClass);
+                            console.log('oi5')
+
+                            found.momentTime[i].dailyInfo[j].studentByDay.push(moment.dailyInfo[h]);
 
                             found.save(function(err, saved)
                             {
@@ -160,7 +183,19 @@
                         }
                     }
                 }
+
+                found.momentTime[i].dailyInfo.push(moment.dailyInfo[h]);
+
+                found.save(function(err, saved)
+                {
+                    if (err)
+                        return done(err);
+
+                    return done(null);
+                })
             }
+            else
+                criaNovoMomentTime(found, moment, done);
         }
     }
 

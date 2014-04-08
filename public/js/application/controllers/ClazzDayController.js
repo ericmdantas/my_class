@@ -52,7 +52,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
     $scope.registerClazzDay = function(turma, alunos)
     {
         var problemasAlunos = ((!alunos) || ("object" !== typeof alunos) || (!Object.keys(alunos).length));
-        var problemasTurma = (!turma)  || ("object" !== typeof turma) || (!turma.teacher) || (!turma.subject) || (!Object.keys(turma).length);
+        var problemasTurma = (!turma)  || ("object" !== typeof turma) || (!turma.teacherName) || (!turma.subject) || (!Object.keys(turma).length);
 
         if (problemasAlunos || problemasTurma)
             throw new Error('Não será possível continuar, pois alguns parâmetros não foram informados.');
@@ -66,9 +66,10 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
         for (var i = 0; i < alunos.length; i++)
         {
             alunos[i].date = new Date();
+            alunos[i].studentName = alunos[i].name;
         }
 
-        _moment.dailyInfo = {teacher: turma.teacherName, subject: turma.subject, studentByDay: alunos};
+        _moment.dailyInfo = [{teacher: turma.teacherName, subject: turma.subject, studentByDay: alunos}]; //TODO FIX THIS
 
         $scope.isLoadingVisible.modal = true;
 

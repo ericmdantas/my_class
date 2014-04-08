@@ -23,7 +23,7 @@
                     <select ng-model="turmaDiaDia" ng-options="turma.name for turma in turmasCadastradas" ng-change="getStudentsNamesByClass(turmaDiaDia.name)"></select>
                     <br/><br/>
                     <label>professor responsável</label>
-                    <input type="text" class="form-control" ng-model="turmaDiaDia.teacher" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
+                    <input type="text" class="form-control" ng-model="turmaDiaDia.teacherName" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
                     <br/>
                     <label>presença</label>
                     <p ng-repeat="aluno in alunos" class="presenca transition">{{aluno.name}}
@@ -39,7 +39,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
-                            ng-disabled="!(!!turmaDiaDia.teacher && !!turmaDiaDia.subject)"
+                            ng-disabled="!(!!turmaDiaDia.teacherName && !!turmaDiaDia.subject)"
                             ng-click="registerClazzDay(turmaDiaDia, alunos)">
                         registrar
                     </button>
