@@ -193,8 +193,8 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         {
             $controller('ClazzDayController', {$scope: scope});
 
-            var turma = {teacher: "professor", date: new Date(), subject: 'matéria', observation: 'observação'};
-            var alunos = {studentsInClass: [{name: 'Abc', isInClass: false}]};
+            var turma = {teacherName: "professor", date: new Date(), subject: 'matéria'};
+            var alunos = {studentsInClass: [{name: 'Abc', wasInClass: false}]};
 
             scope.registerClazzDay(turma, alunos);
             httpMock.flush();

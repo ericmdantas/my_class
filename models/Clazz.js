@@ -4,31 +4,26 @@
 
 (function(mongoose)
 {
-    var momentInTimeSchema = mongoose.Schema
+    var dailyInformation = mongoose.Schema
     ({
-        monthYear: {type: String, required: true},
-        lastModified: {type: Date, required: true, default: new Date},
-        observation: {type: String, trim: true},
-        dailyInfo: [{
-                        teacherName: {type: String, trim: true, required: true},
-                        subject: {type: String, trim: true, required: true},
-                        studentByDay: [{
-                                            studentName: {type: String, trim: true},
-                                            wasInClass: {type: Boolean},
-                                            date: {type: Date}
-                                      }]
-                   }]
+        teacherName: {type: String, trim: true, required: true},
+        subject: {type: String, trim: true, required: true},
+        date: {type: Date},
+        studentByDay: [{
+                            name: {type: String, trim: true},
+                            wasInClass: {type: Boolean}
+                      }]
     })
 
     var clazzSchema = mongoose.Schema
     ({
-        name: {type: String, trim: true, required: true},
+        name: {type: String, trim: true, required: true, index: true},
         studentsQuantity: {type: String, trim: true, required: true},
         time: {type: String, required: true},
         registered: {type: Date, default: new Date},
         lastModified: Date,
         usersAllowed: [],
-        momentTime: [momentInTimeSchema]
+        dailyInfo: [dailyInformation]
     });
 
     clazzSchema.methods.findAllClassesByUser = function(user, done)
@@ -49,23 +44,45 @@
     clazzSchema.methods.registerClassMomentInTime = function(user, moment, done)
     {
         var query = {usersAllowed: {$in: [user]}, name: moment.clazzName};
-        var updt = {$push: {momentTime: moment}};
-        var options = {new: true};
+        var projection = {};
 
-        Clazz.findOneAndUpdate(query, updt, options)
-             .exec(function(err, updated)
+        Clazz.findOne(query, projection)
+             .exec(function(err, found)
                   {
                       if (err)
-                          return done(err)
+                          return done(err);
 
-                      console.log(updated);
+                      if (found.dailyInfo.length === 0)
+                      {
+                          var updt = {$push: {dailyInfo: moment.dailyInfo}};
+                          var options = {upsert: true};
 
-                      return done(null);
+                          Clazz.update(query, updt, options)
+                               .exec(function(err, updated)
+                                    {
+                                         if (err)
+                                            return done(err);
 
-                      /*if (found.momentTime.length === 0)
-                          criaNovoMomentTime(found, moment, done);
+                                         return done(null);
+                                    })
+                      }
                       else
-                          preencheMomentExistente(found, moment, done);*/
+                      {
+                          //TODO GETTING THERE, SHOULD CHECK DAILY INFO FUNCIONALITY NOW
+
+                          var queryExistentDailyInfo = {"dailyInfo.date": {$lt: new Date(moment.dailyInfo.date)}};
+                          var updtStudentDay = {$push: {"dailyInfo.$.studentByDay": moment.dailyInfo.studentByDay[0]}};
+                          var options = {};
+
+                          Clazz.update(queryExistentDailyInfo, updtStudentDay, options)
+                               .exec(function(err, updated)
+                                    {
+                                        if (err)
+                                            return done(err);
+
+                                        return done(null);
+                                    })
+                      }
                   })
     }
 
@@ -126,77 +143,6 @@
 
                      done();
                   })
-    }
-
-    function criaNovoMomentTime(found, moment, done)
-    {
-        //Clazz.update
-
-        found.momentTime.push(moment);
-        found.momentTime[0].dailyInfo.push(moment.dailyInfo);
-
-
-        var clazzMoment = new Clazz();
-        clazzMoment.momentTime = found;
-
-        clazzMoment.save(function(err, saved)
-        {
-            if (err)
-                return done(err);
-
-            return done(null);
-        })
-    }
-
-    function preencheMomentExistente(found, moment, done)
-    {
-        for (var i = 0; i < found.momentTime.length; i++)
-        {
-            console.log('oi1')
-
-            if (found.momentTime[i].monthYear === moment.monthYear)
-            {
-                console.log('oi2')
-
-                for (var j = 0; j < found.momentTime[i].dailyInfo.length; j++)
-                {
-
-                    console.log('oi3')
-
-                    for (var h = 0; h < moment.dailyInfo.length; h++)
-                    {
-                        console.log('oi4')
-
-                        if (found.momentTime[i].dailyInfo[j].studentName === moment.dailyInfo[h].studentName)
-                        {
-                            console.log('oi5')
-
-                            found.momentTime[i].dailyInfo[j].studentByDay.push(moment.dailyInfo[h]);
-
-                            found.save(function(err, saved)
-                            {
-                                if (err)
-                                    return done(err);
-
-                                return done(null);
-                            })
-                        }
-                    }
-                }
-
-                found.momentTime[i].dailyInfo.push(moment.dailyInfo[h]);
-
-                found.save(function(err, saved)
-                {
-                    if (err)
-                        return done(err);
-
-                    return done(null);
-                })
-            }
-            else
-                criaNovoMomentTime(found, moment, done);
-        }
     }
 
     var Clazz = mongoose.model('Clazz', clazzSchema);

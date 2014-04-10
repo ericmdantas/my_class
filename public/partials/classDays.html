@@ -94,7 +94,7 @@
         <div id="class-toggle-{{$index}}" class="collapse">
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
 
-            <div ng-show=isHistoricoVisible(turma.momentTime.length)>
+            <div ng-show=isHistoricoVisible({{turma.dailyInfo.length}})>
                 <div class="select-data" align="center">
                     <button type="button" class="btn btn-default btn-sm" ng-click="changeDate(monthYear, 'add')">&#171;</button>
                     {{monthYear}}
@@ -110,23 +110,23 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="momento in turma.momentTime">
+                    <tr ng-repeat="momento in turma.dailyInfo">
                         <td>{{momento.date | date: 'dd'}}</td>
                         <td>{{momento.subject}}</td>
-                        <td>{{momento.teacher}}</td>
+                        <td>{{momento.teacherName}}</td>
                     </tr>
                     </tbody>
                 </table>
 
                 <br/><br/>
 
-                <div ng-repeat="momento in turma.momentTime">
+                <div ng-repeat="momento in turma.dailyInfo">
                     <table class="table">
                         <tbody>
-                            <tr ng-repeat="aluno in momento.studentsInTheClass">
+                            <tr ng-repeat="aluno in momento.studentByDay">
                                 <td>{{aluno.name}}</td>
-                                <td ng-repeat="presence in aluno.presence">
-                                    <is-ok-disc situation="{{presence.wasInClass}}" when="presence.date"></is-ok-disc>
+                                <td>
+                                    <is-ok-disc situation="{{aluno.wasInClass}}" when="momento.date"></is-ok-disc>
                                 </td>
                             </tr>
                         </tbody>

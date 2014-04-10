@@ -60,16 +60,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
         var _moment = {};
 
         _moment.clazzName = turma.name;
-        _moment.monthYear = moment().format('MM/YYYY');
-        _moment.observation = turma.observation;
-
-        for (var i = 0; i < alunos.length; i++)
-        {
-            alunos[i].date = new Date();
-            alunos[i].studentName = alunos[i].name;
-        }
-
-        _moment.dailyInfo = [{teacher: turma.teacherName, subject: turma.subject, studentByDay: alunos}]; //TODO FIX THIS
+        _moment.dailyInfo = {date: new Date(), teacherName: turma.teacherName, subject: turma.subject, studentByDay: alunos};
 
         $scope.isLoadingVisible.modal = true;
 
