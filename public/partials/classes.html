@@ -10,45 +10,6 @@
         <input type="text" class="form-control fc-search" placeholder="procurar turma" ng-model="turmaProcurada" maxlength="100" autofocus/>
     </div>
 
-    <div class="modal fade" id="modal-day-by-day">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{turmaDiaDia.name}} ({{turmaDiaDia.time}}) no dia {{turmaDiaDia.date | date: 'dd/MM/yyyy'}}</h4>
-                </div>
-                <div class="modal-body">
-                    <label>professor responsável</label>
-                    <input type="text" class="form-control" ng-model="turmaDiaDia.teacher" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
-                    <br/>
-                    <label>data</label>
-                    <input type="date" class="form-control date-width" ng-model="turmaDiaDia.date" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_DATA}}"/>
-                    <br/>
-                    <label>presença</label>
-                    <p ng-repeat="aluno in alunos" class="presenca transition">{{aluno.name}}
-                        <input type="checkbox" class="pull-right" ng-model="aluno.isInClass"/>
-                    </p>
-                    <br/>
-                    <label>matéria</label>
-                    <input type="text" class="form-control" ng-model="turmaDiaDia.subject" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
-                    <br/>
-                    <label>observação</label>
-                    <textarea type="text" rows="5" class="form-control" ng-model="turmaDiaDia.observation" spellcheck="true" max-length="333"></textarea>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            ng-disabled="!(!!turmaDiaDia.teacher && !!turmaDiaDia.subject)"
-                            ng-click="registerClassMomentInTime(turmaDiaDia, alunos)">
-                        registrar
-                    </button>
-                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" id="modal-register-class">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -61,12 +22,19 @@
                     <label>nome</label>
                     <input type="text" class="form-control" ng-model="novaTurma.name" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
                     <br/>
+
+                    <label>alunos</label>
+                    <select multiple style="width: 500px;" id="teste1">
+                        <option value="AL">Alabama</option>
+                        <option value="Am">Amalapuram</option>
+                        <option value="An">Anakapalli</option>
+                        <option value="Ak">Akkayapalem</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                    <br/><br/>
+
                     <div class="middle-modal">
                         <aside class="pull-left">
-                            <label>quantidade de alunos</label>
-                            <input type="text" class="form-control" ng-model="novaTurma.studentsQuantity" maxlength="6" numbers-only/>
-                        </aside>
-                        <aside class="pull-right">
                             <label>horário</label>
                             <input type="time" class="form-control" ng-model="novaTurma.time" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
                         </aside>

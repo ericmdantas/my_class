@@ -5,7 +5,7 @@
 #login .btn-success {width: 100%; margin-top: 1em;}
 #login form, .info-card, .topic {overflow-y: hidden;}
 #login form {padding: 15px; max-width: 27em; margin: 0 auto;}
-#login input {padding: 20px 10px;}
+#login input.form-control {height: auto; padding: 12px;}
 #login header {overflow: hidden;}
 #password {margin-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-top: 0;}
 #username {border-bottom-left-radius: 0; border-bottom-right-radius: 0;}
@@ -17,6 +17,7 @@
 .info-card .btn-success {margin-right: 5px;}
 .topic .text-almost-invisible {display: inline-block;}
 .topic {padding: 5px 20px;}
+.topic h1 {text-align: center;}
 .topic.selected {margin-bottom: 1em;}
 .topic.selected h1 {margin: -13px -13px 0 -13px; padding: 30px 30px 30px 15px;}
 .topic.selected h1 {margin-bottom: 1em;}
@@ -30,8 +31,8 @@
 .created.alert.alert-danger {position: fixed; top: 30%; z-index: 1; width: 75%; left: 50%; margin: 0 0 0 -37.5%; text-align: center;}
 .presenca {padding: 6px 5px;}
 .date-width {width: 12em}
-.is-ok-disc {padding: 0 .2em;}
 .hidden-small-phone {display: none;}
+.is-ok-disc {border-radius: 100%; padding: 0 .5em; margin: 0 .3em;}
 
 footer {float: right; padding: 3px 7px; margin: 3em 1em 0;}
 input[type=checkbox] {width: 25px; height: 25px; margin: 0;}

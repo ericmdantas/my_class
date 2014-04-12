@@ -6,6 +6,8 @@
 {
     function findAllEarningsByTrimester(user, done)
     {
+        var trimestres;
+
         Student.aggregate({$match: {usersAllowed: {$in: [user]}}},
                           {$unwind: "$payments"},
                           {$group: {
@@ -21,10 +23,9 @@
                               if (err)
                                  return done(err, null);
 
-                              var trimestres;
                               trimestres = lib.getValuesByTrimester(doc);
 
-                              done(null, trimestres);
+                              return done(null, trimestres);
                           })
     }
 

@@ -10,9 +10,10 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
         httpMock.when('GET', '/api/classes').respond({classes: [{name: 'a'}, {name: 'b'}]});
+        httpMock.when('GET', '/api/classes/dailyInfo').respond();
         httpMock.when('GET', '/api/students/name/turma1').respond({});
         httpMock.when('GET', '/api/teachers/name').respond({});
-        httpMock.when('POST', '/api/classes/moment').respond(200);
+        httpMock.when('POST', '/api/classes/dailyInfo').respond(200);
     }))
 
     describe('checks elements creation', function()
@@ -90,6 +91,13 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             expect(typeof scope.getTeachersNames).toEqual('function');
         }))
 
+        it('checks if getClassesDailyInfo is defined', inject(function($controller)
+        {
+            $controller('ClazzDayController', {$scope: scope});
+            expect(scope.getClassesDailyInfo).toBeDefined();
+            expect(typeof scope.getClassesDailyInfo).toEqual('function');
+        }))
+
         it('checks if monthYear was created correctly', inject(function($controller)
         {
             $controller('ClazzDayController', {$scope: scope});
@@ -109,7 +117,26 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('GET /api/getClasses', function()
+    describe('checks if opening modal to edit class is working properly', function()
+    {
+        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
+        {
+            $controller('ClazzDayController', {$scope: scope});
+            var chosenClass = {};
+            scope.openModalToEditClazzDay(chosenClass);
+            expect(scope.aulaEscolhida).toEqual(chosenClass);
+        }))
+
+        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
+        {
+            $controller('ClazzDayController', {$scope: scope});
+            var chosenClass = {_id: 'abc', name: 'Turma1'};
+            scope.openModalToEditClazzDay(chosenClass);
+            expect(scope.aulaEscolhida).toEqual(chosenClass);
+        }))
+    })
+
+    describe('GET /api/classes', function()
     {
         it('should get a response from the server with nothing', inject(function($controller)
         {
@@ -135,26 +162,37 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('checks if opening modal to edit class is working properly', function()
+    describe('GET /api/classes/dailyInfo', function()
     {
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
+        it('should get a response from the server with nothing', inject(function($controller)
         {
+            httpMock.expectGET('/api/classes/dailyInfo').respond();
             $controller('ClazzDayController', {$scope: scope});
-            var chosenClass = {};
-            scope.openModalToEditClazzDay(chosenClass);
-            expect(scope.aulaEscolhida).toEqual(chosenClass);
+            expect(scope.informacaoDiaria).toEqual([]);
         }))
 
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
+        it('should get a response from the server with empty object', inject(function($controller)
         {
+            httpMock.expectGET('/api/classes/dailyInfo').respond({info: []});
             $controller('ClazzDayController', {$scope: scope});
-            var chosenClass = {_id: 'abc', name: 'Turma1'};
-            scope.openModalToEditClazzDay(chosenClass);
-            expect(scope.aulaEscolhida).toEqual(chosenClass);
+            expect(scope.informacaoDiaria).toEqual([]);
+        }))
+
+        it('should get a filled response from the server', inject(function($controller)
+        {
+            httpMock.expectGET('/api/classes/dailyInfo').respond({info: [{_id: {name: "Aluno2"}, dailyInfo: [{year: 2014, month: 4, day: 10, wasInClass: false}]}]});
+            $controller('ClazzDayController', {$scope: scope});
+            httpMock.flush();
+
+            expect(scope.informacaoDiaria[0]._id.name).toEqual('Aluno2');
+            expect(scope.informacaoDiaria[0].dailyInfo[0].year).toEqual(2014);
+            expect(scope.informacaoDiaria[0].dailyInfo[0].month).toEqual(4);
+            expect(scope.informacaoDiaria[0].dailyInfo[0].day).toEqual(10);
+            expect(scope.informacaoDiaria[0].dailyInfo[0].wasInClass).toEqual(false);
         }))
     })
 
-    describe('POST /api/classes/moment', function()
+    describe('POST /api/classes/dailyInfo', function()
     {
         it('shouldn\'t fetch request - empty parameters', inject(function($controller)
         {

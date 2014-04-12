@@ -11,6 +11,7 @@
     .topic.selected, .topic.selected:hover {border-left-width: 0px;}
     .nav.navbar-right {margin-right: .5em !important;}
     .hidden-small-phone {display: block;}
+    .topic h1 {text-align: left;}
 }
 
 @media (min-width: 45em)

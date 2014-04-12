@@ -2,7 +2,7 @@
 
 myClass.directive('isOkDisc', function()
 {
-    var temp = '<span style="padding: 0 .2em; border-radius: 100%; background-color: red; margin: 0 1em;"></span>';
+    var temp = '<span></span>';
 
     return {
                 restrict: 'EA',

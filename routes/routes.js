@@ -25,8 +25,9 @@
         //CLASS
         app.get('/api/classes', isLoggedIn, classes.getClassesInfo);
         app.get('/api/classes/name', isLoggedIn, classes.getClassesNames);
+        app.get('/api/classes/dailyInfo', isLoggedIn, classes.getClassesDailyInfo);
         app.post('/api/classes', isLoggedIn, classes.registerClass);
-        app.post('/api/classes/moment', isLoggedIn, classes.registerClassMomentInTime);
+        app.post('/api/classes/dailyInfo', isLoggedIn, classes.registerClassMomentInTime);
         app.put('/api/classes/:id', isLoggedIn, classes.editClass);
         app.delete('/api/classes/:id', isLoggedIn, classes.deleteClass);
 
@@ -39,6 +40,7 @@
 
         //STUDENTS
         app.get('/api/students', isLoggedIn, students.getInfoFromAllStudents);
+        app.get('/api/students/name', isLoggedIn, students.getStudentsNames);
         app.get('/api/students/name/:clazz', isLoggedIn, students.getStudentsNamesByClass);
         app.post('/api/students', isLoggedIn, students.registerStudent);
         app.put('/api/students/:id', isLoggedIn, students.editStudent);

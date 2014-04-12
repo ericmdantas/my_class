@@ -10,6 +10,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
     $scope.hoje = moment().format('DD/MM/YYYY');
     $scope.monthYear = moment().format('MM/YYYY');
     $scope.turmasCadastradas = [];
+    $scope.informacaoDiaria = [];
 
     $scope.getClasses = function()
     {
@@ -17,6 +18,15 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
             .success(function(data)
             {
                 $scope.turmasCadastradas = (data && data.classes) ? data.classes : [];
+            })
+    }
+
+    $scope.getClassesDailyInfo = function()
+    {
+        $http.get('/api/classes/dailyInfo')
+            .success(function(data)
+            {
+                $scope.informacaoDiaria = (data && data.info) ? data.info : [];
             })
     }
 
@@ -29,11 +39,6 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
              .success(function(data)
                      {
                          $scope.alunos = (data && data.students) ? data.students : [];
-
-                         for (var i = 0; i < $scope.alunos.length; i++)
-                         {
-                             $scope.alunos[i].wasInClass = true;
-                         }
                      })
     }
 
@@ -47,6 +52,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
     }
 
     $scope.getClasses();
+    $scope.getClassesDailyInfo();
     $scope.getTeachersNames();
 
     $scope.registerClazzDay = function(turma, alunos)
@@ -64,7 +70,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/classes/moment', _moment)
+        $http.post('/api/classes/dailyInfo', _moment)
              .success(function()
                      {
                          closesModal('#modal-clazz-day');

@@ -18,7 +18,7 @@
     var clazzSchema = mongoose.Schema
     ({
         name: {type: String, trim: true, required: true, index: true},
-        studentsQuantity: {type: String, trim: true, required: true},
+        studentsNames: [{type: String, trim: true, required: true}],
         time: {type: String, required: true},
         registered: {type: Date, default: new Date},
         lastModified: Date,
@@ -29,7 +29,7 @@
     clazzSchema.methods.findAllClassesByUser = function(user, done)
     {
         var query = {usersAllowed: {$in: [user]}};
-        var projection = {usersAllowed: 0};
+        var projection = {usersAllowed: 0, dailyInfo: 0};
 
         Clazz.find(query, projection)
              .exec(function(err, clazzes)
@@ -41,48 +41,39 @@
                    })
     }
 
+    clazzSchema.methods.getClassesDailyInfo = function(user, done)
+    {
+        Clazz.aggregate(
+            {$match: {usersAllowed: {$in: [user]}}},
+            {$match: {name: "Turma1"}},
+            {$unwind: "$dailyInfo"},
+            {$unwind: "$dailyInfo.studentByDay"},
+            {$project: {nomeAluno: "$dailyInfo.studentByDay.name", presenca: "$dailyInfo.studentByDay.wasInClass",
+                        data: "$dailyInfo.date", professor: "$dailyInfo.teacherName", assunto: "$dailyInfo.subject"}},
+            {$group: {_id: {studentName: "$nomeAluno"},
+                            dailyInfo: {$push: {teacherName: "$professor", subject: "$assunto", year: {$year: "$data"},
+                                                month: {$month: "$data"}, day: {$dayOfMonth: "$data"}, wasInClass: "$presenca"}}}},
+            function(err, info)
+            {
+                if (err)
+                    return done(err, null);
+
+                return done(null, info);
+            })
+    }
+
     clazzSchema.methods.registerClassMomentInTime = function(user, moment, done)
     {
         var query = {usersAllowed: {$in: [user]}, name: moment.clazzName};
-        var projection = {};
+        var updt = {$addToSet: {dailyInfo: moment.dailyInfo}};
 
-        Clazz.findOne(query, projection)
+        Clazz.update(query, updt)
              .exec(function(err, found)
                   {
                       if (err)
                           return done(err);
 
-                      if (found.dailyInfo.length === 0)
-                      {
-                          var updt = {$push: {dailyInfo: moment.dailyInfo}};
-                          var options = {upsert: true};
-
-                          Clazz.update(query, updt, options)
-                               .exec(function(err, updated)
-                                    {
-                                         if (err)
-                                            return done(err);
-
-                                         return done(null);
-                                    })
-                      }
-                      else
-                      {
-                          //TODO GETTING THERE, SHOULD CHECK DAILY INFO FUNCIONALITY NOW
-
-                          var queryExistentDailyInfo = {"dailyInfo.date": {$lt: new Date(moment.dailyInfo.date)}};
-                          var updtStudentDay = {$push: {"dailyInfo.$.studentByDay": moment.dailyInfo.studentByDay[0]}};
-                          var options = {};
-
-                          Clazz.update(queryExistentDailyInfo, updtStudentDay, options)
-                               .exec(function(err, updated)
-                                    {
-                                        if (err)
-                                            return done(err);
-
-                                        return done(null);
-                                    })
-                      }
+                      return done(null);
                   })
     }
 

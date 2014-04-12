@@ -94,7 +94,7 @@
         <div id="class-toggle-{{$index}}" class="collapse">
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
 
-            <div ng-show=isHistoricoVisible({{turma.dailyInfo.length}})>
+            <div>
                 <div class="select-data" align="center">
                     <button type="button" class="btn btn-default btn-sm" ng-click="changeDate(monthYear, 'add')">&#171;</button>
                     {{monthYear}}
@@ -103,34 +103,29 @@
 
                 <table class="table table-responsive">
                     <thead>
-                    <tr>
-                        <td>dia</td>
-                        <td>matéria</td>
-                        <td>professor</td>
-                    </tr>
+                        <tr>
+                            <td>dia</td>
+                            <td>matéria</td>
+                            <td>professor</td>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="momento in turma.dailyInfo">
-                        <td>{{momento.date | date: 'dd'}}</td>
-                        <td>{{momento.subject}}</td>
-                        <td>{{momento.teacherName}}</td>
-                    </tr>
+                        <tr ng-repeat="info in informacaoDiaria[0].dailyInfo">
+                            <td>{{info.day}}</td>
+                            <td>{{info.subject}}</td>
+                            <td>{{info.teacherName}}</td>
+                        </tr>
                     </tbody>
                 </table>
 
                 <br/><br/>
 
-                <div ng-repeat="momento in turma.dailyInfo">
-                    <table class="table">
-                        <tbody>
-                            <tr ng-repeat="aluno in momento.studentByDay">
-                                <td>{{aluno.name}}</td>
-                                <td>
-                                    <is-ok-disc situation="{{aluno.wasInClass}}" when="momento.date"></is-ok-disc>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div ng-repeat="info in informacaoDiaria">
+                    <p>
+                        <span>{{info._id.studentName}}</span>
+                        <is-ok-disc ng-repeat="diaria in info.dailyInfo" class="is-ok-disc disc-{{diaria.wasInClass}}"
+                                    situation="{{diaria.wasInClass}}" when="{{diaria.day}}"></is-ok-disc>
+                    </p>
                 </div>
             </div>
 

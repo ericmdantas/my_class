@@ -27,6 +27,28 @@ function Student()
         student.findAllStudentsByUser(usuario, callback);
     }
 
+    function pegaTodosOsNomesDeAlunos(req, res)
+    {
+        var usuario = req.session.passport.user;
+        var student = new StudentModel();
+
+        function callback(error, students)
+        {
+            if (error)
+            {
+                var errorHandler = new ErrorHandler();
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de nomes de alunos'));
+            }
+            else
+            {
+                students ? res.json({students: students})
+                    : res.json({students: []});
+            }
+        }
+
+        student.findAllStudentsNames(usuario, callback);
+    }
+
     function pegaTodosOsNomesDeAlunosPorTurma(req, res)
     {
         var usuario = req.session.passport.user;
@@ -38,7 +60,7 @@ function Student()
             if (error)
             {
                 var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de nomes de alunos'));
+                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de nomes de alunos por turma'));
             }
             else
             {
@@ -155,6 +177,7 @@ function Student()
 
     return {
                 getInfoFromAllStudents: pegaInformacaoDeTodosAlunos,
+                getStudentsNames: pegaTodosOsNomesDeAlunos,
                 getStudentsNamesByClass: pegaTodosOsNomesDeAlunosPorTurma,
                 registerStudent: cadastraNovoEstudante,
                 editStudent: editaAlunoEscolhido,

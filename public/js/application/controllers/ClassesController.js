@@ -19,26 +19,17 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
                       })
     }
 
-    $scope.getStudentsNames = function(turma)
+    $scope.getStudentsNames = function()
     {
-        $http.get('/api/students/name/'+turma)
+        $http.get('/api/students/name')
             .success(function(data)
             {
-                if (data && data.students)
-                {
-                    $scope.alunos = data.students;
-
-                    for (var x in $scope.alunos)
-                    {
-                        $scope.alunos[x].isInClass = true;
-                    }
-                }
-                else
-                    $scope.alunos = [];
+                $scope.alunos = (data && data.students) ? data.students : [];
             })
     }
 
     $scope.getClasses();
+    $scope.getStudentsNames();
 
     function preparaAberturaModal(idModal)
     {

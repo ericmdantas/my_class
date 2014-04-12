@@ -2,13 +2,12 @@
 
 describe('PLUSLESSINFO BEING TESTED', function()
 {
-    var scope, httpMock, compile, element, html;
+    var scope, compile, element, html;
 
     beforeEach(module('myClass'));
     beforeEach(inject(function($injector)
     {
         scope = $injector.get('$rootScope').$new();
-        httpMock = $injector.get('$httpBackend');
         compile = $injector.get('$compile');
 
         html = '<plusLessInfoElement>' +
@@ -21,9 +20,9 @@ describe('PLUSLESSINFO BEING TESTED', function()
 
     describe('checks elements creation in PLUS-LESS-INFO-ELEMENT', function()
     {
-        it('checks if directive was created', function()
+        it('checks if directive was created', inject(function()
         {
             expect(element).toBeDefined();
-        })
+        }))
     })
 })

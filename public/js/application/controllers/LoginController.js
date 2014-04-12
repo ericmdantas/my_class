@@ -3,7 +3,7 @@
 myClass.controller('LoginController', ['$scope', '$http', '$window', 'pageConfig', function ($scope, $http, $window, pageConfig)
 {
     $scope.user = {};
-    $scope.user.username = window.localStorage.getItem('u') || '';
+    $scope.user.username = $window.localStorage ? $window.localStorage.getItem('u') : '';
     $scope.allUsers = {};
     $scope.cfg = pageConfig;
     var idIntervalo = 0;

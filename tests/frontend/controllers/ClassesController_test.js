@@ -9,6 +9,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
         httpMock.when('GET', '/api/classes').respond({classes: [{name: 'a'}, {name: 'b'}]});
+        httpMock.when('GET', '/api/students/name').respond(200);
         httpMock.when('POST', '/api/classes').respond(200);
         httpMock.when('PUT', '/api/classes/123').respond(200);
         httpMock.when('DELETE', '/api/classes/A').respond(200);
