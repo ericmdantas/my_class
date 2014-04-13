@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.directive('isOkDisc', function()
+myClass.directive('wasInClass', function()
 {
     var temp = "<span class=\"label\" ng-class=\"{{situation}} ? 'label-success' : 'label-danger'\">{{when}}</span>";
 

@@ -8,9 +8,9 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
     $scope.professores = [];
     $scope.isLoadingVisible = {modal: false};
     $scope.hoje = moment().format('DD/MM/YYYY');
-    $scope.monthYear = moment().format('MM/YYYY');
     $scope.turmasCadastradas = [];
     $scope.informacaoDiaria = [];
+    var currentMonthYear = moment().format("MM_YYYY");
 
     $scope.getClasses = function()
     {
@@ -21,9 +21,12 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
             })
     }
 
-    $scope.getClassesDailyInfo = function()
+    $scope.getClassesDailyInfo = function(monthYear)
     {
-        $http.get('/api/classes/dailyInfo')
+        if ((!monthYear) || ("string" !== typeof monthYear) || (monthYear.length !== 7))
+            throw new Error('Não foi informado o ano e mês correto para consulta.');
+
+        $http.get('/api/classes/dailyInfo/'+monthYear)
             .success(function(data)
             {
                 $scope.informacaoDiaria = (data && data.info) ? data.info : [];
@@ -39,6 +42,11 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
              .success(function(data)
                      {
                          $scope.alunos = (data && data.students) ? data.students : [];
+
+                         for (var i = 0; i < $scope.alunos.length; i++)
+                         {
+                             $scope.alunos[i].wasInClass = true;
+                         }
                      })
     }
 
@@ -52,7 +60,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
     }
 
     $scope.getClasses();
-    $scope.getClassesDailyInfo();
+    $scope.getClassesDailyInfo(currentMonthYear);
     $scope.getTeachersNames();
 
     $scope.registerClazzDay = function(turma, alunos)
@@ -66,7 +74,13 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
         var _moment = {};
 
         _moment.clazzName = turma.name;
-        _moment.dailyInfo = {date: new Date(), teacherName: turma.teacherName, subject: turma.subject, studentByDay: alunos};
+        _moment.dailyInfo = {
+                                day: moment().format("DD"),
+                                monthYear: currentMonthYear,
+                                teacherName: turma.teacherName,
+                                subject: turma.subject,
+                                studentByDay: alunos
+                            };
 
         $scope.isLoadingVisible.modal = true;
 
@@ -75,7 +89,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
                      {
                          closesModal('#modal-clazz-day');
                          emptyProperty('turmaDiaDia');
-                         $scope.getClasses();
+                         $scope.getClassesDailyInfo(currentMonthYear);
                      })
     }
 
@@ -157,16 +171,6 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
     function emptyProperty(propertyToBeEmpty)
     {
         $scope[propertyToBeEmpty] = {};
-    }
-
-    $scope.changeDate = function(data, tipo)
-    {
-        if (!tipo || !data)
-            return;
-
-        tipo = tipo.toLowerCase();
-
-        $scope.monthYear = moment()[tipo]('months', 1).calendar();
     }
 
     $scope.isHistoricoVisible = function(historico)

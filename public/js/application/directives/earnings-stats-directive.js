@@ -3,8 +3,8 @@
 myClass.directive('earningsStats', function()
 {
     var temp = '<div class="info-card transition">'+
-               '<h3>arrecadação por trimestre</h3>'+
-               '<div id="column-chart" class="chart"></div>'+
+                    '<h3>arrecadação por trimestre</h3>'+
+                    '<div id="column-chart" class="chart"></div>'+
                '</div>';
 
     var ctrl = ['$scope', '$http', function ($scope, $http)

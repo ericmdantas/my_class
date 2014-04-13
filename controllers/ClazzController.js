@@ -50,6 +50,7 @@ function Clazz()
     function getClassesDailyInfo(req, res)
     {
         var usuario = req.session.passport.user;
+        var monthYear = req.params.monthYear;
         var clazz = new ClazzModel();
 
         function callback(error, dailyInfo)
@@ -64,7 +65,7 @@ function Clazz()
                           : res.json({info: []});
         }
 
-        clazz.getClassesDailyInfo(usuario, callback);
+        clazz.getClassesDailyInfo(usuario, monthYear, callback);
     }
 
     function registerClassMomentInTime(req, res)

@@ -2,15 +2,17 @@
 
 describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 {
-    var scope, httpMock;
+    var scope, httpMock, currentMonthYear;
 
     beforeEach(module('myClass'));
     beforeEach(inject(function($injector)
     {
+        currentMonthYear = moment().format("MM_YYYY");
+
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
         httpMock.when('GET', '/api/classes').respond({classes: [{name: 'a'}, {name: 'b'}]});
-        httpMock.when('GET', '/api/classes/dailyInfo').respond();
+        httpMock.when('GET', '/api/classes/dailyInfo/'+currentMonthYear).respond();
         httpMock.when('GET', '/api/students/name/turma1').respond({});
         httpMock.when('GET', '/api/teachers/name').respond({});
         httpMock.when('POST', '/api/classes/dailyInfo').respond(200);
@@ -162,11 +164,23 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('GET /api/classes/dailyInfo', function()
+    describe('GET /api/classes/dailyInfo/monthYear', function()
     {
+        it('should throw exception - passing wrong params to the get', inject(function($controller)
+        {
+            $controller('ClazzDayController', {$scope: scope});
+
+            var wrongParams = ['123456', '', undefined, null, function(){}, true, false, {}, [], 1];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function(){scope.getClassesDailyInfo(wrongParams[i])}).toThrow(new Error('Não foi informado o ano e mês correto para consulta.'));
+            }
+        }))
+
         it('should get a response from the server with nothing', inject(function($controller)
         {
-            httpMock.expectGET('/api/classes/dailyInfo').respond();
+            httpMock.expectGET('/api/classes/dailyInfo/'+currentMonthYear).respond();
             $controller('ClazzDayController', {$scope: scope});
             expect(scope.informacaoDiaria).toEqual([]);
         }))
@@ -180,7 +194,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         it('should get a filled response from the server', inject(function($controller)
         {
-            httpMock.expectGET('/api/classes/dailyInfo').respond({info: [{_id: {name: "Aluno2"}, dailyInfo: [{year: 2014, month: 4, day: 10, wasInClass: false}]}]});
+            httpMock.expectGET('/api/classes/dailyInfo/'+currentMonthYear).respond({info: [{_id: {name: "Aluno2"}, dailyInfo: [{year: 2014, month: 4, day: 10, wasInClass: false}]}]});
             $controller('ClazzDayController', {$scope: scope});
             httpMock.flush();
 
@@ -375,20 +389,4 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             expect(scope.isHistoricoVisible(12)).toBe(true);
         }))
     })
-
-    /*describe('changing dates', function()
-     {
-     it('checks if adding advancing a month is working', inject(function($controller)
-     {
-     $controller('ClassesController', {$scope: scope})
-     expect(scope.changeDate(moment().format('MM/YYYY'), 'add')).toBe(moment().add('months', 1).calendar());
-     }))
-
-     it('checks if adding reducing a month is working', inject(function($controller)
-     {
-     $controller('ClassesController', {$scope: scope})
-     expect(scope.changeDate(moment().format('MM/YYYY'), 'subtract')).toBe(moment().subtract('months', 1).calendar());
-     }))
-     })*/
-
 })

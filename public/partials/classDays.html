@@ -95,11 +95,7 @@
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
 
             <div>
-                <div class="select-data" align="center">
-                    <button type="button" class="btn btn-default btn-sm" ng-click="changeDate(monthYear, 'add')">&#171;</button>
-                    {{monthYear}}
-                    <button type="button" class="btn btn-default btn-sm" ng-click="changeDate(monthYear, 'subtract')">&#187;</button>
-                </div>
+                <get-info-by-date getinfo="getClassesDailyInfo(date)"></get-info-by-date>
 
                 <table class="table table-responsive">
                     <thead>
@@ -123,7 +119,8 @@
                 <div ng-repeat="info in informacaoDiaria">
                     <p>
                         <span>{{info._id.studentName}}</span>
-                        <is-ok-disc class="is-ok-disc" ng-repeat="diaria in info.dailyInfo" situation="{{diaria.wasInClass || false}}" when="{{diaria.day}}"></is-ok-disc>
+                        <was-in-class class="was-in-class" ng-repeat="diaria in info.dailyInfo" situation="{{diaria.wasInClass || false}}"
+                                      when="{{diaria.day}}"></was-in-class>
                     </p>
                 </div>
             </div>

@@ -52,7 +52,7 @@
 .topic.selected.border-left-color-rosa h1 {background-color: rgba(255, 13, 97, .6);}
 .topic.selected.border-left-color-avermelhado h1 {background-color: rgba(128, 0, 0, .6);}
 .container-icon {opacity: .4}
-.presenca:hover {background-color: #eee;}
+.table tbody tr:hover, .presenca:hover {background-color: rgba(0, 152, 10, .1);}
 
 .transition
 {

@@ -6,12 +6,13 @@
 {
     var dailyInformation = mongoose.Schema
     ({
+        day: {type: String, trim: true, required: true, index: true},
+        monthYear: {type: String, trim: true, required: true, index: true},
         teacherName: {type: String, trim: true, required: true},
         subject: {type: String, trim: true, required: true},
-        date: {type: Date},
         studentByDay: [{
                             name: {type: String, trim: true},
-                            wasInClass: {type: Boolean}
+                            wasInClass: {type: Boolean, required: true}
                       }]
     })
 
@@ -41,25 +42,21 @@
                    })
     }
 
-    clazzSchema.methods.getClassesDailyInfo = function(user, done)
+    clazzSchema.methods.getClassesDailyInfo = function(user, monthYear, done)
     {
-        Clazz.aggregate(
-            {$match: {usersAllowed: {$in: [user]}}},
-            {$project: {name: 1, time: 1, dailyInfo: 1}},
-            {$unwind: "$dailyInfo"},
-            {$unwind: "$dailyInfo.studentByDay"},
-            {$project: {clazzName: "$name", clazzTime: "$time", nomeAluno: "$dailyInfo.studentByDay.name", presenca: "$dailyInfo.studentByDay.wasInClass",
-                        data: "$dailyInfo.date", professor: "$dailyInfo.teacherName", assunto: "$dailyInfo.subject"}},
-            {$group: {_id: {clazzName: "$clazzName", studentName: "$nomeAluno"},
-                      dailyInfo: {$push: {teacherName: "$professor", subject: "$assunto", year: {$year: "$data"},
-                                          month: {$month: "$data"}, day: {$dayOfMonth: "$data"}, wasInClass: "$presenca"}}}},
-            function(err, info)
-            {
-                if (err)
-                    return done(err, null);
+        var query = {usersAllowed: {$in: [user]}, "dailyInfo.monthYear": monthYear};
+        var projection = {};
 
-                return done(null, info);
-            })
+        //TODO CHECK THE REASON WHY IT'S ALSO BRINGIN OTHER MONTHS
+
+        Clazz.find(query, projection)
+             .exec(function(err, found)
+                   {
+                        if (err)
+                            return done(err, null);
+
+                        return done(null, found);
+                   })
     }
 
     clazzSchema.methods.registerClassMomentInTime = function(user, moment, done)
