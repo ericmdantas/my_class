@@ -12,21 +12,6 @@
         type: String
     });
 
-    userSchema.methods.countInfoByUsername = function(user, done)
-    {
-        var query = {username: user};
-        var projection = {};
-
-        User.findOne(query, projection)
-            .exec(function(err, doc)
-                  {
-                     if (err)
-                         return done(err, null);
-
-                         done(null, doc);
-                  })
-    }
-
     var User = mongoose.model('User', userSchema);
 
     module.exports = User;
