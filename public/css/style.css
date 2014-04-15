@@ -53,8 +53,6 @@
 .topic.selected.border-left-color-avermelhado h1 {background-color: rgba(128, 0, 0, .6);}
 .container-icon {opacity: .4}
 .presenca:hover {background-color: #eee;}
-.disc-false {background-color: red;}
-.disc-true {background-color: green;}
 
 .transition
 {

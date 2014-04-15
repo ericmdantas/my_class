@@ -18,7 +18,7 @@
     var clazzSchema = mongoose.Schema
     ({
         name: {type: String, trim: true, required: true, index: true},
-        studentsNames: [{type: String, trim: true, required: true}],
+        students: [{type: String, trim: true, required: true}],
         time: {type: String, required: true},
         registered: {type: Date, default: new Date},
         lastModified: Date,
@@ -45,14 +45,14 @@
     {
         Clazz.aggregate(
             {$match: {usersAllowed: {$in: [user]}}},
-            {$match: {name: "Turma1"}},
+            {$project: {name: 1, time: 1, dailyInfo: 1}},
             {$unwind: "$dailyInfo"},
             {$unwind: "$dailyInfo.studentByDay"},
-            {$project: {nomeAluno: "$dailyInfo.studentByDay.name", presenca: "$dailyInfo.studentByDay.wasInClass",
+            {$project: {clazzName: "$name", clazzTime: "$time", nomeAluno: "$dailyInfo.studentByDay.name", presenca: "$dailyInfo.studentByDay.wasInClass",
                         data: "$dailyInfo.date", professor: "$dailyInfo.teacherName", assunto: "$dailyInfo.subject"}},
-            {$group: {_id: {studentName: "$nomeAluno"},
-                            dailyInfo: {$push: {teacherName: "$professor", subject: "$assunto", year: {$year: "$data"},
-                                                month: {$month: "$data"}, day: {$dayOfMonth: "$data"}, wasInClass: "$presenca"}}}},
+            {$group: {_id: {clazzName: "$clazzName", studentName: "$nomeAluno"},
+                      dailyInfo: {$push: {teacherName: "$professor", subject: "$assunto", year: {$year: "$data"},
+                                          month: {$month: "$data"}, day: {$dayOfMonth: "$data"}, wasInClass: "$presenca"}}}},
             function(err, info)
             {
                 if (err)

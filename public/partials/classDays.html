@@ -123,8 +123,7 @@
                 <div ng-repeat="info in informacaoDiaria">
                     <p>
                         <span>{{info._id.studentName}}</span>
-                        <is-ok-disc ng-repeat="diaria in info.dailyInfo" class="is-ok-disc disc-{{diaria.wasInClass}}"
-                                    situation="{{diaria.wasInClass}}" when="{{diaria.day}}"></is-ok-disc>
+                        <is-ok-disc class="is-ok-disc" ng-repeat="diaria in info.dailyInfo" situation="{{diaria.wasInClass || false}}" when="{{diaria.day}}"></is-ok-disc>
                     </p>
                 </div>
             </div>

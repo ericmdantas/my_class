@@ -33,8 +33,14 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress'],
-
+    reporters: ['progress', 'coverage'],
+	
+	preprocessors: {
+      // source files, that you wanna generate coverage for
+      // do not include tests or libraries
+      // (these files will be instrumented by Istanbul)
+      'public/js/application/*.js': ['coverage']
+    },
 
     // web server port
     port: 9876,
@@ -63,6 +69,10 @@ module.exports = function(config) {
     // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
     browsers: ['Chrome', 'Firefox'],
 
+	coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,
