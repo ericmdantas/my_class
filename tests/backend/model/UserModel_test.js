@@ -21,7 +21,7 @@ describe('UserModel', function()
         })
     })
 
-    describe('check properties', function()
+    describe("check properties", function()
     {
         beforeEach(function(done)
         {
