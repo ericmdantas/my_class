@@ -14,6 +14,9 @@
 
     bookSchema.methods.findAllBooksByUser = function(user, done)
     {
+        if ((!user) || ("string" !== typeof user))
+            return done(new Error("Usuario não informado."), null);
+
         var query = {usersAllowed: {$in: [user]}};
         var projection = {usersAllowed: 0};
 
@@ -29,20 +32,35 @@
 
     bookSchema.methods.registerNewBook = function(usuario, livro, done)
     {
+        if ((!usuario) || ("string" !== typeof usuario))
+            return done(new Error("Usuario não informado no momento do cadastro de livros."), null);
+
+        if ((!livro) || ("object" !== typeof livro) || (!Object.keys(livro).length))
+            return done(new Error("Livro não informado no momento de cadastro de livros."), null);
+
         livro.usersAllowed = [usuario];
         var book = new Book(livro);
 
         book.save(function(err, saved)
         {
             if (err)
-                return done(err, null);
+                return done(err);
 
-            done(null);
+            return done(null);
         })
     }
 
     bookSchema.methods.editBook = function(usuario, livro, id, done)
     {
+        if ((!usuario) || ("string" !== typeof usuario))
+            return done(new Error("Usuario não informado no momento da edição de livros."), null);
+
+        if ((!livro) || ("object" !== typeof livro) || (!Object.keys(livro).length))
+            return done(new Error("Livro não informado no momento da edição de livros."), null);
+
+        if ((!id) || ("string" !== typeof id))
+            return done(new Error("ID não informado no momento da edição de livros."), null);
+
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete livro._id;
         var updt = livro;
@@ -51,21 +69,27 @@
             .exec(function(err, updated)
                  {
                      if (err)
-                         return done(err, null);
+                         return done(err);
 
                      done(null);
                  })
     }
 
-    bookSchema.methods.deleteBook = function(user, identificacaoLivro, done)
+    bookSchema.methods.deleteBook = function(usuario, id, done)
     {
-        var query = {usersAllowed: {$in: [user]}, _id: identificacaoLivro};
+        if ((!usuario) || ("string" !== typeof usuario))
+            return done(new Error("Usuario não informado no momento do cadastro de livros."), null);
+
+        if ((!id) || ("string" !== typeof id))
+            return done(new Error("ID não informado no momento da deleção de livros."), null);
+
+        var query = {usersAllowed: {$in: [usuario]}, _id: id};
 
         Book.findOneAndRemove(query)
             .exec(function(err, deleted)
             {
                 if (err)
-                    return done(err, null);
+                    return done(err);
 
                 done(null);
             })

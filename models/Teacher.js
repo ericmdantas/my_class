@@ -4,7 +4,8 @@
 
 (function(mongoose)
 {
-    var teacherSchema = mongoose.Schema({
+    var teacherSchema = mongoose.Schema
+    ({
         name: {type: String, trim: true, required: true, index: true},
         birthDate: {type: String, trim: true, required: true},
         admission: {type: String, trim: true},
@@ -19,9 +20,12 @@
         usersAllowed: []
     });
 
-    teacherSchema.methods.findAllTeachersByUser = function(user, done)
+    teacherSchema.methods.findAllTeachersByUser = function(usuario, done)
     {
-        var query = {usersAllowed: {$in: [user]}};
+        if ((!usuario) || ("string" !== typeof usuario))
+            return done(new Error("Não foi informado o usuário com acesso aos professores."), null);
+
+        var query = {usersAllowed: {$in: [usuario]}};
         var projection = {usersAllowed: 0};
 
         Teacher.find(query, projection)
@@ -30,13 +34,16 @@
                    if (err)
                        return done(err, null);
 
-                   done(null, teachers);
+                   return done(null, teachers);
                })
     }
 
-    teacherSchema.methods.findAllTeachersNames = function(user, done)
+    teacherSchema.methods.findAllTeachersNames = function(usuario, done)
     {
-        var query = {usersAllowed: {$in: [user]}};
+        if ((!usuario) || ("string" !== typeof usuario))
+            return done(new Error("Não foi informado o usuário com acesso aos nomes dos professores."), null);
+
+        var query = {usersAllowed: {$in: [usuario]}};
         var projection = {name: 1};
 
         Teacher.find(query, projection)
@@ -45,12 +52,18 @@
                         if (err)
                             return done(err, null);
 
-                        done(null, teachers)
+                        return done(null, teachers);
                     })
     }
 
     teacherSchema.methods.registerNewTeacher = function(usuario, professor, done)
     {
+        if ((!usuario) || ("string" !== typeof usuario))
+            return done(new Error("Não foi informado o usuário no momento do cadastro dos professores."), null);
+
+        if ((!professor) || ("object" !== typeof professor) || (!Object.keys(professor).length))
+            return done(new Error("Não foi informado o professor a ser cadastrado."), null);
+
         professor.usersAllowed = [usuario];
         var teacher = new Teacher(professor);
 

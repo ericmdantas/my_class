@@ -3,12 +3,13 @@
 var assert = require('assert');
 var mongoose = require('mongoose');
 var UserModel = require('../../../models/User');
+var dburl = require('../config/db.json');
 
 describe('UserModel', function()
 {
     before(function()
     {
-        mongoose.connect('mongodb://localhost/myclass_test');
+        mongoose.connect(dburl);
         mongoose.connection.on('error', function(){});
     })
 
@@ -24,7 +25,7 @@ describe('UserModel', function()
     {
         beforeEach(function(done)
         {
-            UserModel.create({username: "eric3", password: "112233", registered: new Date(), payment: true}, done);
+            UserModel.create({username: "eric3    ", password: "112233   ", registered: new Date(), payment: true}, done);
         })
 
         afterEach(function(done)
@@ -34,12 +35,14 @@ describe('UserModel', function()
 
         it('should return the right properties', function(done)
         {
-            UserModel.find({username: "eric3"})
+            UserModel.findOne({username: "eric3"})
                      .exec(function(err, found)
                           {
                                 assert.strictEqual(err, null);
                                 assert.strictEqual(typeof found, "object");
-                                assert.strictEqual(found.length, 1);
+                                assert.strictEqual(found.username, "eric3");
+                                assert.strictEqual(found.password, "112233");
+                                assert.strictEqual(typeof found.payment, "boolean");
                                 done();
                           })
         })

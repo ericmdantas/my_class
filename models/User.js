@@ -7,9 +7,9 @@
         username: {type: String, trim: true, required: true, index: {unique: true}},
         password: {type: String, trim: true, required: true},
         payment: {type: Boolean},
-        registered: Date,
-        lastModified: Date,
-        type: String
+        registered: {type: Date},
+        lastModified: {type: Date},
+        type: {type: String, trim: true}
     });
 
     var User = mongoose.model('User', userSchema);
