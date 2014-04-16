@@ -22,7 +22,7 @@
 
     teacherSchema.methods.findAllTeachersByUser = function(usuario, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario))
+        if ((!usuario) || ('string' !== typeof usuario))
             return done(new Error("Não foi informado o usuário com acesso aos professores."), null);
 
         var query = {usersAllowed: {$in: [usuario]}};

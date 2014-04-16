@@ -32,7 +32,7 @@
 
     bookSchema.methods.registerNewBook = function(usuario, livro, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario))
+        if ((!usuario) || ('string' !== typeof usuario))
             return done(new Error("Usuario não informado no momento do cadastro de livros."), null);
 
         if ((!livro) || ("object" !== typeof livro) || (!Object.keys(livro).length))

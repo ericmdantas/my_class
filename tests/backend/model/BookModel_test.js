@@ -346,7 +346,7 @@ describe('BookModel', function()
         {
             var _book = new BookModel();
             var _user = "usuario";
-            var _id = "534dafae51aaf04b9b8c5b6f";
+            var _id = '534dafae51aaf04b9b8c5b6f';
 
             _book.deleteBook(_user, _id, function(err)
                                          {

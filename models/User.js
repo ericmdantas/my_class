@@ -12,7 +12,7 @@
         type: {type: String, trim: true}
     });
 
-    var User = mongoose.model('User', userSchema);
+    var User = mongoose.model("User", userSchema);
 
     module.exports = User;
 

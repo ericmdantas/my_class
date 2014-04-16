@@ -297,7 +297,7 @@ describe('Testing TeacherModel', function()
         {
             var _teacher = new TeacherModel();
             var _user = "eric3";
-            var _professor = {name: "Professor Qualquer"};
+            var _professor = {name: 'Professor Qualquer'};
 
             _teacher.registerNewTeacher(_user, _professor, function(err)
                                                            {
