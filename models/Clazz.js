@@ -29,6 +29,9 @@
 
     clazzSchema.methods.findAllClassesByUser = function(user, done)
     {
+        if ((!user) || ("string" !== typeof user))
+            return done(new Error("Não foi encontrado o usuário para buscar as turmas."), null);
+
         var query = {usersAllowed: {$in: [user]}};
         var projection = {usersAllowed: 0, dailyInfo: 0};
 
@@ -40,6 +43,24 @@
 
                         done(null, clazzes);
                    })
+    }
+
+    clazzSchema.methods.findAllClassesNamesByUser = function(user, done)
+    {
+        if ((!user) || ("string" !== typeof user))
+            return done(new Error("Não foi encontrado o usuário para buscar os nomes das turmas."), null);
+
+        var query = {usersAllowed: {$in: [user]}};
+        var projection = {name: 1};
+
+        Clazz.find(query, projection)
+            .exec(function(err, classes)
+            {
+                if (err)
+                    return done(err, null);
+
+                done(null, classes);
+            })
     }
 
     clazzSchema.methods.getClassesDailyInfo = function(user, monthYear, done)
@@ -59,8 +80,34 @@
                    })
     }
 
+    clazzSchema.methods.registerNewClass = function(usuario, turma, done)
+    {
+        if ((!usuario) || ("string" !== typeof usuario))
+            return done(new Error("Não foi encontrado o usuário para cadastrar a turma."));
+
+        if ((!turma) || ("object" !== typeof turma) || (!Object.keys(turma).length))
+            return done(new Error("Não foi encontrada a turma a ser cadastrada."));
+
+        turma.usersAllowed = [usuario];
+        var clazz = new Clazz(turma);
+
+        clazz.save(function(err, saved)
+        {
+            if (err)
+                return done(err);
+
+            return done(null);
+        })
+    }
+
     clazzSchema.methods.registerClassMomentInTime = function(user, moment, done)
     {
+        if ((!user) || ("string" !== typeof user))
+            return done(new Error("Não foi encontrado o usuário para cadastro da aula."));
+
+        if ((!moment) || ("object" !== typeof moment) || (!Object.keys(moment).length))
+            return done(new Error("Não foi encontrada a turma referente a aula para o cadastro."));
+
         var query = {usersAllowed: {$in: [user]}, name: moment.clazzName};
         var updt = {$addToSet: {dailyInfo: moment.dailyInfo}};
 
@@ -74,37 +121,17 @@
                   })
     }
 
-    clazzSchema.methods.findAllClassesNamesByUser = function(user, done)
-    {
-        var query = {usersAllowed: {$in: [user]}};
-        var projection = {name: 1};
-
-        Clazz.find(query, projection)
-             .exec(function(err, classes)
-                  {
-                        if (err)
-                            return done(err, null);
-
-                        done(null, classes);
-                  })
-    }
-
-    clazzSchema.methods.registerNewClass = function(usuario, turma, done)
-    {
-        turma.usersAllowed = [usuario];
-        var clazz = new Clazz(turma);
-
-        clazz.save(function(err, saved)
-        {
-            if (err)
-                return done(err);
-
-            done(null);
-        })
-    }
-
     clazzSchema.methods.editClass = function(usuario, turma, id, done)
     {
+        if ((!usuario) || ("string" !== typeof usuario))
+            return done(new Error("Não foi encontrado o usuário para a edição da turma."));
+
+        if ((!turma) || ("object" !== typeof turma) || (!Object.keys(turma).length))
+            return done(new Error("Não foi encontrada a turma referente a aula para a edição."));
+
+        if ((!id) || ("string" !== typeof id))
+            return done(new Error("Não foi encontrado o id para edição da turma."));
+
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete turma._id;
         var updt = turma;
@@ -115,13 +142,19 @@
                       if (err)
                           return done(err);
 
-                      done();
+                      done(null);
                    })
     }
 
-    clazzSchema.methods.deleteClass = function(user, identificacaoTurma, done)
+    clazzSchema.methods.deleteClass = function(user, id, done)
     {
-        var query = {usersAllowed: {$in: [user]}, _id: identificacaoTurma};
+        if ((!user) || ("string" !== typeof user))
+            return done(new Error("Não foi encontrado o usuário para a deleção da turma."));
+
+        if ((!id) || ("string" !== typeof id))
+            return done(new Error("Não foi encontrado o id para a deleção da turma."));
+
+        var query = {usersAllowed: {$in: [user]}, _id: id};
 
         Clazz.findOneAndRemove(query)
              .exec(function(err, deleted)
@@ -129,7 +162,7 @@
                      if (err)
                          return done(err);
 
-                     done();
+                     done(null);
                   })
     }
 

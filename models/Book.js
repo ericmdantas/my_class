@@ -33,10 +33,10 @@
     bookSchema.methods.registerNewBook = function(usuario, livro, done)
     {
         if ((!usuario) || ('string' !== typeof usuario))
-            return done(new Error("Usuario não informado no momento do cadastro de livros."), null);
+            return done(new Error("Usuario não informado no momento do cadastro de livros."));
 
         if ((!livro) || ("object" !== typeof livro) || (!Object.keys(livro).length))
-            return done(new Error("Livro não informado no momento de cadastro de livros."), null);
+            return done(new Error("Livro não informado no momento de cadastro de livros."));
 
         livro.usersAllowed = [usuario];
         var book = new Book(livro);
@@ -53,13 +53,13 @@
     bookSchema.methods.editBook = function(usuario, livro, id, done)
     {
         if ((!usuario) || ("string" !== typeof usuario))
-            return done(new Error("Usuario não informado no momento da edição de livros."), null);
+            return done(new Error("Usuario não informado no momento da edição de livros."));
 
         if ((!livro) || ("object" !== typeof livro) || (!Object.keys(livro).length))
-            return done(new Error("Livro não informado no momento da edição de livros."), null);
+            return done(new Error("Livro não informado no momento da edição de livros."));
 
         if ((!id) || ("string" !== typeof id))
-            return done(new Error("ID não informado no momento da edição de livros."), null);
+            return done(new Error("ID não informado no momento da edição de livros."));
 
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete livro._id;
@@ -78,10 +78,10 @@
     bookSchema.methods.deleteBook = function(usuario, id, done)
     {
         if ((!usuario) || ("string" !== typeof usuario))
-            return done(new Error("Usuario não informado no momento do cadastro de livros."), null);
+            return done(new Error("Usuario não informado no momento do cadastro de livros."));
 
         if ((!id) || ("string" !== typeof id))
-            return done(new Error("ID não informado no momento da deleção de livros."), null);
+            return done(new Error("ID não informado no momento da deleção de livros."));
 
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
 

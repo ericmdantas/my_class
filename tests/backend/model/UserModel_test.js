@@ -42,7 +42,7 @@ describe('UserModel', function()
                                 assert.strictEqual(typeof found, "object");
                                 assert.strictEqual(found.username, "eric3");
                                 assert.strictEqual(found.password, "112233");
-                                assert.strictEqual(typeof found.payment, "boolean");
+                                assert.strictEqual(found.payment, true);
                                 done();
                           })
         })

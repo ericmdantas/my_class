@@ -59,10 +59,10 @@
     teacherSchema.methods.registerNewTeacher = function(usuario, professor, done)
     {
         if ((!usuario) || ("string" !== typeof usuario))
-            return done(new Error("Não foi informado o usuário no momento do cadastro dos professores."), null);
+            return done(new Error("Não foi informado o usuário no momento do cadastro dos professores."));
 
         if ((!professor) || ("object" !== typeof professor) || (!Object.keys(professor).length))
-            return done(new Error("Não foi informado o professor a ser cadastrado."), null);
+            return done(new Error("Não foi informado o professor a ser cadastrado."));
 
         professor.usersAllowed = [usuario];
         var teacher = new Teacher(professor);
@@ -78,6 +78,15 @@
 
     teacherSchema.methods.editTeacher = function(usuario, professor, id, done)
     {
+        if ((!usuario) || ("string" !== typeof usuario))
+            return done(new Error("Não foi informado o usuário no momento da edição do professor."));
+
+        if ((!professor) || ("object" !== typeof professor) || (!Object.keys(professor).length))
+            return done(new Error("Não foi informado o professor a ser editado."));
+
+        if ((!id) || ("string" !== typeof id))
+            return done(new Error("Não foi informado o id para edição do professor."));
+
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete professor._id;
         var updt = professor;
@@ -88,13 +97,19 @@
                         if (err)
                             return done(err);
 
-                        done();
+                        done(null);
                     })
     }
 
-    teacherSchema.methods.deleteTeacher = function(user, identificacaoProfessor, done)
+    teacherSchema.methods.deleteTeacher = function(usuario, id, done)
     {
-        var query = {usersAllowed: {$in: [user]}, _id: identificacaoProfessor};
+        if ((!usuario) || ("string" !== typeof usuario))
+            return done(new Error("Não foi informado o usuário no momento da deleção do professor."));
+
+        if ((!id) || ("string" !== typeof id))
+            return done(new Error("Não foi informado o id para deleção do professor."));
+
+        var query = {usersAllowed: {$in: [usuario]}, _id: id};
 
         Teacher.findOneAndRemove(query)
                .exec(function(err, deleted)
@@ -102,7 +117,7 @@
                    if (err)
                        return done(err);
 
-                   done();
+                   done(null);
                })
     }
 

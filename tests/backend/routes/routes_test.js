@@ -4,11 +4,11 @@ var routes = require('../../../routes/routes');
 var assert = require('assert');
 var express = require('express')();
 var passport = require('passport');
-var mongoose = require('mongoose');
-var supertest = require('supertest');
-var app = require('../../../server');
-var api = supertest('http://localhost:7777');
-var agent = supertest.agent(app);
+//var mongoose = require('mongoose');
+//var supertest = require('supertest');
+//var app = require('../../../server');
+//var api = supertest('http://localhost:7777');
+//var agent = supertest.agent(app);
 
 describe('routes.js being tested', function()
 {

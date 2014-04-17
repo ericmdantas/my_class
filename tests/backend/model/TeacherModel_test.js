@@ -217,19 +217,15 @@ describe('Testing TeacherModel', function()
                                                     assert.strictEqual(teachers.length, 2);
                                                     assert.strictEqual(typeof teachers[0].name, "string");
                                                     assert.strictEqual(typeof teachers[0]._id, "object");
-
-                                                    /*
-                                   ??????????         Uncaught AssertionError: "undefined" === "undefined"       ???????????
-                                                    assert.strictEqual(typeof teachers[0].birthDate, undefined);
-                                                    assert.strictEqual(typeof teachers[0].admission, undefined);
-                                                    assert.strictEqual(typeof teachers[0].availability, undefined);
-                                                    assert.strictEqual(typeof teachers[0].email, undefined);
-                                                    assert.strictEqual(typeof teachers[0].mobilePhone, undefined);
-                                                    assert.strictEqual(typeof teachers[0].phone, undefined);
-                                                    assert.strictEqual(typeof teachers[0].salary, undefined);
-                                                    assert.strictEqual(typeof teachers[0].address, undefined);
-                                                    assert.strictEqual(typeof teachers[0].usersAllowed, undefined);
-                                                    */
+                                                    assert.strictEqual(teachers[0].birthDate, undefined);
+                                                    assert.strictEqual(teachers[0].admission, undefined);
+                                                    assert.strictEqual(teachers[0].availability, undefined);
+                                                    assert.strictEqual(teachers[0].email, undefined);
+                                                    assert.strictEqual(teachers[0].mobilePhone, undefined);
+                                                    assert.strictEqual(teachers[0].phone, undefined);
+                                                    assert.strictEqual(teachers[0].salary, undefined);
+                                                    assert.strictEqual(teachers[0].address, undefined);
+                                                    assert.strictEqual(teachers[0].usersAllowed, undefined);
 
                                                     done();
                                                 })
@@ -308,5 +304,187 @@ describe('Testing TeacherModel', function()
         })
     })
 
-    //TODO keep adding the tests: describe('editTeacher') [...]
+    describe('editTeacher', function()
+    {
+        beforeEach(function(done)
+        {
+            TeacherModel.create({
+                    name: "Professor1",
+                    birthDate: "26/06/1989",
+                    admission: "26/06/1999",
+                    availability: "15:00",
+                    email: "ericdantas0@hotmail.com",
+                    mobilePhone: "98969896",
+                    phone: "27410707",
+                    salary: "123123",
+                    address: "Rua Endereço Qualquer",
+                    registered: new Date(),
+                    lastModified: new Date(),
+                    usersAllowed: ["eric3"]
+                }, done);
+        })
+
+        afterEach(function(done)
+        {
+            TeacherModel.remove(done);
+        })
+
+        it('shouldn\'t edit teacher - empty user', function(done)
+        {
+            var _teacher = new TeacherModel();
+            var _professor = {name: "Professor1"};
+            var _id = "abc123";
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _teacher.editTeacher(wrongParams[i], _professor, _id, function(err)
+                                                                      {
+                                                                            assert.notStrictEqual(err, null);
+                                                                            assert.strictEqual(err instanceof Error, true);
+                                                                      })
+            }
+
+            done();
+        })
+
+        it('shouldn\'t edit teacher - empty teacher', function(done)
+        {
+            var _teacher = new TeacherModel();
+            var _usuario = "987eric";
+            var _id = "abc123";
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _teacher.editTeacher(_usuario, wrongParams[i], _id, function(err)
+                                                                    {
+                                                                        assert.notStrictEqual(err, null);
+                                                                        assert.strictEqual(err instanceof Error, true);
+                                                                    })
+            }
+
+            done();
+        })
+
+        it('shouldn\'t edit teacher - empty id', function(done)
+        {
+            var _teacher = new TeacherModel();
+            var _usuario = "987eric";
+            var _professor = {name: "Professor1"};
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _teacher.editTeacher(_usuario, _professor, wrongParams[i], function(err)
+                                                                           {
+                                                                               assert.notStrictEqual(err, null);
+                                                                               assert.strictEqual(err instanceof Error, true);
+                                                                           })
+            }
+
+            done();
+        })
+
+        it('shouldn\'t edit teacher - all empty', function(done)
+        {
+            var _teacher = new TeacherModel();
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _teacher.editTeacher(wrongParams[i], wrongParams[i], wrongParams[i], function(err)
+                                                                                     {
+                                                                                         assert.notStrictEqual(err, null);
+                                                                                         assert.strictEqual(err instanceof Error, true);
+                                                                                     })
+            }
+
+            done();
+        })
+
+        it('should edit teacher correctly', function(done)
+        {
+            var _teacher = new TeacherModel();
+            var _usuario = "987eric";
+            var _professor = {name: "Professor1"};
+            var _id = "534dafae51aaf04b9b8c5b6f";
+
+            _teacher.editTeacher(_usuario, _professor, _id, function(err)
+                                                            {
+                                                                assert.strictEqual(err, null);
+                                                                done();
+                                                            })
+        })
+    })
+
+    describe('deleteTeacher', function()
+    {
+        beforeEach(function(done)
+        {
+            TeacherModel.create({
+                name: "Professor1",
+                birthDate: "26/06/1989",
+                admission: "26/06/1999",
+                availability: "15:00",
+                email: "ericdantas0@hotmail.com",
+                mobilePhone: "98969896",
+                phone: "27410707",
+                salary: "123123",
+                address: "Rua Endereço Qualquer",
+                registered: new Date(),
+                lastModified: new Date(),
+                usersAllowed: ["eric3"]
+            }, done);
+        })
+
+        afterEach(function(done)
+        {
+            TeacherModel.remove(done);
+        })
+
+        it('shouldn\'t delete teacher - empty user', function(done)
+        {
+            var _teacher = new TeacherModel();
+            var _id = "id123";
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _teacher.deleteTeacher(wrongParams[i], _id, function(err)
+                                                            {
+                                                                assert.notStrictEqual(err, null);
+                                                                assert.strictEqual(err instanceof Error, true);
+                                                            })
+            }
+
+            done();
+        })
+
+        it('shouldn\'t delete teacher - empty id', function(done)
+        {
+            var _teacher = new TeacherModel();
+            var _usuario = "eric3";
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _teacher.deleteTeacher(_usuario, wrongParams[i], function(err)
+                                                                 {
+                                                                     assert.notStrictEqual(err, null);
+                                                                     assert.strictEqual(err instanceof Error, true);
+                                                                 })
+            }
+
+            done();
+        })
+
+        it('should delete teacher correctly', function(done)
+        {
+            var _teacher = new TeacherModel();
+            var _usuario = "eric3";
+            var _id = "534dafae51aaf04b9b8c5b6f";
+
+
+            _teacher.deleteTeacher(_usuario, _id, function(err)
+                                                  {
+                                                     assert.strictEqual(err, null);
+                                                     done();
+                                                  })
+        })
+    })
 })
