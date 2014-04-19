@@ -19,7 +19,7 @@ configuration.routes = ['$routeProvider', '$locationProvider', function($routePr
 
 configuration.interceptors = ['$provide', '$httpProvider', function($provide, $httpProvider)
                      {
-                         $provide.factory('Interceptus', ['$q', 'lib_frontend', function($q, lib)
+                         $provide.factory('Interceptus', ['$q', 'lib', function($q, lib)
                          {
                              return {
                                          request: function(config)

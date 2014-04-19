@@ -1,6 +1,6 @@
 describe('STUDENTSCONTROLLER BEING TESTED', function()
 {
-    var scope, httpMock, lib_frontend;
+    var scope, httpMock, lib;
 
     beforeEach(module('myClass'));
 
@@ -8,7 +8,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
     {
         scope = $injector.get('$rootScope').$new();
         httpMock = $injector.get('$httpBackend');
-        lib_frontend = $injector.get('lib_frontend');
+        lib = $injector.get('lib');
         httpMock.when('GET', '/api/students').respond({students: [{nome: 'aluno qualquer'}]});
         httpMock.when('GET', '/api/classes/name').respond({classes: [{name: 'turma qualquer'}]});
         httpMock.when('POST', '/api/students').respond(200);
@@ -214,7 +214,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
             httpMock.expectPUT('/api/students/1').respond();
             httpMock.expectGET('/api/students').respond({students: [{name: 'nome'}]});
             $controller('StudentsController', {$scope: scope});
-            var student = {_id: 1, name: 'e', class: '', status: '', contract: ''};
+            var student = {_id: "1", name: 'e', class: '', status: '', contract: ''};
             scope.editStudent(student);
             httpMock.flush();
             expect(scope.alunos).toBeDefined();

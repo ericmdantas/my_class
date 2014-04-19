@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_frontend', 'TeacherService',
-                                  function($scope, $http, pageConfig, lib_fronted, TeacherService)
+myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib', 'TeacherService',
+                                  function($scope, $http, pageConfig, lib, TeacherService)
 {
     $scope.cfg = pageConfig;
     $scope.professores = [];
@@ -53,10 +53,10 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
     {
         $scope.isLoadingVisible.modal = true;
 
-        if ((!professor) || ("object" !== typeof professor) || (!Object.keys(professor).length))
+        if (lib.isObjectInvalid(professor))
             throw new Error('Não é possível cadastrar um professor sem informações.');
 
-        professor = lib_fronted.removeWhiteSpaces(professor);
+        professor = lib.removeWhiteSpaces(professor);
 
         TeacherService.registerTeacher(professor)
             .success(function()
@@ -70,10 +70,10 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
     {
         $scope.isLoadingVisible.modal = true;
 
-        if ((!professor) || ("object" !== typeof professor) || (!professor._id) || (!Object.keys(professor).length))
+        if (lib.isObjectInvalid(professor) || lib.isStringInvalid(professor._id))
             throw new Error('Não é possível editar um professor sem informações.');
 
-        professor = lib_fronted.removeWhiteSpaces(professor);
+        professor = lib.removeWhiteSpaces(professor);
 
         TeacherService.editTeacher(professor._id, professor)
              .success(function()
@@ -87,7 +87,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.deleteTeacher = function(id)
     {
-        if (("string" !== typeof id) || (!id))
+        if (lib.isStringInvalid(id))
             throw new Error('Não foi possível deletar este professor. Pois o ID está errado.');
 
         $scope.isLoadingVisible.modal = true;

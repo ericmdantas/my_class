@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookService', function($scope, $http, pageConfig, BookService)
+myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookService', 'lib', function($scope, $http, pageConfig, BookService, lib)
 {
     $scope.livros = [];
     $scope.cfg = pageConfig;
@@ -49,7 +49,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookSer
 
     $scope.registerBook = function(livro)
     {
-        if ((!livro) || (typeof livro !== "object") || (!Object.keys(livro).length))
+        if (lib.isObjectInvalid(livro))
            throw new Error('Não foi possível cadastrar este livro, pois o mesmo não existe.')
 
         $scope.isLoadingVisible.modal = true;
@@ -64,7 +64,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookSer
 
     $scope.editBook = function(livro)
     {
-        if ((!livro) || ("object" !== typeof livro) || (!livro._id))
+        if (lib.isObjectInvalid(livro) || (lib.isStringInvalid(livro._id)))
             throw new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.');
 
         $scope.isLoadingVisible.modal = true;
@@ -79,7 +79,7 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookSer
 
     $scope.deleteBook = function(id)
     {
-        if ((!id) || ("object" === typeof id))
+        if (lib.isStringInvalid(id))
             throw new Error('Ocorreu um erro na deleção do livro. Não há um id identificado.');
 
         $scope.isLoadingVisible.modal = true;

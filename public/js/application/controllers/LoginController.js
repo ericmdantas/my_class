@@ -1,6 +1,7 @@
 "use strict";
 
-myClass.controller('LoginController', ['$scope', '$http', '$window', 'pageConfig', 'LoginService', function ($scope, $http, $window, pageConfig, LoginService)
+myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pageConfig', 'LoginService',
+                              function ($scope, $http, $window, lib, pageConfig, LoginService)
 {
     $scope.user = {};
     $scope.user.username = $window.localStorage ? $window.localStorage.getItem('u') : '';
@@ -10,7 +11,7 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'pageConfig
 
     $scope.validaUser = function(user)
     {
-        if ((!user) || (typeof user !== "object"))
+        if (lib.isObjectInvalid(user))
             throw new Error('Usuário não informado.');
 
         desabilitaBotao();

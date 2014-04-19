@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', 'ClazzDayService', 'TeacherService', 'StudentService',
-                                function ($scope, $http, pageConfig, ClazzDayService, TeacherService, StudentService)
+myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig', 'ClazzDayService', 'TeacherService', 'StudentService',
+                                function ($scope, $http, lib, pageConfig, ClazzDayService, TeacherService, StudentService)
 {
     $scope.cfg = pageConfig;
     $scope.aulaEscolhida = {};
@@ -24,7 +24,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', 'Claz
 
     $scope.getClassesDailyInfo = function(monthYear)
     {
-        if ((!monthYear) || ("string" !== typeof monthYear) || (monthYear.length !== 7))
+        if (lib.isStringInvalid(monthYear) || monthYear.length !== 7)
             throw new Error('Não foi informado o ano e mês correto para consulta.');
 
         ClazzDayService.getDailyInfo(monthYear)
@@ -36,7 +36,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', 'Claz
 
     $scope.getStudentsNamesByClass = function(turma)
     {
-        if ((!turma) || ("string" !== typeof turma))
+        if (lib.isStringInvalid(turma))
             throw new Error('Não foi possível pegar os nomes dos alunos.');
 
         StudentService.getStudentsNamesInClass(turma)
@@ -66,8 +66,8 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', 'Claz
 
     $scope.registerClazzDay = function(turma, alunos)
     {
-        var problemasAlunos = ((!alunos) || ("object" !== typeof alunos) || (!Object.keys(alunos).length));
-        var problemasTurma = (!turma)  || ("object" !== typeof turma) || (!turma.teacherName) || (!turma.subject) || (!Object.keys(turma).length);
+        var problemasAlunos = (lib.isObjectInvalid(alunos));
+        var problemasTurma = ((lib.isObjectInvalid(turma)) || (!turma.teacherName) || (!turma.subject));
 
         if (problemasAlunos || problemasTurma)
             throw new Error('Não será possível continuar, pois alguns parâmetros não foram informados.');

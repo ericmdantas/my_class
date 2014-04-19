@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('PaymentsController', ['$scope', '$http', 'pageConfig', 'PaymentService',
-                                function ($scope, $http, pageConfig, PaymentService)
+myClass.controller('PaymentsController', ['$scope', '$http', 'lib', 'pageConfig', 'PaymentService',
+                                function ($scope, $http, lib, pageConfig, PaymentService)
 {
     $scope.pagamentos = [];
     $scope.pagamentoEscolhido = {};
@@ -47,7 +47,7 @@ myClass.controller('PaymentsController', ['$scope', '$http', 'pageConfig', 'Paym
 
     $scope.pay = function(pagamento)
     {
-        if ((!pagamento) || (typeof pagamento !== "object"))
+        if (lib.isObjectInvalid(pagamento))
             throw new Error('Não foi possível realizar o pagamento.');
 
         $scope.isLoadingVisible.modal = true;

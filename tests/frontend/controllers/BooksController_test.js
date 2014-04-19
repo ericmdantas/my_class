@@ -169,7 +169,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         it('should change the book name', inject(function($controller)
         {
             $controller('BooksController', {$scope: scope});
-            var livroEditado = {_id: 123, name: 'outro nome', quantity: 7};
+            var livroEditado = {_id: "123", name: 'outro nome', quantity: 7};
             scope.editBook(livroEditado);
             httpMock.flush();
             expect(scope.livros[0].name).toBe('A');

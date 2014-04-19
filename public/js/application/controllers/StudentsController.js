@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_frontend', 'StudentService', 'ClazzService',
-                                function ($scope, $http, pageConfig, lib_frontend, StudentService, ClazzService)
+myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib', 'StudentService', 'ClazzService',
+                                function ($scope, $http, pageConfig, lib, StudentService, ClazzService)
 {
     $scope.alunos = [];
     $scope.turmasCadastradas = [];
@@ -62,14 +62,14 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.registerNewStudent = function(aluno)
     {
-        if ((!aluno) || ("object" !== typeof aluno) || (!Object.keys(aluno).length))
+        if (lib.isObjectInvalid(aluno))
             throw new Error('erro: aluno nao informado - registerNewStudent');
 
         $scope.isLoadingVisible.modal = true;
         aluno.class = aluno.class ? aluno.class.name : '';
         aluno.status = aluno.status ? aluno.status.nome : '';
         aluno.contract = aluno.contract ? aluno.contract.nome : '';
-        aluno = lib_frontend.removeWhiteSpaces(aluno);
+        aluno = lib.removeWhiteSpaces(aluno);
 
         StudentService.registerStudent(aluno)
              .success(function()
@@ -81,7 +81,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.editStudent = function(aluno)
     {
-        if ((!aluno) || (typeof aluno !== "object") || (!aluno._id))
+        if (lib.isObjectInvalid(aluno) || (lib.isStringInvalid(aluno._id)))
             throw new Error('Não foi possível editar este aluno. Tente mais tarde.');
 
         $scope.isLoadingVisible.modal = true;
@@ -100,7 +100,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.deleteStudent = function(id)
     {
-        if ((!id) || ("string" !== typeof id))
+        if (lib.isStringInvalid(id))
             throw new Error('Não foi possível realizar a deleção do aluno. O ID está errado.');
 
         $scope.isLoadingVisible.modal = true;

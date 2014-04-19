@@ -1,6 +1,7 @@
 "use strict";
 
-myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', 'ClazzService', function ($scope, $http, pageConfig, ClazzService)
+myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig', 'ClazzService', 'StudentService',
+                                function ($scope, $http, lib, pageConfig, ClazzService, StudentService)
 {
     $scope.turmas = [];
     $scope.cfg = pageConfig;
@@ -21,7 +22,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', 'Clazz
 
     $scope.getStudentsNames = function()
     {
-        $http.get('/api/students/name')
+        StudentService.getStudentsNames()
             .success(function(data)
             {
                 $scope.alunos = (data && data.students) ? data.students : [];
@@ -64,7 +65,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', 'Clazz
     {
         $scope.isLoadingVisible.modal = true;
 
-        if ((!turma) || ("object" !== typeof turma) || (!Object.keys(turma).length))
+        if (lib.isObjectInvalid(turma))
             throw new Error('Não foi possível registrar esta turma.');
 
         ClazzService.registerClazz(turma)
@@ -79,7 +80,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', 'Clazz
     {
         $scope.isLoadingVisible.modal = true;
 
-        if ((!turma) || ("object" !== typeof turma) || (!Object.keys(turma).length) || (!turma._id))
+        if (lib.isObjectInvalid(turma) || lib.isStringInvalid(turma._id))
             throw new Error('Não foi possível editar esta turma.');
 
         ClazzService.editClazz(turma._id, turma)
@@ -92,7 +93,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', 'Clazz
 
     $scope.deleteClass = function(id)
     {
-        if (("string" !== typeof id) || (!id))
+        if (lib.isStringInvalid(id))
             throw new Error('Não foi possível deletar esta turma, pois o id está errado.');
 
         $scope.isLoadingVisible.modal = true;

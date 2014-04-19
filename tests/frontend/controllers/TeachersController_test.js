@@ -241,7 +241,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         it('edit a teacher successfully', inject(function($controller)
         {
             $controller('TeachersController', {$scope: scope});
-            var teacher = {_id: 123, name: 'Professor', salary: 1};
+            var teacher = {_id: "123", name: 'Professor', salary: 1};
             scope.editTeacher(teacher);
             httpMock.flush();
         }))
