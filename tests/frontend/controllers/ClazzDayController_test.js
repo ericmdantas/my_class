@@ -99,24 +99,6 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             expect(scope.getClassesDailyInfo).toBeDefined();
             expect(typeof scope.getClassesDailyInfo).toEqual('function');
         }))
-
-        it('checks if monthYear was created correctly', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: scope});
-            expect(scope.monthYear).toBeDefined();
-        }))
-
-        it('checks if editClazzDay was created', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: scope});
-            expect(scope.editClazzDay).toBeDefined();
-        }))
-
-        it('checks if editClazzDay was created', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: scope});
-            expect(scope.deleteClazzDay).toBeDefined();
-        }))
     })
 
     describe('checks if opening modal to edit class is working properly', function()

@@ -1,6 +1,7 @@
 "use strict";
 
-myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', function ($scope, $http, pageConfig)
+myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', 'ClazzDayService', 'TeacherService', 'StudentService',
+                                function ($scope, $http, pageConfig, ClazzDayService, TeacherService, StudentService)
 {
     $scope.cfg = pageConfig;
     $scope.aulaEscolhida = {};
@@ -26,7 +27,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
         if ((!monthYear) || ("string" !== typeof monthYear) || (monthYear.length !== 7))
             throw new Error('Não foi informado o ano e mês correto para consulta.');
 
-        $http.get('/api/classes/dailyInfo/'+monthYear)
+        ClazzDayService.getDailyInfo(monthYear)
             .success(function(data)
             {
                 $scope.informacaoDiaria = (data && data.info) ? data.info : [];
@@ -38,7 +39,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
         if ((!turma) || ("string" !== typeof turma))
             throw new Error('Não foi possível pegar os nomes dos alunos.');
 
-        $http.get('/api/students/name/'+turma)
+        StudentService.getStudentsNamesInClass(turma)
              .success(function(data)
                      {
                          $scope.alunos = (data && data.students) ? data.students : [];
@@ -52,7 +53,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
 
     $scope.getTeachersNames = function()
     {
-        $http.get('/api/teachers/name')
+        TeacherService.getTeachersNames()
              .success(function(data)
                      {
                           $scope.professores = (data && data.resultado) ? data.resultado : [];
@@ -84,7 +85,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/classes/dailyInfo', _moment)
+        ClazzDayService.registerDailyInfo(_moment)
              .success(function()
                      {
                          closesModal('#modal-clazz-day');
@@ -121,45 +122,6 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'pageConfig', funct
     {
         preparaAberturaModal('#modal-delete-class-day');
         $scope.aulaEscolhida = myClass;
-    }
-
-    $scope.registerClass = function(turma)
-    {
-        $scope.isLoadingVisible.modal = true;
-
-        $http.post('/api/classes', turma)
-             .success(function()
-                     {
-                         closesModal('#modal-clazz-day');
-                         emptyProperty('novaTurma');
-                     })
-    }
-
-    $scope.editClazzDay = function(turma)
-    {
-        $scope.isLoadingVisible.modal = true;
-
-        $http.put('/api/classes/'+turma._id, turma)
-             .success(function()
-                     {
-                         closesModal('#modal-edit-clazz-day');
-                         emptyProperty('turmaEscolhida');
-                     })
-    }
-
-    $scope.deleteClazzDay = function(id)
-    {
-        if ((!id) || ("object" === typeof id))
-            throw new Error('Não foi possível deletar esta turma, pois o id está errado.');
-
-        $scope.isLoadingVisible.modal = true;
-
-        $http.delete('/api/classes/'+id)
-             .success(function()
-                     {
-                         closesModal('#modal-delete-clazz-day');
-                         emptyProperty('turmaEscolhida');
-                     })
     }
 
     function closesModal(modalID)

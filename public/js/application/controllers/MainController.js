@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.controller('MainController', ['$scope', '$http', '$location', '$interval', 'pageConfig', function ($scope, $http, $location, $interval, pageConfig)
+myClass.controller('MainController', ['$scope', '$location', '$interval', 'pageConfig', function ($scope, $location, $interval, pageConfig)
 {
     $scope.cfg = pageConfig;
     var TEMPO_ATUALIZACAO_CUMPRIMENTO = 60000; //1 minuto

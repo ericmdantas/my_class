@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function($scope, $http, pageConfig)
+myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookService', function($scope, $http, pageConfig, BookService)
 {
     $scope.livros = [];
     $scope.cfg = pageConfig;
@@ -10,11 +10,10 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
     $scope.getBooks = function()
     {
-        $http.get('/api/books')
-             .success(function(data)
-                      {
-                          $scope.livros = (data && data.books) ? data.books : [];
-                      })
+        BookService.getBooks().success(function(data)
+                                      {
+                                          $scope.livros = (data && data.books) ? data.books : [];
+                                      })
     }
 
     $scope.getBooks();
@@ -55,12 +54,12 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.post('/api/books', livro)
-             .success(function()
-                     {
-                         closesModal('#modal-register-book');
-                         emptyProperty('novoLivro');
-                     });
+        BookService.registerBook(livro)
+                   .success(function()
+                           {
+                               closesModal('#modal-register-book');
+                               emptyProperty('novoLivro');
+                             });
     }
 
     $scope.editBook = function(livro)
@@ -70,12 +69,12 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.put('/api/books/'+livro._id, livro)
-             .success(function()
-                     {
-                         closesModal('#modal-edit-book');
-                         emptyProperty('livroEscolhido');
-                     })
+        BookService.editBook(livro._id, livro)
+                   .success(function()
+                           {
+                              closesModal('#modal-edit-book');
+                              emptyProperty('livroEscolhido');
+                           })
     }
 
     $scope.deleteBook = function(id)
@@ -85,12 +84,12 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', function
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete('/api/books/'+id)
-             .success(function()
-                      {
-                          closesModal('#modal-delete-book');
-                          emptyProperty('livroEscolhido');
-                      });
+        BookService.deleteBook(id)
+                   .success(function()
+                           {
+                               closesModal('#modal-delete-book');
+                               emptyProperty('livroEscolhido');
+                           });
     }
 
     function closesModal(modalID)

@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.directive('earningsStats', function()
+myClass.directive('earningsStats', ['StatisticService', function(StatisticService)
 {
     var temp = '<div class="info-card transition">'+
                     '<h3>arrecadação por trimestre</h3>'+
@@ -11,8 +11,8 @@ myClass.directive('earningsStats', function()
     {
         $scope.valoresTrimestre = [];
 
-        $http.get('/api/earnings/trimester')
-             .success(function(data)
+        StatisticService.getEarnings()
+            .success(function(data)
              {
                  if (!data || !data.resultado)
                      $scope.valoresTrimestre = [0, 0, 0, 0];
@@ -64,4 +64,4 @@ myClass.directive('earningsStats', function()
                 controller: ctrl
            }
 
-})
+}])

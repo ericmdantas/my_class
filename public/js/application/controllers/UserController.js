@@ -23,8 +23,7 @@ myClass.controller('UserController', ['$scope', '$http', '$window', function($sc
     function kickarSessao()
     {
         $http.post('/api/logout', {user: usuarioLogado})
-             .success(redirecionaLogin)
-             .error(redirecionaLogin)
+             .finally(redirecionaLogin)
     }
 
     function redirecionaLogin()

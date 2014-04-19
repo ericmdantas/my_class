@@ -1,17 +1,23 @@
 "use strict";
 
-myClass.controller('PaymentsController', ['$scope', '$http', 'pageConfig', function ($scope, $http, pageConfig)
+myClass.controller('PaymentsController', ['$scope', '$http', 'pageConfig', 'PaymentService',
+                                function ($scope, $http, pageConfig, PaymentService)
 {
     $scope.pagamentos = [];
     $scope.pagamentoEscolhido = {};
     $scope.isLoadingVisible = {modal: false};
     $scope.cfg = pageConfig;
 
-    $http.get('/api/payments')
-         .success(function(data)
-                 {
-                        $scope.pagamentos = (data && data.resultado) ? data.resultado : [];
-                 })
+    $scope.getPayments = function()
+    {
+        PaymentService.getPayments()
+            .success(function(data)
+            {
+                $scope.pagamentos = (data && data.resultado) ? data.resultado : [];
+            })
+    }
+
+    $scope.getPayments();
 
     function preparaAberturaModal(idModal)
     {
@@ -49,7 +55,7 @@ myClass.controller('PaymentsController', ['$scope', '$http', 'pageConfig', funct
         pagamento.class = pagamento.class ? pagamento.class.class : '';
         pagamento.paymentMonth = pagamento.paymentMonth ? pagamento.paymentMonth.nome : '';
 
-        $http.post('/api/payments', pagamento)
+        PaymentService.registerPayment(pagamento)
              .success(function()
                      {
                          escondeModal('#modal-pay');

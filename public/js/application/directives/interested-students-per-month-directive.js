@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.directive('interestedStudentsPerMonth', function()
+myClass.directive('interestedStudentsPerMonth', ['StatisticService', function(StatisticService)
 {
     var t = '<div class="info-card transition">' +
             '<h3>interesse por mês</h3>' +
@@ -11,7 +11,7 @@ myClass.directive('interestedStudentsPerMonth', function()
     {
         $scope.alunosInteressadosPorMes = [];
 
-        $http.get('/api/interestedStudents/month')
+        StatisticService.getInterestedStudents()
              .success(function(data)
                       {
                             if (!data || !data.resultado)
@@ -65,4 +65,4 @@ myClass.directive('interestedStudentsPerMonth', function()
                 template: t,
                 controller: ctrl
            }
-})
+}])

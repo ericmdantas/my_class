@@ -47,8 +47,8 @@
         app.delete('/api/students/:id', isLoggedIn, students.deleteStudent);
 
         //PAYMENTS
-        app.get('/api/payments', isLoggedIn, students.getPaymentsInfo);
-        app.post('/api/payments', isLoggedIn, students.registerPayment);
+        app.get('/api/students/payments', isLoggedIn, students.getPaymentsInfo);
+        app.post('/api/students/payments', isLoggedIn, students.registerPayment);
 
         //BOOKS
         app.get('/api/books', isLoggedIn, books.getBooksInfo);

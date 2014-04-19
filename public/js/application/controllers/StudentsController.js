@@ -1,6 +1,7 @@
 "use strict";
 
-myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_frontend', function ($scope, $http, pageConfig, lib_frontend)
+myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_frontend', 'StudentService', 'ClazzService',
+                                function ($scope, $http, pageConfig, lib_frontend, StudentService, ClazzService)
 {
     $scope.alunos = [];
     $scope.turmasCadastradas = [];
@@ -11,7 +12,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.getStudents = function()
     {
-        $http.get('/api/students')
+        StudentService.getStudents()
              .success(function(data)
                       {
                             $scope.alunos = (data && data.students) ? data.students : [];
@@ -20,7 +21,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.getClassesNames = function()
     {
-        $http.get('/api/classes/name')
+        ClazzService.getClazzesNames()
              .success(function(data)
                      {
                          $scope.turmasCadastradas = (data && data.classes) ? data.classes : [];
@@ -70,7 +71,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
         aluno.contract = aluno.contract ? aluno.contract.nome : '';
         aluno = lib_frontend.removeWhiteSpaces(aluno);
 
-        $http.post('/api/students', aluno)
+        StudentService.registerStudent(aluno)
              .success(function()
                       {
                           closesModal('#modal-register-student');
@@ -89,7 +90,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
         aluno.status = aluno.status ? aluno.status.nome : '';
         aluno.contract = aluno.contract ? aluno.contract.nome : '';
 
-        $http.put('/api/students/'+aluno._id, aluno)
+        StudentService.editStudent(aluno._id, aluno)
              .success(function()
                       {
                             closesModal('#modal-edit-student');
@@ -103,7 +104,8 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib_
             throw new Error('Não foi possível realizar a deleção do aluno. O ID está errado.');
 
         $scope.isLoadingVisible.modal = true;
-        $http.delete('/api/students/'+id)
+
+        StudentService.deleteStudent(id)
              .success(function()
                     {
                         closesModal('#modal-delete-student');

@@ -63,17 +63,17 @@ describe('Testing StudentsModel', function()
 
         it('shouldn\'t return any document - empty user', function(done)
         {
-
+            done()
         })
 
         it('shouldn\'t return any document - wrong user', function(done)
         {
-
+            done()
         })
 
         it('should return document correctly', function(done)
         {
-
+            done()
         })
     })
 })

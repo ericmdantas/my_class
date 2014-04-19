@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', function ($scope, $http, pageConfig)
+myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', 'ClazzService', function ($scope, $http, pageConfig, ClazzService)
 {
     $scope.turmas = [];
     $scope.cfg = pageConfig;
@@ -12,7 +12,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
     $scope.getClasses = function()
     {
-        $http.get('/api/classes')
+        ClazzService.getClazzes()
              .success(function(data)
                       {
                           $scope.turmas = (data && data.classes) ? data.classes : [];
@@ -67,7 +67,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
         if ((!turma) || ("object" !== typeof turma) || (!Object.keys(turma).length))
             throw new Error('Não foi possível registrar esta turma.');
 
-        $http.post('/api/classes', turma)
+        ClazzService.registerClazz(turma)
             .success(function()
             {
                 closesModal('#modal-register-class');
@@ -82,7 +82,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
         if ((!turma) || ("object" !== typeof turma) || (!Object.keys(turma).length) || (!turma._id))
             throw new Error('Não foi possível editar esta turma.');
 
-        $http.put('/api/classes/'+turma._id, turma)
+        ClazzService.editClazz(turma._id, turma)
              .success(function()
                      {
                          closesModal('#modal-edit-class');
@@ -97,7 +97,7 @@ myClass.controller('ClassesController', ['$scope', '$http', 'pageConfig', functi
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete('/api/classes/'+id)
+        ClazzService.deleteClazz(id)
             .success(function()
                     {
                         closesModal('#modal-delete-class');

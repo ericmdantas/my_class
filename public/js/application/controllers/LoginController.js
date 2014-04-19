@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.controller('LoginController', ['$scope', '$http', '$window', 'pageConfig', function ($scope, $http, $window, pageConfig)
+myClass.controller('LoginController', ['$scope', '$http', '$window', 'pageConfig', 'LoginService', function ($scope, $http, $window, pageConfig, LoginService)
 {
     $scope.user = {};
     $scope.user.username = $window.localStorage ? $window.localStorage.getItem('u') : '';
@@ -15,7 +15,7 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'pageConfig
 
         desabilitaBotao();
 
-        $http.post('/api/validateUser', {username: user.username || '', password: user.password || ''})
+        LoginService.validateUser(user)
              .success(function(data)
                       {
                           if (data.user === "ok")

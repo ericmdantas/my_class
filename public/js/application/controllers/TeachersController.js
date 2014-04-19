@@ -1,6 +1,7 @@
 "use strict";
 
-myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_frontend', function($scope, $http, pageConfig, lib_fronted)
+myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_frontend', 'TeacherService',
+                                  function($scope, $http, pageConfig, lib_fronted, TeacherService)
 {
     $scope.cfg = pageConfig;
     $scope.professores = [];
@@ -10,7 +11,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
     $scope.getTeachers = function()
     {
-        $http.get('/api/teachers')
+        TeacherService.getTeachers()
              .success(function(data)
                       {
                           $scope.professores = (data && data.resultado) ? data.resultado : [];
@@ -57,7 +58,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
         professor = lib_fronted.removeWhiteSpaces(professor);
 
-        $http.post('/api/teachers', professor)
+        TeacherService.registerTeacher(professor)
             .success(function()
             {
                 closesModal('#modal-register-teacher');
@@ -74,7 +75,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
         professor = lib_fronted.removeWhiteSpaces(professor);
 
-        $http.put('/api/teachers/'+professor._id, professor)
+        TeacherService.editTeacher(professor._id, professor)
              .success(function()
                        {
                            closesModal('#modal-edit-teacher');
@@ -91,7 +92,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib_
 
         $scope.isLoadingVisible.modal = true;
 
-        $http.delete('/api/teachers/'+id)
+        TeacherService.deleteTeacher(id)
              .success(function()
                      {
                          closesModal('#modal-delete-teacher');
