@@ -9,7 +9,7 @@ describe('UserModel', function()
 {
     before(function()
     {
-        mongoose.connect(dburl);
+        mongoose.connect(dburl.db.url);
         mongoose.connection.on('error', function(){});
     })
 

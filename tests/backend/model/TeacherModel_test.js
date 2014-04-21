@@ -3,7 +3,7 @@
 var assert = require('assert');
 var TeacherModel = require('../../../models/Teacher');
 var mongoose = require('mongoose');
-var db = require('../config/db.json');
+var dburl = require('../config/db.json');
 
 describe('Testing TeacherModel', function()
 {
@@ -12,7 +12,7 @@ describe('Testing TeacherModel', function()
 
     before(function()
     {
-        mongoose.connect(db);
+        mongoose.connect(dburl.db.url);
         mongoose.connection.on('error', function(){});
     })
 

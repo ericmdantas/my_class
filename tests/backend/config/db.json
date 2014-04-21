@@ -1,6 +1,9 @@
 {
 	"db":
 	{
-		"url": "mongodb://localhost/myclass_test"
+		"test":
+		{
+			"url": "mongodb://localhost/myclass_test"
+		}
 	}
 }
