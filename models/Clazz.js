@@ -29,7 +29,7 @@
 
     clazzSchema.methods.findAllClassesByUser = function(user, done)
     {
-        if ((!user) || ("string" !== typeof user))
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
             return done(new Error("Não foi encontrado o usuário para buscar as turmas."), null);
 
         var query = {usersAllowed: {$in: [user]}};
@@ -47,7 +47,7 @@
 
     clazzSchema.methods.findAllClassesNamesByUser = function(user, done)
     {
-        if ((!user) || ("string" !== typeof user))
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
             return done(new Error("Não foi encontrado o usuário para buscar os nomes das turmas."), null);
 
         var query = {usersAllowed: {$in: [user]}};
@@ -67,8 +67,6 @@
     {
         var query = {usersAllowed: {$in: [user]}, "dailyInfo.monthYear": monthYear};
         var projection = {};
-
-        //TODO CHECK THE REASON WHY IT'S ALSO BRINGIN OTHER MONTHS
 
         Clazz.find(query, projection)
              .exec(function(err, found)

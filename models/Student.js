@@ -34,8 +34,11 @@
 
     studentSchema.methods.findAllStudentsByUser = function(user, done)
     {
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+            return done(new Error('Não é possível buscar todos os alunos sem que o usuário seja informado.'), null);
+
         var query = {usersAllowed: {$in: [user]}};
-        var projection = {usersAllowed: 0};
+        var projection = {usersAllowed: 0, payments: 0};
 
         Student.find(query, projection)
                .exec(function(err, students)
@@ -43,12 +46,15 @@
                         if (err)
                             return done(err, null);
 
-                        done(null, students);
+                        return done(null, students);
                     })
     }
 
     studentSchema.methods.findAllStudentsNames = function(user, done)
     {
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+            return done(new Error('Não é possível buscar os nomes de todos os alunos sem que o usuário seja informado.'), null);
+
         var query = {usersAllowed: {$in: [user]}};
         var projection = {name: 1};
 
@@ -58,12 +64,18 @@
                 if (err)
                     return done(err, null);
 
-                done(null, students);
+                return done(null, students);
             })
     }
 
     studentSchema.methods.findAllStudentsNamesByClass = function(user, turma, done)
     {
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+            return done(new Error('Não é possível buscar os nomes de alunos para esta determinada turma, pois o usuário não foi informado.'), null);
+
+        if ((!turma) || ("string" !== typeof turma) || (turma.length === 0))
+            return done(new Error('Não é possível buscar os nomes de alunos para esta determinada turma, pois a turma não foi informada.'), null);
+
         var query = {usersAllowed: {$in: [user]}, class: turma};
         var projection = {name: 1};
 
@@ -77,8 +89,53 @@
                })
     }
 
+    studentSchema.methods.findAllPaymentsByUser = function(user, done)
+    {
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+            return done(new Error('Não é possível buscar os pagamentos dos alunos, pois o usuário não foi informado.'), null);
+
+        var query = {usersAllowed: {$in: [user]}};
+        var projection = {usersAllowed: 0};
+
+        Student.find(query, projection)
+            .exec(function(err, doc)
+            {
+                if (err)
+                    return done(err, null);
+
+                return done(null, doc);
+            })
+    }
+
+    studentSchema.methods.registerNewPayment = function(usuario, pagamento, done)
+    {
+        if ((!usuario) || ("string" !== typeof usuario) || (usuario.length === 0))
+            return done(new Error("Não é possível realizar pagamento sem que o usuário tenha sido informado"));
+
+        if ((!pagamento) || ("object" !== typeof pagamento) || (!Object.keys(pagamento).length))
+            return done(new Error("Não é possível realizar pagamento sem que o pagamento tenha sido informado"));
+
+        var query = {usersAllowed: {$in: [usuario]}, "name": pagamento.name};
+        var updt = {$push: {"payments": pagamento}};
+
+        Student.update(query, updt)
+            .exec(function(err, updated)
+            {
+                if (err)
+                    return done(err);
+
+                return done(null);
+            })
+    }
+
     studentSchema.methods.registerStudent = function(usuario, aluno, done)
     {
+        if ((!usuario) || ("string" !== typeof usuario) || (usuario.length === 0))
+            return done(new Error("Não é possível cadastrar aluno sem que o usuário tenha sido informado"));
+
+        if ((!aluno) || ("object" !== typeof aluno) || (!Object.keys(aluno).length))
+            return done(new Error("Não é possível cadastrar aluno sem que o aluno tenha sido informado"));
+
         aluno.usersAllowed = [usuario];
         var student = new Student(aluno);
 
@@ -87,12 +144,21 @@
                         if (err)
                             return done(err);
 
-                        done();
+                        return done(null);
                     })
     }
 
     studentSchema.methods.editStudent = function(usuario, aluno, id, done)
     {
+        if ((!usuario) || ("string" !== typeof usuario) || (usuario.length === 0))
+            return done(new Error("Não é possível editar aluno sem que o usuário tenha sido informado"));
+
+        if ((!aluno) || ("object" !== typeof aluno) || (!Object.keys(aluno).length))
+            return done(new Error("Não é possível editar aluno sem que o aluno tenha sido informado"));
+
+        if ((!id) || ("string" !== typeof id) || (id.length === 0))
+            return done(new Error("Não é possível editar aluno sem que o ID tenha sido informado"));
+
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete aluno._id;
         var updt = aluno;
@@ -103,13 +169,19 @@
                          if (err)
                              return done(err);
 
-                         done();
+                         return done(null);
                      })
     }
 
-    studentSchema.methods.deleteStudent = function(user, identificacaoAluno, done)
+    studentSchema.methods.deleteStudent = function(user, id, done)
     {
-        var query = {usersAllowed: {$in: [user]}, _id: identificacaoAluno};
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+            return done(new Error("Não é possível deletar aluno sem que o usuário tenha sido informado"));
+
+        if ((!id) || ("string" !== typeof id) || (id.length === 0))
+            return done(new Error("Não é possível deletar aluno sem que o ID tenha sido informado"));
+
+        var query = {usersAllowed: {$in: [user]}, _id: id};
 
         Student.findOneAndRemove(query)
                .exec(function(err, foundDoc)
@@ -117,37 +189,7 @@
                         if (err)
                             return done(err);
 
-                        done();
-                    })
-    }
-
-    studentSchema.methods.findAllPaymentsByUser = function(user, done)
-    {
-        var query = {usersAllowed: {$in: [user]}};
-        var projection = {};
-
-        Student.find(query, projection)
-               .exec(function(err, doc)
-                    {
-                        if (err)
-                            return done(err, null);
-
-                        done(null, doc);
-                    })
-    }
-
-    studentSchema.methods.registerNewPayment = function(usuario, pagamento, done)
-    {
-        var query = {usersAllowed: {$in: [usuario]}, "name": pagamento.name};
-        var updt = {$push: {"payments": pagamento}};
-
-        Student.update(query, updt)
-               .exec(function(err, updated)
-                    {
-                        if (err)
-                            return done(err);
-
-                        done();
+                        return done(null);
                     })
     }
 

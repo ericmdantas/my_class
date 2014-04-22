@@ -6,7 +6,10 @@
 {
     function findAllEarningsByTrimester(user, done)
     {
-        var trimestres;
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+            return done(new Error("Não foi possível calcular o ganho por trimestre, pois o usuário não foi informado."), null);
+
+        var _trimestres;
 
         Student.aggregate({$match: {usersAllowed: {$in: [user]}}},
                           {$unwind: "$payments"},
@@ -23,26 +26,30 @@
                               if (err)
                                  return done(err, null);
 
-                              trimestres = lib.getValuesByTrimester(doc);
+                              _trimestres = lib.getValuesByTrimester(doc);
 
-                              return done(null, trimestres);
+                              return done(null, _trimestres);
                           })
     }
 
     function findAllInterestedStudentsPerMonth(user, done)
     {
-        var query = {usersAllowed: {$in: [user]}};
-        var projection = {registered: 1};
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+            return done(new Error("Não foi possível verificar o interesse por mês, pois o usuário não foi informado."), null);
 
-        Student.find(query, projection)
+        var _meses;
+        var _query = {usersAllowed: {$in: [user]}};
+        var _projection = {registered: 1};
+
+        Student.find(_query, _projection)
                .exec(function(err, doc)
                {
                    if (err)
                        return done(err, null);
 
-                   var meses = lib.getMonthInDate(doc);
+                   _meses = lib.getMonthInDate(doc);
 
-                   done(null, meses);
+                   done(null, _meses);
                 })
     }
 

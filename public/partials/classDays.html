@@ -116,13 +116,13 @@
 
                 <br/><br/>
 
-                <div ng-repeat="info in informacaoDiaria">
+                <!--<div ng-repeat="info in informacaoDiaria">
                     <p>
                         <span>{{info._id.studentName}}</span>
                         <was-in-class class="was-in-class" ng-repeat="diaria in info.dailyInfo" situation="{{diaria.wasInClass || false}}"
                                       when="{{diaria.day}}"></was-in-class>
                     </p>
-                </div>
+                </div>-->
             </div>
 
             <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteClazzDay(turma)">excluir</button>

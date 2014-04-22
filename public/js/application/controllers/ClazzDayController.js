@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig', 'ClazzDayService', 'TeacherService', 'StudentService',
-                                function ($scope, $http, lib, pageConfig, ClazzDayService, TeacherService, StudentService)
+myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig', 'ClazzDayService', 'TeacherService', 'StudentService', 'ClazzService',
+                                function ($scope, $http, lib, pageConfig, ClazzDayService, TeacherService, StudentService, ClazzService)
 {
     $scope.cfg = pageConfig;
     $scope.aulaEscolhida = {};
@@ -15,7 +15,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
 
     $scope.getClasses = function()
     {
-        $http.get('/api/classes')
+        ClazzService.getClazzes()
             .success(function(data)
             {
                 $scope.turmasCadastradas = (data && data.classes) ? data.classes : [];

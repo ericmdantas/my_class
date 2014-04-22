@@ -12,7 +12,7 @@ describe('Testing TeacherModel', function()
 
     before(function()
     {
-        mongoose.connect(dburl.db.url);
+        mongoose.connect(dburl.db.test.url);
         mongoose.connection.on('error', function(){});
     })
 
