@@ -5,17 +5,17 @@ var ErrorHandler = require('../lib/ErrorHandler');
 
 function Student()
 {
-    function pegaInformacaoDeTodosAlunos(req, res)
+    function _getInfoFromAllStudents(req, res)
     {
-        var usuario = req.session.passport.user;
-        var student = new StudentModel();
+        var _usuario = req.session.passport.user;
+        var _student = new StudentModel();
 
         function callback(error, students)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de alunos'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta de alunos'));
             }
             else
             {
@@ -24,20 +24,20 @@ function Student()
             }
         }
 
-        student.findAllStudentsByUser(usuario, callback);
+        _student.findAllStudentsByUser(_usuario, callback);
     }
 
-    function pegaTodosOsNomesDeAlunos(req, res)
+    function _getStudentsNames(req, res)
     {
-        var usuario = req.session.passport.user;
-        var student = new StudentModel();
+        var _usuario = req.session.passport.user;
+        var _student = new StudentModel();
 
         function callback(error, students)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de nomes de alunos'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta de nomes de alunos'));
             }
             else
             {
@@ -46,21 +46,21 @@ function Student()
             }
         }
 
-        student.findAllStudentsNames(usuario, callback);
+        _student.findAllStudentsNames(_usuario, callback);
     }
 
-    function pegaTodosOsNomesDeAlunosPorTurma(req, res)
+    function _getStudentsNamesByClass(req, res)
     {
-        var usuario = req.session.passport.user;
-        var turma = req.params.clazz;
-        var student = new StudentModel();
+        var _usuario = req.session.passport.user;
+        var _turma = req.params.clazz;
+        var _student = new StudentModel();
 
         function callback(error, students)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de nomes de alunos por turma'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta de nomes de alunos por turma'));
             }
             else
             {
@@ -69,20 +69,20 @@ function Student()
             }
         }
 
-        student.findAllStudentsNamesByClass(usuario, turma, callback);
+        _student.findAllStudentsNamesByClass(_usuario, _turma, callback);
     }
 
-    function pegaInformacaoTodosPagamentos(req, res)
+    function _getPaymentsInfo(req, res)
     {
-        var usuario = req.session.passport.user;
-        var student = new StudentModel();
+        var _usuario = req.session.passport.user;
+        var _student = new StudentModel();
 
         var callback = function(error, students)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de pagamentos'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta de pagamentos'));
             }
             else
             {
@@ -91,99 +91,99 @@ function Student()
             }
         }
 
-        student.findAllPaymentsByUser(usuario, callback);
+        _student.findAllPaymentsByUser(_usuario, callback);
     }
 
-    function cadastraNovoEstudante(req, res)
+    function _registerStudent(req, res)
     {
-        var usuario = req.session.passport.user;
-        var aluno = req.body;
-        var student = new StudentModel();
+        var _usuario = req.session.passport.user;
+        var _aluno = req.body;
+        var _student = new StudentModel();
 
         function callback(error)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'cadastro de aluno'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'cadastro de aluno'));
             }
             else
                 res.end();
         }
 
-        student.registerStudent(usuario, aluno, callback)
+        _student.registerStudent(_usuario, _aluno, callback)
     }
 
-    function fazPagamento(req, res)
+    function _registerPayment(req, res)
     {
-        var usuario = req.session.passport.user;
-        var pagamento = req.body;
-        var student = new StudentModel();
+        var _usuario = req.session.passport.user;
+        var _pagamento = req.body;
+        var _student = new StudentModel();
 
         function callback(error)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'registrar pagamento'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'registrar pagamento'));
             }
             else
                 res.end();
         }
 
-        student.registerNewPayment(usuario, pagamento, callback);
+        _student.registerNewPayment(_usuario, _pagamento, callback);
     }
 
-    function editaAlunoEscolhido(req, res)
+    function _editStudent(req, res)
     {
-        var usuario = req.session.passport.user;
-        var alunoID = req.params.id;
-        var aluno = req.body;
-        var student = new StudentModel();
+        var _usuario = req.session.passport.user;
+        var _alunoID = req.params.id;
+        var _aluno = req.body;
+        var _student = new StudentModel();
 
         function callback(error)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'edição de aluno'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'edição de aluno'));
             }
             else
                 res.end();
         }
 
-        student.editStudent(usuario, aluno, alunoID, callback);
+        _student.editStudent(_usuario, _aluno, _alunoID, callback);
     }
 
-    function removeAlunoEscolhido(req, res)
+    function _deleteStudent(req, res)
     {
-        var usuario = req.session.passport.user;
-        var identificacaoAluno = req.params.id;
-        var student = new StudentModel();
+        var _usuario = req.session.passport.user;
+        var _identificacaoAluno = req.params.id;
+        var _student = new StudentModel();
 
         function callback(error)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'deleção de alunos'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'deleção de alunos'));
             }
             else
                 res.end()
         }
 
-        student.deleteStudent(usuario, identificacaoAluno, callback);
+        _student.deleteStudent(_usuario, _identificacaoAluno, callback);
     }
 
     return {
-                getInfoFromAllStudents: pegaInformacaoDeTodosAlunos,
-                getStudentsNames: pegaTodosOsNomesDeAlunos,
-                getStudentsNamesByClass: pegaTodosOsNomesDeAlunosPorTurma,
-                registerStudent: cadastraNovoEstudante,
-                editStudent: editaAlunoEscolhido,
-                deleteStudent: removeAlunoEscolhido,
-                getPaymentsInfo: pegaInformacaoTodosPagamentos,
-                registerPayment: fazPagamento
+                getInfoFromAllStudents: _getInfoFromAllStudents,
+                getStudentsNames: _getStudentsNames,
+                getStudentsNamesByClass: _getStudentsNamesByClass,
+                registerStudent: _registerStudent,
+                editStudent: _editStudent,
+                deleteStudent: _deleteStudent,
+                getPaymentsInfo: _getPaymentsInfo,
+                registerPayment: _registerPayment
            }
 }
 

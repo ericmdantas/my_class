@@ -11,7 +11,6 @@
 #username {border-bottom-left-radius: 0; border-bottom-right-radius: 0;}
 
 .big-espaco-top {margin-top: 2em;}
-.select-data {padding: 10px;}
 .info-card, .topic {margin-bottom: .4em;}
 .info-card.titulo {display: inline-block;}
 .info-card .btn-success {margin-right: 5px;}
@@ -33,6 +32,9 @@
 .date-width {width: 12em}
 .hidden-small-phone {display: none;}
 .was-in-class {display: inline-block; margin-left: .4em;}
+.select-data {padding: 10px;}
+.select-data .row {width: 8em;}
+.select-data input[type=text] {max-width: 6em;}
 
 footer {float: right; padding: 3px 7px; margin: 3em 1em 0;}
 input[type=checkbox] {width: 25px; height: 25px; margin: 0;}

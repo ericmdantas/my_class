@@ -5,6 +5,7 @@
 #login .project {font-size: 5.5em; text-shadow: 1px 1px #b2dba1; text-align: center; color: #333;}
 
 .select-data {border-radius: 4px; font-size: 1.2em;}
+.select-data input[type=text] {text-align: center;}
 .table thead {font-weight: bold;}
 .navbar {border-radius: 0; border-bottom: 1px solid #b2dba1;}
 .navbar-brand {font-family: "amao"; font-size: 3em;}

@@ -1,6 +1,6 @@
 <div ng-controller="ClazzDayController">
     <div id="turmas-container" class="topic transition selected {{cfg.information.aulas.classeBorda}}">
-        <h1>{{cfg.information.aulas.nome}} <span class="text-almost-invisible">{{turmasCadastradas.length}} turmas</span></h1>
+        <h1>{{cfg.information.aulas.nome}}</h1>
         <p>Tenha total controle sobre toda a informação das aulas.</p>
         <p>{{cfg.information.aulas.resumo}}</p>
         <button type="button" class="btn btn-default pull-right" id="#adicionarTurma"
@@ -20,7 +20,7 @@
                 <div class="modal-body">
                     <label>turma</label>
                     <br/>
-                    <select ng-model="turmaDiaDia" ng-options="turma.name for turma in turmasCadastradas" ng-change="getStudentsNamesByClass(turmaDiaDia.name)"></select>
+                    <select ng-model="turmaDiaDia" ng-options="turma.name for turma in clazzesNames" ng-change="getStudentsNamesByClass(turmaDiaDia.name)"></select>
                     <br/><br/>
                     <label>professor responsável</label>
                     <input type="text" class="form-control" ng-model="turmaDiaDia.teacherName" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
@@ -88,7 +88,7 @@
 
     <delete-info directiveid="modal-delete-class-day" title="aula" objectname="{{aulaEscolhida.name}}" objectid="{{aulaEscolhida._id}}" delete="deleteClazzDay(id)"></delete-info>
 
-    <div class="info-card transition" ng-repeat="turma in turmasCadastradas | filter: turmaProcurada">
+    <div class="info-card transition" ng-repeat="turma in informacaoDiaria | filter: turmaProcurada">
         <plus-less-info-element elementToToggle="class-toggle-{{$index}}"></plus-less-info-element>
         <h3>{{turma.name}}</h3>
         <div id="class-toggle-{{$index}}" class="collapse">
@@ -106,7 +106,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="info in informacaoDiaria[0].dailyInfo">
+                        <tr ng-repeat="info in turma.dailyInfo">
                             <td>{{info.day}}</td>
                             <td>{{info.subject}}</td>
                             <td>{{info.teacherName}}</td>

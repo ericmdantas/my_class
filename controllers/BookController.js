@@ -5,17 +5,17 @@ var ErrorHandler = require('../lib/ErrorHandler');
 
 function Book()
 {
-    function pegaInformacoesLivros(req, res)
+    function _getBooksInfo(req, res)
     {
-        var usuario = req.session.passport.user;
-        var book = new BookModel();
+        var _usuario = req.session.passport.user;
+        var _book = new BookModel();
 
         function callback(error, books)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de livros'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta de livros'));
             }
 
             else
@@ -25,77 +25,76 @@ function Book()
             }
         }
 
-        book.findAllBooksByUser(usuario, callback)
+        _book.findAllBooksByUser(_usuario, callback)
     }
 
-    function cadastraLivro(req, res)
+    function _registerBook(req, res)
     {
-        var usuario = req.session.passport.user;
-        var livro = req.body;
-        var book = new BookModel();
+        var _usuario = req.session.passport.user;
+        var _livro = req.body;
+        var _book = new BookModel();
 
         function callback(error)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'cadastro de livros'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'cadastro de livros'));
             }
             else
                 res.end();
-
         }
 
-        book.registerNewBook(usuario, livro, callback);
+        _book.registerNewBook(_usuario, _livro, callback);
     }
 
-    function editaLivro(req, res)
+    function _editBook(req, res)
     {
-        var usuario = req.session.passport.user;
-        var livroID = req.params.id;
-        var livro = req.body;
-        var book = new BookModel();
+        var _usuario = req.session.passport.user;
+        var _livroID = req.params.id;
+        var _livro = req.body;
+        var _book = new BookModel();
 
         function callback(error)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'edição de livros'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'edição de livros'));
             }
             else
                 res.end();
         }
 
-        book.editBook(usuario, livro, livroID, callback);
+        _book.editBook(_usuario, _livro, _livroID, callback);
     }
 
-    function removeLivro(req, res)
+    function _deleteBook(req, res)
     {
-        var usuario = req.session.passport.user;
-        var identificacaoLivro = req.params.id;
-        var book = new BookModel();
+        var _usuario = req.session.passport.user;
+        var _identificacaoLivro = req.params.id;
+        var _book = new BookModel();
 
         function callback(error)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'deleção de livros'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'deleção de livros'));
             }
             else
                 res.end();
         }
 
-        book.deleteBook(usuario, identificacaoLivro, callback);
+        _book.deleteBook(_usuario, _identificacaoLivro, callback);
     }
 
 
     return {
-                getBooksInfo: pegaInformacoesLivros,
-                registerBook: cadastraLivro,
-                editBook: editaLivro,
-                deleteBook: removeLivro
+                getBooksInfo: _getBooksInfo,
+                registerBook: _registerBook,
+                editBook: _editBook,
+                deleteBook: _deleteBook
            }
 }
 

@@ -32,10 +32,10 @@
         if ((!user) || ("string" !== typeof user) || (user.length === 0))
             return done(new Error("Não foi encontrado o usuário para buscar as turmas."), null);
 
-        var query = {usersAllowed: {$in: [user]}};
-        var projection = {usersAllowed: 0, dailyInfo: 0};
+        var _query = {usersAllowed: {$in: [user]}};
+        var _projection = {usersAllowed: 0, dailyInfo: 0};
 
-        Clazz.find(query, projection)
+        Clazz.find(_query, _projection)
              .exec(function(err, clazzes)
                    {
                        if (err)
@@ -50,10 +50,10 @@
         if ((!user) || ("string" !== typeof user) || (user.length === 0))
             return done(new Error("Não foi encontrado o usuário para buscar os nomes das turmas."), null);
 
-        var query = {usersAllowed: {$in: [user]}};
-        var projection = {name: 1};
+        var _query = {usersAllowed: {$in: [user]}};
+        var _projection = {name: 1};
 
-        Clazz.find(query, projection)
+        Clazz.find(_query, _projection)
             .exec(function(err, classes)
             {
                 if (err)
@@ -65,10 +65,10 @@
 
     clazzSchema.methods.getClassesDailyInfo = function(user, monthYear, done)
     {
-        var query = {usersAllowed: {$in: [user]}, "dailyInfo.monthYear": monthYear};
-        var projection = {};
+        var _query = {usersAllowed: {$in: [user]}, "dailyInfo.monthYear": monthYear};
+        var _projection = {};
 
-        Clazz.find(query, projection)
+        Clazz.find(_query, _projection)
              .exec(function(err, found)
                    {
                         if (err)
@@ -87,9 +87,9 @@
             return done(new Error("Não foi encontrada a turma a ser cadastrada."));
 
         turma.usersAllowed = [usuario];
-        var clazz = new Clazz(turma);
+        var _clazz = new Clazz(turma);
 
-        clazz.save(function(err, saved)
+        _clazz.save(function(err, saved)
         {
             if (err)
                 return done(err);
@@ -106,10 +106,10 @@
         if ((!moment) || ("object" !== typeof moment) || (!Object.keys(moment).length))
             return done(new Error("Não foi encontrada a turma referente a aula para o cadastro."));
 
-        var query = {usersAllowed: {$in: [user]}, name: moment.clazzName};
-        var updt = {$addToSet: {dailyInfo: moment.dailyInfo}};
+        var _query = {usersAllowed: {$in: [user]}, name: moment.clazzName};
+        var _updt = {$addToSet: {dailyInfo: moment.dailyInfo}};
 
-        Clazz.update(query, updt)
+        Clazz.update(_query, _updt)
              .exec(function(err, found)
                   {
                       if (err)
@@ -130,11 +130,11 @@
         if ((!id) || ("string" !== typeof id))
             return done(new Error("Não foi encontrado o id para edição da turma."));
 
-        var query = {usersAllowed: {$in: [usuario]}, _id: id};
+        var _query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete turma._id;
-        var updt = turma;
+        var _updt = turma;
 
-        Clazz.findOneAndUpdate(query, updt)
+        Clazz.findOneAndUpdate(_query, _updt)
              .exec(function(err, updated)
                    {
                       if (err)
@@ -152,9 +152,9 @@
         if ((!id) || ("string" !== typeof id))
             return done(new Error("Não foi encontrado o id para a deleção da turma."));
 
-        var query = {usersAllowed: {$in: [user]}, _id: id};
+        var _query = {usersAllowed: {$in: [user]}, _id: id};
 
-        Clazz.findOneAndRemove(query)
+        Clazz.findOneAndRemove(_query)
              .exec(function(err, deleted)
                   {
                      if (err)

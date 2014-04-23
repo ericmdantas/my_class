@@ -18,7 +18,6 @@
         app.get('/principal', isLoggedIn, content.mainPage);
 
         //USER
-        app.get('/api/users/:username', isLoggedIn, users.getUserInfoByUsername);
         app.post('/api/validateUser', authentication.authenticate('local-login'), users.validateUser);
         app.post('/api/logout', users.logout);
 

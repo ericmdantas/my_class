@@ -5,17 +5,17 @@ var ErrorHandler = require('../lib/ErrorHandler');
 
 function Teacher()
 {
-    function getTeachersInfo(req, res)
+    function _getTeachersInfo(req, res)
     {
-        var usuario = req.session.passport.user;
-        var teacher = new TeacherModel();
+        var _usuario = req.session.passport.user;
+        var _teacher = new TeacherModel();
 
         function callback(error, teachers)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta de professores'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta de professores'));
             }
             else
             {
@@ -24,20 +24,20 @@ function Teacher()
             }
         }
 
-        teacher.findAllTeachersByUser(usuario, callback);
+        _teacher.findAllTeachersByUser(_usuario, callback);
     }
 
-    function getTeachersNames(req, res)
+    function _getTeachersNames(req, res)
     {
-        var usuario = req.session.passport.user;
-        var teacher = new TeacherModel();
+        var _usuario = req.session.passport.user;
+        var _teacher = new TeacherModel();
 
         function callback(error, teachers)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'consulta dos nomes dos professores'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta dos nomes dos professores'));
             }
             else
             {
@@ -46,76 +46,76 @@ function Teacher()
             }
         }
 
-        teacher.findAllTeachersNames(usuario, callback);
+        _teacher.findAllTeachersNames(_usuario, callback);
     }
 
-    function registerTeacher(req, res)
+    function _registerTeacher(req, res)
     {
-        var usuario = req.session.passport.user;
-        var professor = req.body;
-        var teacher = new TeacherModel();
+        var _usuario = req.session.passport.user;
+        var _professor = req.body;
+        var _teacher = new TeacherModel();
 
         function callback(error)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'cadastro de professor'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'cadastro de professor'));
             }
             else
                 res.end();
         }
 
-        teacher.registerNewTeacher(usuario, professor, callback);
+        _teacher.registerNewTeacher(_usuario, _professor, callback);
     }
 
-    function editTeacher(req, res)
+    function _editTeacher(req, res)
     {
-        var usuario = req.session.passport.user;
-        var professorID = req.params.id;
-        var professor = req.body;
-        var teacher = new TeacherModel();
+        var _usuario = req.session.passport.user;
+        var _professorID = req.params.id;
+        var _professor = req.body;
+        var _teacher = new TeacherModel();
 
         function callback(error)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'edição de professor'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'edição de professor'));
             }
             else
                 res.end();
         }
 
-        teacher.editTeacher(usuario, professor, professorID, callback);
+        _teacher.editTeacher(_usuario, _professor, _professorID, callback);
     }
 
-    function deleteTeacher(req, res)
+    function _deleteTeacher(req, res)
     {
-        var usuario = req.session.passport.user;
-        var identificacaoProfessor = req.params.id;
-        var teacher = new TeacherModel();
+        var _usuario = req.session.passport.user;
+        var _identificacaoProfessor = req.params.id;
+        var _teacher = new TeacherModel();
 
         function callback(error)
         {
             if (error)
             {
-                var errorHandler = new ErrorHandler();
-                res.json(500, errorHandler.createSimpleErrorObject(500, 'deleção de professor'));
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'deleção de professor'));
             }
             else
                 res.end();
         }
 
-        teacher.deleteTeacher(usuario, identificacaoProfessor, callback);
+        _teacher.deleteTeacher(_usuario, _identificacaoProfessor, callback);
     }
 
     return {
-                getTeachersInfo: getTeachersInfo,
-                getTeachersNames: getTeachersNames,
-                registerTeacher: registerTeacher,
-                editTeacher: editTeacher,
-                deleteTeacher: deleteTeacher
+                getTeachersInfo: _getTeachersInfo,
+                getTeachersNames: _getTeachersNames,
+                registerTeacher: _registerTeacher,
+                editTeacher: _editTeacher,
+                deleteTeacher: _deleteTeacher
            }
 }
 

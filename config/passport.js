@@ -1,7 +1,7 @@
 "use strict";
 
-var LocalStrategy = require('passport-local').Strategy,
-    User = require('../models/User');
+var LocalStrategy = require('passport-local').Strategy;
+var User = require('../models/User');
 
 module.exports = function(passport)
 {
@@ -26,14 +26,14 @@ module.exports = function(passport)
         passReqToCallback: true
     }, function(req, username, password, done)
        {
-            var query = {username: username, password: password};
-            var projection = {};
+            var _query = {username: username, password: password};
+            var _projection = {};
 
-            User.findOne(query, projection)
+            User.findOne(_query, _projection)
                 .exec(function(err, user)
                 {
-                    if (err || !user)
-                        return done(err);
+                    if (err)
+                        return done(err, null);
 
                     return done(null, user);
                 });

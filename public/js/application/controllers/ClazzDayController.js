@@ -9,23 +9,31 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
     $scope.professores = [];
     $scope.isLoadingVisible = {modal: false};
     $scope.hoje = moment().format('DD/MM/YYYY');
-    $scope.turmasCadastradas = [];
+    $scope.clazzesNames = [];
     $scope.informacaoDiaria = [];
-    var currentMonthYear = moment().format("MM_YYYY");
+    var currentMonthYear = moment().format("MM/YYYY");
 
-    $scope.getClasses = function()
+    $scope.getClazzesNames = function()
     {
-        ClazzService.getClazzes()
+        ClazzService.getClazzesNames()
             .success(function(data)
             {
-                $scope.turmasCadastradas = (data && data.classes) ? data.classes : [];
+                $scope.clazzesNames = (data && data.classes) ? data.classes : [];
             })
     }
 
     $scope.getClassesDailyInfo = function(monthYear)
     {
-        if (lib.isStringInvalid(monthYear) || monthYear.length !== 7)
+        var invalidString = lib.isStringInvalid(monthYear) || monthYear.length !== 7;
+        var notNumber = lib.isStringInvalid(monthYear) || ("number" !== typeof parseInt(monthYear.substring(0, 2))) || ("number" !== typeof parseInt(monthYear.substring(3, 7)));
+        var wrongSeparator = lib.isStringInvalid(monthYear) || (monthYear.indexOf('/') === -1);
+
+        if (invalidString || notNumber || wrongSeparator)
             throw new Error('Não foi informado o ano e mês correto para consulta.');
+
+        monthYear = monthYear.replace('/', '_');
+
+        //TODO PASS CLASS PARAM SO IT'LL UPDATE ONLY THE CLASS, NOT THE WHOLE THING
 
         ClazzDayService.getDailyInfo(monthYear)
             .success(function(data)
@@ -60,7 +68,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
                      })
     }
 
-    $scope.getClasses();
+    $scope.getClazzesNames();
     $scope.getClassesDailyInfo(currentMonthYear);
     $scope.getTeachersNames();
 
@@ -77,7 +85,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
         _moment.clazzName = turma.name;
         _moment.dailyInfo = {
                                 day: moment().format("DD"),
-                                monthYear: currentMonthYear,
+                                monthYear: currentMonthYear.replace('/', '_'),
                                 teacherName: turma.teacherName,
                                 subject: turma.subject,
                                 studentByDay: alunos
@@ -127,7 +135,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
     function closesModal(modalID)
     {
         escondeModal(modalID);
-        $scope.getClasses();
+        $scope.getClassesDailyInfo(currentMonthYear);
     }
 
     function emptyProperty(propertyToBeEmpty)
