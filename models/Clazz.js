@@ -74,13 +74,18 @@
             return done(new Error("Não foi encontrado o mês e ano para buscar as informações de todas as turma."), null);
 
         var _query = {usersAllowed: {$in: [user]}, "dailyInfo.monthYear": monthYear};
-        var _projection = {};
+        var _projection = {usersAllowed: 0};
 
         Clazz.find(_query, _projection)
             .exec(function(err, found)
             {
                 if (err)
                     return done(err, null);
+
+                var _isArray = true;
+
+                if (found && found.length > 0)
+                    _removeDifferentMonths(found, monthYear, _isArray);
 
                 return done(null, found);
             })
@@ -97,16 +102,19 @@
         if ((!clazzId) || ("string" !== typeof clazzId) || (clazzId.length === 0))
             return done(new Error("Não foi encontrado o ID para buscar as informações da turma."), null);
 
-        //TODO FIX, SO IT ONLY RETURNS THE MATCHING MONTH/YEAR
-
         var _query = {usersAllowed: {$in: [user]}, _id: clazzId, "dailyInfo.monthYear": monthYear};
-        var _projection = {};
+        var _projection = {usersAllowed: 0};
 
         Clazz.findOne(_query, _projection)
              .exec(function(err, found)
                   {
                       if (err)
                           return done(err, null);
+
+                      var _isArray = false;
+
+                      if (found && Object.keys(found).length > 0)
+                          _removeDifferentMonths(found, monthYear, _isArray);
 
                       return done(null, found);
                   })
@@ -196,6 +204,35 @@
 
                      done(null);
                   })
+    }
+
+    function _removeDifferentMonths(found, monthYear, isArray)
+    {
+        if (isArray)
+        {
+            for (var i = 0; i < found.length; i++)
+            {
+                for (var j = 0; found[i].dailyInfo[j]; j++)
+                {
+                    if (monthYear !== found[i].dailyInfo[j].monthYear)
+                    {
+                        found[i].dailyInfo.splice(j, 1);
+                        j -= 1;
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (var j = 0; found.dailyInfo[j]; j++)
+            {
+                if (monthYear !== found.dailyInfo[j].monthYear)
+                {
+                    found.dailyInfo.splice(j, 1);
+                    j -= 1;
+                }
+            }
+        }
     }
 
     var Clazz = mongoose.model('Clazz', clazzSchema);

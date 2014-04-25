@@ -242,7 +242,7 @@ describe('ClazzModel', function()
                     dailyInfo: [
                         {
                             day: "01",
-                            monthYear: "01",
+                            monthYear: "04_2013",
                             teacherName: "Teacher1",
                             subject: "matéria1",
                             studentByDay: [
@@ -264,7 +264,41 @@ describe('ClazzModel', function()
                     dailyInfo: [
                         {
                             day: "01",
-                            monthYear: "01",
+                            monthYear: "04_2014",
+                            teacherName: "Teacher1",
+                            subject: "matéria1",
+                            studentByDay: [
+                                {
+                                    name: "Aluno1",
+                                    wasInClass: true
+                                }
+                            ]
+                        },
+                        {
+                            day: "02",
+                            monthYear: "04_2014",
+                            teacherName: "Teacher2",
+                            subject: "matéria2",
+                            studentByDay: [
+                                {
+                                    name: "Aluno1",
+                                    wasInClass: true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Turma1",
+                    students: ["Aluno1"],
+                    time: "15:00",
+                    registered: new Date(),
+                    lastModified: new Date(),
+                    usersAllowed: ["eric3"],
+                    dailyInfo: [
+                        {
+                            day: "01",
+                            monthYear: "05_2014",
                             teacherName: "Teacher1",
                             subject: "matéria1",
                             studentByDay: [
@@ -318,7 +352,33 @@ describe('ClazzModel', function()
             done();
         })
 
-        //TODO ADD THE CORRECT TEST WHEN THE MODEL IS RETURNING ONLY THE MONTH YEAR CHOSEN
+        it('should return document correctly', function(done)
+        {
+            var _clazz = new ClazzModel();
+            var _usuario = "eric3";
+            var _monthYear = '04_2014';
+
+            _clazz.getClassesDailyInfo(_usuario, _monthYear, function(err, clazzesInfo)
+                                                             {
+                                                                assert.strictEqual(err, null);
+                                                                assert.strictEqual(clazzesInfo.length, 1);
+                                                                assert.strictEqual(clazzesInfo[0].name, "Turma1");
+                                                                assert.strictEqual(clazzesInfo[0].time, "15:00");
+                                                                assert.strictEqual(clazzesInfo[0].usersAllowed, undefined);
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo.length, 2);
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[0].day, "01");
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[1].day, "02");
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[0].monthYear, "04_2014");
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[1].monthYear, "04_2014");
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[0].teacherName, "Teacher1");
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[1].teacherName, "Teacher2");
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[0].subject, "matéria1");
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[1].subject, "matéria2");
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[0].studentByDay.length, 1);
+                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[1].studentByDay.length, 1);
+                                                                done();
+                                                             })
+        })
     })
 
     describe('getClassesDailyInfoByClass', function() {
@@ -346,6 +406,7 @@ describe('ClazzModel', function()
                     ]
                 },
                 {
+                    _id: '534dafae51aaf04b9b8c5b6f',
                     name: "Turma1",
                     students: ["Aluno1"],
                     time: "15:00",
@@ -355,7 +416,7 @@ describe('ClazzModel', function()
                     dailyInfo: [
                         {
                             day: "01",
-                            monthYear: "01",
+                            monthYear: "04_2014",
                             teacherName: "Teacher1",
                             subject: "matéria1",
                             studentByDay: [
@@ -430,7 +491,29 @@ describe('ClazzModel', function()
             done();
         })
 
-        //TODO ADD THE CORRECT TEST WHEN THE MODEL IS RETURNING ONLY THE MONTH YEAR CHOSEN
+        it('should return document correctly', function(done)
+        {
+            var _clazz = new ClazzModel();
+            var _usuario = "eric3";
+            var _monthYear = '04_2014';
+            var _id = '534dafae51aaf04b9b8c5b6f';
+
+            _clazz.getClassesDailyInfoByClass(_usuario, _monthYear, _id, function(err, clazzesInfo)
+                                                                         {
+                                                                             assert.strictEqual(err, null);
+                                                                             assert.notStrictEqual(clazzesInfo, undefined);
+                                                                             assert.strictEqual(clazzesInfo.name, "Turma1");
+                                                                             assert.strictEqual(clazzesInfo.time, "15:00");
+                                                                             assert.strictEqual(clazzesInfo.usersAllowed, undefined);
+                                                                             assert.strictEqual(clazzesInfo.dailyInfo.length, 1);
+                                                                             assert.strictEqual(clazzesInfo.dailyInfo[0].day, "01");
+                                                                             assert.strictEqual(clazzesInfo.dailyInfo[0].monthYear, "04_2014");
+                                                                             assert.strictEqual(clazzesInfo.dailyInfo[0].teacherName, "Teacher1");
+                                                                             assert.strictEqual(clazzesInfo.dailyInfo[0].subject, "matéria1");
+                                                                             assert.strictEqual(clazzesInfo.dailyInfo[0].studentByDay.length, 1);
+                                                                             done();
+                                                                         })
+        })
     })
 
     describe('registerNewClass', function()
@@ -495,7 +578,6 @@ describe('ClazzModel', function()
             var _clazz = new ClazzModel();
             var _usuario = "eric3";
             var _turma = {name: "Turma1"};
-
 
             _clazz.registerNewClass(_usuario, _turma, function(err)
                                                       {
