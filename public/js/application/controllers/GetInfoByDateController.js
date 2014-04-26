@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.controller('GetInfoByDateController', ['$scope', '$http', 'lib', function($scope, $http, lib)
+myClass.controller('GetInfoByDateController', ['$scope', 'lib', function($scope, lib)
 {
     $scope.date = '';
 
@@ -11,6 +11,4 @@ myClass.controller('GetInfoByDateController', ['$scope', '$http', 'lib', functio
 
         $scope.date = data;
     }
-
-    $scope.setDate(moment().format("MM/YYYY"));
 }])

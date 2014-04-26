@@ -97,36 +97,39 @@
             <div>
                 <get-info-by-date getinfo="getClassesDailyInfo(date, turma._id)"></get-info-by-date>
 
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <td>dia</td>
-                            <td>matéria</td>
-                            <td>professor</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="info in turma.dailyInfo">
-                            <td>{{info.day}}</td>
-                            <td>{{info.subject}}</td>
-                            <td>{{info.teacherName}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div ng-if="turma.dailyInfo.length === 0" align="center">
+                    <div class="alert alert-warning"><strong>Oops.</strong> Não existe informação para a data escolhida.</div>
+                </div>
 
-                <br/><br/>
+                <div ng-if="turma.dailyInfo.length > 0">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <td>dia</td>
+                                <td>matéria</td>
+                                <td>professor</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="info in turma.dailyInfo">
+                                <td>{{info.day}}</td>
+                                <td>{{info.subject}}</td>
+                                <td>{{info.teacherName}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                <!--<div ng-repeat="info in informacaoDiaria">
-                    <p>
-                        <span>{{info._id.studentName}}</span>
-                        <was-in-class class="was-in-class" ng-repeat="diaria in info.dailyInfo" situation="{{diaria.wasInClass || false}}"
-                                      when="{{diaria.day}}"></was-in-class>
-                    </p>
-                </div>-->
+                    <br/><br/>
+
+                    <!--<div ng-repeat="info in informacaoDiaria">
+                        <p>
+                            <span>{{info._id.studentName}}</span>
+                            <was-in-class class="was-in-class" ng-repeat="diaria in info.dailyInfo" situation="{{diaria.wasInClass || false}}"
+                                          when="{{diaria.day}}"></was-in-class>
+                        </p>
+                    </div>-->
+                </div>
             </div>
-
-            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteClazzDay(turma)">excluir</button>
-            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditClazzDay(turma)">editar</button>
         </div>
     </div>
 </div>

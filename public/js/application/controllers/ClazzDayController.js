@@ -33,8 +33,6 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
 
         monthYear = monthYear.replace('/', '_');
 
-        //TODO PASS CLASS PARAM SO IT'LL UPDATE ONLY THE CLASS, NOT THE WHOLE THING
-
         if (lib.isStringInvalid(id))
             _getDailyInfoFromAllClazzes(monthYear);
         else
@@ -115,14 +113,30 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
         ClazzDayService.getDailyInfoByClass(monthYear, id)
             .success(function(data)
             {
-                var _informacaoDiaria = (data && data.info) ? data.info : {};
+                var _informacaoDiaria;
 
-                for (var i = 0; i < $scope.informacaoDiaria.length; i++)
+                if (data && data.info && (Object.keys(data.info).length))
                 {
-                    if (_informacaoDiaria.name === $scope.informacaoDiaria[i].name)
+                    _informacaoDiaria = data.info;
+
+                    for (var i = 0; i < $scope.informacaoDiaria.length; i++)
                     {
-                        $scope.informacaoDiaria[i] = _informacaoDiaria;
-                        break;
+                        if (_informacaoDiaria._id === $scope.informacaoDiaria[i]._id)
+                        {
+                            $scope.informacaoDiaria[i] = _informacaoDiaria;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < $scope.informacaoDiaria.length; i++)
+                    {
+                        if (id === $scope.informacaoDiaria[i]._id)
+                        {
+                            $scope.informacaoDiaria[i].dailyInfo = [];
+                            break;
+                        }
                     }
                 }
             })

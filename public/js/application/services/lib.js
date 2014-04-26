@@ -44,10 +44,38 @@ myClass.factory('lib', function()
         return ((!obj) || ("object" !== typeof obj) || (!Object.keys(obj).length));
     }
 
+    function _isMonthYearInvalid(monthYear)
+    {
+        var SEPARATOR = "/";
+
+        if (_isStringInvalid(monthYear))
+            return true;
+
+        if (monthYear.length !== 7)
+            return true;
+
+        if (SEPARATOR !== monthYear.substring(2, 3))
+            return true;
+
+        var _mes = parseInt(monthYear.substring(0, 2));
+        var _ano = parseInt(monthYear.substring(3, 7));
+        var _menorAno = 2000;
+        var _maiorAno = 2999;
+
+        if (isNaN(_mes) || _mes === 0 || _mes > 12)
+            return true;
+
+        if (isNaN(_ano) || _ano <  _menorAno || _ano > _maiorAno)
+            return true;
+
+        return false;
+    }
+
     return {
                removeWhiteSpaces: _removeWhiteSpaces,
                createAlert: _createAlert,
                isStringInvalid: _isStringInvalid,
-               isObjectInvalid: _isObjectInvalid
+               isObjectInvalid: _isObjectInvalid,
+               isMonthYearInvalid: _isMonthYearInvalid
            }
 })

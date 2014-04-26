@@ -32,7 +32,7 @@
 .date-width {width: 12em}
 .hidden-small-phone {display: none;}
 .was-in-class {display: inline-block; margin-left: .4em;}
-.select-data {padding: 10px;}
+.select-data {padding: 10px; margin-bottom: 1em;}
 .select-data .row {width: 8em;}
 .select-data input[type=text] {max-width: 6em;}
 

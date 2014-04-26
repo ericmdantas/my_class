@@ -119,4 +119,27 @@ describe('lib BEING TESTED', function()
             }
         })
     })
+
+    describe('isMonthYearInvalid', function()
+    {
+        it('should return true - invalid MonthYear param ', function()
+        {
+            var _wrongParams = ['', 1, 2, function(){}, true, false, {}, [], "1/2014", "1_2014", "01.2014", "01/1999", "01/3000", "13/2999", "../...."];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(lib.isMonthYearInvalid(_wrongParams[i])).toBeTruthy();
+            }
+        })
+
+        it('should return false - valid MonthYear param', function()
+        {
+            var _correctParams = ['01/2000', '01/2999', '12/2000', "06/2555"];
+
+            for (var i = 0; i < _correctParams.length; i++)
+            {
+                expect(lib.isMonthYearInvalid(_correctParams[i])).toBeFalsy();
+            }
+        })
+    })
 })
