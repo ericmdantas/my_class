@@ -10,13 +10,21 @@ describe('getInfoByDate being tested', function()
         scope = $injector.get('$rootScope').$new();
         compile = $injector.get('$compile');
 
-        html = '<get-info-by-date getinfo="getClassesDailyInfo(date)"><' +
-                   '<div class="select-data" align="center">'+
-                        '<button type="button" class="btn btn-default btn-sm" ng-click="changeDate(\'months\', \'subtract\', 1)">&#171;</button>'+
-                             ' {{date}} ' +
-                        '<button type="button" class="btn btn-default btn-sm" ng-click="changeDate(\'months\', \'add\', 1)">&#187;</button>'+
-                   '</div>'+
-               '</get-info-by-date>';
+        html = '<div class="select-data" align="center">'+
+                    '<label>mês/ano</label>'+
+                    '<div class="row">'+
+                        '<div>'+
+                            '<div class="input-group">'+
+                                '<input type="text" class="form-control" ng-model="date" maxlength="7" />'+
+                                '<span class="input-group-btn">'+
+                                    '<button class="btn btn-default" type="button" ng-disabled="isItDisabled" ng-click="getinfo({date: date, id: id})">' +
+                                        '<span class="glyphicon glyphicon-refresh"></span>'+
+                                    '</button>'+
+                                '</span>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>';
 
         element = compile(angular.element(html))(scope);
         scope.$digest();
@@ -28,20 +36,5 @@ describe('getInfoByDate being tested', function()
         {
             expect(element).toBeDefined();
         })
-    })
-
-    describe('changing dates', function()
-    {
-        /*it('checks if adding advancing a month is working', function()
-        {
-            $controller('ClassesController', {$scope: scope})
-            expect(scope.changeDate(moment().format('MM/YYYY'), 'add')).toBe(moment().add('months', 1).calendar());
-        })
-
-        it('checks if adding reducing a month is working', function()
-        {
-            $controller('ClassesController', {$scope: scope})
-            expect(scope.changeDate(moment().format('MM/YYYY'), 'subtract')).toBe(moment().subtract('months', 1).calendar());
-        })*/
     })
 })

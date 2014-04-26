@@ -98,7 +98,7 @@
                 <get-info-by-date getinfo="getClassesDailyInfo(date, turma._id)"></get-info-by-date>
 
                 <div ng-if="turma.dailyInfo.length === 0" align="center">
-                    <div class="alert alert-warning"><strong>Oops.</strong> Não existe informação para a data escolhida.</div>
+                    <div class="alert alert-warning">Não existe informação para a data escolhida.</div>
                 </div>
 
                 <div ng-if="turma.dailyInfo.length > 0">
@@ -119,9 +119,9 @@
                         </tbody>
                     </table>
 
-                    <br/><br/>
+                    <!-- <br/><br/>
 
-                    <!--<div ng-repeat="info in informacaoDiaria">
+                    <div ng-repeat="info in informacaoDiaria">
                         <p>
                             <span>{{info._id.studentName}}</span>
                             <was-in-class class="was-in-class" ng-repeat="diaria in info.dailyInfo" situation="{{diaria.wasInClass || false}}"

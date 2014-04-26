@@ -2,14 +2,16 @@
 
 myClass.directive('getInfoByDate', ['lib', function(lib)
 {
-    var temp = '<div class="select-data" align="center" style="{{stuff}}">'+
+    var _chosenDate = _chosenDate || '';
+
+    var temp = '<div class="select-data" align="center">'+
                    '<label>mês/ano</label>'+
                    '<div class="row">'+
                        '<div>'+
                            '<div class="input-group">'+
                                 '<input type="text" class="form-control" ng-model="date" maxlength="7" />'+
                                 '<span class="input-group-btn">'+
-                                   '<button class="btn btn-default" type="button" ng-disabled="{{isItDisabled}}" ng-click="getinfo({date: date, id: id})">' +
+                                   '<button class="btn btn-default" type="button" ng-disabled="isItDisabled" ng-click="getinfo({date: date, id: id})">' +
                                         '<span class="glyphicon glyphicon-refresh"></span>'+
                                    '</button>'+
                                 '</span>'+
@@ -18,21 +20,17 @@ myClass.directive('getInfoByDate', ['lib', function(lib)
                    '</div>'+
                 '</div>';
 
-    //TODO: ADJUST THE DATE SO IT'LL DISPLAY THE DATE THE USER CHANGED TOO
+    //TODO: ADD TESTS
 
     function _link(scope, element, attrs)
     {
-        //TODO: ADJUST THE MONTHYEAR VALIDATION SO IT'LL DISABLE THE BUTTON WHEN THE INPUT IS INCORRECT
-        //TODO: ADD TESTS
-
-        //scope.stuff = "border: 1px solid red";
-
-        /*scope.$watch('date', function()
+        scope.$watch('date', function()
         {
             scope.isItDisabled = lib.isMonthYearInvalid(scope.date);
-        })*/
+            _chosenDate = scope.date;
+        })
 
-        scope.setDate(moment().format("MM/YYYY"));
+        scope.setDate(_chosenDate || moment().format("MM/YYYY"));
     }
 
     return {

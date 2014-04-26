@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib', 'StudentService', 'ClazzService',
-                                function ($scope, $http, pageConfig, lib, StudentService, ClazzService)
+myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib', 'StudentService', 'ClazzService', 'ModalHelper',
+                                function ($scope, $http, pageConfig, lib, StudentService, ClazzService, ModalHelper)
 {
     $scope.alunos = [];
     $scope.turmasCadastradas = [];
@@ -28,36 +28,24 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib'
                      })
     }
 
-    $scope.getStudents();
-    $scope.getClassesNames();
-
-    function preparaAberturaModal(idModal)
-    {
-        $scope.isLoadingVisible.modal = false;
-        $(idModal).modal('show');
-    }
-
-    function escondeModal(idModal)
-    {
-        $(idModal).modal('hide');
-        $scope.isLoadingVisible.modal = false;
-    }
-
     $scope.openModalToDeleteStudent = function(aluno)
     {
-        preparaAberturaModal('#modal-delete-student');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-delete-student');
         $scope.alunoEscolhido = aluno;
     }
 
     $scope.openModalToEditStudent = function(aluno)
     {
-        preparaAberturaModal('#modal-edit-student');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-edit-student');
         $scope.alunoEscolhido = aluno;
     }
 
     $scope.openModalToRegisterStudent = function()
     {
-        preparaAberturaModal('#modal-register-student');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-register-student');
     }
 
     $scope.registerNewStudent = function(aluno)
@@ -66,6 +54,7 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib'
             throw new Error('erro: aluno nao informado - registerNewStudent');
 
         $scope.isLoadingVisible.modal = true;
+
         aluno.class = aluno.class ? aluno.class.name : '';
         aluno.status = aluno.status ? aluno.status.nome : '';
         aluno.contract = aluno.contract ? aluno.contract.nome : '';
@@ -74,8 +63,9 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib'
         StudentService.registerStudent(aluno)
              .success(function()
                       {
-                          closesModal('#modal-register-student');
-                          emptyProperty('novoAluno');
+                          $scope.getStudents();
+                          ModalHelper.close('#modal-register-student');
+                          lib.emptyProperty($scope, 'novoAluno', {});
                       })
     }
 
@@ -93,8 +83,9 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib'
         StudentService.editStudent(aluno._id, aluno)
              .success(function()
                       {
-                            closesModal('#modal-edit-student');
-                            emptyProperty('alunoEscolhido ');
+                            $scope.getStudents();
+                            ModalHelper.close('#modal-edit-student');
+                            lib.emptyProperty($scope, 'alunoEscolhido', {});
                       })
     }
 
@@ -108,19 +99,12 @@ myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib'
         StudentService.deleteStudent(id)
              .success(function()
                     {
-                        closesModal('#modal-delete-student');
-                        emptyProperty('alunoEscolhido');
+                        $scope.getStudents();
+                        ModalHelper.close('#modal-delete-student');
+                        lib.emptyProperty($scope, 'alunoEscolhido', {});
                     })
     }
 
-    function closesModal(modalID)
-    {
-        $scope.getStudents();
-        escondeModal(modalID);
-    }
-
-    function emptyProperty(propertyToBeEmpty)
-    {
-        $scope[propertyToBeEmpty] = {};
-    }
+    $scope.getStudents();
+    $scope.getClassesNames();
 }])

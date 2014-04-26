@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib', 'TeacherService',
-                                  function($scope, $http, pageConfig, lib, TeacherService)
+myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib', 'TeacherService', 'ModalHelper',
+                                  function($scope, $http, pageConfig, lib, TeacherService, ModalHelper)
 {
     $scope.cfg = pageConfig;
     $scope.professores = [];
@@ -18,34 +18,23 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib'
                       })
     }
 
-    $scope.getTeachers();
-
-    function preparaAberturaModal(idModal)
-    {
-        $scope.isLoadingVisible.modal = false;
-        $(idModal).modal('show');
-    }
-
-    function escondeModal(idModal)
-    {
-        $(idModal).modal('hide');
-        $scope.isLoadingVisible.modal = false;
-    }
-
     $scope.openModalToRegisterTeacher = function()
     {
-        preparaAberturaModal('#modal-register-teacher');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-register-teacher');
     }
 
     $scope.openModalToEditTeacher = function(professor)
     {
-        preparaAberturaModal('#modal-edit-teacher');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-edit-teacher');
         $scope.professorEscolhido = professor;
     }
 
     $scope.openModalToDeleteTeacher = function(professor)
     {
-        preparaAberturaModal('#modal-delete-teacher');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-delete-teacher');
         $scope.professorEscolhido = professor;
     }
 
@@ -61,8 +50,9 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib'
         TeacherService.registerTeacher(professor)
             .success(function()
             {
-                closesModal('#modal-register-teacher');
-                emptyProperty('novoProfessor');
+                $scope.getTeachers();
+                ModalHelper.close('#modal-register-teacher');
+                lib.emptyProperty($scope, 'novoProfessor', {});
             })
     }
 
@@ -78,8 +68,9 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib'
         TeacherService.editTeacher(professor._id, professor)
              .success(function()
                        {
-                           closesModal('#modal-edit-teacher');
-                           emptyProperty('professorEscolhido');
+                           $scope.getTeachers();
+                           ModalHelper.open('#modal-edit-teacher');
+                           lib.emptyProperty($scope, 'professorEscolhido', {});
                        })
 
         $scope.professorEscolhido = {};
@@ -95,19 +86,11 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib'
         TeacherService.deleteTeacher(id)
              .success(function()
                      {
-                         closesModal('#modal-delete-teacher');
-                         emptyProperty('professorEscolhido');
+                         $scope.getTeachers();
+                         ModalHelper.close('#modal-delete-teacher');
+                         lib.emptyProperty($scope, 'professorEscolhido', {});
                      })
     }
 
-    function closesModal(modalID)
-    {
-        $scope.getTeachers();
-        escondeModal(modalID);
-    }
-
-    function emptyProperty(propertyToBeEmpty)
-    {
-        $scope[propertyToBeEmpty] = {};
-    }
+    $scope.getTeachers();
 }])

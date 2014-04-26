@@ -1,13 +1,14 @@
 "use strict";
 
-myClass.controller('MainController', ['$scope', '$location', '$interval', 'pageConfig', function ($scope, $location, $interval, pageConfig)
+myClass.controller('MainController', ['$scope', '$location', '$interval', 'pageConfig', 'lib',
+                             function ($scope, $location, $interval, pageConfig, lib)
 {
     $scope.cfg = pageConfig;
     var TEMPO_ATUALIZACAO_CUMPRIMENTO = 60000; //1 minuto
 
     $scope.redirectTo = function(url)
     {
-        if ((!url) || ("string" !== typeof url) || (!url.length))
+        if (lib.isStringInvalid(url))
         {
             $location.path('principal');
             return;

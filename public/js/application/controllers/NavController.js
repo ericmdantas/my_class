@@ -1,6 +1,7 @@
 "use strict";
 
-myClass.controller('NavController', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location)
+myClass.controller('NavController', ['$rootScope', '$scope', '$location',
+                            function($rootScope, $scope, $location)
 {
     $scope.items = [{nome: 'aulas', href: '/aulas', active: ''}, {nome: 'turmas', href: '/turmas', active: ''}, {nome: 'professores', href: '/professores', active: ''},
                     {nome: 'alunos', href: '/alunos', active: ''}, {nome: 'livros', href: '/livros', active: ''}, {nome: 'pagamentos', href: '/pagamentos', active: ''},
@@ -12,18 +13,18 @@ myClass.controller('NavController', ['$rootScope', '$scope', '$location', functi
         {
             if ($location.path() === $scope.items[i].href)
             {
-                removeActive($scope.items);
+                _removeActive($scope.items);
                 $scope.items[i].active = 'active';
-                trocaTitulo($scope.items[i].nome)
+                _trocaTitulo($scope.items[i].nome)
                 return;
             }
         }
 
-        trocaTitulo('principal');
-        removeActive($scope.items);
+        _trocaTitulo('principal');
+        _removeActive($scope.items);
     })
 
-    function removeActive(array)
+    function _removeActive(array)
     {
         for (var i = 0; i < array.length; i++)
         {
@@ -31,7 +32,7 @@ myClass.controller('NavController', ['$rootScope', '$scope', '$location', functi
         }
     }
 
-    function trocaTitulo(novoTitulo)
+    function _trocaTitulo(novoTitulo)
     {
         document.title = 'my class | ' + novoTitulo;
     }

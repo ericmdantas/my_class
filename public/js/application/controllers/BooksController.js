@@ -1,6 +1,7 @@
 "use strict";
 
-myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookService', 'lib', function($scope, $http, pageConfig, BookService, lib)
+myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookService', 'lib', 'ModalHelper',
+                               function($scope, $http, pageConfig, BookService, lib, ModalHelper)
 {
     $scope.livros = [];
     $scope.cfg = pageConfig;
@@ -16,35 +17,24 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookSer
                                       })
     }
 
-    $scope.getBooks();
-
-    function preparaAberturaModal(idModal)
-    {
-        $scope.isLoadingVisible.modal = false;
-        $(idModal).modal('show');
-    }
-
-    function escondeModal(idModal)
-    {
-        $(idModal).modal('hide');
-        $scope.isLoadingVisible.modal = false;
-    }
-
     $scope.openModalToEditBook = function(livro)
     {
-        preparaAberturaModal('#modal-edit-book');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-edit-book');
         $scope.livroEscolhido = livro;
     }
 
     $scope.openModalToDeleteBook = function(livro)
     {
-        preparaAberturaModal('#modal-delete-book');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-delete-book');
         $scope.livroEscolhido = livro;
     }
 
     $scope.openModalToRegisterBook = function()
     {
-        preparaAberturaModal('#modal-register-book');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-register-book');
     }
 
     $scope.registerBook = function(livro)
@@ -57,9 +47,10 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookSer
         BookService.registerBook(livro)
                    .success(function()
                            {
-                               closesModal('#modal-register-book');
-                               emptyProperty('novoLivro');
-                             });
+                               $scope.getBooks();
+                               ModalHelper.close('#modal-register-book');
+                               lib.emptyProperty($scope, 'novoLivro', {});
+                           });
     }
 
     $scope.editBook = function(livro)
@@ -72,8 +63,9 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookSer
         BookService.editBook(livro._id, livro)
                    .success(function()
                            {
-                              closesModal('#modal-edit-book');
-                              emptyProperty('livroEscolhido');
+                              $scope.getBooks();
+                              ModalHelper.close('#modal-edit-book');
+                              lib.emptyProperty($scope, 'livroEscolhido', {});
                            })
     }
 
@@ -87,19 +79,11 @@ myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookSer
         BookService.deleteBook(id)
                    .success(function()
                            {
-                               closesModal('#modal-delete-book');
-                               emptyProperty('livroEscolhido');
+                               $scope.getBooks();
+                               ModalHelper.close('#modal-delete-book');
+                               lib.emptyProperty($scope, 'livroEscolhido', {});
                            });
     }
 
-    function closesModal(modalID)
-    {
-        $scope.getBooks();
-        escondeModal(modalID);
-    }
-
-    function emptyProperty(propertyToBeEmpty)
-    {
-        $scope[propertyToBeEmpty] = {};
-    }
+    $scope.getBooks();
 }])

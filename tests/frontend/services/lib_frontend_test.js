@@ -30,7 +30,7 @@ describe('lib BEING TESTED', function()
         })
     })
 
-    describe('checks if removeWhiteSpaces is working', function()
+    describe('removeWhiteSpaces', function()
     {
         it('should check if removeWhiteSpaces is working - invalid parameters', function()
         {
@@ -74,7 +74,7 @@ describe('lib BEING TESTED', function()
         })
     })
 
-    describe('checks if isStringInvalid is working', function()
+    describe('isStringInvalid', function()
     {
         it('should return true - string is invalid', function()
         {
@@ -97,7 +97,7 @@ describe('lib BEING TESTED', function()
         })
     })
 
-    describe('checks if isObjectInvalid is working', function()
+    describe('isObjectInvalid', function()
     {
         it('should return true - object is invalid', function()
         {
@@ -122,9 +122,13 @@ describe('lib BEING TESTED', function()
 
     describe('isMonthYearInvalid', function()
     {
+        var _invalidYear = new Date().getFullYear() + 1;
+        var _invalidMonth = new Date().getMonth() + 2;
+
         it('should return true - invalid MonthYear param ', function()
         {
-            var _wrongParams = ['', 1, 2, function(){}, true, false, {}, [], "1/2014", "1_2014", "01.2014", "01/1999", "01/3000", "13/2999", "../...."];
+            var _wrongParams = ['', 1, 2, function(){}, true, false, {}, [], "1/2014", "1_2014", "01.2014",
+                                "01/1999", "01/"+ _invalidYear, _invalidMonth + "/" + new Date().getFullYear(), "13/2999", "../...."];
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
@@ -134,11 +138,58 @@ describe('lib BEING TESTED', function()
 
         it('should return false - valid MonthYear param', function()
         {
-            var _correctParams = ['01/2000', '01/2999', '12/2000', "06/2555"];
+            var _correctParams = ['01/2014', '02/2013', '12/2001', "06/2000"];
 
             for (var i = 0; i < _correctParams.length; i++)
             {
                 expect(lib.isMonthYearInvalid(_correctParams[i])).toBeFalsy();
+            }
+        })
+    })
+
+    describe('emptyProperty', function()
+    {
+        it('should throw error - wrong parent param', function()
+        {
+            var _wrongParams = ['', 1, false, true, [], {}, function(){}, 1, 0];
+            var _property = 'algumaPropriedade';
+            var _withWhat = {};
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(function()
+                {
+                    lib.emptyProperty(_wrongParams[i], _property, _withWhat);
+                }).toThrow(new Error('Objeto pai não é um objeto válido para ter sua propriedade limpa.'));
+            }
+        })
+
+        it('should throw error - wrong property param', function()
+        {
+            var _parent = {algumaInfoAqui: 1, OutraInfoAqui: {mais: true}};
+            var _wrongParams = ['', 1, false, true, [], {}, function(){}, 1, 0];
+            var _withWhat = {};
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(function()
+                {
+                    lib.emptyProperty(_parent, _wrongParams[i], _withWhat);
+                }).toThrow(new Error('A propriedade em questão não é válida para ser esvaziada.'));
+            }
+        })
+
+        it('should emptyProperty correctly', function()
+        {
+            var _params = ['', 0, {}, [], function(){}, false, 'abc', 'nothing to see here', '...', new Date()];
+
+            var _parent = {propriedade: 'preenchida'};
+            var _propriedade = 'propriedade';
+
+            for (var i = 0; i < _params.length; i++)
+            {
+                lib.emptyProperty(_parent, _propriedade, _params[i])
+                expect(_parent.propriedade).toEqual(_params[i]);
             }
         })
     })

@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig', 'ClazzService', 'StudentService',
-                                function ($scope, $http, lib, pageConfig, ClazzService, StudentService)
+myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig', 'ClazzService', 'StudentService', 'ModalHelper',
+                                function ($scope, $http, lib, pageConfig, ClazzService, StudentService, ModalHelper)
 {
     $scope.turmas = [];
     $scope.cfg = pageConfig;
@@ -29,65 +29,55 @@ myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig',
             })
     }
 
-    $scope.getClasses();
-    $scope.getStudentsNames();
-
-    function preparaAberturaModal(idModal)
-    {
-        $scope.isLoadingVisible.modal = false;
-        $(idModal).modal('show');
-    }
-
-    function escondeModal(idModal)
-    {
-        $(idModal).modal('hide');
-        $scope.isLoadingVisible.modal = false;
-    }
-
     $scope.openModalToEditClass = function(myClass)
     {
-        preparaAberturaModal('#modal-edit-class');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-edit-class');
         $scope.turmaEscolhida = myClass;
     }
 
     $scope.openModalToDeleteClass = function(myClass)
     {
-        preparaAberturaModal('#modal-delete-class');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-delete-class');
         $scope.turmaEscolhida = myClass;
     }
 
     $scope.openModalToRegisterClass = function()
     {
-        preparaAberturaModal('#modal-register-class');
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-register-class');
     }
 
     $scope.registerClass = function(turma)
     {
-        $scope.isLoadingVisible.modal = true;
-
         if (lib.isObjectInvalid(turma))
             throw new Error('Não foi possível registrar esta turma.');
+
+        $scope.isLoadingVisible.modal = true;
 
         ClazzService.registerClazz(turma)
             .success(function()
             {
-                closesModal('#modal-register-class');
-                emptyProperty('novaTurma');
+                $scope.getClasses();
+                ModalHelper.close('#modal-register-class');
+                lib.emptyProperty($scope, 'novaTurma', {});
             })
     }
 
     $scope.editClass = function(turma)
     {
-        $scope.isLoadingVisible.modal = true;
-
         if (lib.isObjectInvalid(turma) || lib.isStringInvalid(turma._id))
             throw new Error('Não foi possível editar esta turma.');
+
+        $scope.isLoadingVisible.modal = true;
 
         ClazzService.editClazz(turma._id, turma)
              .success(function()
                      {
-                         closesModal('#modal-edit-class');
-                         emptyProperty('turmaEscolhida');
+                         $scope.getClasses();
+                         ModalHelper.close('#modal-edit-class');
+                         lib.emptyProperty($scope, 'turmaEscolhida', {});
                      })
     }
 
@@ -101,19 +91,12 @@ myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig',
         ClazzService.deleteClazz(id)
             .success(function()
                     {
-                        closesModal('#modal-delete-class');
-                        emptyProperty('turmaEscolhida');
+                        $scope.getClasses();
+                        ModalHelper.close('#modal-delete-class');
+                        lib.emptyProperty($scope, 'turmaEscolhida', {});
                     })
     }
 
-    function closesModal(modalID)
-    {
-        escondeModal(modalID);
-        $scope.getClasses();
-    }
-
-    function emptyProperty(propertyToBeEmpty)
-    {
-        $scope[propertyToBeEmpty] = {};
-    }
+    $scope.getClasses();
+    $scope.getStudentsNames();
 }])

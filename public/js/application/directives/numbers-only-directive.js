@@ -2,7 +2,7 @@
 
 myClass.directive('numbersOnly', function()
 {
-    function l($scope, el, attr, model)
+    function _link($scope, el, attr, model)
     {
         if (!model)
             return;
@@ -26,6 +26,6 @@ myClass.directive('numbersOnly', function()
     return {
                 restrict: 'A',
                 require: '?ngModel',
-                link: l
+                link: _link
            }
 })

@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig', 'ClazzDayService', 'TeacherService', 'StudentService', 'ClazzService',
-                                function ($scope, $http, lib, pageConfig, ClazzDayService, TeacherService, StudentService, ClazzService)
+myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig', 'ClazzDayService', 'TeacherService', 'StudentService', 'ClazzService', 'ModalHelper',
+                                function ($scope, $http, lib, pageConfig, ClazzDayService, TeacherService, StudentService, ClazzService, ModalHelper)
 {
     $scope.cfg = pageConfig;
     $scope.aulaEscolhida = {};
@@ -12,6 +12,13 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
     $scope.clazzesNames = [];
     $scope.informacaoDiaria = [];
     var currentMonthYear = moment().format("MM/YYYY");
+
+    $scope.openModalToRegisterClazzDay = function(myClass)
+    {
+        $scope.isLoadingVisible.modal = false;
+        ModalHelper.open('#modal-clazz-day');
+        $scope.turmaDiaDia = myClass;
+    }
 
     $scope.getClazzesNames = function()
     {
@@ -65,10 +72,6 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
                      })
     }
 
-    $scope.getClazzesNames();
-    $scope.getClassesDailyInfo(currentMonthYear);
-    $scope.getTeachersNames();
-
     $scope.registerClazzDay = function(turma, alunos)
     {
         var _problemasAlunos = (lib.isObjectInvalid(alunos));
@@ -93,9 +96,9 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
         ClazzDayService.registerDailyInfo(_moment)
              .success(function()
                      {
-                         closesModal('#modal-clazz-day');
-                         emptyProperty('turmaDiaDia');
                          $scope.getClassesDailyInfo(currentMonthYear);
+                         ModalHelper.close('#modal-clazz-day');
+                         lib.emptyProperty($scope, 'turmaDiaDia', {});
                      })
     }
 
@@ -130,11 +133,11 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
                 }
                 else
                 {
-                    for (var i = 0; i < $scope.informacaoDiaria.length; i++)
+                    for (var j = 0; j < $scope.informacaoDiaria.length; j++)
                     {
-                        if (id === $scope.informacaoDiaria[i]._id)
+                        if (id === $scope.informacaoDiaria[j]._id)
                         {
-                            $scope.informacaoDiaria[i].dailyInfo = [];
+                            $scope.informacaoDiaria[j].dailyInfo = [];
                             break;
                         }
                     }
@@ -142,50 +145,13 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
             })
     }
 
-    function preparaAberturaModal(idModal)
-    {
-        $scope.isLoadingVisible.modal = false;
-        $(idModal).modal('show');
-    }
-
-    function escondeModal(idModal)
-    {
-        $(idModal).modal('hide');
-        $scope.isLoadingVisible.modal = false;
-    }
-
-    $scope.openModalToRegisterClazzDay = function(myClass)
-    {
-        preparaAberturaModal('#modal-clazz-day');
-        $scope.turmaDiaDia = myClass;
-    }
-
-    $scope.openModalToEditClazzDay = function(myClass)
-    {
-        preparaAberturaModal('#modal-edit-clazz-day');
-        $scope.aulaEscolhida = myClass;
-    }
-
-    $scope.openModalToDeleteClazzDay = function(myClass)
-    {
-        preparaAberturaModal('#modal-delete-class-day');
-        $scope.aulaEscolhida = myClass;
-    }
-
-    function closesModal(modalID)
-    {
-        escondeModal(modalID);
-        $scope.getClassesDailyInfo(currentMonthYear);
-    }
-
-    function emptyProperty(propertyToBeEmpty)
-    {
-        $scope[propertyToBeEmpty] = {};
-    }
-
     $scope.isHistoricoVisible = function(historico)
     {
         var periodoEscolhido = (historico) && ("number" === typeof historico) ? historico : 0;
         return periodoEscolhido > 0 ? true : false;
     }
+
+    $scope.getClazzesNames();
+    $scope.getTeachersNames();
+    $scope.getClassesDailyInfo(currentMonthYear);
 }])

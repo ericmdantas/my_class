@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('PaymentsController', ['$scope', '$http', 'lib', 'pageConfig', 'PaymentService',
-                                function ($scope, $http, lib, pageConfig, PaymentService)
+myClass.controller('PaymentsController', ['$scope', '$http', 'lib', 'pageConfig', 'PaymentService', 'ModalHelper',
+                                function ($scope, $http, lib, pageConfig, PaymentService, ModalHelper)
 {
     $scope.pagamentos = [];
     $scope.pagamentoEscolhido = {};
@@ -17,18 +17,38 @@ myClass.controller('PaymentsController', ['$scope', '$http', 'lib', 'pageConfig'
             })
     }
 
-    $scope.getPayments();
-
-    function preparaAberturaModal(idModal)
+    $scope.openModalToRegisterPayment = function()
     {
         $scope.isLoadingVisible.modal = false;
-        $(idModal).modal('show');
+        ModalHelper.open('#modal-pay');
     }
 
-    function escondeModal(idModal)
+    $scope.pay = function(pagamento)
     {
-        $(idModal).modal('hide');
-        $scope.isLoadingVisible.modal = false;
+        if (lib.isObjectInvalid(pagamento))
+            throw new Error('Não foi possível realizar o pagamento.');
+
+        $scope.isLoadingVisible.modal = true;
+
+        pagamento.name = pagamento.name ? pagamento.name.name : '';
+        pagamento.class = pagamento.class ? pagamento.class.class : '';
+        pagamento.paymentMonth = pagamento.paymentMonth ? pagamento.paymentMonth.nome : '';
+
+        PaymentService.registerPayment(pagamento)
+             .success(function()
+                     {
+                         $scope.isLoadingVisible.modal = false;
+                         ModalHelper.close('#modal-pay');
+                         lib.emptyProperty($scope, 'alunoPagando', {});
+                     })
+            .finally(function()
+                    {
+                        for (var i = 0; i < $scope.pagamentos.length; i++)
+                        {
+                            if ($scope.pagamentos[i].name === pagamento.name)
+                                $scope.pagamentos[i].payments.push(pagamento);
+                        }
+                    })
     }
 
     $scope.isHistoricoVisible = function(pagamento)
@@ -40,33 +60,5 @@ myClass.controller('PaymentsController', ['$scope', '$http', 'lib', 'pageConfig'
         return quantidade > 0 ? true : false;
     }
 
-    $scope.openModalToRegisterPayment = function()
-    {
-        preparaAberturaModal('#modal-pay');
-    }
-
-    $scope.pay = function(pagamento)
-    {
-        if (lib.isObjectInvalid(pagamento))
-            throw new Error('Não foi possível realizar o pagamento.');
-
-        $scope.isLoadingVisible.modal = true;
-        pagamento.name = pagamento.name ? pagamento.name.name : '';
-        pagamento.class = pagamento.class ? pagamento.class.class : '';
-        pagamento.paymentMonth = pagamento.paymentMonth ? pagamento.paymentMonth.nome : '';
-
-        PaymentService.registerPayment(pagamento)
-             .success(function()
-                     {
-                         escondeModal('#modal-pay');
-                     })
-
-        for (var i = 0; i < $scope.pagamentos.length; i++)
-        {
-            if ($scope.pagamentos[i].name === pagamento.name)
-                $scope.pagamentos[i].payments.push(pagamento);
-        }
-
-        $scope.alunoPagando = {};
-    }
+    $scope.getPayments();
 }])

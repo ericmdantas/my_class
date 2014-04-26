@@ -51,25 +51,11 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             expect(scope.cfg).toBeDefined();
         }));
 
-        it('checks if modals are ready to be opened - openModalToDeleteClazzDay', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: scope});
-            expect(scope.openModalToDeleteClazzDay).toBeDefined();
-            expect(typeof scope.openModalToDeleteClazzDay).toEqual('function');
-        }))
-
         it('checks if modals are ready to be opened - openModalToRegisterClazzDay', inject(function($controller)
         {
             $controller('ClazzDayController', {$scope: scope});
             expect(scope.openModalToRegisterClazzDay).toBeDefined();
             expect(typeof scope.openModalToRegisterClazzDay).toEqual('function');
-        }))
-
-        it('checks if modals are ready to be opened - openModalToEditClazzDay', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: scope});
-            expect(scope.openModalToEditClazzDay).toBeDefined();
-            expect(typeof scope.openModalToEditClazzDay).toEqual('function');
         }))
 
         it('checks if getStudentsNamesByClass is defined', inject(function($controller)
@@ -91,25 +77,6 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             $controller('ClazzDayController', {$scope: scope});
             expect(scope.getClassesDailyInfo).toBeDefined();
             expect(typeof scope.getClassesDailyInfo).toEqual('function');
-        }))
-    })
-
-    describe('checks if opening modal to edit class is working properly', function()
-    {
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: scope});
-            var chosenClass = {};
-            scope.openModalToEditClazzDay(chosenClass);
-            expect(scope.aulaEscolhida).toEqual(chosenClass);
-        }))
-
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: scope});
-            var chosenClass = {_id: 'abc', name: 'Turma1'};
-            scope.openModalToEditClazzDay(chosenClass);
-            expect(scope.aulaEscolhida).toEqual(chosenClass);
         }))
     })
 
@@ -165,25 +132,38 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             httpMock.flush();
         }))
 
-        it('should not replace anything, server returned empty object', inject(function($controller)
+        it('should empty dailyInfo, server returned empty object', inject(function($controller)
         {
             httpMock.expectGET('/api/classes/dailyInfo/a123/05_2099').respond();
             $controller('ClazzDayController', {$scope: scope});
             scope.informacaoDiaria = [{name: "Algum Nome", id: 'abc1'}, {name: "Outro nome", id: 'abc2'}, {name: "Turma1", id: 'n3wId'}];
             scope.getClassesDailyInfo('05/2099', 'a123');
             httpMock.flush();
-            expect(scope.informacaoDiaria).toEqual([{name: "Algum Nome", id: 'abc1'}, {name: "Outro nome", id: 'abc2'}, {name: "Turma1", id: 'n3wId'}]);
+            expect(scope.informacaoDiaria).toEqual([]);
+        }))
+
+        it('should empty dailyInfo, server returned empty array', inject(function($controller)
+        {
+            httpMock.expectGET('/api/classes/dailyInfo/a123/05_2099').respond({info: {}});
+            $controller('ClazzDayController', {$scope: scope});
+            scope.informacaoDiaria = [{name: "Algum Nome", id: 'abc1'}, {name: "Outro nome", id: 'abc2'}, {name: "Turma1", id: 'n3wId'}];
+            scope.getClassesDailyInfo('05/2099', 'a123');
+            httpMock.flush();
+            expect(scope.informacaoDiaria).toEqual([]);
         }))
 
         it('should replace informacaoDiaria correctly', inject(function($controller)
         {
-            httpMock.expectGET('/api/classes/dailyInfo/a123/04_2014').respond({info: {name: "Turma1", _id: 'n3wId', anotherInfo: '123'}});
+            var _responseCompleteRequest = {info: [{name: "Algum Nome", _id: 'abc1'}, {name: "Outro nome", _id: 'abc2'}, {name: "Turma1", _id: 'a123', anotherInfo: '567'}]};
+            var _responseSpecificRequest = {info: {name: "Turma1", _id: 'a123', anotherInfo: '123'}};
+
+            httpMock.expectGET('/api/classes/dailyInfo/04_2014').respond(_responseCompleteRequest);
+            httpMock.expectGET('/api/classes/dailyInfo/a123/04_2014').respond(_responseSpecificRequest);
             $controller('ClazzDayController', {$scope: scope});
-            scope.informacaoDiaria = [{name: "Algum Nome", _id: 'abc1'}, {name: "Outro nome", _id: 'abc2'}, {name: "Turma1", _id: 'n3wId', anotherInfo: '567'}];
             scope.getClassesDailyInfo('04/2014', 'a123');
             httpMock.flush();
 
-            expect(scope.informacaoDiaria[2]).toEqual({name: "Turma1", id: 'n3wId', anotherInfo: '123'});
+            expect(scope.informacaoDiaria[2]).toEqual({name: "Turma1", _id: 'a123', anotherInfo: '123'});
         }))
     })
 

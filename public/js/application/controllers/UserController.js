@@ -2,17 +2,17 @@
 
 myClass.controller('UserController', ['$scope', '$http', '$window', function($scope, $http, $window)
 {
-    var usuarioLogado;
+    var _usuarioLogado;
 
     $scope.userOnline = function()
     {
-        usuarioLogado = $window.localStorage.getItem('u');
-        return usuarioLogado ? ', '+ usuarioLogado : '';
+        _usuarioLogado = $window.localStorage.getItem('u');
+        return _usuarioLogado ? ', '+ _usuarioLogado : '';
     }
 
     $scope.logout = function()
     {
-        kickarSessao();
+        _kickarSessao();
     }
 
     $scope.toTheTop = function()
@@ -20,9 +20,9 @@ myClass.controller('UserController', ['$scope', '$http', '$window', function($sc
         $window.scrollTo(0, 0);
     }
 
-    function kickarSessao()
+    function _kickarSessao()
     {
-        $http.post('/api/logout', {user: usuarioLogado})
+        $http.post('/api/logout', {user: _usuarioLogado})
              .finally(redirecionaLogin)
     }
 

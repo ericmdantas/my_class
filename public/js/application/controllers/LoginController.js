@@ -5,9 +5,8 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pag
 {
     $scope.user = {};
     $scope.user.username = $window.localStorage ? $window.localStorage.getItem('u') : '';
-    $scope.allUsers = {};
     $scope.cfg = pageConfig;
-    var idIntervalo = 0;
+    var _idIntervalo = 0;
 
     $scope.validaUser = function(user)
     {
@@ -44,7 +43,7 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pag
         btn_logar.text('entrar');
         btn_logar.prop('disabled', false);
         $('#username').focus();
-        clearInterval(idIntervalo);
+        clearInterval(_idIntervalo);
     }
 
     function desabilitaBotao()
@@ -54,7 +53,7 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pag
         btn_logar.text('carregando'+pontos);
         btn_logar.prop('disabled', true);
 
-        idIntervalo = setInterval(function()
+        _idIntervalo = setInterval(function()
                                   {
                                       if (pontos.length > 3)
                                           pontos = '';
