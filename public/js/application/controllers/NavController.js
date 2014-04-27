@@ -3,9 +3,13 @@
 myClass.controller('NavController', ['$rootScope', '$scope', '$location',
                             function($rootScope, $scope, $location)
 {
-    $scope.items = [{nome: 'aulas', href: '/aulas', active: ''}, {nome: 'turmas', href: '/turmas', active: ''}, {nome: 'professores', href: '/professores', active: ''},
-                    {nome: 'alunos', href: '/alunos', active: ''}, {nome: 'livros', href: '/livros', active: ''}, {nome: 'pagamentos', href: '/pagamentos', active: ''},
-                    {nome: 'estatísticas', href: '/estatisticas', active: ''}];
+    $scope.items = [{nome: 'aulas', href: '/aulas', active: ''},
+                    {nome: 'turmas', href: '/turmas', active: ''},
+                    {nome: 'professores', href: '/professores', active: ''},
+                    {nome: 'alunos', href: '/alunos', active: ''},
+                    {nome: 'livros', href: '/livros', active: ''},
+                    {nome: 'pagamentos', href: '/pagamentos', active: ''},
+                    {nome: 'estatisticas', href: '/estatisticas', active: ''}];
 
     $rootScope.$on('$locationChangeSuccess', function()
     {

@@ -1,13 +1,18 @@
 "use strict";
 
-myClass.controller('UserController', ['$scope', '$http', '$window', function($scope, $http, $window)
+myClass.controller('UserController', ['$scope', '$http', '$window', 'lib',
+                              function($scope, $http, $window, lib)
 {
     var _usuarioLogado;
 
     $scope.userOnline = function()
     {
+        if (lib.isStringInvalid($window.localStorage.getItem('u')))
+            return '';
+
         _usuarioLogado = $window.localStorage.getItem('u');
-        return _usuarioLogado ? ', '+ _usuarioLogado : '';
+
+        return ', ' + _usuarioLogado;
     }
 
     $scope.logout = function()
@@ -23,10 +28,10 @@ myClass.controller('UserController', ['$scope', '$http', '$window', function($sc
     function _kickarSessao()
     {
         $http.post('/api/logout', {user: _usuarioLogado})
-             .finally(redirecionaLogin)
+             .finally(_redirecionaLogin)
     }
 
-    function redirecionaLogin()
+    function _redirecionaLogin()
     {
         $window.location.href = '/';
     }

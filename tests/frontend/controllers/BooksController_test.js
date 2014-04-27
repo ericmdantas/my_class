@@ -152,6 +152,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
             httpMock.flush();
             var quantidadeDeLivrosDepoisDoCadastro = scope.livros.length;
             expect(quantidadeDeLivrosDepoisDoCadastro).toBeGreaterThan(0);
+            expect(scope.novoLivro).toEqual({});
         }))
     })
 
@@ -174,6 +175,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
             httpMock.flush();
             expect(scope.livros[0].name).toBe('A');
             expect(scope.livros[0].quantity).toBe(5);
+            expect(scope.livroEscolhido).toEqual({});
         }))
     })
 

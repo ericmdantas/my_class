@@ -155,7 +155,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
     describe('POST /api/students', function()
     {
-        it('shouldn\'t allow a student to be registered without info', inject(function($controller)
+        it('shouldn\'t allow a student to be registered without info - throws error', inject(function($controller)
         {
             $controller('StudentsController', {$scope: scope});
 
@@ -219,6 +219,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
             httpMock.flush();
             expect(scope.alunos).toBeDefined();
             expect(scope.alunos[0].name).toBe('nome');
+            expect(scope.alunoEscolhido).toEqual({});
         }))
     })
 
@@ -246,6 +247,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
             httpMock.flush();
 
             expect(quantidadeDeAlunosAntesDaDelecao).toBeGreaterThan(0);
+            expect(scope.alunoEscolhido).toEqual({});
         }))
     })
 })

@@ -11,6 +11,8 @@ myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig',
     $scope.professores = {};
     $scope.isLoadingVisible = {modal: false};
 
+    //TODO: CHECK SOME WAY TO ALLOW USER TO SELECT MORE THAN ONE STUDENT - SELECT2
+
     $scope.getClasses = function()
     {
         ClazzService.getClazzes()

@@ -72,8 +72,6 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib'
                            ModalHelper.open('#modal-edit-teacher');
                            lib.emptyProperty($scope, 'professorEscolhido', {});
                        })
-
-        $scope.professorEscolhido = {};
     }
 
     $scope.deleteTeacher = function(id)

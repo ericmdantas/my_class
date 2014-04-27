@@ -101,6 +101,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
             var pagamento = {name: 'eric', class: '', paymentMonth: ''};
             scope.pay(pagamento);
             httpMock.flush();
+            expect(scope.pagamentoEscolhido).toEqual({});
         }))
     })
 
@@ -117,14 +118,14 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
         {
             $controller('PaymentsController', {$scope: scope});
             var pagamento = {payments: []}
-            expect(scope.isHistoricoVisible(pagamento)).toBe(false);
+            expect(scope.isHistoricoVisible(pagamento)).toBeFalsy();
         }))
 
         it('checks historic visibility - should be true', inject(function($controller)
         {
             $controller('PaymentsController', {$scope: scope});
             var pagamento = {payments: [{a: 1}, {b: 2}]}
-            expect(scope.isHistoricoVisible(pagamento)).toBe(true);
+            expect(scope.isHistoricoVisible(pagamento)).toBeTruthy();
         }))
     })
 })

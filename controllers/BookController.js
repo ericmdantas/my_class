@@ -89,7 +89,6 @@ function Book()
         _book.deleteBook(_usuario, _identificacaoLivro, callback);
     }
 
-
     return {
                 getBooksInfo: _getBooksInfo,
                 registerBook: _registerBook,

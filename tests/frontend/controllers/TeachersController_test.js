@@ -109,8 +109,6 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if modals are ready to be opened - openModalToEditTeacher', inject(function($controller)
         {
-            scope.professorEscolhido = {};
-
             $controller('TeachersController', {$scope: scope});
             expect(scope.openModalToEditTeacher).toBeDefined();
             expect(typeof scope.openModalToEditTeacher).toEqual('function');
@@ -214,6 +212,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
             var teacher = {name: 'professor', salary: 123};
             scope.registerNewTeacher(teacher);
             httpMock.flush();
+            expect(scope.novoProfessor).toEqual({});
         }))
     })
 
@@ -244,6 +243,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
             var teacher = {_id: "123", name: 'Professor', salary: 1};
             scope.editTeacher(teacher);
             httpMock.flush();
+            expect(scope.professorEscolhido).toEqual({});
         }))
     })
 
@@ -271,6 +271,8 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
             scope.deleteTeacher(professor._id);
             httpMock.flush();
+
+            expect(scope.professorEscolhido).toEqual({});
         }))
     })
 })

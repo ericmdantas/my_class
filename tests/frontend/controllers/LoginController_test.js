@@ -46,10 +46,13 @@ describe("LOGINCONTROLLER BEING TESTED", function()
         it('tries to log in with an empty user', inject(function($controller)
         {
             $controller('LoginController', {$scope: scope});
-            expect(function(){scope.validaUser(undefined)}).toThrow(new Error('Usuário não informado.'));
-            expect(function(){scope.validaUser(null)}).toThrow(new Error('Usuário não informado.'));
-            expect(function(){scope.validaUser(false)}).toThrow(new Error('Usuário não informado.'));
-            expect(function(){scope.validaUser(true)}).toThrow(new Error('Usuário não informado.'));
+
+            var _wrongParams = [undefined, null, function(){}, true, false, 0, 1];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(function(){scope.validaUser(_wrongParams[i])}).toThrow(new Error('Usuário não informado.'));
+            }
         }))
 
         it('tries to log in with a wrong user', inject(function($controller)
@@ -58,12 +61,6 @@ describe("LOGINCONTROLLER BEING TESTED", function()
             $controller('LoginController', {$scope: scope});
             var user = {username: 'eric3', password: 'senha_errada'}
             scope.validaUser(user);
-
-            rootScope.$apply(function()
-            {
-                locationMock.path('/');
-            })
-
             httpMock.flush();
 
             expect(locationMock.path()).toBe('/');
