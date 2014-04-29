@@ -20,11 +20,6 @@ myClass.controller('UserController', ['$scope', '$http', '$window', 'lib',
         _kickarSessao();
     }
 
-    $scope.toTheTop = function()
-    {
-        $window.scrollTo(0, 0);
-    }
-
     function _kickarSessao()
     {
         $http.post('/api/logout', {user: _usuarioLogado})
