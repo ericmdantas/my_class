@@ -29,12 +29,6 @@ describe('USERCONTROLLER BEING TESTED', function()
             $controller('UserController', {$scope: scope});
             expect(scope.userOnline).toBeDefined();
         }))
-
-        it('checks if logout was created', inject(function($controller)
-        {
-            $controller('UserController', {$scope: scope});
-            expect(scope.logout).toBeDefined();
-        }))
     })
 
     describe('userOnline', function()
@@ -42,7 +36,16 @@ describe('USERCONTROLLER BEING TESTED', function()
         it('checks if userOnline is empty when there\'s nothing in the localstorage', inject(function($controller)
         {
             $controller('UserController', {$scope: scope});
-            expect(scope.userOnline()).toEqual('');
+
+            var _wrongParams = [null, undefined, '   ', function(){}, true, false, 1, 0, {}, []];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(function()
+                {
+                    scope.userOnline(_wrongParams[i]);
+                }).toThrow('Não foi possível informar o usuário logado. Não há nada na sessão.');
+            }
         }))
 
         it('checks if userOnline is equal to what\'s in the localStorage', inject(function($controller)
@@ -51,20 +54,5 @@ describe('USERCONTROLLER BEING TESTED', function()
             windowMock.localStorage.setItem('u', 'eric3');
             expect(scope.userOnline()).toEqual(', eric3');
         }))
-    })
-
-    describe('logout', function()
-    {
-        //TODO: ADD TESTS FOR LOGGING OUT
-        //TODO: FIX Karma Error > Some of your tests did a full page reload!
-
-        /*it('should log user out correctly', inject(function($controller)
-        {
-            windowMock.location = {};
-            httpMock.expectPOST('/api/logout').respond();
-            $controller('UserController', {$scope: scope});
-            scope.logout();
-            httpMock.flush();
-        }))*/
     })
 })

@@ -1,33 +1,17 @@
 "use strict";
 
-myClass.controller('UserController', ['$scope', '$http', '$window', 'lib',
-                              function($scope, $http, $window, lib)
+myClass.controller('UserController', ['$scope', '$window', 'lib',
+                              function($scope, $window, lib)
 {
-    var _usuarioLogado;
+    var _usuarioLogado = '';
 
     $scope.userOnline = function()
     {
-        if (lib.isStringInvalid($window.localStorage.getItem('u')))
-            return '';
-
         _usuarioLogado = $window.localStorage.getItem('u');
 
+        if (lib.isStringInvalid(_usuarioLogado))
+            throw new Error('Não foi possível informar o usuário logado. Não há nada na sessão.');
+
         return ', ' + _usuarioLogado;
-    }
-
-    $scope.logout = function()
-    {
-        _kickarSessao();
-    }
-
-    function _kickarSessao()
-    {
-        $http.post('/api/logout', {user: _usuarioLogado})
-             .finally(_redirecionaLogin)
-    }
-
-    function _redirecionaLogin()
-    {
-        $window.location.href = '/';
     }
 }])

@@ -36,7 +36,7 @@ myClass.factory('lib', function()
 
     function _isStringInvalid(text)
     {
-        return ((!text) || ("string" !== typeof text) || (text.length === 0));
+        return ((!text) || ("string" !== typeof text) || (text.length === 0) || (text.trim().length === 0));
     }
 
     function _isObjectInvalid(obj)

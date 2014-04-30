@@ -2,7 +2,7 @@
 
 describe('NAVCONTROLLER BEING TESTED', function()
 {
-    var rootScope, scope, locationMock;
+    var rootScope, scope, locationMock, httpMock;
     var _validURLs = ['aulas', 'turmas', 'professores', 'alunos', 'livros', 'pagamentos', 'estatisticas'];
 
     beforeEach(module('myClass'));
@@ -12,6 +12,7 @@ describe('NAVCONTROLLER BEING TESTED', function()
         rootScope = $injector.get('$rootScope').$new();
         scope = rootScope;
         locationMock = $injector.get('$location');
+        httpMock = $injector.get('$httpBackend');
     }))
 
     describe('checks all elements creation', function()
@@ -37,7 +38,23 @@ describe('NAVCONTROLLER BEING TESTED', function()
         it('checks if items array is populated by objects', inject(function($controller)
         {
             $controller('NavController', {$scope: scope});
-            expect(typeof scope.items[0]).toEqual("object");
+
+            for (var i = 0; i < scope.items.length; i++)
+            {
+                expect(typeof scope.items[i]).toEqual("object");
+            }
+        }))
+
+        it('checks if items array is populated correctly', inject(function($controller)
+        {
+            $controller('NavController', {$scope: scope});
+            expect(scope.items.length).toEqual(7);
+        }))
+
+        it('checks if logout was created', inject(function($controller)
+        {
+            $controller('NavController', {$scope: scope});
+            expect(scope.logout).toBeDefined();
         }))
     })
 
@@ -107,5 +124,25 @@ describe('NAVCONTROLLER BEING TESTED', function()
                 expect(document.title).toContain(_validURLs[i]);
             }
         }))
+    })
+
+    describe('logout', function()
+    {
+        it('should throw error - wrong param usuario', inject(function($controller)
+        {
+            $controller('NavController', {$scope: scope});
+
+            var _wrongParams = [null, undefined, '   ', function(){}, true, false, 1, 0, {}, []];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(function()
+                {
+                    scope.logout(_wrongParams[i]);
+                }).toThrow(new Error('Não foi possível deslogar o usuário. O Parâmetro foi informado incorretamente.'));
+            }
+        }))
+
+        //TODO: ADD SUCCESS TESTS
     })
 })
