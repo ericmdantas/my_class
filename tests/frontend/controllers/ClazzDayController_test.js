@@ -157,10 +157,10 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             var _responseCompleteRequest = {info: [{name: "Algum Nome", _id: 'abc1'}, {name: "Outro nome", _id: 'abc2'}, {name: "Turma1", _id: 'a123', anotherInfo: '567'}]};
             var _responseSpecificRequest = {info: {name: "Turma1", _id: 'a123', anotherInfo: '123'}};
 
-            httpMock.expectGET('/api/classes/dailyInfo/04_2014').respond(_responseCompleteRequest);
-            httpMock.expectGET('/api/classes/dailyInfo/a123/04_2014').respond(_responseSpecificRequest);
+            httpMock.expectGET('/api/classes/dailyInfo/'+currentMonthYear).respond(_responseCompleteRequest);
+            httpMock.expectGET('/api/classes/dailyInfo/a123/'+currentMonthYear).respond(_responseSpecificRequest);
             $controller('ClazzDayController', {$scope: scope});
-            scope.getClassesDailyInfo('04/2014', 'a123');
+            scope.getClassesDailyInfo(currentMonthYear.replace('_', '/'), 'a123');
             httpMock.flush();
 
             expect(scope.informacaoDiaria[2]).toEqual({name: "Turma1", _id: 'a123', anotherInfo: '123'});
