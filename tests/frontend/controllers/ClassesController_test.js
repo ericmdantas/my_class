@@ -183,7 +183,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         {
             $controller('ClassesController', {$scope: scope});
             var _turma = {name: 'A', _id: '123', students: 'a1, a2, a3'};
-            scope.editClass(_turma);
+            scope.registerClass(_turma);
             httpMock.flush();
             var _expected = {name: 'A', _id: '123', students: ['a1', ' a2', ' a3']};
 
