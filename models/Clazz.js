@@ -65,8 +65,6 @@
 
     clazzSchema.methods.getClassesDailyInfo = function(user, monthYear, done)
     {
-        //TODO FIX, SO IT ONLY RETURNS THE MATCHING MONTH/YEAR
-
         if ((!user) || ("string" !== typeof user) || (user.length === 0))
             return done(new Error("Não foi encontrado o usuário para buscar as informações de todas as turma."), null);
 
@@ -129,6 +127,7 @@
             return done(new Error("Não foi encontrada a turma a ser cadastrada."));
 
         turma.usersAllowed = [usuario];
+
         var _clazz = new Clazz(turma);
 
         _clazz.save(function(err, saved)

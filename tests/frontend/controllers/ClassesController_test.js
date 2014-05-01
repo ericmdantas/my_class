@@ -178,6 +178,17 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
 
             expect(scope.turmas.length).toBeGreaterThan(0);
         }))
+
+        it('should be able to register class successfully with students informed', inject(function($controller)
+        {
+            $controller('ClassesController', {$scope: scope});
+            var _turma = {name: 'A', _id: '123', students: 'a1, a2, a3'};
+            scope.editClass(_turma);
+            httpMock.flush();
+            var _expected = {name: 'A', _id: '123', students: ['a1', ' a2', ' a3']};
+
+            expect(_turma).toEqual(_expected);
+        }))
     })
 
     describe('PUT /api/classes/:id', function()
@@ -208,6 +219,17 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             var turma = {name: 'A', _id: '123'};
             scope.editClass(turma);
             httpMock.flush();
+        }))
+
+        it('should be able to edit class successfully with students informed', inject(function($controller)
+        {
+            $controller('ClassesController', {$scope: scope});
+            var _turma = {name: 'A', _id: '123', students: 'a1, a2, a3'};
+            scope.editClass(_turma);
+            httpMock.flush();
+            var _expected = {name: 'A', _id: '123', students: ['a1', ' a2', ' a3']};
+
+            expect(_turma).toEqual(_expected);
         }))
     })
 

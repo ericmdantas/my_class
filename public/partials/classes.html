@@ -23,10 +23,10 @@
                     <input type="text" class="form-control" ng-model="novaTurma.name" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
                     <br/>
 
-                    <!--<label>alunos</label>
+                    <label>alunos</label>
                     <br/>
-                    <input type="hidden" style="width: 100%;" id="teste1" />
-                    <br/><br/>-->
+                    <textarea type="text" class="form-control" ng-model="novaTurma.students" maxlength="500"></textarea>
+                    <br/>
 
                     <div class="middle-modal">
                         <aside class="pull-left">
@@ -60,12 +60,14 @@
                     <label>nome</label>
                     <input type="text" class="form-control" ng-model="turmaEscolhida.name" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
                     <br/>
+
+                    <label>alunos</label>
+                    <br/>
+                    <textarea type="text" class="form-control" ng-model="turmaEscolhida.students" maxlength="500"></textarea>
+                    <br/>
+
                     <div class="middle-modal">
                         <aside class="pull-left">
-                            <label>quantidade de alunos</label>
-                            <input type="text" class="form-control" ng-model="turmaEscolhida.studentsQuantity" maxlength="6"/>
-                        </aside>
-                        <aside class="pull-right">
                             <label>horário</label>
                             <input type="time" class="form-control" ng-model="turmaEscolhida.time" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
                         </aside>
@@ -90,7 +92,7 @@
         <plus-less-info-element elementToToggle="class-toggle-{{$index}}"></plus-less-info-element>
         <h3>{{turma.name}}</h3>
         <div id="class-toggle-{{$index}}" class="collapse">
-            <p class="text-almost-invisible">alunos: <span class="text-almost-black">{{turma.studentsQuantity}}</span></p>
+            <p class="text-almost-invisible">alunos: <span class="text-almost-black alunos" ng-repeat="alunos in turma.students">{{alunos}}</span></p>
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
 
             <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteClass(turma)">fechar</button>

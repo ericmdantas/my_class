@@ -577,7 +577,7 @@ describe('ClazzModel', function()
         {
             var _clazz = new ClazzModel();
             var _usuario = "eric3";
-            var _turma = {name: "Turma1"};
+            var _turma = {name: "Turma1", students: ["eu", "fulano"]};
 
             _clazz.registerNewClass(_usuario, _turma, function(err)
                                                       {

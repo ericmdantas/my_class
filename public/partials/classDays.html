@@ -26,6 +26,15 @@
                     <input type="text" class="form-control" ng-model="turmaDiaDia.teacherName" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
                     <br/>
                     <label>presença</label>
+
+                    <div ng-if="!turmaDiaDia.name && alunos.length === 0" align="center">
+                        <div class="alert alert-info">Por favor, escolha uma turma.</div>
+                    </div>
+
+                    <div ng-if="turmaDiaDia.name && alunos.length === 0" align="center">
+                        <div class="alert alert-warning">Não existem alunos para a turma escolhida.</div>
+                    </div>
+
                     <p ng-repeat="aluno in alunos" class="presenca transition">{{aluno.name}}
                         <input type="checkbox" class="pull-right" ng-model="aluno.wasInClass"/>
                     </p>
@@ -39,7 +48,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
-                            ng-disabled="!(!!turmaDiaDia.teacherName && !!turmaDiaDia.subject)"
+                            ng-disabled="!(!!turmaDiaDia.teacherName && !!turmaDiaDia.subject && alunos.length > 0)"
                             ng-click="registerClazzDay(turmaDiaDia, alunos)">
                         registrar
                     </button>
@@ -49,44 +58,6 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="modal-edit-clazz-day">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">editar {{turmaEscolhida.name}}</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Para editar a turma escolhida, favor preencher as informações abaixo:</p>
-                    <label>nome</label>
-                    <input type="text" class="form-control" ng-model="turmaEscolhida.name" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>quantidade de alunos</label>
-                            <input type="text" class="form-control" ng-model="turmaEscolhida.studentsQuantity" maxlength="6"/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>horário</label>
-                            <input type="time" class="form-control" ng-model="turmaEscolhida.time" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
-                        </aside>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                            ng-disabled="!(!!turmaEscolhida.name && !!turmaEscolhida.time)"
-                            ng-click="editClazzDay(turmaEscolhida)">
-                        continuar
-                    </button>
-                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <delete-info directiveid="modal-delete-class-day" title="aula" objectname="{{aulaEscolhida.name}}" objectid="{{aulaEscolhida._id}}" delete="deleteClazzDay(id)"></delete-info>
 
     <div class="info-card transition" ng-repeat="turma in informacaoDiaria | filter: turmaProcurada">
         <plus-less-info-element elementToToggle="class-toggle-{{$index}}"></plus-less-info-element>

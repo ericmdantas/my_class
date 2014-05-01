@@ -69,7 +69,7 @@ myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib'
              .success(function()
                        {
                            $scope.getTeachers();
-                           ModalHelper.open('#modal-edit-teacher');
+                           ModalHelper.close('#modal-edit-teacher');
                            lib.emptyProperty($scope, 'professorEscolhido', {});
                        })
     }

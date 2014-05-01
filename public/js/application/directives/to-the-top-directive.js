@@ -10,7 +10,7 @@ myClass.directive('toTheTop', ['$window', function($window)
     {
         $($window).scroll(function()
         {
-            $window.scrollY < 100 ? element.addClass('fade') : element.removeClass('fade');
+            $window.scrollY < 100 ? element.fadeOut('slow') : element.fadeIn('slow');
         })
 
         element.on('click', function()

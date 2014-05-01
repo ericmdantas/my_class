@@ -11,8 +11,6 @@ myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig',
     $scope.professores = {};
     $scope.isLoadingVisible = {modal: false};
 
-    //TODO: CHECK SOME WAY TO ALLOW USER TO SELECT MORE THAN ONE STUDENT - SELECT2
-
     $scope.getClasses = function()
     {
         ClazzService.getClazzes()
@@ -24,6 +22,9 @@ myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig',
 
     $scope.getStudentsNames = function()
     {
+        //TODO: CHECK SOME WAY TO ALLOW USER TO SELECT MORE THAN ONE STUDENT - SELECT2
+        //SO THAT THE FOLLOWING REQUEST IS USED CORRECTLY
+
         StudentService.getStudentsNames()
             .success(function(data)
             {
@@ -58,6 +59,9 @@ myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig',
 
         $scope.isLoadingVisible.modal = true;
 
+        if (turma && turma.students && turma.students.indexOf(',') > -1)
+            turma.students = turma.students.split(',');
+
         ClazzService.registerClazz(turma)
             .success(function()
             {
@@ -73,6 +77,9 @@ myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig',
             throw new Error('Não foi possível editar esta turma.');
 
         $scope.isLoadingVisible.modal = true;
+
+        if (turma && turma.students && turma.students.indexOf(',') > -1)
+            turma.students = turma.students.split(',');
 
         ClazzService.editClazz(turma._id, turma)
              .success(function()

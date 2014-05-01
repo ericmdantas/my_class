@@ -35,6 +35,7 @@
 .select-data {padding: 10px; margin-bottom: 1em;}
 .select-data .row {width: 8em;}
 .select-data input[type=text] {max-width: 6em;}
+.alunos {display: block; margin-left: 2em;}
 
 footer {float: right; padding: 3px 7px; margin: 3em 1em 0;}
 input[type=checkbox] {width: 25px; height: 25px; margin: 0;}
