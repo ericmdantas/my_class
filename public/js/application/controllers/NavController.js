@@ -3,6 +3,8 @@
 myClass.controller('NavController', ['$rootScope', '$scope', '$location', '$http', '$window', 'lib',
                             function($rootScope, $scope, $location, $http, $window, lib)
 {
+    $scope.usuarioLogado = $window.localStorage.getItem('u');
+
     $scope.items = [{nome: 'aulas', href: '/aulas', active: ''},
                     {nome: 'turmas', href: '/turmas', active: ''},
                     {nome: 'professores', href: '/professores', active: ''},

@@ -54,6 +54,14 @@
 .topic.selected.border-left-color-avermelhado h1 {background-color: rgba(128, 0, 0, .6);}
 .container-icon {opacity: .4}
 .table tbody tr:hover, .presenca:hover {background-color: rgba(0, 152, 10, .1);}
+.payment {border: 2px dashed limegreen; border-radius: 3px;}
+.payment h3 {border-bottom: 1px solid lightgray;}
+.payment:hover {background-color: white; box-shadow: 1px 1px 10px green;
+    -webkit-transform: scale(1.03);
+    -moz-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    -o-transform: scale(1.03);
+    transform: scale(1.03);}
 
 .transition
 {

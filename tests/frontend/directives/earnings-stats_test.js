@@ -2,41 +2,44 @@
 
 describe('EARNINGSTATS BEING TESTED', function()
 {
-    var scope, element, httpMock, compile;
+    var _scope, _element, _httpMock, _compile;
 
     beforeEach(module('myClass'));
     beforeEach(inject(function($injector)
     {
-        scope = $injector.get('$rootScope').$new();
-        httpMock = $injector.get('$httpBackend');
-        compile = $injector.get('$compile');
-        httpMock.when('GET', '/api/earnings/trimester').respond({});
-        var html = '<earnings-stats>' +
+        _scope = $injector.get('$rootScope').$new();
+        _httpMock = $injector.get('$httpBackend');
+        _compile = $injector.get('$compile');
+        _httpMock.when('GET', '/api/earnings/trimester').respond({});
+        var _html = '<earnings-stats>' +
                         '<div class="info-card transition">'+
                             '<h3>arrecadação por trimestre</h3>'+
                             '<div id="column-chart" class="chart"></div>'+
                         '</div>'+
                    '</earnings-stats>';
-        element = compile(angular.element(html))(scope);
-        scope.$digest();
+
+        _element = angular.element(_html);
+
+        _compile(_element)(_scope);
+        _scope.$digest();
     }))
 
     describe('checks elements creation', function()
     {
         it('checks if directive was created', function()
         {
-            expect(element).toBeDefined();
+            expect(_element).toBeDefined();
         })
 
         it('checks the controller', function()
         {
-            expect(element.controller('earningsStats')).toBeDefined();
+            expect(_element.controller('earningsStats')).toBeDefined();
         })
 
         it('checks the controller', function()
         {
-            expect(element.scope().valoresTrimestre).toBeDefined();
-            expect(typeof element.scope().valoresTrimestre).toEqual("object");
+            expect(_element.scope().valoresTrimestre).toBeDefined();
+            expect(typeof _element.scope().valoresTrimestre).toEqual("object");
         })
     })
 

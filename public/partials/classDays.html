@@ -25,19 +25,19 @@
                     <label>professor responsável</label>
                     <input type="text" class="form-control" ng-model="turmaDiaDia.teacherName" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
                     <br/>
-                    <label>presença</label>
 
-                    <div ng-if="!turmaDiaDia.name && alunos.length === 0" align="center">
-                        <div class="alert alert-info">Por favor, escolha uma turma.</div>
+                    <div ng-if="turmaDiaDia.name">
+                        <label>presença</label>
+
+                        <div ng-if="alunos.length === 0" align="center">
+                            <div class="alert alert-warning">Não existem alunos para a turma escolhida.</div>
+                        </div>
+
+                        <p ng-repeat="aluno in alunos" class="presenca transition">{{aluno.name}}
+                            <input type="checkbox" class="pull-right" ng-model="aluno.wasInClass"/>
+                        </p>
                     </div>
 
-                    <div ng-if="turmaDiaDia.name && alunos.length === 0" align="center">
-                        <div class="alert alert-warning">Não existem alunos para a turma escolhida.</div>
-                    </div>
-
-                    <p ng-repeat="aluno in alunos" class="presenca transition">{{aluno.name}}
-                        <input type="checkbox" class="pull-right" ng-model="aluno.wasInClass"/>
-                    </p>
                     <br/>
                     <label>matéria</label>
                     <input type="text" class="form-control" ng-model="turmaDiaDia.subject" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>

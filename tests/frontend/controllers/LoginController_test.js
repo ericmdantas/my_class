@@ -66,4 +66,120 @@ describe("LOGINCONTROLLER BEING TESTED", function()
             expect(locationMock.path()).toBe('/');
         }))
     })
+
+    describe('isItDisabled (button)', function()
+    {
+        it('should return true - wrong user param', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+
+            var _wrongParams = [null, undefined, true, false, '   ', '', function(){}, {}, []];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(scope.isItDisabled(_wrongParams[i])).toBeTruthy();
+            }
+        }))
+
+        it('should return true - empty username', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+
+            var _user = {username: '', password: '112233'};
+
+            expect(scope.isItDisabled(_user)).toBeTruthy();
+        }))
+
+        it('should return true - empty password', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+
+            var _user = {username: 'eric3', password: ''};
+
+            expect(scope.isItDisabled(_user)).toBeTruthy();
+        }))
+
+        it('should return true - both user and password are empty', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+
+            var _user = {username: '', password: ''};
+
+            expect(scope.isItDisabled(_user)).toBeTruthy();
+        }))
+
+        it('should return false - correct valid informations', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+
+            var _user = {username: 'acceptable', password: 'alsoAcceptable'};
+
+            expect(scope.isItDisabled(_user)).toBeFalsy();
+        }))
+    })
+
+    describe('validateInput', function()
+    {
+        it('should just return - wrong user param', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+
+            var _wrongParams = [null, function(){}, true, false, 0, 1, {}, [], 'a', '  '];
+            var _event = {keyCode: 13};
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(scope.validateInput(_wrongParams[i], _event)).toBeUndefined();
+            }
+        }))
+
+        it('should just return - wrong event param', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+
+            var _user = {username: 'a123', password: '123'};
+            var _wrongParams = [null, function(){}, true, false, 0, 1, {}, [], 'a', '  '];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(scope.validateInput(_user, _wrongParams[i])).toBeUndefined();
+            }
+        }))
+
+        it('should just return - wrong event param', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+
+            var _user = {username: 'a123', password: '123'};
+            var _wrongParams = [null, function(){}, true, false, 0, 1, {}, [], 'a', '  '];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(scope.validateInput(_user, _wrongParams[i])).toBeUndefined();
+            }
+        }))
+
+        it('shouldn\'t fetch anything to the server - wrong key pressed (12 was pressed instead of 13)', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+
+            var _user = {username: 'a123', password: '123'};
+            var _event = {keyCode: 12};
+
+            scope.validateInput(_user, _event);
+            expect(function(){httpMock.flush()}).toThrow(new Error('No pending request to flush !'));
+        }))
+
+        it('should validate user correctly - but he was not found', inject(function($controller)
+        {
+            httpMock.expectPOST('/api/validateUser').respond({user: "404"});
+            $controller('LoginController', {$scope: scope});
+
+            var _user = {username: 'a123', password: '123'};
+            var _event = {keyCode: 13};
+
+            scope.validateInput(_user, _event);
+            httpMock.flush();
+        }))
+    })
 })

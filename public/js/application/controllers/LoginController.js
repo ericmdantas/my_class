@@ -8,6 +8,29 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pag
     $scope.cfg = pageConfig;
     var _idIntervalo = 0;
 
+    $scope.validateInput = function(user, ev)
+    {
+        if (lib.isObjectInvalid(user) || lib.isObjectInvalid(ev))
+            return;
+
+        if (!$scope.isItDisabled(user))
+        {
+            if (ev.keyCode === 13)
+                $scope.validaUser(user);
+        }
+    }
+
+    $scope.isItDisabled = function(user)
+    {
+        //TODO: CHECK THE POSSIBILITY TO TAKE THIS IDEA TO THE OTHER CONTROLLERS
+        //TODO: MAYBE PUT IT IN A DIRECTIVE
+
+        if (lib.isObjectInvalid(user))
+            return true;
+
+        return !(!!user.username && !!user.password);
+    }
+
     $scope.validaUser = function(user)
     {
         if (lib.isObjectInvalid(user))

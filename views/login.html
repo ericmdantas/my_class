@@ -17,10 +17,10 @@
                     <div class="alert alert-danger hidden" id="erroLogin">
                         <p>usuário não encontrado</p>
                     </div>
-                    <input type="text" class="form-control" placeholder="usuário" id="username" ng-model="user.username"/>
-                    <input type="password" class="form-control" placeholder="senha" id="password" ng-model="user.password"/>
+                    <input ng-keyup="validateInput(user, $event)" type="text" class="form-control" placeholder="usuário" id="username" ng-model="user.username" autofocus/>
+                    <input ng-keyup="validateInput(user, $event)" type="password" class="form-control" placeholder="senha" id="password" ng-model="user.password"/>
                     <button type="button" class="btn btn-lg btn-success" id="btnLogar"
-                            ng-disabled="!(!!user.username && !!user.password)"
+                            ng-disabled="isItDisabled(user)"
                             ng-click="validaUser(user)">
                         entrar
                     </button>

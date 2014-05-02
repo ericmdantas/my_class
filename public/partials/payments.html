@@ -83,10 +83,16 @@
             <p class="text-almost-invisible">data do contrato: <span class="text-almost-black">{{pagamento.contractDate}}</span></p>
             <p class="text-almost-invisible">vencimento: <span class="text-almost-black">{{pagamento.untilWhen}}</span></p>
             <a href data-toggle="collapse" data-target="#historico{{$index}}" ng-show="isHistoricoVisible(pagamento)">histórico de pagamento</a>
-            <div id="historico{{$index}}" class="collapse">
-                <div ng-repeat="historico in pagamento.payments">
-                    <hr/>
-                    <p class="text-almost-invisible">mês do pagamento: <span class="text-almost-black">{{historico.paymentMonth}}</span></p>
+
+            <div ng-if="pagamento.payments.length === 0" align="center">
+                <div class="alert alert-warning">Aluno não pagou ainda.
+                    <a href class="alert-link" ng-click="openModalToRegisterPayment()">Clique aqui para realizar o pagamento.</a>
+                </div>
+            </div>
+
+            <div id="historico{{$index}}" class="collapse historico">
+                <div ng-repeat="historico in pagamento.payments" class="payment transition">
+                    <h3>{{historico.paymentMonth}}</h3>
                     <p class="text-almost-invisible">quantia: <span class="text-almost-black">{{historico.amountPaid}}</span></p>
                     <p class="text-almost-invisible">forma de pagamento: <span class="text-almost-black">{{historico.paidWithWhat}}</span></p>
                     <p class="text-almost-invisible">observação: <span class="text-almost-black">{{historico.observation}}</span></p>

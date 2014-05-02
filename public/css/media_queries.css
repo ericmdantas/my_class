@@ -18,6 +18,7 @@
 {
     .big-text {font-size: 3em;}
     .welcome-container .general-info {font-size: 1.3em;}
+    .payment {width: 30%;}
 }
 
 @media (min-width: 70em)
