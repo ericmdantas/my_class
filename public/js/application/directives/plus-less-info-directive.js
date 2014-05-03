@@ -2,8 +2,9 @@
 
 myClass.directive('plusLessInfoElement', function()
 {
-    var temp = '<span class="plus-less-info pull-right transition" data-toggle="collapse" data-target="#{{elementToToggle}}">{{symbol}}</span>';
-    var link = function(scope, elem, attrs)
+    var _temp = '<span class="plus-less-info pull-right transition" data-toggle="collapse" data-target="#{{elementToToggle}}">{{symbol}}</span>';
+
+    var _link = function(scope, elem, attrs)
     {
         scope.$watch("$index", function()
         {
@@ -20,23 +21,10 @@ myClass.directive('plusLessInfoElement', function()
         })
     }
 
-    var ctrl = ['$scope', function($scope)
-                {
-                    var SYMBOL_CLOSED = '+',
-                        SYMBOL_OPENED = '–';
-
-                    $scope.symbol = SYMBOL_CLOSED;
-
-                    $scope.toggleSymbol = function()
-                    {
-                        $scope.symbol = ($scope.symbol === SYMBOL_OPENED) ? SYMBOL_CLOSED : SYMBOL_OPENED;
-                    }
-                }];
-
     return {
                 restrict: 'E',
-                template: temp,
-                controller: ctrl,
-                link: link
+                template: _temp,
+                controller: 'PlussLessInfoController',
+                link: _link
            }
 })

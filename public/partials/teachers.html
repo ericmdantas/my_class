@@ -139,7 +139,7 @@
 
     <delete-info directiveid="modal-delete-teacher" title="professor" objectname="{{professorEscolhido.name}}" objectid="{{professorEscolhido._id}}" delete="deleteTeacher(id)"></delete-info>
 
-    <div class="info-card transition" ng-repeat="professor in professores | filter: professorProcurado">
+    <div class="info-card transition" ng-repeat="professor in professores | orderBy: 'name' | filter: professorProcurado">
         <plus-less-info-element elementToToggle="teacher-toggle-{{$index}}"></plus-less-info-element>
         <h3>{{professor.name}}</h3>
         <div id="teacher-toggle-{{$index}}" class="collapse">

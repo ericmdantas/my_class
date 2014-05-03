@@ -1,32 +1,30 @@
-describe('lib BEING TESTED', function()
+describe('_lib BEING TESTED', function()
 {
-    var lib, rootScope, compile;
+    var _lib;
 
     beforeEach(module('myClass'));
     beforeEach(inject(function($injector)
     {
-        rootScope = $injector.get('$rootScope').$new();
-        lib = $injector.get('lib');
-        compile = $injector.get('$compile');
+        _lib = $injector.get('lib');
     }))
 
     describe('checks elements creation', function()
     {
-        it('should check if lib was created', function()
+        it('should check if _lib was created', function()
         {
-            expect(lib).toBeDefined();
+            expect(_lib).toBeDefined();
         })
 
-        it('checks if lib.removeWhiteSpaces was created', function()
+        it('checks if _lib.removeWhiteSpaces was created', function()
         {
-            expect(lib.removeWhiteSpaces).toBeDefined();
-            expect(typeof lib.removeWhiteSpaces).toEqual('function');
+            expect(_lib.removeWhiteSpaces).toBeDefined();
+            expect(typeof _lib.removeWhiteSpaces).toEqual('function');
         })
 
-        it('checks if lib.createWarningModal was created', function()
+        it('checks if _lib.createWarningModal was created', function()
         {
-            expect(lib.createAlert).toBeDefined();
-            expect(typeof lib.createAlert).toEqual('function');
+            expect(_lib.createAlert).toBeDefined();
+            expect(typeof _lib.createAlert).toEqual('function');
         })
     })
 
@@ -38,39 +36,39 @@ describe('lib BEING TESTED', function()
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(function(){lib.removeWhiteSpaces(wrongParams[i])}).toThrow(new Error('problema na remoção de espaços em branco (obj == undefined)'));
+                expect(function(){_lib.removeWhiteSpaces(wrongParams[i])}).toThrow(new Error('problema na remoção de espaços em branco (obj == undefined)'));
             }
         })
 
         it('should check if removeWhiteSpaces is working - undefined', function()
         {
             var obj = {nome: " eric  ", vivo: true, idade: 24, idk: undefined};
-            expect(lib.removeWhiteSpaces(obj).nome).toBe('eric');
+            expect(_lib.removeWhiteSpaces(obj).nome).toBe('eric');
         })
 
         it('should check if removeWhiteSpaces is working - numbers', function()
         {
             var obj = {nome: " eric  ", idade: 1};
-            expect(lib.removeWhiteSpaces(obj).nome).toBe('eric');
+            expect(_lib.removeWhiteSpaces(obj).nome).toBe('eric');
         })
 
         it('should check if removeWhiteSpaces is working - boolean', function()
         {
             var obj = {nome: " eric  ", vivo: true, idade: 24};
-            expect(lib.removeWhiteSpaces(obj).nome).toBe('eric');
+            expect(_lib.removeWhiteSpaces(obj).nome).toBe('eric');
         })
 
         it('should check if removeWhiteSpaces is working - decimals', function()
         {
             var obj = {nome: " eric  ", vivo: true, idade: 24, idk: undefined, altura: 1.703232322323232};
-            expect(lib.removeWhiteSpaces(obj).nome).toBe('eric');
+            expect(_lib.removeWhiteSpaces(obj).nome).toBe('eric');
         })
 
         it('should check if removeWhiteSpaces is working - decimals', function()
         {
             var obj = {nome: " eric  ", sobrenome: 'dantas      ', vivo: true, idade: 24, idk: undefined, altura: 1.703232322323232};
-            expect(lib.removeWhiteSpaces(obj).nome).toBe('eric');
-            expect(lib.removeWhiteSpaces(obj).sobrenome).toBe('dantas');
+            expect(_lib.removeWhiteSpaces(obj).nome).toBe('eric');
+            expect(_lib.removeWhiteSpaces(obj).sobrenome).toBe('dantas');
         })
     })
 
@@ -82,7 +80,7 @@ describe('lib BEING TESTED', function()
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(lib.isStringInvalid(wrongParams[i])).toBeTruthy();
+                expect(_lib.isStringInvalid(wrongParams[i])).toBeTruthy();
             }
         })
 
@@ -92,7 +90,7 @@ describe('lib BEING TESTED', function()
 
             for (var i = 0; i < correctParams.length; i++)
             {
-                expect(lib.isStringInvalid(correctParams[i])).toBeFalsy();
+                expect(_lib.isStringInvalid(correctParams[i])).toBeFalsy();
             }
         })
     })
@@ -105,7 +103,7 @@ describe('lib BEING TESTED', function()
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(lib.isObjectInvalid(wrongParams[i])).toBeTruthy();
+                expect(_lib.isObjectInvalid(wrongParams[i])).toBeTruthy();
             }
         })
 
@@ -115,7 +113,7 @@ describe('lib BEING TESTED', function()
 
             for (var i = 0; i < correctParams.length; i++)
             {
-                expect(lib.isObjectInvalid(correctParams[i])).toBeFalsy();
+                expect(_lib.isObjectInvalid(correctParams[i])).toBeFalsy();
             }
         })
     })
@@ -132,7 +130,7 @@ describe('lib BEING TESTED', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                expect(lib.isMonthYearInvalid(_wrongParams[i])).toBeTruthy();
+                expect(_lib.isMonthYearInvalid(_wrongParams[i])).toBeTruthy();
             }
         })
 
@@ -142,7 +140,7 @@ describe('lib BEING TESTED', function()
 
             for (var i = 0; i < _correctParams.length; i++)
             {
-                expect(lib.isMonthYearInvalid(_correctParams[i])).toBeFalsy();
+                expect(_lib.isMonthYearInvalid(_correctParams[i])).toBeFalsy();
             }
         })
     })
@@ -159,7 +157,7 @@ describe('lib BEING TESTED', function()
             {
                 expect(function()
                 {
-                    lib.emptyProperty(_wrongParams[i], _property, _withWhat);
+                    _lib.emptyProperty(_wrongParams[i], _property, _withWhat);
                 }).toThrow(new Error('Objeto pai não é um objeto válido para ter sua propriedade limpa.'));
             }
         })
@@ -174,7 +172,7 @@ describe('lib BEING TESTED', function()
             {
                 expect(function()
                 {
-                    lib.emptyProperty(_parent, _wrongParams[i], _withWhat);
+                    _lib.emptyProperty(_parent, _wrongParams[i], _withWhat);
                 }).toThrow(new Error('A propriedade em questão não é válida para ser esvaziada.'));
             }
         })
@@ -188,7 +186,7 @@ describe('lib BEING TESTED', function()
 
             for (var i = 0; i < _params.length; i++)
             {
-                lib.emptyProperty(_parent, _propriedade, _params[i])
+                _lib.emptyProperty(_parent, _propriedade, _params[i])
                 expect(_parent.propriedade).toEqual(_params[i]);
             }
         })

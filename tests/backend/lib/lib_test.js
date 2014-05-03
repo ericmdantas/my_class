@@ -7,10 +7,10 @@ describe('checks if lib\'s doing good', function()
     {
         it('checks if lib was created', function()
         {
-            assert.equal(typeof lib_backend, "object");
-            assert.equal(typeof lib_backend.getValuesByTrimester, "function");
-            assert.equal(typeof lib_backend.getMonthInDate, "function");
-            assert.equal(typeof lib_backend.getPercentage, "function");
+            assert.strictEqual(typeof lib_backend, "object");
+            assert.strictEqual(typeof lib_backend.getValuesByTrimester, "function");
+            assert.strictEqual(typeof lib_backend.getMonthInDate, "function");
+            assert.strictEqual(typeof lib_backend.getPercentage, "function");
         })
     })
 
@@ -31,10 +31,10 @@ describe('checks if lib\'s doing good', function()
 
             var resultado = lib_backend.getValuesByTrimester(obj);
 
-            assert.equal(0, resultado.valorPrimeiroTrimestre);
-            assert.equal(0, resultado.valorSegundoTrimestre);
-            assert.equal(0, resultado.valorTerceiroTrimestre);
-            assert.equal(0, resultado.valorQuartoTrimestre);
+            assert.strictEqual(0, resultado.valorPrimeiroTrimestre);
+            assert.strictEqual(0, resultado.valorSegundoTrimestre);
+            assert.strictEqual(0, resultado.valorTerceiroTrimestre);
+            assert.strictEqual(0, resultado.valorQuartoTrimestre);
         })
 
         it('checks if return trimester is returning the first trimester correctly', function()
@@ -49,7 +49,7 @@ describe('checks if lib\'s doing good', function()
             var obj = [{mes: "Abril", valor: 1}, {mes: "Maio", valor: 1}, {mes: "Junho", valor: 123123}];
             var resultado = lib_backend.getValuesByTrimester(obj);
 
-            assert.equal(123125, resultado.valorSegundoTrimestre);
+            assert.strictEqual(123125, resultado.valorSegundoTrimestre);
         })
 
         it('checks if return trimester is returning the third trimester correctly', function()
@@ -65,37 +65,20 @@ describe('checks if lib\'s doing good', function()
             var obj = [{mes: "Outubro", valor: 1}, {mes: "Novembro", valor: 1}, {mes: "Dezembro", valor: 123123}];
             var resultado = lib_backend.getValuesByTrimester(obj);
 
-            assert.equal(123125, resultado.valorQuartoTrimestre);
+            assert.strictEqual(123125, resultado.valorQuartoTrimestre);
         })
     })
 
     describe('checks getMonthInDate', function()
     {
-        it('checks if getMonthInDate is working when it receives a empty object', function()
+        it('should getMonthInDate even when wrong params are passed - should return undefined', function()
         {
-            assert.strictEqual(undefined, lib_backend.getMonthInDate({}));
-        })
+            var _wrongParams = [null, undefined, true, false, function(){}, 1, 0, {}, []];
 
-        it('checks if getMonthInDate is working when it receives a empty array', function()
-        {
-            assert.strictEqual(undefined, lib_backend.getMonthInDate([]));
-        })
-
-        it('checks if getMonthInDate is working when it receives null', function()
-        {
-            assert.strictEqual(undefined, lib_backend.getMonthInDate(null));
-        })
-
-        it('checks if getMonthInDate is working when it receives undefined', function()
-        {
-            assert.strictEqual(undefined, lib_backend.getMonthInDate(undefined));
-            assert.strictEqual(undefined, lib_backend.getMonthInDate());
-        })
-
-        it('checks if getMonthInDate is working when it receives boolean', function()
-        {
-            assert.strictEqual(undefined, lib_backend.getMonthInDate(true));
-            assert.strictEqual(undefined, lib_backend.getMonthInDate(false));
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                assert.strictEqual(undefined, lib_backend.getMonthInDate(_wrongParams[i]));
+            }
         })
 
         it('checks getMonthInDate when the parameter is correct - January', function()

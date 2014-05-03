@@ -71,7 +71,7 @@
 
     <delete-info directiveid="modal-delete-book" title="livros" objectname="{{livroEscolhido.name}}" objectid="{{livroEscolhido._id}}" delete="deleteBook(id)"></delete-info>
 
-    <div class="info-card transition" ng-repeat="livro in livros | filter: livroProcurado">
+    <div class="info-card transition" ng-repeat="livro in livros | orderBy: 'name' | filter: livroProcurado">
         <plus-less-info-element elementToToggle="book-toggle-{{$index}}"></plus-less-info-element>
         <h3 class="titulo">{{livro.name}}</h3>
         <div id="book-toggle-{{$index}}" class="collapse">

@@ -3,9 +3,12 @@
 myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pageConfig', 'LoginService',
                               function ($scope, $http, $window, lib, pageConfig, LoginService)
 {
+    var NOME_BOTAO = 'entrar';
+
     $scope.user = {};
     $scope.user.username = $window.localStorage ? $window.localStorage.getItem('u') : '';
     $scope.cfg = pageConfig;
+    $scope.nomeBotao = NOME_BOTAO;
     var _idIntervalo = 0;
 
     $scope.validateInput = function(user, ev)
@@ -13,11 +16,8 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pag
         if (lib.isObjectInvalid(user) || lib.isObjectInvalid(ev))
             return;
 
-        if (!$scope.isItDisabled(user))
-        {
-            if (ev.keyCode === 13)
-                $scope.validaUser(user);
-        }
+        if (ev.keyCode === 13 && !$scope.isItDisabled(user))
+            $scope.validaUser(user);
     }
 
     $scope.isItDisabled = function(user)
@@ -36,7 +36,7 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pag
         if (lib.isObjectInvalid(user))
             throw new Error('Usuário não informado.');
 
-        desabilitaBotao();
+        _desabilitaBotao();
 
         LoginService.validateUser(user)
              .success(function(data)
@@ -49,40 +49,38 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pag
                           else
                           {
                               $("#erroLogin").removeClass('hidden');
-                              reabilitaBotao();
+                              _reabilitaBotao();
                           }
                       })
              .error(function()
                     {
                         $("#erroLogin").removeClass('hidden');
-                        reabilitaBotao();
+                        _reabilitaBotao();
                     })
 
     }
 
-    function reabilitaBotao()
+    function _reabilitaBotao()
     {
-        var btn_logar = $('#btnLogar');
-        btn_logar.text('entrar');
-        btn_logar.prop('disabled', false);
+        $scope.nomeBotao = NOME_BOTAO;
+        $scope.isItDisabled(null);
         $('#username').focus();
         clearInterval(_idIntervalo);
     }
 
-    function desabilitaBotao()
+    function _desabilitaBotao()
     {
-        var pontos = '';
-        var btn_logar = $('#btnLogar');
-        btn_logar.text('carregando'+pontos);
-        btn_logar.prop('disabled', true);
+        var _pontos = '';
+        $scope.nomeBotao = 'carregando' + _pontos;
+        $scope.isItDisabled(null);
 
         _idIntervalo = setInterval(function()
                                   {
-                                      if (pontos.length > 3)
-                                          pontos = '';
+                                      if (_pontos.length > 3)
+                                          _pontos = '';
 
-                                      btn_logar.text('carregando'+pontos);
-                                      pontos += '.';
-                                  }, 3333);
+                                      $scope.nomeBotao = 'carregando' + _pontos;
+                                      _pontos += '.';
+                                  }, 555);
     }
 }])

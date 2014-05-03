@@ -154,7 +154,7 @@
 
     <delete-info directiveid="modal-delete-student" title="aluno" objectname="{{alunoEscolhido.name}}" objectid="{{alunoEscolhido._id}}" delete="deleteStudent(id)"></delete-info>
 
-    <div class="info-card transition" ng-repeat="aluno in alunos | filter: alunoProcurado">
+    <div class="info-card transition" ng-repeat="aluno in alunos | orderBy: 'name' | filter: alunoProcurado">
         <plus-less-info-element elementToToggle="student-toggle-{{$index}}"></plus-less-info-element>
         <h3>{{aluno.name}}</h3>
         <div id="student-toggle-{{$index}}" class="collapse">

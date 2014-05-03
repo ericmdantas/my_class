@@ -354,9 +354,6 @@ describe('BookModel', function()
                                              assert.notStrictEqual(err instanceof Error, true);
                                              done();
                                          })
-
-
-
         })
     })
 })

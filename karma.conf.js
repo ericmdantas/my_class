@@ -7,10 +7,8 @@ module.exports = function(config) {
     // base path, that will be used to resolve files and exclude
     basePath: '',
 
-
     // frameworks to use
     frameworks: ['jasmine'],
-
 
     // list of files / patterns to load in the browser
     files: [
@@ -22,10 +20,10 @@ module.exports = function(config) {
 		'public/js/framework/bootstrap.min.js',
 		'public/js/framework/moment.min.js',
 		'public/js/framework/highcharts.js',
-        'public/js/application/services/config.js',
+		'public/js/application/services/config.js',
         'public/js/application/services/services.js',
-        'public/js/application/app.js',
-		'public/js/application/services/lib.js',
+		'public/js/application/app.js',
+        'public/js/application/services/lib.js',
 		'public/js/application/services/*Service.js',
 		'public/js/application/**/*.js',
 		'tests/frontend/**/*_test.js'
@@ -36,31 +34,24 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress'],
 	
 	preprocessors: {
-      // source files, that you wanna generate coverage for
-      // do not include tests or libraries
-      // (these files will be instrumented by Istanbul)
-      'public/js/application/*.js': ['coverage']
+      'public/js/application/**/*.js': ['coverage']
     },
 
     // web server port
     port: 9876,
 
-
     // enable / disable colors in the output (reporters and logs)
     colors: true,
-
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
-
+    autoWatch: false,
 
     // Start these browsers, currently available:
     // - Chrome
@@ -72,13 +63,8 @@ module.exports = function(config) {
     // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
     browsers: ['Chrome', 'Firefox'],
 
-	coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
-    },
-
     // If browser does not capture in given timeout [ms], kill it
-    captureTimeout: 60000,
+    captureTimeout: 120000,
 
 
     // Continuous Integration mode

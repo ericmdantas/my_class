@@ -65,5 +65,11 @@
     }
 
     exports.init = init;
-}(require('./session'), require('./content'), require('../controllers/UserController'), require('../controllers/ClazzController'),
-  require('../controllers/TeacherController'), require('../controllers/StudentController'), require('../controllers/BookController'), require('../controllers/StatisticController')))
+
+}(require('./session'), require('./content'),
+  require('../controllers/UserController'),
+  require('../controllers/ClazzController'),
+  require('../controllers/TeacherController'),
+  require('../controllers/StudentController'),
+  require('../controllers/BookController'),
+  require('../controllers/StatisticController')))

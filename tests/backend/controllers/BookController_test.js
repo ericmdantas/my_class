@@ -4,6 +4,7 @@ var assert = require('assert');
 var BookController = require('../../../controllers/BookController');
 var mongoose = require('mongoose');
 var db = require('../config/db.json');
+var BookModel = require('../../../models/Book');
 
 describe('BookController being tested', function()
 {
@@ -21,22 +22,38 @@ describe('BookController being tested', function()
         })
     })
 
-    //TODO: ADD TESTS FOR THE CONTROLLERS (BACKEND)
-
-    /*describe('getBooksInfo', function()
+    describe('getBooksInfo', function()
     {
-        var req, res;
+        var _req, _res;
 
-        beforeEach(function()
+        beforeEach(function(done)
         {
-            req = {"req": {"session": {"passport": {"user": "eric3"}}}};
-            res = {json: function(){console.log('MOCKUN\'D!');}};
+            _req = {session: {passport: {user: "eric3"}}};
+
+            BookModel.create({name: "Livro1", quantity: "1", usersAllowed: ["eric3"]}, done);
+        })
+
+        afterEach(function(done)
+        {
+            BookModel.remove(done);
         })
 
         it('should do something', function(done)
         {
-            BookController.getBooksInfo(req, res);
-            done();
+            var _res = {json: function(obj)
+            {
+                console.log(obj);
+
+                assert.strictEqual(obj.books[0].name, "Livro1");
+                assert.strictEqual(obj.books[0].quantity, "1");
+                assert.strictEqual(obj.books[0].usersAllowed, undefined);
+                done();
+            }};
+
+            BookController.getBooksInfo(_req, _res);
         })
-    })*/
+
+        //TODO: ADD MORE TESTS?
+        //TODO: CHECK HOW TO TEST REQUEST THAT DON'T RETURN ANYTHING (POST, PULL AND DELETE)
+    })
 })

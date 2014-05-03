@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div class="info-card transition" ng-repeat="turma in informacaoDiaria | filter: turmaProcurada">
+    <div class="info-card transition" ng-repeat="turma in informacaoDiaria | orderBy: 'name' | filter: turmaProcurada">
         <plus-less-info-element elementToToggle="class-toggle-{{$index}}"></plus-less-info-element>
         <h3>{{turma.name}}</h3>
         <div id="class-toggle-{{$index}}" class="collapse">
@@ -79,6 +79,7 @@
                                 <td>dia</td>
                                 <td>matéria</td>
                                 <td>professor</td>
+                                <td>presença</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,19 +87,13 @@
                                 <td>{{info.day}}</td>
                                 <td>{{info.subject}}</td>
                                 <td>{{info.teacherName}}</td>
+                                <td class="studentsInClass">
+                                    <span class="label" ng-repeat="s in info.studentByDay | orderBy: 'name'"
+                                          ng-class="s.wasInClass ? 'label-success' : 'label-danger'">{{s.name}}</span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-
-                    <!-- <br/><br/>
-
-                    <div ng-repeat="info in informacaoDiaria">
-                        <p>
-                            <span>{{info._id.studentName}}</span>
-                            <was-in-class class="was-in-class" ng-repeat="diaria in info.dailyInfo" situation="{{diaria.wasInClass || false}}"
-                                          when="{{diaria.day}}"></was-in-class>
-                        </p>
-                    </div>-->
                 </div>
             </div>
         </div>

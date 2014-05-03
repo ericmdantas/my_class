@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    <div class="info-card transition" ng-repeat="pagamento in pagamentos | filter: pagamentoProcurado">
+    <div class="info-card transition" ng-repeat="pagamento in pagamentos | orderBy: 'name' | filter: pagamentoProcurado">
         <plus-less-info-element elementToToggle="payment-toggle-{{$index}}"></plus-less-info-element>
         <h3>{{pagamento.name}}</h3>
         <div id="payment-toggle-{{$index}}" class="collapse">
