@@ -12,9 +12,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'public/js/framework/angular.min.js',
         'public/js/framework/jquery-2.0.3.min.js',
-		'tests/frontend/mocks/angular-mocks.js',
+		'public/js/framework/angular.min.js',
+        'tests/frontend/mocks/angular-mocks.js',
 		'public/js/framework/angular-route.min.js',
 		'public/js/framework/angular-resource.min.js',
 		'public/js/framework/bootstrap.min.js',

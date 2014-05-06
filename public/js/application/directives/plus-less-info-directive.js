@@ -11,7 +11,7 @@ myClass.directive('plusLessInfoElement', function()
             scope.elementToToggle = attrs.elementtotoggle;
         })
 
-        elem.bind('click', function()
+        elem.on('click', function()
         {
             scope.$apply(function()
             {
@@ -24,7 +24,7 @@ myClass.directive('plusLessInfoElement', function()
     return {
                 restrict: 'E',
                 template: _temp,
-                controller: 'PlussLessInfoController',
+                controller: 'PlusLessInfoController',
                 link: _link
            }
 })

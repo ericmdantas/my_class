@@ -42,8 +42,6 @@ describe('BookController being tested', function()
         {
             var _res = {json: function(obj)
             {
-                console.log(obj);
-
                 assert.strictEqual(obj.books[0].name, "Livro1");
                 assert.strictEqual(obj.books[0].quantity, "1");
                 assert.strictEqual(obj.books[0].usersAllowed, undefined);

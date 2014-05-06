@@ -12,9 +12,11 @@ describe('to-the-top-directive', function()
         _compile = $injector.get('$compile');
         _windowMock = $injector.get('$window');
 
-        var _html = '<div class="to-the-top transition">'+
-                        '<span class="glyphicon glyphicon-chevron-up"></span>'+
-                    '</div>';
+        var _html = '<to-the-top>'+
+                        '<div class="to-the-top transition">'+
+                            '<span class="glyphicon glyphicon-chevron-up"></span>'+
+                        '</div>'+
+                    '</to-the-top>';
 
         _element = angular.element(_html);
         _compile(_element)(_scope);
@@ -25,8 +27,8 @@ describe('to-the-top-directive', function()
         it('should have class transition', function()
         {
             _scope.$digest()
-            expect(_element.hasClass('transition')).toBeTruthy();
-            expect(_element.hasClass('to-the-top')).toBeTruthy();
+            expect(_element.find('div').hasClass('transition')).toBeTruthy();
+            expect(_element.find('div').hasClass('to-the-top')).toBeTruthy();
         })
 
         it('should have class glyphcon', function()
@@ -39,18 +41,13 @@ describe('to-the-top-directive', function()
     })
 
 
-    //TODO: GET THE SCROLLING TEST TO WORK
-    /*describe('checks if fading in and out is working', function()
+    describe('checks if the click is working', function()
     {
-        it('should fade out', function()
+        it('should get the click to work', function()
         {
-            _windowMock.scrollTo(0, 10);
-
-            _scope.$digest();
-
-            console.log(_windowMock.scrollY);
-
-            expect(_element.hasClass('fadeOut')).toBeTruthy();
+            _element.click();
         })
-    })*/
+    })
+
+    //TODO: GET THE SCROLLING TEST TO WORK
 })

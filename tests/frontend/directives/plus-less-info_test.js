@@ -10,9 +10,9 @@ describe('PLUSLESSINFO BEING TESTED', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
 
-        var _html = '<plusLessInfoElement>' +
+        var _html = '<plus-less-info-element elementToToggle="class-toggle-1">' +
                         '<span class="plus-less-info pull-right transition" data-toggle="collapse" data-target="#{{elementToToggle}}">{{symbol}}</span>' +
-                    '</plusLessInfoElement>';
+                    '</plus-less-info-element>';
 
         _element = angular.element(_html);
 
@@ -47,6 +47,17 @@ describe('PLUSLESSINFO BEING TESTED', function()
             expect(_element.find('span').attr('data-target')).toContain('#');
         })
 
-        //TODO: ADD MORE TESTS
+        it('checks if element to toggle is set correctly', function()
+        {
+            expect(_element.scope().elementToToggle).toEqual("class-toggle-1");
+        })
+    })
+
+    describe('checks if click is working', function()
+    {
+        it('should get clicking to work', function()
+        {
+            _element.click();
+        })
     })
 })
