@@ -41,21 +41,22 @@ myClass.controller('PaymentsController', ['$scope', '$http', 'lib', 'pageConfig'
                          ModalHelper.close('#modal-pay');
                          lib.emptyProperty($scope, 'alunoPagando', {});
                      })
-            .finally(function()
-                    {
-                        for (var i = 0; i < $scope.pagamentos.length; i++)
-                        {
-                            if ($scope.pagamentos[i].name === pagamento.name)
-                                $scope.pagamentos[i].payments.push(pagamento);
-                        }
-                    })
+             .finally(function()
+                     {
+                         for (var i = 0; i < $scope.pagamentos.length; i++)
+                         {
+                             if ($scope.pagamentos[i].name === pagamento.name)
+                                 $scope.pagamentos[i].payments.push(pagamento);
+                         }
+                     })
     }
 
     $scope.isHistoricoVisible = function(pagamento)
     {
-        pagamento = pagamento || {};
-        pagamento.payments = pagamento.payments || [];
-        var quantidade = (pagamento.payments.length);
+        if (lib.isObjectInvalid(pagamento))
+            throw new Error('Não é possível exibir o histórico. Parâmetro passado incorretamente. Esperava um objeto.');
+
+        var quantidade = (pagamento && pagamento.payments) ? pagamento.payments.length : 0;
 
         return quantidade > 0 ? true : false;
     }

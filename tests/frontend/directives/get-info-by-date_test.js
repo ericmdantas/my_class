@@ -10,7 +10,7 @@ describe('getInfoByDate being tested', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
 
-        var _html = '<get-info-by-date getinfo="getClassesDailyInfo(date, turma._id)>'
+        var _html = '<get-info-by-date getinfo="getClassesDailyInfo(date, turma._id)">'+
                         '<div class="select-data" align="center">'+
                             '<label>mês/ano</label>'+
                             '<div class="row">'+
@@ -40,10 +40,20 @@ describe('getInfoByDate being tested', function()
         {
             expect(_element).toBeDefined();
         })
+
+        it('checks if date is set correctly', function()
+        {
+            expect(_element.find('.form-control').val()).toEqual(moment().format('MM/YYYY'));
+        })
+
+        it('checks if the refreshing button is enabled at first', function()
+        {
+            expect(_element.scope().isItDisabled).toBeFalsy();
+        })
     })
 
-    describe('checks ng-model=date', function()
+    describe('validations', function()
     {
-        //TODO: ADD TESTS
+        //TODO: ADD TESTS CHANGING THE DATE SO THE REFRESH BUTTON WILL BE DISABLED
     })
 })

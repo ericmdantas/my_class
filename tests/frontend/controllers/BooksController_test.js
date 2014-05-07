@@ -161,10 +161,16 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         it('should throw an exception when trying to edit a non existed book', inject(function($controller)
         {
             $controller('BooksController', {$scope: scope});
-            expect(function(){scope.editBook(undefined)}).toThrow(new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.'));
-            expect(function(){scope.editBook(null)}).toThrow(new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.'));
-            expect(function(){scope.editBook()}).toThrow(new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.'));
-            expect(function(){scope.editBook({name: 'a'})}).toThrow(new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.'));
+
+            var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, {}, []];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(function()
+                {
+                    scope.editBook(_wrongParams[i])
+                }).toThrow(new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.'));
+            }
         }))
 
         it('should change the book name', inject(function($controller)

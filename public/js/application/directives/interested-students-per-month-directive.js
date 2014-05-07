@@ -2,12 +2,12 @@
 
 myClass.directive('interestedStudentsPerMonth', ['StatisticService', function(StatisticService)
 {
-    var t = '<div class="info-card transition">' +
-            '<h3>interesse por mês</h3>' +
-            '<div id="pie-chart" class="chart" align="center"></div>' +
-            '</div>';
+    var _template = '<div class="info-card transition">' +
+                        '<h3>interesse por mês</h3>' +
+                        '<div id="pie-chart" class="chart" align="center"></div>' +
+                    '</div>';
 
-    var ctrl = ['$scope', '$http', function($scope, $http)
+    var _ctrl = ['$scope', '$http', function($scope, $http)
     {
         $scope.alunosInteressadosPorMes = [];
 
@@ -62,7 +62,7 @@ myClass.directive('interestedStudentsPerMonth', ['StatisticService', function(St
 
     return {
                 restrict: 'EA',
-                template: t,
-                controller: ctrl
+                template: _template,
+                controller: _ctrl
            }
 }])

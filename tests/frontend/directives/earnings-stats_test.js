@@ -10,7 +10,9 @@ describe('EARNINGSTATS BEING TESTED', function()
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
         _compile = $injector.get('$compile');
+
         _httpMock.when('GET', '/api/earnings/trimester').respond({});
+
         var _html = '<earnings-stats>' +
                         '<div class="info-card transition">'+
                             '<h3>arrecadação por trimestre</h3>'+
@@ -45,15 +47,17 @@ describe('EARNINGSTATS BEING TESTED', function()
 
     describe('/getEarningByTrimester', function()
     {
-        it('should test the return /get without any response', function()
-        {
-            /*httpMock.expectGET('/api/getEarningByTrimester').respond({});
-            httpMock.flush();
+        //TODO: FIX THE GET TEST
 
-            expect(element.scope().valoresTrimestre[0]).toEqual(0);
-            expect(element.scope().valoresTrimestre[1]).toEqual(0);
-            expect(element.scope().valoresTrimestre[2]).toEqual(0);
-            expect(element.scope().valoresTrimestre[3]).toEqual(0);*/
-        })
+        /*it('should test the return /get without any response', function()
+        {
+            _httpMock.expectGET('/api/getEarningByTrimester').respond({});
+            _httpMock.flush()
+
+            expect(_element.scope().valoresTrimestre[0]).toEqual(0);
+            expect(_element.scope().valoresTrimestre[1]).toEqual(0);
+            expect(_element.scope().valoresTrimestre[2]).toEqual(0);
+            expect(_element.scope().valoresTrimestre[3]).toEqual(0);
+        })*/
     })
 })

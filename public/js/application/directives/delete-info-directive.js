@@ -2,7 +2,7 @@
 
 myClass.directive('deleteInfo', function()
 {
-    var temp = '<div class="modal fade" id="{{directiveid}}">'+
+    var _temp = '<div class="modal fade" id="{{directiveid}}">'+
                     '<div class="modal-dialog">'+
                         '<div class="modal-content">'+
                             '<div class="modal-header">'+
@@ -23,8 +23,8 @@ myClass.directive('deleteInfo', function()
                 '</div>';
 
     return {
-                scope: {directiveid: '@', title: '@', objectid: '@', objectname: '@', delete: '&'},
                 restrict: 'EA',
-                template: temp
+                template: _temp,
+                scope: {directiveid: '@', title: '@', objectid: '@', objectname: '@', delete: '&'}
            }
 })

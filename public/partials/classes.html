@@ -86,7 +86,12 @@
         </div>
     </div>
 
-    <delete-info directiveid="modal-delete-class" title="turma" objectname="{{turmaEscolhida.name}}" objectid="{{turmaEscolhida._id}}" delete="deleteClass(id)"></delete-info>
+    <delete-info directiveid="modal-delete-class"
+                title="turma"
+                objectname="{{turmaEscolhida.name}}"
+                objectid="{{turmaEscolhida._id}}"
+                delete="deleteClass(id)">
+    </delete-info>
 
     <div class="info-card transition" ng-repeat="turma in turmas | orderBy: 'name' | filter: turmaProcurada">
         <plus-less-info-element elementToToggle="class-toggle-{{$index}}"></plus-less-info-element>

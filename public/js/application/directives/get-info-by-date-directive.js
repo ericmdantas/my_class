@@ -20,8 +20,6 @@ myClass.directive('getInfoByDate', ['lib', function(lib)
                    '</div>'+
                 '</div>';
 
-    //TODO: ADD TESTS
-
     function _link(scope, element, attrs)
     {
         scope.$watch('date', function()

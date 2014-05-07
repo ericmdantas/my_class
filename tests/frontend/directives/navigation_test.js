@@ -2,13 +2,14 @@
 
 describe('navigation-directive', function()
 {
-    var _scope, _element, _compile;
+    var _scope, _element, _compile, _locationMock;
 
     beforeEach(module('myClass'));
     beforeEach(inject(function($injector)
     {
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
+        _locationMock = $injector.get('$location');
 
         var _html = '<header class="navbar navbar-default navbar-fixed-top" role="navigation" >'+
                         '<div>'+
@@ -36,19 +37,32 @@ describe('navigation-directive', function()
 
         _element = angular.element(_html);
         _compile(_element)(_scope);
+        _scope.$digest();
     }))
 
     describe('checks elements creation', function()
     {
         it('should have classes navbar and navbar-fixed-top', function()
         {
-            _scope.$digest();
-
             expect(_element.hasClass('navbar')).toBeTruthy();
             expect(_element.hasClass('navbar-fixed-top')).toBeTruthy();
             expect(_element.hasClass('navbar-default')).toBeTruthy();
+            expect(_element.find('ul li').hasClass('active')).toBeFalsy();
         })
 
-        //TODO: ADD MORE TESTS
+        it('checks if the items are begin repeated', function()
+        {
+            _element.scope().items = [{nome: 'aulas', href: '/aulas', active: ''},
+                                      {nome: 'turmas', href: '/turmas', active: ''},
+                                      {nome: 'professores', href: '/professores', active: ''},
+                                      {nome: 'alunos', href: '/alunos', active: ''},
+                                      {nome: 'livros', href: '/livros', active: ''},
+                                      {nome: 'pagamentos', href: '/pagamentos', active: ''},
+                                      {nome: 'estatisticas', href: '/estatisticas', active: ''}];
+
+            _scope.$digest();
+
+            expect(_element.find('ul li').length).toEqual(8); // 7 items + sair
+        })
     })
 })

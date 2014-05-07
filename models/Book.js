@@ -71,7 +71,7 @@
                      if (err)
                          return done(err);
 
-                     done(null);
+                     return done(null);
                  })
     }
 

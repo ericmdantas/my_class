@@ -2,14 +2,14 @@
 
 describe('DELETE-INFO BEING TESTED', function()
 {
-    var scope, element, compile;
+    var _scope, _element, _compile;
 
     beforeEach(inject(function($injector)
     {
-        compile = $injector.get('$compile');
-        scope = $injector.get('$rootScope').$new();
+        _scope = $injector.get('$rootScope').$new();
+        _compile = $injector.get('$compile');
 
-        var html = '<delete-info>'+
+        var _html = '<delete-info directiveid="modal-delete-class" title="turma" objectname="{{turmaEscolhida.name}}" objectid="{{turmaEscolhida._id}}" delete="deleteClass(id)">'+
                         '<div class="modal fade" id="{{directiveid}}">'+
                             '<div class="modal-dialog">'+
                                 '<div class="modal-content">'+
@@ -29,22 +29,28 @@ describe('DELETE-INFO BEING TESTED', function()
                                 '</div>'+
                             '</div>'+
                         '</div>'+
-                     '</delete-info>';
+                    '</delete-info>';
 
-        element = compile(angular.element(html))(scope);
-        scope.$digest();
+        _element = angular.element(_html);
+        _compile(_element)(_scope);
+        _scope.$digest();
     }))
 
     describe('checks elements creation', function()
     {
         it('checks if delete info was created', function()
         {
-            expect(element).toBeDefined();
+            expect(_element).toBeDefined();
         })
 
         it('checks if element is populated', function()
         {
-            expect(element.text()).toContain('Tem certeza que deseja excluir');
+            expect(_element.text()).toContain('Tem certeza que deseja excluir');
         })
+    })
+
+    describe('checks if the key words are being filled', function()
+    {
+        //TODO: ADD TESTS FOR THE ISOLATED SCOPE
     })
 })

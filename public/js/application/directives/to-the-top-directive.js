@@ -8,6 +8,8 @@ myClass.directive('toTheTop', ['$window', function($window)
 
     var _link = function(scope, element, attrs)
     {
+        element.fadeOut('fast');
+
         $($window).scroll(function()
         {
             $window.scrollY < 100 ? element.fadeOut('slow') : element.fadeIn('slow');
