@@ -191,4 +191,12 @@ describe('_lib BEING TESTED', function()
             }
         })
     })
+
+    describe('create alert', function()
+    {
+        it('should not throw error', function()
+        {
+            _lib.createAlert();
+        })
+    })
 })

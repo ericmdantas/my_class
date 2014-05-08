@@ -9,6 +9,7 @@
     .topic {border-left-width: 20px;}
     .topic:hover {border-left-width: 10px;}
     .topic.selected, .topic.selected:hover {border-left-width: 0px;}
+    .topic.selected p {display: block;}
     .nav.navbar-right {margin-right: .5em !important;}
     .hidden-small-phone {display: block;}
     .topic h1 {text-align: left;}

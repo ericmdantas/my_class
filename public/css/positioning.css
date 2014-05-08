@@ -18,6 +18,7 @@
 .topic {padding: 5px 20px;}
 .topic h1 {text-align: center;}
 .topic.selected {margin-bottom: 1em;}
+.topic.selected p {display: none;}
 .topic.selected h1 {margin: -13px -13px 0 -13px; padding: 30px 30px 30px 15px;}
 .topic.selected h1 {margin-bottom: 1em;}
 .fc-search {width: 33%;}
