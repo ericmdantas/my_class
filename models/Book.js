@@ -2,7 +2,7 @@
 
 //books
 
-(function(mongoose)
+(function(mongoose, lib)
 {
     var bookSchema = mongoose.Schema
     ({
@@ -14,7 +14,7 @@
 
     bookSchema.methods.findAllBooksByUser = function(user, done)
     {
-        if ((!user) || ("string" !== typeof user))
+        if (lib.isStringInvalid(user))
             return done(new Error("Usuario não informado."), null);
 
         var query = {usersAllowed: {$in: [user]}};
@@ -32,10 +32,10 @@
 
     bookSchema.methods.registerNewBook = function(usuario, livro, done)
     {
-        if ((!usuario) || ('string' !== typeof usuario))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Usuario não informado no momento do cadastro de livros."));
 
-        if ((!livro) || ("object" !== typeof livro) || (!Object.keys(livro).length))
+        if (lib.isObjectInvalid(livro))
             return done(new Error("Livro não informado no momento de cadastro de livros."));
 
         livro.usersAllowed = [usuario];
@@ -52,13 +52,13 @@
 
     bookSchema.methods.editBook = function(usuario, livro, id, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Usuario não informado no momento da edição de livros."));
 
-        if ((!livro) || ("object" !== typeof livro) || (!Object.keys(livro).length))
+        if (lib.isObjectInvalid(livro))
             return done(new Error("Livro não informado no momento da edição de livros."));
 
-        if ((!id) || ("string" !== typeof id))
+        if (lib.isStringInvalid(id))
             return done(new Error("ID não informado no momento da edição de livros."));
 
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
@@ -77,10 +77,10 @@
 
     bookSchema.methods.deleteBook = function(usuario, id, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Usuario não informado no momento do cadastro de livros."));
 
-        if ((!id) || ("string" !== typeof id))
+        if (lib.isStringInvalid(id))
             return done(new Error("ID não informado no momento da deleção de livros."));
 
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
@@ -99,4 +99,5 @@
 
     module.exports = Book;
 
-}(require('mongoose')))
+}(require('mongoose'),
+  require('../lib/lib')))

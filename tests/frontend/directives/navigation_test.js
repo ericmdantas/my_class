@@ -24,9 +24,13 @@ describe('navigation-directive', function()
                             '</div>'+
                             '<div class="collapse navbar-collapse transition" id="nav-header">'+
                                 '<ul class="nav navbar-nav">'+
-                                    '<li ng-repeat="item in items track by $index" ' +
-                                        'class="{{item.active}}"><a href="{{item.href}}" ng-cloak>{{item.nome}}</a>'+
-                                    '</li>'+
+                                    '<li><a href="/aulas" ng-cloak>aulas</a></li>'+
+                                    '<li><a href="/turmas" ng-cloak>turmas</a></li>'+
+                                    '<li><a href="/professores" ng-cloak>professores</a></li>'+
+                                    '<li><a href="/alunos" ng-cloak>alunos</a></li>'+
+                                    '<li><a href="/livros" ng-cloak>livros</a></li>'+
+                                    '<li><a href="/pagamentos" ng-cloak>pagamentos</a></li>'+
+                                    '<li><a href="/estatisticas" ng-cloak>estatisticas</a></li>'+
                                 '</ul>'+
                                 '<ul class="nav navbar-nav navbar-right">'+
                                     '<li ng-click="logout(usuarioLogado)"><a href>sair</a></li>'+
@@ -52,17 +56,91 @@ describe('navigation-directive', function()
 
         it('checks if the items are begin repeated', function()
         {
-            _element.scope().items = [{nome: 'aulas', href: '/aulas', active: ''},
-                                      {nome: 'turmas', href: '/turmas', active: ''},
-                                      {nome: 'professores', href: '/professores', active: ''},
-                                      {nome: 'alunos', href: '/alunos', active: ''},
-                                      {nome: 'livros', href: '/livros', active: ''},
-                                      {nome: 'pagamentos', href: '/pagamentos', active: ''},
-                                      {nome: 'estatisticas', href: '/estatisticas', active: ''}];
-
             _scope.$digest();
 
             expect(_element.find('ul li').length).toEqual(8); // 7 items + sair
+        })
+    })
+
+    describe('active class on click', function()
+    {
+        it ('should have no li elements active - clicked on the brand', function()
+        {
+            _element.find('.navbar-brand').click();
+            var _numLi = _element.find('.nav-header li').length;
+
+            for (var i = 0; i < _numLi; i++)
+            {
+                expect(_element.find('.nav-header li').eq(i).hasClass('active')).toBeFalsy();
+            }
+        })
+
+        it ('should have no li elements active - clicked somewhere else', function()
+        {
+            _element.find('.icon-bar').click();
+            var _numLi = _element.find('.nav-header li').length;
+
+            for (var i = 0; i < _numLi; i++)
+            {
+                expect(_element.find('.nav-header li').eq(i).hasClass('active')).toBeFalsy();
+            }
+        })
+
+        it ('should set active to the correct li element', function()
+        {
+            var _numLi = _element.find('.nav-header li').length;
+
+            for (var i = 0; i < _numLi; i++)
+            {
+                _element.find('.nav-header li').eq(i).click();
+
+                if (_element.find('.nav-header li').eq(i).hasClass('nav-right'))
+                    expect(_element.find('.nav-header li').eq(i).hasClass('active')).toBeFalsy();
+                else
+                    expect(_element.find('.nav-header li').eq(i).hasClass('active')).toBeTruthy();
+            }
+        })
+    })
+
+    describe('change of title', function()
+    {
+        it ('should have the title set to principal - clicked on the brand', function()
+        {
+            _element.find('.navbar-brand').click();
+
+            var _numLi = _element.find('.nav-header li').length;
+
+            for (var i = 0; i < _numLi; i++)
+            {
+                expect(document.title).toContain('principal');
+            }
+        })
+
+        it ('should have no li elements active - clicked somewhere else', function()
+        {
+            _element.find('.icon-bar').click();
+
+            var _numLi = _element.find('.nav-header li').length;
+
+            for (var i = 0; i < _numLi; i++)
+            {
+                expect(document.title).toContain('principal');
+            }
+        })
+
+        it ('should set active to the correct li element', function()
+        {
+            var _numLi = _element.find('.nav-header li').length;
+
+            for (var i = 0; i < _numLi; i++)
+            {
+                _element.find('.nav-header li').eq(i).click();
+
+                if (_element.find('.nav-header li').eq(i).hasClass('nav-right'))
+                    expect(document.title).not.toContain(_element.find('.nav-header li').eq(i).text());
+                else
+                    expect(document.title).toContain(_element.find('.nav-header li').eq(i).text());
+            }
         })
     })
 })

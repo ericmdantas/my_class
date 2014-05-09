@@ -15,9 +15,13 @@ myClass.directive('navigation', function()
                             '</div>'+
                             '<div class="collapse navbar-collapse transition" id="nav-header">'+
                                 '<ul class="nav navbar-nav">'+
-                                    '<li ng-repeat="item in items track by $index" ' +
-                                        'class="{{item.active}}"><a href="{{item.href}}" ng-cloak>{{item.nome}}</a>'+
-                                    '</li>'+
+                                    '<li><a href="/aulas" ng-cloak>aulas</a></li>'+
+                                    '<li><a href="/turmas" ng-cloak>turmas</a></li>'+
+                                    '<li><a href="/professores" ng-cloak>professores</a></li>'+
+                                    '<li><a href="/alunos" ng-cloak>alunos</a></li>'+
+                                    '<li><a href="/livros" ng-cloak>livros</a></li>'+
+                                    '<li><a href="/pagamentos" ng-cloak>pagamentos</a></li>'+
+                                    '<li><a href="/estatisticas" ng-cloak>estatisticas</a></li>'+
                                 '</ul>'+
                                 '<ul class="nav navbar-nav navbar-right">'+
                                     '<li ng-click="logout(usuarioLogado)"><a href>sair</a></li>'+
@@ -26,9 +30,29 @@ myClass.directive('navigation', function()
                         '</div>'+
                     '</header>';
 
+    var _link = function(scope, element, attrs)
+    {
+        element.find('.navbar-brand').on('click', function()
+        {
+            element.find('li').removeClass('active');
+            document.title = 'my class | principal';
+        })
+
+        element.find('#nav-header li').on('click', function()
+        {
+            element.find('li').removeClass('active');
+            element.find(this).addClass('active');
+
+            var _nomeLiClickado = element.find(this).text().trim();
+
+            document.title = 'my class | ' + _nomeLiClickado;
+        })
+    }
+
     return {
                 restrict: 'E',
                 template: _template,
+                link: _link,
                 controller: 'NavController'
            }
 })

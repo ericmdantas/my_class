@@ -2,7 +2,7 @@
 
 //teachers
 
-(function(mongoose)
+(function(mongoose, lib)
 {
     var teacherSchema = mongoose.Schema
     ({
@@ -22,7 +22,7 @@
 
     teacherSchema.methods.findAllTeachersByUser = function(usuario, done)
     {
-        if ((!usuario) || ('string' !== typeof usuario))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Não foi informado o usuário com acesso aos professores."), null);
 
         var query = {usersAllowed: {$in: [usuario]}};
@@ -40,7 +40,7 @@
 
     teacherSchema.methods.findAllTeachersNames = function(usuario, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Não foi informado o usuário com acesso aos nomes dos professores."), null);
 
         var query = {usersAllowed: {$in: [usuario]}};
@@ -58,10 +58,10 @@
 
     teacherSchema.methods.registerNewTeacher = function(usuario, professor, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Não foi informado o usuário no momento do cadastro dos professores."));
 
-        if ((!professor) || ("object" !== typeof professor) || (!Object.keys(professor).length))
+        if (lib.isObjectInvalid(professor))
             return done(new Error("Não foi informado o professor a ser cadastrado."));
 
         professor.usersAllowed = [usuario];
@@ -78,13 +78,13 @@
 
     teacherSchema.methods.editTeacher = function(usuario, professor, id, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Não foi informado o usuário no momento da edição do professor."));
 
-        if ((!professor) || ("object" !== typeof professor) || (!Object.keys(professor).length))
+        if (lib.isObjectInvalid(professor))
             return done(new Error("Não foi informado o professor a ser editado."));
 
-        if ((!id) || ("string" !== typeof id))
+        if (lib.isStringInvalid(id))
             return done(new Error("Não foi informado o id para edição do professor."));
 
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
@@ -103,10 +103,10 @@
 
     teacherSchema.methods.deleteTeacher = function(usuario, id, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Não foi informado o usuário no momento da deleção do professor."));
 
-        if ((!id) || ("string" !== typeof id))
+        if (lib.isStringInvalid(id))
             return done(new Error("Não foi informado o id para deleção do professor."));
 
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
@@ -125,4 +125,5 @@
 
     module.exports = Teacher;
 
-}(require('mongoose')))
+}(require('mongoose'),
+  require('../lib/lib')))

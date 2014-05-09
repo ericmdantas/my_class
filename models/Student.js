@@ -2,7 +2,7 @@
 
 //students
 
-(function(mongoose)
+(function(mongoose, lib)
 {
     var paymentsSchema = mongoose.Schema({
         paymentMonth: {type: String, required: true},
@@ -34,7 +34,7 @@
 
     studentSchema.methods.findAllStudentsByUser = function(user, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error('Não é possível buscar todos os alunos sem que o usuário seja informado.'), null);
 
         var query = {usersAllowed: {$in: [user]}};
@@ -52,7 +52,7 @@
 
     studentSchema.methods.findAllStudentsNames = function(user, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error('Não é possível buscar os nomes de todos os alunos sem que o usuário seja informado.'), null);
 
         var query = {usersAllowed: {$in: [user]}};
@@ -70,10 +70,10 @@
 
     studentSchema.methods.findAllStudentsNamesByClass = function(user, turma, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error('Não é possível buscar os nomes de alunos para esta determinada turma, pois o usuário não foi informado.'), null);
 
-        if ((!turma) || ("string" !== typeof turma) || (turma.length === 0))
+        if (lib.isStringInvalid(turma))
             return done(new Error('Não é possível buscar os nomes de alunos para esta determinada turma, pois a turma não foi informada.'), null);
 
         var query = {usersAllowed: {$in: [user]}, class: turma};
@@ -91,7 +91,7 @@
 
     studentSchema.methods.findAllPaymentsByUser = function(user, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error('Não é possível buscar os pagamentos dos alunos, pois o usuário não foi informado.'), null);
 
         var query = {usersAllowed: {$in: [user]}};
@@ -109,10 +109,10 @@
 
     studentSchema.methods.registerNewPayment = function(usuario, pagamento, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario) || (usuario.length === 0))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Não é possível realizar pagamento sem que o usuário tenha sido informado"));
 
-        if ((!pagamento) || ("object" !== typeof pagamento) || (!Object.keys(pagamento).length))
+        if (lib.isObjectInvalid(pagamento))
             return done(new Error("Não é possível realizar pagamento sem que o pagamento tenha sido informado"));
 
         var query = {usersAllowed: {$in: [usuario]}, "name": pagamento.name};
@@ -130,10 +130,10 @@
 
     studentSchema.methods.registerStudent = function(usuario, aluno, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario) || (usuario.length === 0))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Não é possível cadastrar aluno sem que o usuário tenha sido informado"));
 
-        if ((!aluno) || ("object" !== typeof aluno) || (!Object.keys(aluno).length))
+        if (lib.isObjectInvalid(aluno))
             return done(new Error("Não é possível cadastrar aluno sem que o aluno tenha sido informado"));
 
         aluno.usersAllowed = [usuario];
@@ -150,13 +150,13 @@
 
     studentSchema.methods.editStudent = function(usuario, aluno, id, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario) || (usuario.length === 0))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Não é possível editar aluno sem que o usuário tenha sido informado"));
 
-        if ((!aluno) || ("object" !== typeof aluno) || (!Object.keys(aluno).length))
+        if (lib.isObjectInvalid(aluno))
             return done(new Error("Não é possível editar aluno sem que o aluno tenha sido informado"));
 
-        if ((!id) || ("string" !== typeof id) || (id.length === 0))
+        if (lib.isStringInvalid(id))
             return done(new Error("Não é possível editar aluno sem que o ID tenha sido informado"));
 
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
@@ -175,10 +175,10 @@
 
     studentSchema.methods.deleteStudent = function(user, id, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error("Não é possível deletar aluno sem que o usuário tenha sido informado"));
 
-        if ((!id) || ("string" !== typeof id) || (id.length === 0))
+        if (lib.isStringInvalid(id))
             return done(new Error("Não é possível deletar aluno sem que o ID tenha sido informado"));
 
         var query = {usersAllowed: {$in: [user]}, _id: id};
@@ -197,4 +197,5 @@
 
     module.exports = Student;
 
-}(require('mongoose')))
+}(require('mongoose'),
+  require('../lib/lib')))

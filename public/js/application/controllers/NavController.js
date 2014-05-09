@@ -5,31 +5,6 @@ myClass.controller('NavController', ['$rootScope', '$scope', '$location', '$http
 {
     $scope.usuarioLogado = $window.localStorage.getItem('u');
 
-    $scope.items = [{nome: 'aulas', href: '/aulas', active: ''},
-                    {nome: 'turmas', href: '/turmas', active: ''},
-                    {nome: 'professores', href: '/professores', active: ''},
-                    {nome: 'alunos', href: '/alunos', active: ''},
-                    {nome: 'livros', href: '/livros', active: ''},
-                    {nome: 'pagamentos', href: '/pagamentos', active: ''},
-                    {nome: 'estatisticas', href: '/estatisticas', active: ''}];
-
-    $rootScope.$on('$locationChangeSuccess', function()
-    {
-        for (var i = 0; i < $scope.items.length; i++)
-        {
-            if ($location.path() === $scope.items[i].href)
-            {
-                _removeActive($scope.items);
-                $scope.items[i].active = 'active';
-                _trocaTitulo($scope.items[i].nome)
-                return;
-            }
-        }
-
-        _trocaTitulo('principal');
-        _removeActive($scope.items);
-    })
-
     $scope.logout = function(usuario)
     {
         if (lib.isStringInvalid(usuario))
@@ -49,16 +24,5 @@ myClass.controller('NavController', ['$rootScope', '$scope', '$location', '$http
         $window.location.href = '/';
     }
 
-    function _removeActive(array)
-    {
-        for (var i = 0; i < array.length; i++)
-        {
-            array[i].active = '';
-        }
-    }
-
-    function _trocaTitulo(novoTitulo)
-    {
-        document.title = 'my class | ' + novoTitulo;
-    }
+    //TODO: PUT THIS INSIDE THE NAVIGATION DIRECTIVE?
 }])

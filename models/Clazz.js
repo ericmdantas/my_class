@@ -2,7 +2,7 @@
 
 //classes
 
-(function(mongoose)
+(function(mongoose, lib)
 {
     var dailyInformation = mongoose.Schema
     ({
@@ -29,7 +29,7 @@
 
     clazzSchema.methods.findAllClassesByUser = function(user, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error("Não foi encontrado o usuário para buscar as turmas."), null);
 
         var _query = {usersAllowed: {$in: [user]}};
@@ -47,7 +47,7 @@
 
     clazzSchema.methods.findAllClassesNamesByUser = function(user, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error("Não foi encontrado o usuário para buscar os nomes das turmas."), null);
 
         var _query = {usersAllowed: {$in: [user]}};
@@ -65,10 +65,10 @@
 
     clazzSchema.methods.getClassesDailyInfo = function(user, monthYear, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error("Não foi encontrado o usuário para buscar as informações de todas as turma."), null);
 
-        if ((!monthYear) || ("string" !== typeof monthYear) || (monthYear.length === 0))
+        if (lib.isStringInvalid(monthYear))
             return done(new Error("Não foi encontrado o mês e ano para buscar as informações de todas as turma."), null);
 
         var _query = {usersAllowed: {$in: [user]}, "dailyInfo.monthYear": monthYear};
@@ -89,18 +89,18 @@
             })
     }
 
-    clazzSchema.methods.getClassesDailyInfoByClass = function(user, monthYear, clazzId, done)
+    clazzSchema.methods.getClassesDailyInfoByClass = function(user, monthYear, id, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error("Não foi encontrado o usuário para buscar as informações da turma."), null);
 
-        if ((!monthYear) || ("string" !== typeof monthYear) || (monthYear.length === 0))
+        if (lib.isStringInvalid(monthYear))
             return done(new Error("Não foi encontrado o mês e ano para buscar as informações da turma."), null);
 
-        if ((!clazzId) || ("string" !== typeof clazzId) || (clazzId.length === 0))
+        if (lib.isStringInvalid(id))
             return done(new Error("Não foi encontrado o ID para buscar as informações da turma."), null);
 
-        var _query = {usersAllowed: {$in: [user]}, _id: clazzId, "dailyInfo.monthYear": monthYear};
+        var _query = {usersAllowed: {$in: [user]}, _id: id, "dailyInfo.monthYear": monthYear};
         var _projection = {usersAllowed: 0};
 
         Clazz.findOne(_query, _projection)
@@ -111,7 +111,7 @@
 
                       var _isArray = false;
 
-                      if (found && Object.keys(found).length > 0)
+                      if (!lib.isObjectInvalid(found))
                           _removeDifferentMonths(found, monthYear, _isArray);
 
                       return done(null, found);
@@ -120,10 +120,10 @@
 
     clazzSchema.methods.registerNewClass = function(usuario, turma, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Não foi encontrado o usuário para cadastrar a turma."));
 
-        if ((!turma) || ("object" !== typeof turma) || (!Object.keys(turma).length))
+        if (lib.isObjectInvalid(turma))
             return done(new Error("Não foi encontrada a turma a ser cadastrada."));
 
         turma.usersAllowed = [usuario];
@@ -141,10 +141,10 @@
 
     clazzSchema.methods.registerClassMomentInTime = function(user, moment, done)
     {
-        if ((!user) || ("string" !== typeof user))
+        if (lib.isStringInvalid(user))
             return done(new Error("Não foi encontrado o usuário para cadastro da aula."));
 
-        if ((!moment) || ("object" !== typeof moment) || (!Object.keys(moment).length))
+        if (lib.isObjectInvalid(moment))
             return done(new Error("Não foi encontrada a turma referente a aula para o cadastro."));
 
         var _query = {usersAllowed: {$in: [user]}, name: moment.clazzName};
@@ -162,13 +162,13 @@
 
     clazzSchema.methods.editClass = function(usuario, turma, id, done)
     {
-        if ((!usuario) || ("string" !== typeof usuario))
+        if (lib.isStringInvalid(usuario))
             return done(new Error("Não foi encontrado o usuário para a edição da turma."));
 
-        if ((!turma) || ("object" !== typeof turma) || (!Object.keys(turma).length))
+        if (lib.isObjectInvalid(turma))
             return done(new Error("Não foi encontrada a turma referente a aula para a edição."));
 
-        if ((!id) || ("string" !== typeof id))
+        if (lib.isStringInvalid(id))
             return done(new Error("Não foi encontrado o id para edição da turma."));
 
         var _query = {usersAllowed: {$in: [usuario]}, _id: id};
@@ -187,11 +187,11 @@
 
     clazzSchema.methods.deleteClass = function(user, id, done)
     {
-        if ((!user) || ("string" !== typeof user))
+        if (lib.isStringInvalid(user))
             return done(new Error("Não foi encontrado o usuário para a deleção da turma."));
-
-        if ((!id) || ("string" !== typeof id))
-            return done(new Error("Não foi encontrado o id para a deleção da turma."));
+{
+        if (lib.isStringInvalid(id))
+            return done(new Error("Não foi encontrado o id para a deleção da turma."));}
 
         var _query = {usersAllowed: {$in: [user]}, _id: id};
 
@@ -238,4 +238,5 @@
 
     module.exports = Clazz;
 
-}(require('mongoose')))
+}(require('mongoose'),
+  require('../lib/lib')))

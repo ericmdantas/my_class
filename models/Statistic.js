@@ -6,7 +6,7 @@
 {
     function findAllEarningsByTrimester(user, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error("Não foi possível calcular o ganho por trimestre, pois o usuário não foi informado."), null);
 
         var _trimestres;
@@ -34,7 +34,7 @@
 
     function findAllInterestedStudentsPerMonth(user, done)
     {
-        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+        if (lib.isStringInvalid(user))
             return done(new Error("Não foi possível verificar o interesse por mês, pois o usuário não foi informado."), null);
 
         var _meses;
@@ -56,4 +56,5 @@
     exports.findAllEarningsByTrimester = findAllEarningsByTrimester;
     exports.findAllInterestedStudentsPerMonth = findAllInterestedStudentsPerMonth;
 
-}(require('../models/Student'), require('../lib/lib')))
+}(require('../models/Student'),
+  require('../lib/lib')))
