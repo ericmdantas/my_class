@@ -11,33 +11,35 @@ describe('navigation-directive', function()
         _compile = $injector.get('$compile');
         _locationMock = $injector.get('$location');
 
-        var _html = '<header class="navbar navbar-default navbar-fixed-top" role="navigation" >'+
-                        '<div>'+
-                            '<div class="navbar-header">'+
-                                '<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-header">'+
-                                    '<span class="sr-only">Toggle navigation</span>'+
-                                    '<span class="icon-bar"></span>'+
-                                    '<span class="icon-bar"></span>'+
-                                    '<span class="icon-bar"></span>'+
-                                '</button>'+
-                                '<a class="navbar-brand" href="/main">my class</a>'+
+        var _html =  '<navigation>'
+                        '<header class="navbar navbar-default navbar-fixed-top" role="navigation" >'+
+                            '<div>'+
+                                '<div class="navbar-header">'+
+                                    '<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-header">'+
+                                        '<span class="sr-only">Toggle navigation</span>'+
+                                        '<span class="icon-bar"></span>'+
+                                        '<span class="icon-bar"></span>'+
+                                        '<span class="icon-bar"></span>'+
+                                    '</button>'+
+                                    '<a class="navbar-brand" href>my class</a>'+
+                                '</div>'+
+                                '<div class="collapse navbar-collapse transition" id="nav-header">'+
+                                    '<ul class="nav navbar-nav">'+
+                                        '<li><a href ng-cloak>aulas</a></li>'+
+                                        '<li><a href ng-cloak>turmas</a></li>'+
+                                        '<li><a href ng-cloak>professores</a></li>'+
+                                        '<li><a href ng-cloak>alunos</a></li>'+
+                                        '<li><a href ng-cloak>livros</a></li>'+
+                                        '<li><a href ng-cloak>pagamentos</a></li>'+
+                                        '<li><a href ng-cloak>estatisticas</a></li>'+
+                                    '</ul>'+
+                                    '<ul class="nav navbar-nav navbar-right">'+
+                                        '<li ng-click="logout(\'usuarioLogado\')"><a href>sair</a></li>'+
+                                    '</ul>'+
+                                '</div>'+
                             '</div>'+
-                            '<div class="collapse navbar-collapse transition" id="nav-header">'+
-                                '<ul class="nav navbar-nav">'+
-                                    '<li><a href="/aulas" ng-cloak>aulas</a></li>'+
-                                    '<li><a href="/turmas" ng-cloak>turmas</a></li>'+
-                                    '<li><a href="/professores" ng-cloak>professores</a></li>'+
-                                    '<li><a href="/alunos" ng-cloak>alunos</a></li>'+
-                                    '<li><a href="/livros" ng-cloak>livros</a></li>'+
-                                    '<li><a href="/pagamentos" ng-cloak>pagamentos</a></li>'+
-                                    '<li><a href="/estatisticas" ng-cloak>estatisticas</a></li>'+
-                                '</ul>'+
-                                '<ul class="nav navbar-nav navbar-right">'+
-                                    '<li ng-click="logout(usuarioLogado)"><a href>sair</a></li>'+
-                                '</ul>'+
-                            '</div>'+
-                        '</div>'+
-                    '</header>';
+                        '</header>'+
+                     '</navigation>';
 
         _element = angular.element(_html);
         _compile(_element)(_scope);
@@ -46,14 +48,6 @@ describe('navigation-directive', function()
 
     describe('checks elements creation', function()
     {
-        it('should have classes navbar and navbar-fixed-top', function()
-        {
-            expect(_element.hasClass('navbar')).toBeTruthy();
-            expect(_element.hasClass('navbar-fixed-top')).toBeTruthy();
-            expect(_element.hasClass('navbar-default')).toBeTruthy();
-            expect(_element.find('ul li').hasClass('active')).toBeFalsy();
-        })
-
         it('checks if the items are begin repeated', function()
         {
             _scope.$digest();
@@ -66,38 +60,36 @@ describe('navigation-directive', function()
     {
         it ('should have no li elements active - clicked on the brand', function()
         {
-            _element.find('.navbar-brand').click();
-            var _numLi = _element.find('.nav-header li').length;
+            _element.find('.navbar-brand')[0].click();
+
+            var _numLi = _element.find('#nav-header li').length;
 
             for (var i = 0; i < _numLi; i++)
             {
-                expect(_element.find('.nav-header li').eq(i).hasClass('active')).toBeFalsy();
+                expect(_element.find('#nav-header li').eq(i).hasClass('active')).toBeFalsy();
             }
         })
 
         it ('should have no li elements active - clicked somewhere else', function()
         {
-            _element.find('.icon-bar').click();
-            var _numLi = _element.find('.nav-header li').length;
+            _element.find('.icon-bar')[0].click();
+
+            var _numLi = _element.find('#nav-header li').length;
 
             for (var i = 0; i < _numLi; i++)
             {
-                expect(_element.find('.nav-header li').eq(i).hasClass('active')).toBeFalsy();
+                expect(_element.find('#nav-header li').eq(i).hasClass('active')).toBeFalsy();
             }
         })
 
         it ('should set active to the correct li element', function()
         {
-            var _numLi = _element.find('.nav-header li').length;
+            var _numLi = _element.find('#nav-header li').length - 1; //removes sair (logout)
 
             for (var i = 0; i < _numLi; i++)
             {
-                _element.find('.nav-header li').eq(i).click();
-
-                if (_element.find('.nav-header li').eq(i).hasClass('nav-right'))
-                    expect(_element.find('.nav-header li').eq(i).hasClass('active')).toBeFalsy();
-                else
-                    expect(_element.find('.nav-header li').eq(i).hasClass('active')).toBeTruthy();
+                _element.find('#nav-header li').eq(i).click();
+                expect(_element.find('#nav-header li').eq(i).hasClass('active')).toBeTruthy();
             }
         })
     })
@@ -106,40 +98,24 @@ describe('navigation-directive', function()
     {
         it ('should have the title set to principal - clicked on the brand', function()
         {
-            _element.find('.navbar-brand').click();
-
-            var _numLi = _element.find('.nav-header li').length;
-
-            for (var i = 0; i < _numLi; i++)
-            {
-                expect(document.title).toContain('principal');
-            }
+            _element.find('.navbar-brand')[0].click();
+            expect(document.title).toContain('principal');
         })
 
         it ('should have no li elements active - clicked somewhere else', function()
         {
-            _element.find('.icon-bar').click();
-
-            var _numLi = _element.find('.nav-header li').length;
-
-            for (var i = 0; i < _numLi; i++)
-            {
-                expect(document.title).toContain('principal');
-            }
+            _element.find('.icon-bar')[0].click();
+            expect(document.title).toContain('principal');
         })
 
         it ('should set active to the correct li element', function()
         {
-            var _numLi = _element.find('.nav-header li').length;
+            var _numLi = _element.find('#nav-header li').length - 1; //remove sair (logout)
 
             for (var i = 0; i < _numLi; i++)
             {
-                _element.find('.nav-header li').eq(i).click();
-
-                if (_element.find('.nav-header li').eq(i).hasClass('nav-right'))
-                    expect(document.title).not.toContain(_element.find('.nav-header li').eq(i).text());
-                else
-                    expect(document.title).toContain(_element.find('.nav-header li').eq(i).text());
+                _element.find('#nav-header li').eq(i).click();
+                expect(document.title).toContain(_element.find('#nav-header li').eq(i).text());
             }
         })
     })
