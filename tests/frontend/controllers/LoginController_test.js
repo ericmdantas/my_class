@@ -39,6 +39,18 @@ describe("LOGINCONTROLLER BEING TESTED", function()
             expect(scope.validaUser).toBeDefined();
             expect(typeof scope.validaUser).toBe('function');
         }))
+
+        it('checks if the name of the button was created correctly', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+            expect(scope.nomeBotao).toEqual('entrar');
+        }))
+
+        it('checks if sendingToServer was created with a false value', inject(function($controller)
+        {
+            $controller('LoginController', {$scope: scope});
+            expect(scope.sendingToServer).toBeFalsy();
+        }))
     })
 
     describe('checks if logging in with a wrong user is working', function()
@@ -51,7 +63,12 @@ describe("LOGINCONTROLLER BEING TESTED", function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                expect(function(){scope.validaUser(_wrongParams[i])}).toThrow(new Error('Usuário não informado.'));
+                expect(function()
+                {
+                    scope.validaUser(_wrongParams[i])
+                }).toThrow(new Error('Usuário não informado.'));
+
+                expect(scope.nomeBotao).toEqual('entrar');
             }
         }))
 
@@ -59,11 +76,12 @@ describe("LOGINCONTROLLER BEING TESTED", function()
         {
             httpMock.expectPOST('/api/validateUser', {username: 'eric3', password: 'senha_errada'}).respond({user: "404"});
             $controller('LoginController', {$scope: scope});
-            var user = {username: 'eric3', password: 'senha_errada'}
+            var user = {username: 'eric3', password: 'senha_errada'};
             scope.validaUser(user);
             httpMock.flush();
 
             expect(locationMock.path()).toBe('/');
+            expect(scope.nomeBotao).toEqual('entrar');
         }))
     })
 

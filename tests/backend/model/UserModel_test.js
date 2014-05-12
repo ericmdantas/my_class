@@ -4,6 +4,7 @@ var assert = require('assert');
 var mongoose = require('mongoose');
 var UserModel = require('../../../models/User');
 var dburl = require('../config/db.json');
+var DBCreator = require('../helpers/DBCreator');
 
 describe('UserModel', function()
 {
@@ -11,6 +12,16 @@ describe('UserModel', function()
     {
         mongoose.connect(dburl.db.test.url);
         mongoose.connection.on('error', function(){});
+    })
+
+    beforeEach(function(done)
+    {
+        new DBCreator().create('user', done);
+    })
+
+    afterEach(function(done)
+    {
+        UserModel.remove(done);
     })
 
     describe('check elements creation', function()
@@ -23,16 +34,6 @@ describe('UserModel', function()
 
     describe("check properties", function()
     {
-        beforeEach(function(done)
-        {
-            UserModel.create({username: "eric3    ", password: "112233   ", registered: new Date(), payment: true}, done);
-        })
-
-        afterEach(function(done)
-        {
-            UserModel.remove(done);
-        })
-
         it('should return the right properties', function(done)
         {
             UserModel.findOne({username: "eric3"})

@@ -4,6 +4,7 @@ var assert = require('assert');
 var BookModel = require('../../../models/Book');
 var mongoose = require('mongoose');
 var dburl = require('../config/db.json');
+var DBCreator = require('../helpers/DBCreator');
 
 describe('BookModel', function()
 {
@@ -13,6 +14,16 @@ describe('BookModel', function()
     {
         mongoose.connect(dburl.db.test.url);
         mongoose.connection.on('error', function(){});
+    })
+
+    beforeEach(function(done)
+    {
+        new DBCreator().create('book', done);
+    })
+
+    afterEach(function(done)
+    {
+        BookModel.remove(done);
     })
 
     describe('check elements creation', function()
@@ -49,17 +60,6 @@ describe('BookModel', function()
 
     describe('findAllBooksByUser', function()
     {
-        beforeEach(function(done)
-        {
-            BookModel.create({name: "Livro1", quantity: "1", usersAllowed: ["abc123"]},
-                             {name: "Livro2", quantity: "2", usersAllowed: ["XYZ987"]}, done);
-        })
-
-        afterEach(function(done)
-        {
-            BookModel.remove(done);
-        })
-
         it('should return error - no user informed', function(done)
         {
             var _book = new BookModel();
@@ -121,11 +121,6 @@ describe('BookModel', function()
 
     describe('registerNewBook', function()
     {
-        afterEach(function(done)
-        {
-            BookModel.remove(done);
-        })
-
         it('shouldn\'t allow to register new book - empty user', function(done)
         {
             var _book = new BookModel();
@@ -282,16 +277,6 @@ describe('BookModel', function()
 
     describe('deleteBook', function()
     {
-        beforeEach(function(done)
-        {
-            BookModel.create({_id: "534dafae51aaf04b9b8c5b6f", name: "Livro1", quantity: 99, usersAllowed: ["usuario"]}, done);
-        })
-
-        afterEach(function(done)
-        {
-            BookModel.remove(done);
-        })
-
         it('shouldn\'t delete book - empty user', function(done)
         {
             var _book = new BookModel();

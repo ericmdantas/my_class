@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.directive('navigation', ['$location', function($location)
+myClass.directive('navigation', ['$rootScope', '$location', function($rootScope, $location)
 {
     var _template = '<header class="navbar navbar-default navbar-fixed-top" role="navigation" >'+
                         '<div>'+
@@ -35,6 +35,16 @@ myClass.directive('navigation', ['$location', function($location)
         var _nomeLiClickado = '';
 
         document.title = 'my class | principal';
+
+        /*
+
+        TODO: WHEN THE USER CHANGES THE URL BY HIMSELF, THE DIRECTIVE SHOULD ALSO HANDLE THE CHANGE SUCCESS TO ACTIVATE RESPECTIVE LI
+
+        $rootScope.on('$locationChangeSuccess', function()
+
+        {
+            alert();
+        })*/
 
         element.find('.navbar-brand').on('click', function()
         {

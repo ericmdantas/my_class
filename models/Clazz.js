@@ -36,6 +36,7 @@
         var _projection = {usersAllowed: 0, dailyInfo: 0};
 
         Clazz.find(_query, _projection)
+             .sort('name')
              .exec(function(err, clazzes)
                    {
                        if (err)
@@ -54,6 +55,7 @@
         var _projection = {name: 1};
 
         Clazz.find(_query, _projection)
+            .sort('name')
             .exec(function(err, classes)
             {
                 if (err)
@@ -75,6 +77,7 @@
         var _projection = {usersAllowed: 0};
 
         Clazz.find(_query, _projection)
+            .sort('name')
             .exec(function(err, found)
             {
                 if (err)

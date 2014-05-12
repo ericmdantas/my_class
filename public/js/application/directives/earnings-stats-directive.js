@@ -11,23 +11,25 @@ myClass.directive('earningsStats', ['StatisticService', function(StatisticServic
     {
         $scope.valoresTrimestre = [];
 
-        StatisticService.getEarnings()
-            .success(function(data)
-             {
-                 if (!data || !data.resultado)
-                     $scope.valoresTrimestre = [0, 0, 0, 0];
-                 else
-                 {
-                     $scope.valoresTrimestre = [data.resultado.valorPrimeiroTrimestre,
-                                                data.resultado.valorSegundoTrimestre,
-                                                data.resultado.valorTerceiroTrimestre,
-                                                data.resultado.valorQuartoTrimestre];
-                 }
+        $scope.getEarnings = function(drawGraphic)
+        {
+            StatisticService.getEarnings()
+                .success(function(data)
+                {
+                    if (!data || !data.resultado || !Object.keys(data.resultado).length)
+                        return;
 
-                 desenhaGrafico();
-             })
+                    $scope.valoresTrimestre = [data.resultado.valorPrimeiroTrimestre,
+                                               data.resultado.valorSegundoTrimestre,
+                                               data.resultado.valorTerceiroTrimestre,
+                                               data.resultado.valorQuartoTrimestre];
 
-        function desenhaGrafico()
+
+                    drawGraphic();
+                })
+        }
+
+        function _desenhaGrafico()
         {
             $('#column-chart').highcharts(
                 {
@@ -56,10 +58,12 @@ myClass.directive('earningsStats', ['StatisticService', function(StatisticServic
                     series:[{name: 'ganho', data: $scope.valoresTrimestre}]
                 });
         }
+
+        $scope.getEarnings(_desenhaGrafico);
     }]
 
     return {
-                restrict: 'AE',
+                restrict: 'EA',
                 template: temp,
                 controller: ctrl
            }

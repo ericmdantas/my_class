@@ -29,6 +29,7 @@
         var projection = {usersAllowed: 0};
 
         Teacher.find(query, projection)
+               .sort('name')
                .exec(function(err, teachers)
                {
                    if (err)

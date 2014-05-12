@@ -4,8 +4,9 @@ var assert = require('assert');
 var TeacherModel = require('../../../models/Teacher');
 var mongoose = require('mongoose');
 var dburl = require('../config/db.json');
+var DBCreator = require('../helpers/DBCreator');
 
-describe('Testing TeacherModel', function()
+describe('TeacherModel', function()
 {
     var _teacher;
     var wrongParams = [null, undefined, true, false, [], {}, 1, function(){}];
@@ -19,6 +20,12 @@ describe('Testing TeacherModel', function()
     beforeEach(function()
     {
         _teacher = new TeacherModel();
+        new DBCreator().create('teacher');
+    })
+
+    afterEach(function(done)
+    {
+        TeacherModel.remove(done);
     })
 
     describe('check elements creation', function()
@@ -56,29 +63,6 @@ describe('Testing TeacherModel', function()
     
     describe('findAllTeachersByUser', function()
     {
-        beforeEach(function(done)
-        {
-            TeacherModel.create({
-                                    name: "Professor1",
-                                    birthDate: "26/06/1989",
-                                    admission: "26/06/1999",
-                                    availability: "15:00",
-                                    email: "ericdantas0@hotmail.com",
-                                    mobilePhone: "98969896",
-                                    phone: "27410707",
-                                    salary: "123123",
-                                    address: "Rua Endereço Qualquer",
-                                    registered: new Date(),
-                                    lastModified: new Date(),
-                                    usersAllowed: ["eric3"]
-                               }, done);
-        })
-
-        afterEach(function(done)
-        {
-            TeacherModel.remove(done);
-        })
-
         it('should return error - params filled wrong - empty user', function(done)
         {
             var _teacher = new TeacherModel();
@@ -118,7 +102,7 @@ describe('Testing TeacherModel', function()
                                                   {
                                                       assert.strictEqual(err, null);
                                                       assert.strictEqual(typeof teachers, "object");
-                                                      assert.strictEqual(teachers.length, 1);
+                                                      assert.strictEqual(teachers.length, 4);
                                                       assert.strictEqual(typeof teachers[0]._id, "object");
                                                       assert.strictEqual(teachers[0].name, "Professor1");
                                                       assert.strictEqual(teachers[0].birthDate, "26/06/1989");
@@ -137,43 +121,6 @@ describe('Testing TeacherModel', function()
 
     describe('findAllTeachersNames', function()
     {
-        beforeEach(function(done)
-        {
-            TeacherModel.create({
-                name: "Professor1",
-                birthDate: "26/06/1989",
-                admission: "26/06/1999",
-                availability: "15:00",
-                email: "ericdantas0@hotmail.com",
-                mobilePhone: "98969896",
-                phone: "27410707",
-                salary: "123123",
-                address: "Rua Endereço Qualquer",
-                registered: new Date(),
-                lastModified: new Date(),
-                usersAllowed: ["eric3"]
-            },
-            {
-                name: "Professor1",
-                birthDate: "26/06/1989",
-                admission: "26/06/1999",
-                availability: "15:00",
-                email: "ericdantas0@hotmail.com",
-                mobilePhone: "98969896",
-                phone: "27410707",
-                salary: "123123",
-                address: "Rua Endereço Qualquer",
-                registered: new Date(),
-                lastModified: new Date(),
-                usersAllowed: ["eric3"]
-            }, done);
-        })
-
-        afterEach(function(done)
-        {
-            TeacherModel.remove(done);
-        })
-
         it('shouldn\'t return anything - empty user', function(done)
         {
             var _teacher = new TeacherModel();
@@ -214,7 +161,7 @@ describe('Testing TeacherModel', function()
                                                 {
                                                     assert.strictEqual(err, null);
                                                     assert.strictEqual(typeof teachers, "object");
-                                                    assert.strictEqual(teachers.length, 2);
+                                                    assert.strictEqual(teachers.length, 4);
                                                     assert.strictEqual(typeof teachers[0].name, "string");
                                                     assert.strictEqual(typeof teachers[0]._id, "object");
                                                     assert.strictEqual(teachers[0].birthDate, undefined);
@@ -234,11 +181,6 @@ describe('Testing TeacherModel', function()
 
     describe('registerNewTeacher', function()
     {
-        afterEach(function(done)
-        {
-            TeacherModel.remove(done);
-        })
-
         it('shouldn\'t register a teacher - empty user', function(done)
         {
             var _teacher = new TeacherModel();
@@ -306,29 +248,6 @@ describe('Testing TeacherModel', function()
 
     describe('editTeacher', function()
     {
-        beforeEach(function(done)
-        {
-            TeacherModel.create({
-                    name: "Professor1",
-                    birthDate: "26/06/1989",
-                    admission: "26/06/1999",
-                    availability: "15:00",
-                    email: "ericdantas0@hotmail.com",
-                    mobilePhone: "98969896",
-                    phone: "27410707",
-                    salary: "123123",
-                    address: "Rua Endereço Qualquer",
-                    registered: new Date(),
-                    lastModified: new Date(),
-                    usersAllowed: ["eric3"]
-                }, done);
-        })
-
-        afterEach(function(done)
-        {
-            TeacherModel.remove(done);
-        })
-
         it('shouldn\'t edit teacher - empty user', function(done)
         {
             var _teacher = new TeacherModel();
@@ -416,29 +335,6 @@ describe('Testing TeacherModel', function()
 
     describe('deleteTeacher', function()
     {
-        beforeEach(function(done)
-        {
-            TeacherModel.create({
-                name: "Professor1",
-                birthDate: "26/06/1989",
-                admission: "26/06/1999",
-                availability: "15:00",
-                email: "ericdantas0@hotmail.com",
-                mobilePhone: "98969896",
-                phone: "27410707",
-                salary: "123123",
-                address: "Rua Endereço Qualquer",
-                registered: new Date(),
-                lastModified: new Date(),
-                usersAllowed: ["eric3"]
-            }, done);
-        })
-
-        afterEach(function(done)
-        {
-            TeacherModel.remove(done);
-        })
-
         it('shouldn\'t delete teacher - empty user', function(done)
         {
             var _teacher = new TeacherModel();
@@ -478,7 +374,6 @@ describe('Testing TeacherModel', function()
             var _teacher = new TeacherModel();
             var _usuario = "eric3";
             var _id = "534dafae51aaf04b9b8c5b6f";
-
 
             _teacher.deleteTeacher(_usuario, _id, function(err)
                                                   {

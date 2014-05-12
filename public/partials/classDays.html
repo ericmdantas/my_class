@@ -83,7 +83,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="info in turma.dailyInfo">
+                            <tr ng-repeat="info in turma.dailyInfo | orderBy: 'day'">
                                 <td>{{info.day}}</td>
                                 <td>{{info.subject}}</td>
                                 <td>{{info.teacherName}}</td>

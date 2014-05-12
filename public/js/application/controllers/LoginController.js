@@ -3,12 +3,12 @@
 myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pageConfig', 'LoginService',
                               function ($scope, $http, $window, lib, pageConfig, LoginService)
 {
-    var NOME_BOTAO = 'entrar';
-
     $scope.user = {};
     $scope.user.username = $window.localStorage ? $window.localStorage.getItem('u') : '';
     $scope.cfg = pageConfig;
-    $scope.nomeBotao = NOME_BOTAO;
+    $scope.nomeBotao = 'entrar';
+    $scope.sendingToServer = false;
+
     var _idIntervalo = 0;
 
     $scope.validateInput = function(user, ev)
@@ -28,7 +28,7 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pag
         if (lib.isObjectInvalid(user))
             return true;
 
-        return !(!!user.username && !!user.password);
+        return $scope.sendingToServer || !(!!user.username && !!user.password);
     }
 
     $scope.validaUser = function(user)
@@ -37,6 +37,7 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pag
             throw new Error('Usuário não informado.');
 
         _desabilitaBotao();
+        $scope.sendingToServer = true;
 
         LoginService.validateUser(user)
              .success(function(data)
@@ -57,29 +58,31 @@ myClass.controller('LoginController', ['$scope', '$http', '$window', 'lib', 'pag
                         $("#erroLogin").removeClass('hidden');
                         _reabilitaBotao();
                     })
+             .finally(function()
+                    {
+                        $scope.sendingToServer = false;
+                    })
 
     }
 
     function _reabilitaBotao()
     {
-        $scope.nomeBotao = NOME_BOTAO;
-        $scope.isItDisabled(null);
         $('#username').focus();
         clearInterval(_idIntervalo);
+        $scope.nomeBotao = 'entrar';
     }
 
     function _desabilitaBotao()
     {
         var _pontos = '';
         $scope.nomeBotao = 'carregando' + _pontos;
-        $scope.isItDisabled(null);
 
         _idIntervalo = setInterval(function()
                                   {
                                       if (_pontos.length > 3)
                                           _pontos = '';
 
-                                      $scope.nomeBotao = 'carregando' + _pontos;
+                                      $scope.nomeBotao = 'carregando ' + _pontos;
                                       _pontos += '.';
                                   }, 555);
     }

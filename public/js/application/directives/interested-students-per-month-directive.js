@@ -11,25 +11,30 @@ myClass.directive('interestedStudentsPerMonth', ['StatisticService', function(St
     {
         $scope.alunosInteressadosPorMes = [];
 
-        StatisticService.getInterestedStudents()
-             .success(function(data)
-                      {
-                            if (!data || !data.resultado)
-                                return;
+        $scope.getInterestedStudentsPerMonth = function(drawGraphic)
+        {
+            StatisticService.getInterestedStudents()
+                .success(function(data)
+                {
+                    if (!data || !data.resultado)
+                        return;
 
-                            var contadorMes = [];
+                    var contadorMes = [];
 
-                            for (var i = 0; i < data.resultado.length; i++)
-                            {
-                                contadorMes = [data.resultado[i].nome, data.resultado[i].porcentagem];
-                                $scope.alunosInteressadosPorMes.push(contadorMes);
-                                contadorMes = [];
-                            }
+                    for (var i = 0; i < data.resultado.length; i++)
+                    {
+                        data.resultado[i].porcentagem = (data.resultado[i].porcentagem >= 0) ? data.resultado[i].porcentagem : 0;
 
-                            desenhaGrafico();
-                      })
+                        contadorMes = [data.resultado[i].nome, data.resultado[i].porcentagem];
+                        $scope.alunosInteressadosPorMes.push(contadorMes);
+                        contadorMes = [];
+                    }
 
-        function desenhaGrafico()
+                    drawGraphic();
+                })
+        }
+
+        function _desenhaGrafico()
         {
             $('#pie-chart').highcharts({
                 chart:
@@ -58,6 +63,8 @@ myClass.directive('interestedStudentsPerMonth', ['StatisticService', function(St
                     }]
             });
         }
+
+        $scope.getInterestedStudentsPerMonth(_desenhaGrafico)
     }]
 
     return {

@@ -2,16 +2,21 @@
 
 var assert = require('assert');
 var StatisticModel = require('../../../models/Statistic');
-var StudentModel = require('../../../models/Student');
 var mongoose = require('mongoose');
 var dburl = require('../config/db.json');
+var DBCreator = require('../helpers/DBCreator');
 
-describe('Testing StatisticModel', function()
+describe('StatisticModel', function()
 {
     before(function()
     {
         mongoose.connect(dburl.db.test.url);
         mongoose.connection.on('error', function(){});
+    })
+
+    beforeEach(function(done)
+    {
+        new DBCreator().create('statistic', done);
     })
 
     describe('check elements creation', function()
@@ -34,91 +39,6 @@ describe('Testing StatisticModel', function()
 
     describe('findAllEarningsByTrimester', function()
     {
-        beforeEach(function(done)
-        {
-            StudentModel.create
-            ({
-                    name: "Aluno1",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma1",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["eric3"],
-                    payments: [{
-                        paymentMonth: "Dezembro",
-                        amountPaid: "123",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                },
-                {
-                    name: "Aluno2",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma2",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["eric3"],
-                    payments: [{
-                        paymentMonth: "Maio",
-                        amountPaid: "1122334455",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                },
-                {
-                    name: "Aluno2",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma2",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["Eric3"],
-                    payments: [{
-                        paymentMonth: "Maio",
-                        amountPaid: "123",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                },done);
-        })
-
-        afterEach(function(done)
-        {
-            StudentModel.remove(done);
-        })
-
         it('shouldn\'t return anything - wrong user param', function(done)
         {
             var _wrongParams = ["", null, undefined, true, false, 1, 0, function(){}, {}, []];
@@ -155,91 +75,6 @@ describe('Testing StatisticModel', function()
 
     describe('findAllInterestedStudentsPerMonth', function()
     {
-        beforeEach(function(done)
-        {
-            StudentModel.create
-            ({
-                    name: "Aluno1",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma1",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["eric3"],
-                    payments: [{
-                        paymentMonth: "Dezembro",
-                        amountPaid: "123",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                },
-                {
-                    name: "Aluno2",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma2",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["eric3"],
-                    payments: [{
-                        paymentMonth: "Maio",
-                        amountPaid: "1122334455",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                },
-                {
-                    name: "Aluno2",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma2",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["Eric3"],
-                    payments: [{
-                        paymentMonth: "Maio",
-                        amountPaid: "123",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                },done);
-        })
-
-        afterEach(function(done)
-        {
-            StudentModel.remove(done);
-        })
-
         it('shouldn\'t return anything - wrong user param', function(done)
         {
             var _wrongParams = ["", null, undefined, true, false, 1, 0, function(){}, {}, []];

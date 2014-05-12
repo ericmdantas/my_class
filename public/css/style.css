@@ -9,6 +9,7 @@
 .table thead {font-weight: bold;}
 .navbar {border-radius: 0; border-bottom: 1px solid #b2dba1;}
 .navbar-brand {font-family: "amao"; font-size: 3em;}
+.navbar-brand:hover {cursor: pointer;}
 .bckg-neutro {background: #f1f2f3;}
 .text-almost-black {color: #222;}
 .topic, .info-card, .welcome-container, select {border-radius: 3px;}

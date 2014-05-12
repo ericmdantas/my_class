@@ -41,6 +41,7 @@
         var projection = {usersAllowed: 0, payments: 0};
 
         Student.find(query, projection)
+               .sort('name')
                .exec(function(err, students)
                     {
                         if (err)
@@ -59,6 +60,7 @@
         var projection = {name: 1};
 
         Student.find(query, projection)
+            .sort('name')
             .exec(function(err, students)
             {
                 if (err)
@@ -80,6 +82,7 @@
         var projection = {name: 1};
 
         Student.find(query, projection)
+               .sort('name')
                .exec(function(err, students)
                {
                    if (err)
@@ -98,6 +101,7 @@
         var projection = {usersAllowed: 0};
 
         Student.find(query, projection)
+            .sort('name')
             .exec(function(err, doc)
             {
                 if (err)

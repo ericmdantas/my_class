@@ -4,10 +4,11 @@ var assert = require('assert');
 var StudentModel = require('../../../models/Student');
 var mongoose = require('mongoose');
 var dburl = require('../config/db.json');
+var DBCreator = require('../helpers/DBCreator');
 
-describe('Testing StudentsModel', function()
+describe('StudentsModel', function()
 {
-    var student;
+    var _student;
 
     before(function(done)
     {
@@ -16,11 +17,16 @@ describe('Testing StudentsModel', function()
         done();
     })
 
-    beforeEach(function()
+    beforeEach(function(done)
     {
-        student = new StudentModel();
+        _student = new StudentModel();
+        new DBCreator().create('student', done);
     })
 
+    afterEach(function(done)
+    {
+        StudentModel.remove(done);
+    })
 
     describe('check elements creation', function()
     {
@@ -31,70 +37,34 @@ describe('Testing StudentsModel', function()
 
         it('checks if StudentsModel findAllStudents was created', function()
         {
-            assert.strictEqual(typeof student.findAllStudentsByUser, "function");
+            assert.strictEqual(typeof _student.findAllStudentsByUser, "function");
         })
 
         it('checks if StudentsModel registerStudent was created', function()
         {
-            assert.strictEqual(typeof student.registerStudent, "function");
+            assert.strictEqual(typeof _student.registerStudent, "function");
         })
 
         it('checks if StudentsModel editStudent was created', function()
         {
-            assert.strictEqual(typeof student.editStudent, "function");
+            assert.strictEqual(typeof _student.editStudent, "function");
         })
 
         it('checks if StudentsModel deleteStudent was created', function()
         {
-            assert.strictEqual(typeof student.deleteStudent, "function");
+            assert.strictEqual(typeof _student.deleteStudent, "function");
         })
 
         it('checks if StudentsModel findAllStudentsNames was created', function()
         {
-            assert.strictEqual(typeof student.findAllStudentsNamesByClass, "function");
+            assert.strictEqual(typeof _student.findAllStudentsNamesByClass, "function");
         })
     })
 
     describe('findAllStudentsByUser', function()
     {
-        beforeEach(function(done)
-        {
-            StudentModel.create
-            ({
-                name: "Aluno1",
-                birthDate: "26/06/1989",
-                email: "ericdantas0@hotmail.com",
-                phone: "27417417",
-                class: "Turma1",
-                mobilePhone: "998989898",
-                availability: "15:00, 18:00",
-                contract: "monthly",
-                contractDate: "01/01/2010",
-                address: "Rua Avenida Estrada km 99",
-                status: "Matriculado",
-                lastModified: new Date(),
-                registered: new Date(),
-                usersAllowed: ["eric3"],
-                payments: [{
-                                paymentMonth: "04/2999",
-                                amountPaid: "123",
-                                paidWithWhat: "Dinheiro",
-                                untilWhen: "Junho",
-                                registered: new Date(),
-                                lastModified: new Date(),
-                                observation: "Observation"
-                          }]
-            }, done);
-        })
-
-        afterEach(function(done)
-        {
-            StudentModel.remove(done);
-        })
-
         it('shouldn\'t return any document - empty user', function(done)
         {
-            var _student = new StudentModel();
             var _wrongParams = ["", function(){}, true, false, 0, 1, {}, []];
 
             for (var i = 0; i < _wrongParams.length; i++)
@@ -112,7 +82,6 @@ describe('Testing StudentsModel', function()
 
         it('shouldn\'t return any document - wrong user', function(done)
         {
-            var _student = new StudentModel();
             var _wrongUser = "Eric3";
 
             _student.findAllStudentsByUser(_wrongUser , function(err, payments)
@@ -125,7 +94,6 @@ describe('Testing StudentsModel', function()
 
         it('should return document correctly', function(done)
         {
-            var _student = new StudentModel();
             var _usuario = "eric3";
 
             _student.findAllStudentsByUser(_usuario, function(err, payments)
@@ -145,8 +113,8 @@ describe('Testing StudentsModel', function()
                                                          assert.strictEqual(payments[0].contractDate, "01/01/2010");
                                                          assert.strictEqual(payments[0].address, "Rua Avenida Estrada km 99");
                                                          assert.strictEqual(payments[0].status, "Matriculado");
-                                                         assert.strictEqual(typeof payments[0].lastModified, "object");
-                                                         assert.strictEqual(typeof payments[0].registered, "object");
+                                                         assert.strictEqual(payments[0].lastModified instanceof Date, true);
+                                                         assert.strictEqual(payments[0].registered instanceof Date, true);
                                                          assert.strictEqual(payments[0].usersAllowed, undefined);
                                                          assert.strictEqual(payments[0].payments, undefined);
                                                          done();
@@ -156,69 +124,8 @@ describe('Testing StudentsModel', function()
 
     describe('findAllStudentsNames', function()
     {
-        beforeEach(function(done)
-        {
-            StudentModel.create
-            ({
-                name: "Aluno1",
-                birthDate: "26/06/1989",
-                email: "ericdantas0@hotmail.com",
-                phone: "27417417",
-                class: "Turma1",
-                mobilePhone: "998989898",
-                availability: "15:00, 18:00",
-                contract: "monthly",
-                contractDate: "01/01/2010",
-                address: "Rua Avenida Estrada km 99",
-                status: "Matriculado",
-                lastModified: new Date(),
-                registered: new Date(),
-                usersAllowed: ["eric3"],
-                payments: [{
-                    paymentMonth: "04/2999",
-                    amountPaid: "123",
-                    paidWithWhat: "Dinheiro",
-                    untilWhen: "Junho",
-                    registered: new Date(),
-                    lastModified: new Date(),
-                    observation: "Observation"
-                }]
-            },
-                {
-                    name: "Aluno2",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma2",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["outro"],
-                    payments: [{
-                        paymentMonth: "04/2999",
-                        amountPaid: "123",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                }, done);
-        })
-
-        afterEach(function(done)
-        {
-            StudentModel.remove(done);
-        })
-
         it('shouldn\'t return anything - wrong user param', function(done)
         {
-            var _student = new StudentModel();
             var _wrongParams = ["", function(){}, true, false, 0, 1, {}, []];
 
             for (var i = 0; i < _wrongParams.length; i++)
@@ -236,7 +143,6 @@ describe('Testing StudentsModel', function()
 
         it('shouldn\'t return anything - user doesn\'t exist', function(done)
         {
-            var _student = new StudentModel();
             var _wrongUser = "NO_ECXISTE";
 
             _student.findAllStudentsNames(_wrongUser, function(err, paymentsNames)
@@ -249,7 +155,6 @@ describe('Testing StudentsModel', function()
 
         it('should return info only about user eric3', function(done)
         {
-            var _student = new StudentModel();
             var _user = "eric3";
 
             _student.findAllStudentsNames(_user, function(err, paymentsNames)
@@ -264,7 +169,6 @@ describe('Testing StudentsModel', function()
 
         it('should return info only about user outro', function(done)
         {
-            var _student = new StudentModel();
             var _user = "outro";
 
             _student.findAllStudentsNames(_user, function(err, paymentsNames)
@@ -272,7 +176,10 @@ describe('Testing StudentsModel', function()
                                                      assert.strictEqual(err, null);
                                                      assert.strictEqual(typeof paymentsNames[0]._id, "object");
                                                      assert.strictEqual(paymentsNames[0].name, "Aluno2");
-                                                     assert.strictEqual(paymentsNames[1], undefined);
+                                                     assert.strictEqual(typeof paymentsNames[1]._id, "object");
+                                                     assert.strictEqual(paymentsNames[1].name, "Aluno3");
+                                                     assert.strictEqual(typeof paymentsNames[2]._id, "object");
+                                                     assert.strictEqual(paymentsNames[2].name, "Aluno4");
                                                      done();
                                                  })
         })
@@ -280,69 +187,8 @@ describe('Testing StudentsModel', function()
 
     describe('findAllStudentsNamesByClass', function()
     {
-        beforeEach(function(done)
-        {
-            StudentModel.create
-            ({
-                    name: "Aluno1",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma1",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["eric3"],
-                    payments: [{
-                        paymentMonth: "04/2999",
-                        amountPaid: "123",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                },
-                {
-                    name: "Aluno2",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma2",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["outro"],
-                    payments: [{
-                        paymentMonth: "04/2999",
-                        amountPaid: "123",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                }, done);
-        })
-
-        afterEach(function(done)
-        {
-            StudentModel.remove(done);
-        })
-
         it('should not return anything - wrong user param', function(done)
         {
-            var _student = new StudentModel();
             var _clazz = "Turma1";
 
             var _wrongParams = ["", undefined, null, {}, [], function(){}, 1, 0, true, false];
@@ -362,7 +208,6 @@ describe('Testing StudentsModel', function()
 
         it('should not return anything - wrong class param', function(done)
         {
-            var _student = new StudentModel();
             var _user = "eric3";
 
             var _wrongParams = ["", undefined, null, {}, [], function(){}, 1, 0, true, false];
@@ -382,7 +227,6 @@ describe('Testing StudentsModel', function()
 
         it('should not return anything - non existant user param', function(done)
         {
-            var _student = new StudentModel();
             var _user = "NON_ECXISTE";
             var _clazz = "Turma1";
 
@@ -397,7 +241,6 @@ describe('Testing StudentsModel', function()
 
         it('should not return anything - non existant class param', function(done)
         {
-            var _student = new StudentModel();
             var _user = "eric3";
             var _clazz = "NON_ECXISTE";
 
@@ -412,7 +255,6 @@ describe('Testing StudentsModel', function()
 
         it('should return payments names by class correctly - eric3', function(done)
         {
-            var _student = new StudentModel();
             var _user = "eric3";
             var _clazz = "Turma1";
 
@@ -427,14 +269,13 @@ describe('Testing StudentsModel', function()
 
         it('should return payments names by class correctly - eric3', function(done)
         {
-            var _student = new StudentModel();
             var _user = "outro";
             var _clazz = "Turma2";
 
             _student.findAllStudentsNamesByClass(_user, _clazz, function(err, paymentsNamesByClazz)
                                                                 {
                                                                     assert.strictEqual(err, null);
-                                                                    assert.strictEqual(paymentsNamesByClazz.length, 1);
+                                                                    assert.strictEqual(paymentsNamesByClazz.length, 3);
                                                                     assert.strictEqual(paymentsNamesByClazz[0].name, "Aluno2");
                                                                     done();
                                                                 })
@@ -450,7 +291,6 @@ describe('Testing StudentsModel', function()
 
         it('shouldn\'t register payment - wrong user param', function(done)
         {
-            var _student = new StudentModel();
             var _pagamento = {name: "Aluno1"};
             var _wrongParams = ["", undefined, null, {}, [], function(){}, 1, 0, true, false];
 
@@ -468,7 +308,6 @@ describe('Testing StudentsModel', function()
 
         it('shouldn\'t register payment - wrong payment param', function(done)
         {
-            var _student = new StudentModel();
             var _wrongParams = ["", undefined, null, {}, [], function(){}, 1, 0, true, false];
             var _user = "eric3";
 
@@ -486,7 +325,6 @@ describe('Testing StudentsModel', function()
 
         it('shouldn\'t register payment - both user and payment are wrong', function(done)
         {
-            var _student = new StudentModel();
             var _wrongParams = ["", undefined, null, {}, [], function(){}, 1, 0, true, false];
 
             for (var i = 0; i < _wrongParams.length; i++)
@@ -503,8 +341,6 @@ describe('Testing StudentsModel', function()
 
         it('should register payment correctly', function(done)
         {
-            var _student = new StudentModel();
-            var _wrongParams = ["", undefined, null, {}, [], function(){}, 1, 0, true, false];
             var _user = "eric3";
             var _pagamento = {name: "Aluno1"};
 
@@ -518,70 +354,8 @@ describe('Testing StudentsModel', function()
 
     describe('findAllPaymentsByUser', function()
     {
-        beforeEach(function(done)
-        {
-            StudentModel.create
-            ({
-                    name: "Aluno1",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma1",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["eric3"],
-                    payments: [{
-                        paymentMonth: "04/2999",
-                        amountPaid: "123",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                },
-                {
-                    name: "Aluno2",
-                    birthDate: "26/06/1989",
-                    email: "ericdantas0@hotmail.com",
-                    phone: "27417417",
-                    class: "Turma2",
-                    mobilePhone: "998989898",
-                    availability: "15:00, 18:00",
-                    contract: "monthly",
-                    contractDate: "01/01/2010",
-                    address: "Rua Avenida Estrada km 99",
-                    status: "Matriculado",
-                    lastModified: new Date(),
-                    registered: new Date(),
-                    usersAllowed: ["outro"],
-                    payments: [{
-                        paymentMonth: "04/2999",
-                        amountPaid: "123",
-                        paidWithWhat: "Dinheiro",
-                        untilWhen: "Junho",
-                        registered: new Date(),
-                        lastModified: new Date(),
-                        observation: "Observation"
-                    }]
-                }, done);
-        })
-
-        afterEach(function(done)
-        {
-            StudentModel.remove(done);
-        })
-
         it('shouldn\'t find all payments - wrong user param', function(done)
         {
-            var _student = new StudentModel();
-
             var _wrongParams = ["", null, function(){}, undefined, true, false, 1, 0, {}, []];
 
             for (var i = 0; i < _wrongParams.length; i++)
@@ -599,7 +373,6 @@ describe('Testing StudentsModel', function()
 
         it('should find all payments correctly', function(done)
         {
-            var _student = new StudentModel();
             var _user = "eric3";
 
             _student.findAllPaymentsByUser(_user, function(err, payments)
@@ -641,9 +414,8 @@ describe('Testing StudentsModel', function()
             StudentModel.remove(done);
         })
 
-        it('shouldn\'t register student - wrong user param', function(done)
+        it('shouldn\'t register _student - wrong user param', function(done)
         {
-            var _student = new StudentModel();
             var _aluno = {name: "Aluno3"};
             var _wrongParams = ["", null, undefined, true, false, 1, 0, {}, []];
 
@@ -659,9 +431,8 @@ describe('Testing StudentsModel', function()
             done();
         })
 
-        it('shouldn\'t register student - wrong student param', function(done)
+        it('shouldn\'t register _student - wrong _student param', function(done)
         {
-            var _student = new StudentModel();
             var _user = "eric3";
             var _wrongParams = ["", null, undefined, true, false, 1, 0, {}, []];
 
@@ -677,9 +448,8 @@ describe('Testing StudentsModel', function()
             done();
         })
 
-        it('shouldn\'t register student - both student and user are wrong', function(done)
+        it('shouldn\'t register _student - both _student and user are wrong', function(done)
         {
-            var _student = new StudentModel();
             var _wrongParams = ["", null, undefined, true, false, 1, 0, {}, []];
 
             for (var i = 0; i < _wrongParams.length; i++)
@@ -694,9 +464,8 @@ describe('Testing StudentsModel', function()
             done();
         })
 
-        it('should register student correctly', function(done)
+        it('should register _student correctly', function(done)
         {
-            var _student = new StudentModel();
             var _aluno = {name: "Aluno1", birthDate: "26/06/1989"};
             var _user = "eric3";
 
@@ -711,44 +480,8 @@ describe('Testing StudentsModel', function()
 
     describe('editStudent', function()
     {
-        beforeEach(function(done)
+        it('shouldn\'t edit _student - wrong user param', function(done)
         {
-            StudentModel.create
-            ({
-                name: "Aluno1",
-                birthDate: "26/06/1989",
-                email: "ericdantas0@hotmail.com",
-                phone: "27417417",
-                class: "Turma1",
-                mobilePhone: "998989898",
-                availability: "15:00, 18:00",
-                contract: "monthly",
-                contractDate: "01/01/2010",
-                address: "Rua Avenida Estrada km 99",
-                status: "Matriculado",
-                lastModified: new Date(),
-                registered: new Date(),
-                usersAllowed: ["eric3"],
-                payments: [{
-                    paymentMonth: "04/2999",
-                    amountPaid: "123",
-                    paidWithWhat: "Dinheiro",
-                    untilWhen: "Junho",
-                    registered: new Date(),
-                    lastModified: new Date(),
-                    observation: "Observation"
-                }]
-            }, done);
-        })
-
-        afterEach(function(done)
-        {
-            StudentModel.remove(done);
-        })
-
-        it('shouldn\'t edit student - wrong user param', function(done)
-        {
-            var _student = new StudentModel();
             var _id = "534dafae51aaf04b9b8c5b6f";
             var _aluno = {name: "Aluno3"};
 
@@ -766,9 +499,8 @@ describe('Testing StudentsModel', function()
             done();
         })
 
-        it('shouldn\'t edit student - wrong student param', function(done)
+        it('shouldn\'t edit _student - wrong _student param', function(done)
         {
-            var _student = new StudentModel();
             var _id = "534dafae51aaf04b9b8c5b6f";
             var _user = "eric3";
 
@@ -786,9 +518,8 @@ describe('Testing StudentsModel', function()
             done();
         })
 
-        it('shouldn\'t edit student - wrong id param', function(done)
+        it('shouldn\'t edit _student - wrong id param', function(done)
         {
-            var _student = new StudentModel();
             var _user = "eric3";
             var _aluno = {name: "Aluno1"};
 
@@ -806,10 +537,8 @@ describe('Testing StudentsModel', function()
             done();
         })
 
-        it('shouldn\'t edit student - all params are wrong', function(done)
+        it('shouldn\'t edit _student - all params are wrong', function(done)
         {
-            var _student = new StudentModel();
-
             var _wrongParams = ["", null, undefined, function(){}, true, false, 1, 0, {}, []];
 
             for (var i = 0; i < _wrongParams.length; i++)
@@ -824,9 +553,8 @@ describe('Testing StudentsModel', function()
             done();
         })
 
-        it('should edit student correctly', function(done)
+        it('should edit _student correctly', function(done)
         {
-            var _student = new StudentModel();
             var _user = "eric3";
             var _aluno = {name: "Aluno3"};
             var _id = "534dafae51aaf04b9b8c5b6f";
@@ -842,44 +570,8 @@ describe('Testing StudentsModel', function()
 
     describe('deleteStudent', function()
     {
-        beforeEach(function(done)
+        it('shouldn\'t delete _student - wrong user param', function(done)
         {
-            StudentModel.create
-            ({
-                name: "Aluno1",
-                birthDate: "26/06/1989",
-                email: "ericdantas0@hotmail.com",
-                phone: "27417417",
-                class: "Turma1",
-                mobilePhone: "998989898",
-                availability: "15:00, 18:00",
-                contract: "monthly",
-                contractDate: "01/01/2010",
-                address: "Rua Avenida Estrada km 99",
-                status: "Matriculado",
-                lastModified: new Date(),
-                registered: new Date(),
-                usersAllowed: ["eric3"],
-                payments: [{
-                    paymentMonth: "04/2999",
-                    amountPaid: "123",
-                    paidWithWhat: "Dinheiro",
-                    untilWhen: "Junho",
-                    registered: new Date(),
-                    lastModified: new Date(),
-                    observation: "Observation"
-                }]
-            }, done);
-        })
-
-        afterEach(function(done)
-        {
-            StudentModel.remove(done);
-        })
-
-        it('shouldn\'t delete student - wrong user param', function(done)
-        {
-            var _student = new StudentModel();
             var _id = "534dafae51aaf04b9b8c5b6f";
 
             var _wrongParams = ["", null, undefined, function(){}, {}, [], true, false, 1, 0];
@@ -896,9 +588,8 @@ describe('Testing StudentsModel', function()
             done();
         })
 
-        it('shouldn\'t delete student - wrong ID param', function(done)
+        it('shouldn\'t delete _student - wrong ID param', function(done)
         {
-            var _student = new StudentModel();
             var _user = "eric3";
 
             var _wrongParams = ["", null, undefined, function(){}, {}, [], true, false, 1, 0];
@@ -915,9 +606,8 @@ describe('Testing StudentsModel', function()
             done();
         })
 
-        it('should delete student correctly', function(done)
+        it('should delete _student correctly', function(done)
         {
-            var _student = new StudentModel();
             var _user = "eric3";
             var _id = "534dafae51aaf04b9b8c5b6f";
 
