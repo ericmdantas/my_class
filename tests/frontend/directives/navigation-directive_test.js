@@ -3,6 +3,7 @@
 describe('navigation-directive', function()
 {
     var _scope, _element, _compile, _locationMock;
+    var _activableURLs = ['aulas', 'turmas', 'professores', 'alunos', 'livros', 'pagamentos', 'estatisticas'];
 
     beforeEach(module('myClass'));
     beforeEach(inject(function($injector)
@@ -43,6 +44,7 @@ describe('navigation-directive', function()
 
         _element = angular.element(_html);
         _compile(_element)(_scope);
+
         _scope.$digest();
     }))
 
@@ -92,6 +94,49 @@ describe('navigation-directive', function()
                 expect(_element.find('#nav-header li').eq(i).hasClass('active')).toBeTruthy();
             }
         })
+    })
+
+    describe('checks if li class is being active even if the user didn\'t click any link from the navigation', function()
+    {
+        it('should not add the class active - wrong url', function()
+        {
+            var _wrongURLs = ['/principal', '/abc', 'xyz', '/sair', 'sair'];
+            var _liLength = _element.find('ul li').length;
+
+            for (var i = 0; i < _wrongURLs.length; i++)
+            {
+                _locationMock.path(_wrongURLs[i]);
+
+                for (var j = 0; j < _liLength; j++)
+                {
+                    expect(_element.find('ul li').eq(j).hasClass('active')).toBeFalsy();
+                }
+            }
+        })
+
+        /* TODO: FIX THE COMMENTED TEST, CHECK HOW TO TRIGGER THE ROUTECHANGESUCCESS
+
+        it('should activate the right li', function()
+        {
+            var _li = _element.find('#nav-header li');
+
+            for (var i = 0; i < _activableURLs.length; i++)
+            {
+                _scope.$apply(function()
+                {
+                    _locationMock.path('/'+_activableURLs[i]);
+
+                    for (var j = 0; j < _li.length; j++)
+                    {
+                        if (_locationMock.path().replace('/', '') === _li.eq(j).text().trim())
+                            expect(_li.eq(j).hasClass('active')).toBeTruthy();
+                        else
+                            expect(_li.eq(j).hasClass('active')).toBeFalsy();
+                    }
+                })
+
+            }
+        })*/
     })
 
     describe('change of title', function()

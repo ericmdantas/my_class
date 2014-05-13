@@ -36,15 +36,19 @@ myClass.directive('navigation', ['$rootScope', '$location', function($rootScope,
 
         document.title = 'my class | principal';
 
-        /*
-
-        TODO: WHEN THE USER CHANGES THE URL BY HIMSELF, THE DIRECTIVE SHOULD ALSO HANDLE THE CHANGE SUCCESS TO ACTIVATE RESPECTIVE LI
-
-        $rootScope.on('$locationChangeSuccess', function()
-
+        $rootScope.$on('$routeChangeSuccess', function()
         {
-            alert();
-        })*/
+            var _li = element.find('#nav-header li');
+
+            for (var i = 0; i < _li.length; i++)
+            {
+                if ($location.path().replace('/', '') === _li.eq(i).text().trim())
+                {
+                    _li.eq(i).addClass('active');
+                    break;
+                }
+            }
+        })
 
         element.find('.navbar-brand').on('click', function()
         {
