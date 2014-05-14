@@ -66,7 +66,7 @@ services.pageConfig = function()
         TAMANHO_CAMPO_QUANTIA: "12",
         TAMANHO_CAMPO_TELEFONE: "11",
         TAMANHO_CAMPO_DATA: "10",
-        TAMANHO_CAMPO_HORARIO: "5",
+        TAMANHO_CAMPO_HORARIO: "22",
         TAMANHO_CAMPO_QUANTIDADE: "3"
     }
 

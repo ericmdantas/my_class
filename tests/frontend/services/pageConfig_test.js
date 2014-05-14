@@ -87,13 +87,14 @@ describe('PAGECONFIG BEING TESTED', function()
 
         it('should have all the constants for maxLength', function()
         {
+            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_QUANTIDADE).toEqual('3');
+            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_DATA).toEqual('10');
+            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_TELEFONE).toEqual('11');
+            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_QUANTIA).toEqual('12');
+            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_HORARIO).toEqual('22');
+            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_EMAIL).toEqual('30');
             expect(pageConfig.lengthConstants.TAMANHO_CAMPO_NOME).toEqual('50');
             expect(pageConfig.lengthConstants.TAMANHO_CAMPO_ENDERECO).toEqual('50');
-            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_EMAIL).toEqual('30');
-            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_QUANTIA).toEqual('12');
-            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_TELEFONE).toEqual('11');
-            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_DATA).toEqual('10');
-            expect(pageConfig.lengthConstants.TAMANHO_CAMPO_QUANTIDADE).toEqual('3');
         })
     })
 })

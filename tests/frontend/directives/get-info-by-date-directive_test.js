@@ -10,23 +10,7 @@ describe('getInfoByDate being tested', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
 
-        var _html = '<get-info-by-date getinfo="getClassesDailyInfo(date, turma._id)">'+
-                        '<div class="select-data" align="center">'+
-                            '<label>mês/ano</label>'+
-                            '<div class="row">'+
-                                '<div>'+
-                                    '<div class="input-group">'+
-                                        '<input type="text" class="form-control" ng-model="date" maxlength="7" />'+
-                                        '<span class="input-group-btn">'+
-                                            '<button class="btn btn-default" type="button" ng-disabled="isItDisabled" ng-click="getinfo({date: date, id: id})">' +
-                                                '<span class="glyphicon glyphicon-refresh"></span>'+
-                                            '</button>'+
-                                        '</span>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'+
-                    '</get-info-by-date>';
+        var _html = '<get-info-by-date getinfo="getClassesDailyInfo(date, turma._id)"></get-info-by-date>';
 
         _element = angular.element(_html);
 

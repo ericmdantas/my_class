@@ -19,44 +19,44 @@
                 </div>
                 <div class="modal-body">
                     <label>nome</label>
-                    <input type="text" class="form-control" ng-model="novoProfessor.name" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_NOME}}" autofocus/>
+                    <input type="text" class="form-control" ng-model="novoProfessor.name" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
                     <br/>
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>data de nascimento</label>
-                            <input type="date" class="form-control" ng-model="novoProfessor.birthDate" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_DATA}}"/>
+                            <input type="date" class="form-control" ng-model="novoProfessor.birthDate" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_DATA}}"/>
                         </aside>
                         <aside class="pull-right">
                             <label>data de admissão</label>
-                            <input type="date" class="form-control" ng-model="novoProfessor.admission" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_DATA}}"/>
+                            <input type="date" class="form-control" ng-model="novoProfessor.admission" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_DATA}}"/>
                         </aside>
                     </div>
                     <br/>
                     <label>email</label>
-                    <input type="text" class="form-control" ng-model="novoProfessor.email" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_EMAIL}}"/>
+                    <input type="text" class="form-control" ng-model="novoProfessor.email" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_EMAIL}}"/>
                     <br/>
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>tel. residencial</label>
-                            <input type="text" class="form-control" ng-model="novoProfessor.phone" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_TELEFONE}}" numbers-only/>
+                            <input type="text" class="form-control" ng-model="novoProfessor.phone" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
                         </aside>
                         <aside class="pull-right">
                             <label>celular</label>
-                            <input type="text" class="form-control" ng-model="novoProfessor.mobilePhone" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_TELEFONE}}" numbers-only/>
+                            <input type="text" class="form-control" ng-model="novoProfessor.mobilePhone" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
                         </aside>
                     </div>
                     <br/>
                     <label>endereço</label>
-                    <input type="text" class="form-control" ng-model="novoProfessor.address" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_NOME}}"/>
+                    <input type="text" class="form-control" ng-model="novoProfessor.address" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
                     <br/>
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>disponibilidade</label>
-                            <input type="time" class="form-control" ng-model="novoProfessor.availability" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_HORARIO}}"/>
+                            <input type="text" class="form-control" ng-model="novoProfessor.availability" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
                         </aside>
                         <aside class="pull-right">
                             <label>salário</label>
-                            <input type="text" class="form-control" ng-model="novoProfessor.salary" numbers-only maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_QUANTIA}}"/>
+                            <input type="text" class="form-control" ng-model="novoProfessor.salary" numbers-only maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_QUANTIA}}"/>
                         </aside>
                     </div>
                 </div>
@@ -81,46 +81,45 @@
                     <h4 class="modal-title">Editar {{professorEscolhido.name}}</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Para cadastrar o aluno, favor preencher as informações abaixo:</p>
                     <label>nome</label>
-                    <input type="text" class="form-control" ng-model="professorEscolhido.name" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_NOME}}"/>
+                    <input type="text" class="form-control" ng-model="professorEscolhido.name" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
                     <br/>
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>data de nascimento</label>
-                            <input type="date" class="form-control" ng-model="professorEscolhido.birthDate" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_DATA}}"/>
+                            <input type="date" class="form-control" ng-model="professorEscolhido.birthDate" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_DATA}}"/>
                         </aside>
                         <aside class="pull-right">
                             <label>data de admissão</label>
-                            <input type="date" class="form-control" ng-model="professorEscolhido.admission" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_DATA}}"/>
+                            <input type="date" class="form-control" ng-model="professorEscolhido.admission" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_DATA}}"/>
                         </aside>
                     </div>
                     <br/>
                     <label>email</label>
-                    <input type="text" class="form-control" ng-model="professorEscolhido.email" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_EMAIL}}"/>
+                    <input type="text" class="form-control" ng-model="professorEscolhido.email" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_EMAIL}}"/>
                     <br/>
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>tel. residencial</label>
-                            <input type="text" class="form-control" ng-model="professorEscolhido.phone" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_TELEFONE}}"/>
+                            <input type="text" class="form-control" ng-model="professorEscolhido.phone" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_TELEFONE}}"/>
                         </aside>
                         <aside class="pull-right">
                             <label>celular</label>
-                            <input type="text" class="form-control" ng-model="professorEscolhido.mobilePhone" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_TELEFONE}}"/>
+                            <input type="text" class="form-control" ng-model="professorEscolhido.mobilePhone" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_TELEFONE}}"/>
                         </aside>
                     </div>
                     <br/>
                     <label>endereço</label>
-                    <input type="text" class="form-control" ng-model="professorEscolhido.address" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_ENDERECO}}"/>
+                    <input type="text" class="form-control" ng-model="professorEscolhido.address" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_ENDERECO}}"/>
                     <br/>
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>disponibilidade</label>
-                            <input type="time" class="form-control" ng-model="professorEscolhido.availability" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_HORARIO}}"/>
+                            <input type="text" class="form-control" ng-model="professorEscolhido.availability" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
                         </aside>
                         <aside class="pull-right">
                             <label>salário</label>
-                            <input type="text" class="form-control" ng-model="professorEscolhido.salary" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_QUANTIA}}"/>
+                            <input type="text" class="form-control" ng-model="professorEscolhido.salary" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_QUANTIA}}"/>
                         </aside>
                     </div>
                 </div>

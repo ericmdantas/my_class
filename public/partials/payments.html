@@ -7,7 +7,7 @@
                 ng-click="openModalToRegisterPayment()">
             realizar pagamento
         </button>
-        <input type="text" class="form-control fc-search" placeholder="procurar pagamento" ng-model="pagamentoProcurado" maxlength="100" autofocus/>
+        <input type="text" class="form-control fc-search" placeholder="procurar pagamento" ng-model="pagamentoProcurado" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
     </div>
 
     <div class="modal fade" id="modal-pay">

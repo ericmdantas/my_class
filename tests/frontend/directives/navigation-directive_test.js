@@ -12,35 +12,7 @@ describe('navigation-directive', function()
         _compile = $injector.get('$compile');
         _locationMock = $injector.get('$location');
 
-        var _html =  '<navigation>'
-                        '<header class="navbar navbar-default navbar-fixed-top" role="navigation" >'+
-                            '<div>'+
-                                '<div class="navbar-header">'+
-                                    '<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-header">'+
-                                        '<span class="sr-only">Toggle navigation</span>'+
-                                        '<span class="icon-bar"></span>'+
-                                        '<span class="icon-bar"></span>'+
-                                        '<span class="icon-bar"></span>'+
-                                    '</button>'+
-                                    '<a class="navbar-brand" href>my class</a>'+
-                                '</div>'+
-                                '<div class="collapse navbar-collapse transition" id="nav-header">'+
-                                    '<ul class="nav navbar-nav">'+
-                                        '<li><a href ng-cloak>aulas</a></li>'+
-                                        '<li><a href ng-cloak>turmas</a></li>'+
-                                        '<li><a href ng-cloak>professores</a></li>'+
-                                        '<li><a href ng-cloak>alunos</a></li>'+
-                                        '<li><a href ng-cloak>livros</a></li>'+
-                                        '<li><a href ng-cloak>pagamentos</a></li>'+
-                                        '<li><a href ng-cloak>estatisticas</a></li>'+
-                                    '</ul>'+
-                                    '<ul class="nav navbar-nav navbar-right">'+
-                                        '<li ng-click="logout(\'usuarioLogado\')"><a href>sair</a></li>'+
-                                    '</ul>'+
-                                '</div>'+
-                            '</div>'+
-                        '</header>'+
-                     '</navigation>';
+        var _html =  '<navigation></navigation>';
 
         _element = angular.element(_html);
         _compile(_element)(_scope);
@@ -76,22 +48,22 @@ describe('navigation-directive', function()
         {
             _element.find('.icon-bar')[0].click();
 
-            var _numLi = _element.find('#nav-header li').length;
+            var _numLi = _element.find('#nav-header li.activable').length;
 
             for (var i = 0; i < _numLi; i++)
             {
-                expect(_element.find('#nav-header li').eq(i).hasClass('active')).toBeFalsy();
+                expect(_element.find('#nav-header li.activable').eq(i).hasClass('active')).toBeFalsy();
             }
         })
 
         it ('should set active to the correct li element', function()
         {
-            var _numLi = _element.find('#nav-header li').length - 1; //removes sair (logout)
+            var _numLi = _element.find('#nav-header li.activable').length; //removes sair (logout)
 
             for (var i = 0; i < _numLi; i++)
             {
-                _element.find('#nav-header li').eq(i).click();
-                expect(_element.find('#nav-header li').eq(i).hasClass('active')).toBeTruthy();
+                _element.find('#nav-header li.activable').eq(i).click();
+                expect(_element.find('#nav-header li.activable').eq(i).hasClass('active')).toBeTruthy();
             }
         })
     })
@@ -100,12 +72,15 @@ describe('navigation-directive', function()
     {
         it('should not add the class active - wrong url', function()
         {
-            var _wrongURLs = ['/principal', '/abc', 'xyz', '/sair', 'sair'];
+            var _wrongURLs = ['/principal', '/abc', 'xyz'];
             var _liLength = _element.find('ul li').length;
 
             for (var i = 0; i < _wrongURLs.length; i++)
             {
-                _locationMock.path(_wrongURLs[i]);
+                _scope.$apply(function()
+                {
+                    _locationMock.path(_wrongURLs[i]);
+                })
 
                 for (var j = 0; j < _liLength; j++)
                 {
@@ -114,29 +89,25 @@ describe('navigation-directive', function()
             }
         })
 
-        /* TODO: FIX THE COMMENTED TEST, CHECK HOW TO TRIGGER THE ROUTECHANGESUCCESS
-
         it('should activate the right li', function()
         {
-            var _li = _element.find('#nav-header li');
+            var _li = _element.find('#nav-header li.activable');
 
             for (var i = 0; i < _activableURLs.length; i++)
             {
                 _scope.$apply(function()
                 {
                     _locationMock.path('/'+_activableURLs[i]);
-
-                    for (var j = 0; j < _li.length; j++)
-                    {
-                        if (_locationMock.path().replace('/', '') === _li.eq(j).text().trim())
-                            expect(_li.eq(j).hasClass('active')).toBeTruthy();
-                        else
-                            expect(_li.eq(j).hasClass('active')).toBeFalsy();
-                    }
                 })
 
+                for (var j = 0; j < _li.length; j++)
+                {
+                    _locationMock.path().replace('/', '') === _li.eq(j).text().trim() ?
+                        expect(_li.eq(j).hasClass('active')).toBeTruthy():
+                        expect(_li.eq(j).hasClass('active')).toBeFalsy();
+                }
             }
-        })*/
+        })
     })
 
     describe('change of title', function()
@@ -155,12 +126,12 @@ describe('navigation-directive', function()
 
         it ('should set active to the correct li element', function()
         {
-            var _numLi = _element.find('#nav-header li').length - 1; //remove sair (logout)
+            var _numLi = _element.find('#nav-header li.activable').length;
 
             for (var i = 0; i < _numLi; i++)
             {
-                _element.find('#nav-header li').eq(i).click();
-                expect(document.title).toContain(_element.find('#nav-header li').eq(i).text());
+                _element.find('#nav-header li.activable').eq(i).click();
+                expect(document.title).toContain(_element.find('#nav-header li.activable').eq(i).text());
             }
         })
     })

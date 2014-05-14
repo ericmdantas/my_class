@@ -12,11 +12,7 @@ describe('to-the-top-directive', function()
         _compile = $injector.get('$compile');
         _windowMock = $injector.get('$window');
 
-        var _html = '<to-the-top>'+
-                        '<div class="to-the-top transition">'+
-                            '<span class="glyphicon glyphicon-chevron-up"></span>'+
-                        '</div>'+
-                    '</to-the-top>';
+        var _html = '<to-the-top></to-the-top>';
 
         _element = angular.element(_html);
         _compile(_element)(_scope);

@@ -13,12 +13,7 @@ describe('EARNINGSTATS BEING TESTED', function()
 
         _httpMock.when('GET', '/api/earnings/trimester').respond({});
 
-        var _html = '<earnings-stats>' +
-                        '<div class="info-card transition">'+
-                            '<h3>arrecadação por trimestre</h3>'+
-                            '<div id="column-chart" class="chart"></div>'+
-                        '</div>'+
-                   '</earnings-stats>';
+        var _html = '<earnings-stats></earnings-stats>';
 
         _element = angular.element(_html);
 

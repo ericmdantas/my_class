@@ -12,12 +12,7 @@ describe('interested students per month being tested', function()
         _compile = $injector.get('$compile');
         _httpMock.when('GET', '/api/interestedStudents/month').respond({});
 
-        var _html = '<interested-students-per-month>'
-                       '<div class="info-card transition">'+
-                           '<h3>interesse por mês</h3>'+
-                           '<div id="pie-chart" class="chart" align="center"></div>'+
-                       '</div>'+
-                   '</interested-students-per-month>';
+        var _html = '<interested-students-per-month></interested-students-per-month>';
 
         _element = angular.element(_html);
         _compile(_element)(_scope);

@@ -20,18 +20,20 @@
                 <div class="modal-body">
                     <p>para cadastrar o livro, favor preencher as informações abaixo:</p>
                     <label>nome</label>
-                    <input type="text" class="form-control" ng-model="novoLivro.name" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_NOME}}" autofocus/>
+                    <input type="text" class="form-control" ng-model="novoLivro.name" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
                     <br/>
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>quantidade</label>
-                            <input type="text" class="form-control" ng-model="novoLivro.quantity" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_QUANTIA}}" numbers-only>
+                            <input type="text" class="form-control" ng-model="novoLivro.quantity" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_QUANTIA}}" numbers-only>
                         </aside>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="registerBook(novoLivro)"
-                            ng-disabled="!(!!novoLivro.name && !!novoLivro.quantity)">
+                    <button type="button" class="btn btn-default"
+                            ng-click="registerBook(novoLivro)"
+                            ng-disabled="!(!!novoLivro.name && !!novoLivro.quantity)"
+                            block-all-inputs-buttons-from="modal-register-book">
                         cadastrar
                     </button>
                     <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
@@ -51,12 +53,12 @@
                 <div class="modal-body">
                     <p>para editar o livro escolhido, favor preencher as informações abaixo:</p>
                     <label>nome</label>
-                    <input type="text" class="form-control" ng-model="livroEscolhido.name" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_NOME}}" autofocus/>
+                    <input type="text" class="form-control" ng-model="livroEscolhido.name" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
                     <br/>
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>quantidade</label>
-                            <input type="text" class="form-control" ng-model="livroEscolhido.quantity" maxlength="{{cfg.lengthConstants.TAMANHO_MAXIMO_QUANTIA}}" numbers-only/>
+                            <input type="text" class="form-control" ng-model="livroEscolhido.quantity" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_QUANTIA}}" numbers-only/>
                         </aside>
                     </div>
                 </div>
