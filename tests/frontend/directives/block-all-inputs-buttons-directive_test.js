@@ -2,7 +2,7 @@
 
 describe('block-all-inputs-buttons-from-directive', function()
 {
-    var _scope, _element, _compile, _html;
+    var _scope, _element, _compile, _html, _timeout;
 
     beforeEach(module('myClass'));
 
@@ -10,6 +10,7 @@ describe('block-all-inputs-buttons-from-directive', function()
     {
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
+        _timeout = $injector.get('$timeout');
 
         _html =     '<div id="teste123">' +
                         '<input type="text" />' +
@@ -41,14 +42,26 @@ describe('block-all-inputs-buttons-from-directive', function()
             }
         })
 
-        /* TODO: CHECK HOW TO TEST THIS
+        // TODO: CHECK HOW TO TEST THIS - REMEMBER TO ADD .EACH()
 
         it('should disable all the inputs when the click lands on the directive', function()
         {
             _element.find('#click-me').eq(0).click();
+            expect(_element.find('input').eq(0).prop('disabled')).toBeTruthy();
+        })
 
-            console.log(_element.find('#teste123 input'))
-            //expect(_element.find('#teste input').attr('disabled')).toEqual('disabled');
+        it('should release the timeout without errors', function()
+        {
+            _element.find('#click-me').eq(0).click();
+            _timeout.flush();
+        })
+
+        //TODO: CHECK IF AFTER RELEASING TIMEOUT, THE INPUTS ARE ENABLED AGAIN
+
+        /*it('should disable all the inputs when the click lands on the directive', function()
+        {
+            _element.find('#click-me').eq(0).click();
+            expect($('#teste123 input').prop('disabled')).toBeTruthy();
         })*/
     })
 })

@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.directive('blockAllInputsButtonsFrom', [function()
+myClass.directive('blockAllInputsButtonsFrom', ['$timeout', function($timeout)
 {
     var _link = function(scope, element, attrs)
     {
@@ -11,11 +11,11 @@ myClass.directive('blockAllInputsButtonsFrom', [function()
                              _id + ' button, ' +
                              _id + ' textarea';
 
-            $(_toDisable).prop('disabled', 'disabled');
+            $(_toDisable).prop('disabled', true);
 
-            setTimeout(function()
+            $timeout(function()
             {
-                $(_toDisable).prop('disabled', '');
+                $(_toDisable).prop('disabled', false);
             }, 5555)
         })
     }

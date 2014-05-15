@@ -35,9 +35,12 @@ describe('numbersOnly', function()
 
         /*it('should let only numbers in the input', function()
         {
-            _element.find('.form-control').val('a123');
+            var _el = _element.find('.form-control').eq(0);
 
-            expect(_element.find('.form-control').val()).toEqual('123');
+            _el.val('a123');
+            _el.trigger('input');
+
+            expect(_scope.something).toEqual('123');
         })*/
 
         it('should display numbers correctly', function()

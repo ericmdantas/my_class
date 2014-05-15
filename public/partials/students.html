@@ -50,7 +50,7 @@
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>disponibilidade</label>
-                            <input type="time" class="form-control" ng-model="novoAluno.availability" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
+                            <input type="text" class="form-control" ng-model="novoAluno.availability" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
                         </aside>
                         <aside class="pull-right">
                             <label>status</label>
@@ -121,7 +121,7 @@
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>disponibilidade</label>
-                            <input type="time" class="form-control" ng-model="alunoEscolhido.availability" maxlength="15"/>
+                            <input type="text" class="form-control" ng-model="alunoEscolhido.availability" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
                         </aside>
                         <aside class="pull-right">
                             <label>status</label>
@@ -135,7 +135,7 @@
                         </aside>
                         <aside class="pull-right">
                             <label>data do contrato</label>
-                            <input type="date" class="form-control" ng-model="alunoEscolhido.contractDate" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
+                            <input type="date" class="form-control" ng-model="alunoEscolhido.contractDate" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_DATA}}"/>
                         </aside>
                     </div>
                 </div>
