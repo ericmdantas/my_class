@@ -8,7 +8,6 @@ myClass.directive('blockAllInputsButtonsFrom', ['$timeout', function($timeout)
         {
             var _id = '#' + attrs.blockAllInputsButtonsFrom;
             var _toDisable = _id + ' input, ' +
-                             _id + ' button, ' +
                              _id + ' textarea';
 
             $(_toDisable).prop('disabled', true);

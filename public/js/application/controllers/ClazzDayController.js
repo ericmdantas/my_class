@@ -75,7 +75,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
     $scope.registerClazzDay = function(turma, alunos)
     {
         var _problemasAlunos = (lib.isObjectInvalid(alunos));
-        var _problemasTurma = ((lib.isObjectInvalid(turma)) || (!turma.teacherName) || (!turma.subject));
+        var _problemasTurma = ((lib.isObjectInvalid(turma)) || (!turma.teacherName) || (!turma.teacherName.name) || (!turma.subject));
 
         if (_problemasAlunos || _problemasTurma)
             throw new Error('Não será possível continuar, pois alguns parâmetros não foram informados.');
@@ -86,7 +86,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
         _moment.dailyInfo = {
                                 day: moment().format("DD"),
                                 monthYear: currentMonthYear.replace('/', '_'),
-                                teacherName: turma.teacherName,
+                                teacherName: turma.teacherName.name,
                                 subject: turma.subject,
                                 studentByDay: alunos
                             };

@@ -43,8 +43,10 @@
                     <br/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" ng-click="pay(alunoPagando)" data-dismiss="modal"
-                            ng-disabled="!(!!alunoPagando.name && !!alunoPagando.amountPaid && !!alunoPagando.paidWithWhat && !!alunoPagando.paymentMonth)">
+                    <button type="button" class="btn btn-default"
+                            ng-click="pay(alunoPagando)"
+                            ng-disabled="!(!!alunoPagando.name && !!alunoPagando.amountPaid && !!alunoPagando.paidWithWhat && !!alunoPagando.paymentMonth)"
+                            block-all-inputs-buttons-from="modal-pay">
                         pagar
                     </button>
                     <img src="img/loading.gif" ng-show=isLoadingVisible.modal />

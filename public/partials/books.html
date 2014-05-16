@@ -18,14 +18,14 @@
                     <h4 class="modal-title">cadastrar {{novoLivro.name}}</h4>
                 </div>
                 <div class="modal-body">
-                    <p>para cadastrar o livro, favor preencher as informações abaixo:</p>
                     <label>nome</label>
                     <input type="text" class="form-control" ng-model="novoLivro.name" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}" autofocus/>
                     <br/>
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>quantidade</label>
-                            <input type="text" class="form-control" ng-model="novoLivro.quantity" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_QUANTIA}}" numbers-only>
+                            <input type="text" class="form-control" ng-model="novoLivro.quantity"
+                                    maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_QUANTIA}}" numbers-only />
                         </aside>
                     </div>
                 </div>
@@ -63,7 +63,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" ng-click="editBook(livroEscolhido)">continuar</button>
+                    <button type="button" class="btn btn-default"
+                            ng-click="editBook(livroEscolhido)"
+                            block-all-inputs-buttons-from="modal-edit-book">
+                        continuar
+                    </button>
                     <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
                     <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
                 </div>

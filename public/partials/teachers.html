@@ -63,7 +63,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             ng-disabled="!(!!novoProfessor.name && novoProfessor.birthDate && !!novoProfessor.address)"
-                            ng-click="registerNewTeacher(novoProfessor)">
+                            ng-click="registerNewTeacher(novoProfessor)"
+                            block-all-inputs-buttons-from="modal-register-student">
                         cadastrar
                     </button>
                     <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
@@ -126,7 +127,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             ng-disabled="!(!!professorEscolhido.name && !!professorEscolhido.birthDate && !!professorEscolhido.address)"
-                            ng-click="editTeacher(professorEscolhido)">
+                            ng-click="editTeacher(professorEscolhido)"
+                            block-all-inputs-buttons-from="modal-edit-teacher">
                         continuar
                     </button>
                     <img src="img/loading.gif" ng-show=isLoadingVisible.modal />

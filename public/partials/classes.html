@@ -38,7 +38,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             ng-disabled="!(!!novaTurma.name && !!novaTurma.time)"
-                            ng-click="registerClass (novaTurma)">
+                            ng-click="registerClass (novaTurma)"
+                            block-all-inputs-buttons-from="modal-register-day">
                         cadastrar
                     </button>
                     <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
@@ -76,7 +77,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"
                             ng-disabled="!(!!turmaEscolhida.name && !!turmaEscolhida.time)"
-                            ng-click="editClass(turmaEscolhida)">
+                            ng-click="editClass(turmaEscolhida)"
+                            block-all-inputs-buttons-from="modal-edit-day">
                         continuar
                     </button>
                     <img src="img/loading.gif" ng-show=isLoadingVisible.modal />

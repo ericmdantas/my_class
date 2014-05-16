@@ -20,7 +20,7 @@ describe('block-all-inputs-buttons-from-directive', function()
                         '<input type="button" />' +
                         '<textarea></textarea>' +
                         '<button id="click-me" block-all-inputs-buttons-from="teste123"></button>' +
-                    '</div>'
+                    '</div>';
 
         _element = angular.element(_html);
 
@@ -44,11 +44,11 @@ describe('block-all-inputs-buttons-from-directive', function()
 
         // TODO: CHECK HOW TO TEST THIS - REMEMBER TO ADD .EACH()
 
-        it('should disable all the inputs when the click lands on the directive', function()
+        /*it('should disable all the inputs when the click lands on the directive', function()
         {
             _element.find('#click-me').eq(0).click();
             expect(_element.find('input').eq(0).prop('disabled')).toBeTruthy();
-        })
+        })*/
 
         it('should release the timeout without errors', function()
         {
