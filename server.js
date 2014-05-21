@@ -15,4 +15,4 @@ db.init();
 routes.init(app, passport);
 app.listen(port);
 
-console.log('up and running @ port: %s & host: %s', port, os.hostname());
+console.log('up and running @ port: %s, host: %s & enviroment: ', port, os.hostname(), process.env.NODE_ENV);
