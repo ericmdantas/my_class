@@ -95,7 +95,7 @@
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
 
             <div>
-                <get-info-by-date getinfo="getClassesDailyInfo(date)"></get-info-by-date>
+                <get-info-by-date getinfo="getClassesDailyInfo(date, turma._id)"></get-info-by-date>
 
                 <table class="table table-responsive">
                     <thead>

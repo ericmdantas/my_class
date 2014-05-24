@@ -22,7 +22,7 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
             })
     }
 
-    $scope.getClassesDailyInfo = function(monthYear)
+    $scope.getClassesDailyInfo = function(monthYear, id)
     {
         var invalidString = lib.isStringInvalid(monthYear) || monthYear.length !== 7;
         var notNumber = lib.isStringInvalid(monthYear) || ("number" !== typeof parseInt(monthYear.substring(0, 2))) || ("number" !== typeof parseInt(monthYear.substring(3, 7)));
@@ -35,11 +35,10 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
 
         //TODO PASS CLASS PARAM SO IT'LL UPDATE ONLY THE CLASS, NOT THE WHOLE THING
 
-        ClazzDayService.getDailyInfo(monthYear)
-            .success(function(data)
-            {
-                $scope.informacaoDiaria = (data && data.info) ? data.info : [];
-            })
+        if (lib.isStringInvalid(id))
+            _getDailyInfoFromAllClazzes(monthYear);
+        else
+            _getDailyInfoByClass(monthYear, id);
     }
 
     $scope.getStudentsNamesByClass = function(turma)
@@ -74,10 +73,10 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
 
     $scope.registerClazzDay = function(turma, alunos)
     {
-        var problemasAlunos = (lib.isObjectInvalid(alunos));
-        var problemasTurma = ((lib.isObjectInvalid(turma)) || (!turma.teacherName) || (!turma.subject));
+        var _problemasAlunos = (lib.isObjectInvalid(alunos));
+        var _problemasTurma = ((lib.isObjectInvalid(turma)) || (!turma.teacherName) || (!turma.subject));
 
-        if (problemasAlunos || problemasTurma)
+        if (_problemasAlunos || _problemasTurma)
             throw new Error('Não será possível continuar, pois alguns parâmetros não foram informados.');
 
         var _moment = {};
@@ -100,6 +99,33 @@ myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig'
                          emptyProperty('turmaDiaDia');
                          $scope.getClassesDailyInfo(currentMonthYear);
                      })
+    }
+
+    function _getDailyInfoFromAllClazzes(monthYear)
+    {
+        ClazzDayService.getDailyInfo(monthYear)
+            .success(function(data)
+            {
+                $scope.informacaoDiaria = (data && data.info) ? data.info : [];
+            })
+    }
+
+    function _getDailyInfoByClass(monthYear, id)
+    {
+        ClazzDayService.getDailyInfoByClass(monthYear, id)
+            .success(function(data)
+            {
+                var _informacaoDiaria = (data && data.info) ? data.info : {};
+
+                for (var i = 0; i < $scope.informacaoDiaria.length; i++)
+                {
+                    if (_informacaoDiaria.name === $scope.informacaoDiaria[i].name)
+                    {
+                        $scope.informacaoDiaria[i] = _informacaoDiaria;
+                        break;
+                    }
+                }
+            })
     }
 
     function preparaAberturaModal(idModal)

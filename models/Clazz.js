@@ -65,17 +65,53 @@
 
     clazzSchema.methods.getClassesDailyInfo = function(user, monthYear, done)
     {
+        //TODO FIX, SO IT ONLY RETURNS THE MATCHING MONTH/YEAR
+
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+            return done(new Error("Não foi encontrado o usuário para buscar as informações de todas as turma."), null);
+
+        if ((!monthYear) || ("string" !== typeof monthYear) || (monthYear.length === 0))
+            return done(new Error("Não foi encontrado o mês e ano para buscar as informações de todas as turma."), null);
+
         var _query = {usersAllowed: {$in: [user]}, "dailyInfo.monthYear": monthYear};
         var _projection = {};
 
         Clazz.find(_query, _projection)
-             .exec(function(err, found)
-                   {
-                        if (err)
-                            return done(err, null);
+            .exec(function(err, found)
+            {
+                if (err)
+                    return done(err, null);
 
-                        return done(null, found);
-                   })
+                return done(null, found);
+            })
+    }
+
+    clazzSchema.methods.getClassesDailyInfoByClass = function(user, monthYear, clazzId, done)
+    {
+        if ((!user) || ("string" !== typeof user) || (user.length === 0))
+            return done(new Error("Não foi encontrado o usuário para buscar as informações da turma."), null);
+
+        if ((!monthYear) || ("string" !== typeof monthYear) || (monthYear.length === 0))
+            return done(new Error("Não foi encontrado o mês e ano para buscar as informações da turma."), null);
+
+        if ((!clazzId) || ("string" !== typeof clazzId) || (clazzId.length === 0))
+            return done(new Error("Não foi encontrado o ID para buscar as informações da turma."), null);
+
+        //TODO FIX, SO IT ONLY RETURNS THE MATCHING MONTH/YEAR
+
+        var _query = {usersAllowed: {$in: [user]}, _id: clazzId, "dailyInfo.monthYear": monthYear};
+        var _projection = {};
+
+        Clazz.findOne(_query, _projection)
+             .exec(function(err, found)
+                  {
+                      console.log(found);
+
+                      if (err)
+                          return done(err, null);
+
+                      return done(null, found);
+                  })
     }
 
     clazzSchema.methods.registerNewClass = function(usuario, turma, done)

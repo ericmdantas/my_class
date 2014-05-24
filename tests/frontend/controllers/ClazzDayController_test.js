@@ -155,6 +155,30 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         }))
     })
 
+    describe('GET /api/classes/dailyInfo/:id/:monthYear', function()
+    {
+        it('should fetch request correctly', inject(function($controller)
+        {
+            httpMock.expectGET('/api/classes/dailyInfo/a123/04_2014').respond();
+            $controller('ClazzDayController', {$scope: scope});
+            scope.getClassesDailyInfo('04/2014', 'a123');
+            httpMock.flush();
+        }))
+
+        /* //TODO CHECK WHY THIS IS NOT WORKING
+        it('should replace informacaoDiaria correctly', inject(function($controller)
+        {
+            httpMock.expectGET('/api/classes/dailyInfo/a123/04_2014').respond({info: {name: "Turma1", id: 'n3wId'}});
+            //httpMock.expectGET('/api/classes/dailyInfo/04_2014').respond({info: [{name: "Algum Nome", id: 'abc1'}, {name: "Outro nome", id: 'abc2'}, {name: "Turma1", id: 'abc3'}]});
+            $controller('ClazzDayController', {$scope: scope});
+            scope.informacaoDiaria = [{name: "Algum Nome", id: 'abc1'}, {name: "Outro nome", id: 'abc2'}, {name: "Turma1", id: 'abc3'}];
+            scope.getClassesDailyInfo('04/2014', 'a123');
+            httpMock.flush();
+
+            expect(scope.informacaoDiaria[2]).toEqual({name: "Turma1", id: 'n3wId'});
+        }))*/
+    })
+
     describe('GET /api/classes/name', function()
     {
         it('should fetch request right away', inject(function($controller)

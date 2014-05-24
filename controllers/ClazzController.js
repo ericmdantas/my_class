@@ -68,6 +68,28 @@ function Clazz()
         _clazz.getClassesDailyInfo(_usuario, _monthYear, callback);
     }
 
+    function _getClassesDailyInfoByClass(req, res)
+    {
+        var _usuario = req.session.passport.user;
+        var _monthYear = req.params.monthYear;
+        var _clazzId = req.params.id;
+        var _clazz = new ClazzModel();
+
+        function callback(error, dailyInfoByClass)
+        {
+            if (error)
+            {
+                var _errorHandler = new ErrorHandler();
+                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta das informações diárias da turma'));
+            }
+            else
+                dailyInfoByClass ? res.json({info: dailyInfoByClass})
+                                 : res.json({info: []});
+        }
+
+        _clazz.getClassesDailyInfoByClass(_usuario, _monthYear, _clazzId, callback);
+    }
+
     function _registerClassMomentInTime(req, res)
     {
         var _usuario = req.session.passport.user;
@@ -152,6 +174,7 @@ function Clazz()
     return {
                 getClassesInfo: _getClassesInfo,
                 getClassesDailyInfo: _getClassesDailyInfo,
+                getClassesDailyInfoByClass: _getClassesDailyInfoByClass,
                 getClassesNames: _getClassesNames,
                 registerClass: _registerClass,
                 registerClassMomentInTime: _registerClassMomentInTime,

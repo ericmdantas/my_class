@@ -12,6 +12,17 @@ myClass.factory('ClazzDayService', ['$http', 'lib', function($http, lib)
         return $http.get(URL + '/' + monthAndYear);
     }
 
+    function _getDailyInfoByClass(monthAndYear, id)
+    {
+        if (lib.isStringInvalid(monthAndYear))
+            throw new Error('Não é possível buscar as informações de aula para esta turma. Parâmetro MÊS/ANO passado errado.');
+
+        if (lib.isStringInvalid(id))
+            throw new Error('Não é possível buscar as informações de aula para esta turma. Parâmetro ID passado errado.');
+
+        return $http.get(URL + '/' + id + '/' + monthAndYear);
+    }
+
     function _registerDailyInfo(moment)
     {
         if (lib.isObjectInvalid(moment))
@@ -22,6 +33,7 @@ myClass.factory('ClazzDayService', ['$http', 'lib', function($http, lib)
 
     return {
                 getDailyInfo: _getDailyInfo,
+                getDailyInfoByClass: _getDailyInfoByClass,
                 registerDailyInfo: _registerDailyInfo
            }
 }])

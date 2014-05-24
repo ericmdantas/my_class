@@ -9,7 +9,7 @@ myClass.directive('getInfoByDate', function()
                            '<div class="input-group">'+
                                 '<input type="text" class="form-control" ng-model="date" maxlength="7">'+
                                 '<span class="input-group-btn">'+
-                                   '<button class="btn btn-default" type="button" ng-click="getinfo({date: date})">' +
+                                   '<button class="btn btn-default" type="button" ng-click="getinfo({date: date, id: id})">' +
                                         '<span class="glyphicon glyphicon-refresh"></span>'+
                                    '</button>'+
                                 '</span>'+

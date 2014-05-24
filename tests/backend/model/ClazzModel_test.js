@@ -230,6 +230,209 @@ describe('ClazzModel', function()
         })
     })
 
+    describe('getClassesDailyInfo', function() {
+        beforeEach(function (done) {
+            ClazzModel.create({
+                    name: "Turma1",
+                    students: ["Aluno1"],
+                    time: "15:00",
+                    registered: new Date(),
+                    lastModified: new Date(),
+                    usersAllowed: ["eric3"],
+                    dailyInfo: [
+                        {
+                            day: "01",
+                            monthYear: "01",
+                            teacherName: "Teacher1",
+                            subject: "matéria1",
+                            studentByDay: [
+                                {
+                                    name: "Aluno1",
+                                    wasInClass: true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Turma1",
+                    students: ["Aluno1"],
+                    time: "15:00",
+                    registered: new Date(),
+                    lastModified: new Date(),
+                    usersAllowed: ["eric3"],
+                    dailyInfo: [
+                        {
+                            day: "01",
+                            monthYear: "01",
+                            teacherName: "Teacher1",
+                            subject: "matéria1",
+                            studentByDay: [
+                                {
+                                    name: "Aluno1",
+                                    wasInClass: true
+                                }
+                            ]
+                        }
+                    ]
+                }, done);
+        })
+
+        afterEach(function (done) {
+            ClazzModel.remove(done);
+        })
+
+        it('shouldn\'t return any document - empty user', function(done)
+        {
+            var _clazz = new ClazzModel();
+            var _monthYear = '04_2014';
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _clazz.getClassesDailyInfo(wrongParams[i], _monthYear, function(err, clazzNames)
+                {
+                    assert.notStrictEqual(err, null);
+                    assert.strictEqual(err instanceof Error, true);
+                    assert.strictEqual(clazzNames, null);
+                })
+            }
+
+            done();
+        })
+
+        it('shouldn\'t return any document - empty monthYear', function(done)
+        {
+            var _clazz = new ClazzModel();
+            var _usuario = "eric3";
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _clazz.getClassesDailyInfo(_usuario, wrongParams[i], function(err, clazzNames)
+                {
+                    assert.notStrictEqual(err, null);
+                    assert.strictEqual(err instanceof Error, true);
+                    assert.strictEqual(clazzNames, null);
+                })
+            }
+
+            done();
+        })
+
+        //TODO ADD THE CORRECT TEST WHEN THE MODEL IS RETURNING ONLY THE MONTH YEAR CHOSEN
+    })
+
+    describe('getClassesDailyInfoByClass', function() {
+        beforeEach(function (done) {
+            ClazzModel.create({
+                    name: "Turma1",
+                    students: ["Aluno1"],
+                    time: "15:00",
+                    registered: new Date(),
+                    lastModified: new Date(),
+                    usersAllowed: ["eric3"],
+                    dailyInfo: [
+                        {
+                            day: "01",
+                            monthYear: "01",
+                            teacherName: "Teacher1",
+                            subject: "matéria1",
+                            studentByDay: [
+                                {
+                                    name: "Aluno1",
+                                    wasInClass: true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Turma1",
+                    students: ["Aluno1"],
+                    time: "15:00",
+                    registered: new Date(),
+                    lastModified: new Date(),
+                    usersAllowed: ["eric3"],
+                    dailyInfo: [
+                        {
+                            day: "01",
+                            monthYear: "01",
+                            teacherName: "Teacher1",
+                            subject: "matéria1",
+                            studentByDay: [
+                                {
+                                    name: "Aluno1",
+                                    wasInClass: true
+                                }
+                            ]
+                        }
+                    ]
+                }, done);
+        })
+
+        afterEach(function (done) {
+            ClazzModel.remove(done);
+        })
+
+        it('shouldn\'t return any document - empty user', function(done)
+        {
+            var _clazz = new ClazzModel();
+            var _monthYear = '04_2014';
+            var _id = 'a123';
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _clazz.getClassesDailyInfoByClass(wrongParams[i], _monthYear, _id, function(err, clazzNames)
+                {
+                    assert.notStrictEqual(err, null);
+                    assert.strictEqual(err instanceof Error, true);
+                    assert.strictEqual(clazzNames, null);
+                })
+            }
+
+            done();
+        })
+
+        it('shouldn\'t return any document - empty monthYear', function(done)
+        {
+            var _clazz = new ClazzModel();
+            var _usuario = "eric3";
+            var _id = 'a123'
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _clazz.getClassesDailyInfoByClass(_usuario, wrongParams[i], _id, function(err, clazzNames)
+                {
+                    assert.notStrictEqual(err, null);
+                    assert.strictEqual(err instanceof Error, true);
+                    assert.strictEqual(clazzNames, null);
+                })
+            }
+
+            done();
+        })
+
+        it('shouldn\'t return any document - empty id', function(done)
+        {
+            var _clazz = new ClazzModel();
+            var _usuario = "eric3";
+            var _monthYear = '04_2014';
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                _clazz.getClassesDailyInfoByClass(_usuario, _monthYear, wrongParams[i], function(err, clazzNames)
+                {
+                    assert.notStrictEqual(err, null);
+                    assert.strictEqual(err instanceof Error, true);
+                    assert.strictEqual(clazzNames, null);
+                })
+            }
+
+            done();
+        })
+
+        //TODO ADD THE CORRECT TEST WHEN THE MODEL IS RETURNING ONLY THE MONTH YEAR CHOSEN
+    })
+
     describe('registerNewClass', function()
     {
         afterEach(function(done)

@@ -25,6 +25,7 @@
         app.get('/api/classes', isLoggedIn, classes.getClassesInfo);
         app.get('/api/classes/name', isLoggedIn, classes.getClassesNames);
         app.get('/api/classes/dailyInfo/:monthYear', isLoggedIn, classes.getClassesDailyInfo);
+        app.get('/api/classes/dailyInfo/:id/:monthYear', isLoggedIn, classes.getClassesDailyInfoByClass);
         app.post('/api/classes', isLoggedIn, classes.registerClass);
         app.post('/api/classes/dailyInfo', isLoggedIn, classes.registerClassMomentInTime);
         app.put('/api/classes/:id', isLoggedIn, classes.editClass);
