@@ -105,8 +105,6 @@
         Clazz.findOne(_query, _projection)
              .exec(function(err, found)
                   {
-                      console.log(found);
-
                       if (err)
                           return done(err, null);
 
