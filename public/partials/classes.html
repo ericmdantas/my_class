@@ -57,7 +57,6 @@
                     <h4 class="modal-title">editar {{turmaEscolhida.name}}</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Para editar a turma escolhida, favor preencher as informações abaixo:</p>
                     <label>nome</label>
                     <input type="text" class="form-control" ng-model="turmaEscolhida.name" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
                     <br/>
@@ -79,7 +78,7 @@
                             ng-disabled="!(!!turmaEscolhida.name && !!turmaEscolhida.time)"
                             ng-click="editClass(turmaEscolhida)"
                             block-all-inputs-buttons-from="modal-edit-day">
-                        continuar
+                        salvar alterações
                     </button>
                     <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
                     <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>

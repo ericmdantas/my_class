@@ -60,11 +60,11 @@ services.pageConfig = function()
 
     var constantesDeTamanho =
     {
-        TAMANHO_CAMPO_NOME: "50",
-        TAMANHO_CAMPO_ENDERECO: "50",
-        TAMANHO_CAMPO_EMAIL: "30",
+        TAMANHO_CAMPO_NOME: "80",
+        TAMANHO_CAMPO_ENDERECO: "100",
+        TAMANHO_CAMPO_EMAIL: "60",
         TAMANHO_CAMPO_QUANTIA: "12",
-        TAMANHO_CAMPO_TELEFONE: "11",
+        TAMANHO_CAMPO_TELEFONE: "25",
         TAMANHO_CAMPO_DATA: "10",
         TAMANHO_CAMPO_HORARIO: "22",
         TAMANHO_CAMPO_QUANTIDADE: "3"
