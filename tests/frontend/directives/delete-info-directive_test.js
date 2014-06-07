@@ -10,7 +10,8 @@ describe('DELETE-INFO BEING TESTED', function()
         _compile = $injector.get('$compile');
 
         var _html = '<delete-info directiveid="modal-delete-class" ' +
-                                 'title="turma" objectname="{{turmaEscolhida.name}}" ' +
+                                 'title="turma" ' +
+                                 'objectname="{{turmaEscolhida.name}}" ' +
                                  'objectid="{{turmaEscolhida._id}}" ' +
                                  'delete="deleteClass(id)">'+
                     '</delete-info>';

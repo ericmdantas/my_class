@@ -25,6 +25,12 @@ myClass.directive('deleteInfo', function()
     return {
                 restrict: 'EA',
                 template: _temp,
-                scope: {directiveid: '@', title: '@', objectid: '@', objectname: '@', delete: '&'}
+                scope: {
+                            directiveid: '@',
+                            title: '@',
+                            objectid: '@',
+                            objectname: '@',
+                            delete: '&'
+                       }
            }
 })

@@ -20,7 +20,7 @@
                 <div class="modal-body">
                     <p>para cadastrar a turma, favor preencher as informações abaixo:</p>
                     <label>nome</label>
-                    <input type="text" class="form-control" ng-model="novaTurma.name" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
+                    <input type="text" class="form-control" ng-model="novaTurma.name" autofocus maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
                     <br/>
 
                     <label>alunos</label>
@@ -31,7 +31,7 @@
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>horário</label>
-                            <input type="time" class="form-control" ng-model="novaTurma.time" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
+                            <input type="time" class="form-control" ng-model="novaTurma.time" maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
                         </aside>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="modal-body">
                     <label>nome</label>
-                    <input type="text" class="form-control" ng-model="turmaEscolhida.name" autofocus maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
+                    <input type="text" class="form-control" ng-model="turmaEscolhida.name" autofocus maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
                     <br/>
 
                     <label>alunos</label>
@@ -69,7 +69,7 @@
                     <div class="middle-modal">
                         <aside class="pull-left">
                             <label>horário</label>
-                            <input type="time" class="form-control" ng-model="turmaEscolhida.time" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_HORARIO}}"/>
+                            <input type="time" class="form-control" ng-model="turmaEscolhida.time" maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
                         </aside>
                     </div>
                 </div>

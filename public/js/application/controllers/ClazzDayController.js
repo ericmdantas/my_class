@@ -1,11 +1,12 @@
 "use strict";
 
-myClass.controller('ClazzDayController', ['$scope', '$http', 'lib', 'pageConfig', 'ClazzDayService', 'TeacherService', 'StudentService', 'ClazzService', 'ModalHelper',
-                                function ($scope, $http, lib, pageConfig, ClazzDayService, TeacherService, StudentService, ClazzService, ModalHelper)
+myClass.controller('ClazzDayController', ['$scope', 'lib', 'pageConfig', 'inputMaxLength', 'ClazzDayService', 'TeacherService', 'StudentService', 'ClazzService', 'ModalHelper',
+                                function ($scope, lib, pageConfig, inputMaxLength, ClazzDayService, TeacherService, StudentService, ClazzService, ModalHelper)
 {
     $scope.cfg = pageConfig;
     $scope.aulaEscolhida = {};
     $scope.alunos = [];
+    $scope.inputMaxLength = inputMaxLength;
     $scope.professores = [];
     $scope.isLoadingVisible = {modal: false};
     $scope.hoje = moment().format('DD/MM/YYYY');

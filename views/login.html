@@ -3,6 +3,7 @@
     <head>
         <title>my class | login</title>
         <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/style.css"/>
@@ -13,17 +14,43 @@
         <div id="login" ng-controller="LoginController">
             <div class="login-container bckg-neutro">
                 <h1 class="project">my class</h1>
-                <form class="form">
-                    <div class="alert alert-danger hidden" id="erroLogin">
+                <form class="form" name="loginForm">
+
+                    <div class="alert alert-danger" id="erroLogin" ng-show="usuarioNaoEncontrado">
                         <p>usuário não encontrado</p>
                     </div>
-                    <input ng-keyup="validateInput(user, $event)" type="text" class="form-control" placeholder="usuário" id="username" ng-model="user.username" autofocus/>
-                    <input ng-keyup="validateInput(user, $event)" type="password" class="form-control" placeholder="senha" id="password" ng-model="user.password"/>
+
+                    <input ng-keyup="validateInput(user, $event)"
+                           type="text"
+                           class="form-control"
+                           placeholder="usuário"
+                           id="username"
+                           name="username"
+                           ng-model="user.username"
+                           ng-minlength=3
+                           ng-maxlength=60
+                           required
+                           autofocus/>
+
+                    <input ng-keyup="validateInput(user, $event)"
+                           type="password"
+                           class="form-control"
+                           placeholder="senha"
+                           id="password"
+                           name="password"
+                           ng-model="user.password"
+                           ng-minlength=3
+                           ng-maxlength=100
+                           required/>
+
                     <button type="button" class="btn btn-lg btn-success" id="btnLogar"
-                            ng-disabled="isItDisabled(user)"
+                            ng-disabled="sendingToServer ||
+                                        loginForm.username.$dirty && (loginForm.username.$error.minlength || loginForm.username.$error.maxlength || loginForm.username.$error.required) ||
+                                        loginForm.password.$dirty && (loginForm.password.$error.minlength || loginForm.password.$error.maxlength || loginForm.password.$error.required) "
                             ng-click="validaUser(user)">
                         {{nomeBotao}}
                     </button>
+
                 </form>
             </div>
             <footer class="transition">

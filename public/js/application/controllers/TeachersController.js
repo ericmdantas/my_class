@@ -1,11 +1,12 @@
 "use strict";
 
-myClass.controller('TeachersController', ['$scope', '$http', 'pageConfig', 'lib', 'TeacherService', 'ModalHelper',
-                                  function($scope, $http, pageConfig, lib, TeacherService, ModalHelper)
+myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLength', 'lib', 'TeacherService', 'ModalHelper',
+                                  function($scope, pageConfig, inputMaxLength, lib, TeacherService, ModalHelper)
 {
     $scope.cfg = pageConfig;
     $scope.professores = [];
     $scope.novoProfessor = {};
+    $scope.inputMaxLength = inputMaxLength;
     $scope.professorEscolhido = {};
     $scope.isLoadingVisible = {modal: false};
 

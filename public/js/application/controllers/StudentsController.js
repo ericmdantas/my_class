@@ -1,13 +1,16 @@
 "use strict";
 
-myClass.controller('StudentsController', ['$scope', '$http', 'pageConfig', 'lib', 'StudentService', 'ClazzService', 'ModalHelper',
-                                function ($scope, $http, pageConfig, lib, StudentService, ClazzService, ModalHelper)
+myClass.controller('StudentsController', ['$scope', 'pageConfig', 'inputMaxLength', 'studentStatus', 'contractsTypes', 'lib', 'StudentService', 'ClazzService', 'ModalHelper',
+                                function ($scope, pageConfig, inputMaxLength, studentStatus, contractsTypes, lib, StudentService, ClazzService, ModalHelper)
 {
     $scope.alunos = [];
     $scope.turmasCadastradas = [];
     $scope.isLoadingVisible = {modal: false};
     $scope.novoAluno = {};
     $scope.alunoEscolhido = {};
+    $scope.inputMaxLength = inputMaxLength;
+    $scope.studentStatus = studentStatus;
+    $scope.contractsTypes = contractsTypes;
     $scope.cfg = pageConfig;
 
     $scope.getStudents = function()

@@ -5,12 +5,6 @@ var services = {};
 services.pageConfig = function()
 {
     var autor = "eric mendes dantas";
-    var contratos = [{nome:"quinzenal"}, {nome: "mensal"}, {nome: "trimestral"}, {nome: "semestral"}];
-    var status = [{nome: "interessado"}, {nome: "matriculado"}, {nome: "desistente"}, {nome: "outro"}];
-    var meses =  [{nome: "Janeiro", numero: 1},  {nome: "Fevereiro", numero: 2}, {nome: "Março", numero: 3},
-                  {nome: "Abril", numero: 4},    {nome: "Maio", numero: 5},      {nome: "Junho", numero: 6},
-                  {nome: "Julho", numero: 7},    {nome: "Agosto", numero: 8},    {nome: "Setembro", numero: 9},
-                  {nome: "Outubro", numero: 10}, {nome: "Novembro", numero: 11}, {nome: "Dezembro", numero: 12}];
 
     var info =
     {
@@ -58,24 +52,8 @@ services.pageConfig = function()
         }
     };
 
-    var constantesDeTamanho =
-    {
-        TAMANHO_CAMPO_NOME: "80",
-        TAMANHO_CAMPO_ENDERECO: "100",
-        TAMANHO_CAMPO_EMAIL: "60",
-        TAMANHO_CAMPO_QUANTIA: "12",
-        TAMANHO_CAMPO_TELEFONE: "25",
-        TAMANHO_CAMPO_DATA: "10",
-        TAMANHO_CAMPO_HORARIO: "22",
-        TAMANHO_CAMPO_QUANTIDADE: "3"
-    }
-
     return {
         author: autor,
-        information: info,
-        lengthConstants: constantesDeTamanho,
-        months: meses,
-        status: status,
-        contracts: contratos
+        information: info
     }
 }

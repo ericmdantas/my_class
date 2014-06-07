@@ -1,20 +1,22 @@
 "use strict";
 
-myClass.controller('BooksController', ['$scope', '$http', 'pageConfig', 'BookService', 'lib', 'ModalHelper',
-                               function($scope, $http, pageConfig, BookService, lib, ModalHelper)
+myClass.controller('BooksController', ['$scope', 'pageConfig', 'inputMaxLength', 'BookService', 'lib', 'ModalHelper',
+                               function($scope, pageConfig, inputMaxLength, BookService, lib, ModalHelper)
 {
     $scope.livros = [];
     $scope.cfg = pageConfig;
+    $scope.inputMaxLength = inputMaxLength;
     $scope.livroEscolhido = {};
     $scope.novoLivro = {};
     $scope.isLoadingVisible = {modal: false};
 
     $scope.getBooks = function()
     {
-        BookService.getBooks().success(function(data)
-                                      {
-                                          $scope.livros = (data && data.books) ? data.books : [];
-                                      })
+        BookService.getBooks()
+            .success(function(data)
+                    {
+                      $scope.livros = (data && data.books) ? data.books : [];
+                    })
     }
 
     $scope.openModalToEditBook = function(livro)

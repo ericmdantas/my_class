@@ -34,7 +34,7 @@ describe('navigation-directive', function()
     {
         it ('should have no li elements active - clicked on the brand', function()
         {
-            _element.find('.navbar-brand')[0].click();
+            _element.find('.navbar-brand').eq(0).click();
 
             var _numLi = _element.find('#nav-header li').length;
 
@@ -46,7 +46,7 @@ describe('navigation-directive', function()
 
         it ('should have no li elements active - clicked somewhere else', function()
         {
-            _element.find('.icon-bar')[0].click();
+            _element.find('.icon-bar').eq(0).click();
 
             var _numLi = _element.find('#nav-header li.activable').length;
 
@@ -114,13 +114,13 @@ describe('navigation-directive', function()
     {
         it ('should have the title set to principal - clicked on the brand', function()
         {
-            _element.find('.navbar-brand')[0].click();
+            _element.find('.navbar-brand').eq(0).click();
             expect(document.title).toContain('principal');
         })
 
         it ('should have no li elements active - clicked somewhere else', function()
         {
-            _element.find('.icon-bar')[0].click();
+            _element.find('.icon-bar').eq(0).click();
             expect(document.title).toContain('principal');
         })
 

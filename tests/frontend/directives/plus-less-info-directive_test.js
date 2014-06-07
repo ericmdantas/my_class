@@ -3,6 +3,7 @@
 describe('PLUSLESSINFO BEING TESTED', function()
 {
     var _scope, _compile, _element;
+    var CLOSED_SYMBOL = '+', OPENED_SYMBOL = '–';
 
     beforeEach(module('myClass'));
     beforeEach(inject(function($injector)
@@ -23,6 +24,11 @@ describe('PLUSLESSINFO BEING TESTED', function()
         it('checks if directive was created', function()
         {
             expect(_element).toBeDefined();
+        })
+
+        it('checks if the controller was defined', function()
+        {
+            expect(_element.controller('plusLessInfoElement')).toBeDefined();
         })
 
         it('checks if directives is positioned correctly - should have pull-right class', function()
@@ -48,6 +54,37 @@ describe('PLUSLESSINFO BEING TESTED', function()
         it('checks if element to toggle is set correctly', function()
         {
             expect(_element.scope().elementToToggle).toEqual("class-toggle-1");
+        })
+
+        it('symbol should exist and should be waiting to be opened', function()
+        {
+            expect(_element.scope().symbol).toBeDefined();
+            expect(_element.scope().symbol).toEqual(CLOSED_SYMBOL);
+        })
+
+        it('toggleSymbol should exist and be a function', function()
+        {
+            expect(_element.scope().toggleSymbol).toBeDefined();
+            expect(typeof _element.scope().toggleSymbol).toEqual('function');
+        })
+    })
+
+    describe('controller', function()
+    {
+        it('should switch the symbols - was closed', function()
+        {
+            _element.scope().symbol = CLOSED_SYMBOL;
+            _element.scope().toggleSymbol();
+
+            expect(_element.scope().symbol).toEqual(OPENED_SYMBOL);
+        })
+
+        it('should switch the symbols - was opened', function()
+        {
+            _element.scope().symbol = OPENED_SYMBOL;
+            _element.scope().toggleSymbol();
+
+            expect(_element.scope().symbol).toEqual(CLOSED_SYMBOL);
         })
     })
 

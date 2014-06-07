@@ -1,11 +1,12 @@
 "use strict";
 
-myClass.controller('ClassesController', ['$scope', '$http', 'lib', 'pageConfig', 'ClazzService', 'StudentService', 'ModalHelper',
-                                function ($scope, $http, lib, pageConfig, ClazzService, StudentService, ModalHelper)
+myClass.controller('ClassesController', ['$scope', 'lib', 'pageConfig', 'inputMaxLength', 'ClazzService', 'StudentService', 'ModalHelper',
+                                function ($scope, lib, pageConfig, inputMaxLength, ClazzService, StudentService, ModalHelper)
 {
     $scope.turmas = [];
     $scope.cfg = pageConfig;
     $scope.novaTurma = {};
+    $scope.inputMaxLength = inputMaxLength;
     $scope.turmaEscolhida = {};
     $scope.alunos = {};
     $scope.professores = {};

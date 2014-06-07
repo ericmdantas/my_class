@@ -14,18 +14,21 @@ module.exports = function(config) {
     files: [
         'public/js/framework/jquery-2.0.3.min.js',
 		'public/js/framework/angular.min.js',
-        'tests/frontend/mocks/angular-mocks.js',
-		'public/js/framework/angular-route.min.js',
+        'public/js/framework/angular-route.min.js',
 		'public/js/framework/angular-resource.min.js',
 		'public/js/framework/bootstrap.min.js',
 		'public/js/framework/moment.min.js',
 		'public/js/framework/highcharts.js',
+
 		'public/js/application/services/config.js',
         'public/js/application/services/services.js',
 		'public/js/application/app.js',
         'public/js/application/services/lib.js',
 		'public/js/application/services/*Service.js',
 		'public/js/application/**/*.js',
+
+        'tests/frontend/mocks/angular-mocks.js',
+
 		'tests/frontend/**/*_test.js'
 	],
 

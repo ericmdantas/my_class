@@ -7,7 +7,7 @@
                 ng-click="openModalToRegisterClazzDay()">
             registrar aula
         </button>
-        <input type="text" class="form-control fc-search" placeholder="procurar aula" ng-model="turmaProcurada" maxlength="100" autofocus/>
+        <input type="text" class="form-control fc-search" placeholder="procurar aula" ng-model="turmaProcurada" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}" autofocus/>
     </div>
 
     <div class="modal fade" id="modal-clazz-day">
@@ -41,10 +41,10 @@
 
                     <br/>
                     <label>matéria</label>
-                    <input type="text" class="form-control" ng-model="turmaDiaDia.subject" maxlength="{{cfg.lengthConstants.TAMANHO_CAMPO_NOME}}"/>
+                    <input type="text" class="form-control" ng-model="turmaDiaDia.subject" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
                     <br/>
                     <label>observação</label>
-                    <textarea type="text" rows="5" class="form-control" ng-model="turmaDiaDia.observation" spellcheck="true" max-length="333"></textarea>
+                    <textarea type="text" rows="5" class="form-control" ng-model="turmaDiaDia.observation" spellcheck="true" max-length="500"></textarea>
 
                 </div>
                 <div class="modal-footer">

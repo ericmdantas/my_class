@@ -1,12 +1,14 @@
 "use strict";
 
-myClass.controller('PaymentsController', ['$scope', '$http', 'lib', 'pageConfig', 'PaymentService', 'ModalHelper',
-                                function ($scope, $http, lib, pageConfig, PaymentService, ModalHelper)
+myClass.controller('PaymentsController', ['$scope', 'lib', 'inputMaxLength', 'months', 'pageConfig', 'PaymentService', 'ModalHelper',
+                                function ($scope, lib, inputMaxLength, months, pageConfig, PaymentService, ModalHelper)
 {
     $scope.pagamentos = [];
     $scope.pagamentoEscolhido = {};
+    $scope.inputMaxLength = inputMaxLength;
     $scope.isLoadingVisible = {modal: false};
     $scope.cfg = pageConfig;
+    $scope.months = months;
 
     $scope.getPayments = function()
     {
