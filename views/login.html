@@ -15,8 +15,9 @@
             <div class="login-container bckg-neutro">
                 <h1 class="project">my class</h1>
                 <form class="form" name="loginForm">
-
-                    <div class="alert alert-danger" id="erroLogin" ng-show="usuarioNaoEncontrado">
+                    <div class="alert alert-danger"
+                         id="erroLogin"
+                         ng-show="usuarioNaoEncontrado">
                         <p>usuário não encontrado</p>
                     </div>
 
@@ -27,8 +28,7 @@
                            id="username"
                            name="username"
                            ng-model="user.username"
-                           ng-minlength=3
-                           ng-maxlength=60
+                           ng-minlength="3"
                            required
                            autofocus/>
 
@@ -39,14 +39,13 @@
                            id="password"
                            name="password"
                            ng-model="user.password"
-                           ng-minlength=3
-                           ng-maxlength=100
+                           ng-minlength="3"
                            required/>
 
-                    <button type="button" class="btn btn-lg btn-success" id="btnLogar"
-                            ng-disabled="sendingToServer ||
-                                        loginForm.username.$dirty && (loginForm.username.$error.minlength || loginForm.username.$error.maxlength || loginForm.username.$error.required) ||
-                                        loginForm.password.$dirty && (loginForm.password.$error.minlength || loginForm.password.$error.maxlength || loginForm.password.$error.required) "
+                    <button type="button"
+                            class="btn btn-lg btn-success"
+                            id="btnLogar"
+                            ng-disabled="sendingToServer || loginForm.$invalid"
                             ng-click="validaUser(user)">
                         {{nomeBotao}}
                     </button>

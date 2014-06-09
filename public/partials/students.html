@@ -12,149 +12,254 @@
 
     <div class="modal fade" id="modal-register-student">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Cadastrar aluno {{novoAluno.name}}</h4>
+            <form name="studentRegister">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Cadastrar aluno {{novoAluno.name}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>nome</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="novoAluno.name"
+                               name="name"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"
+                               required
+                               ng-class="{'error': studentRegister.name.$invalid}"
+                               ng-minlength="3"
+                               autofocus/>
+                        <br/>
+                        <label>email</label>
+                        <input type="email"
+                               class="form-control"
+                               ng-model="novoAluno.email"
+                               ng-minlength="3"
+                               name="email"
+                               ng-class="{'error': studentRegister.email.$invalid}"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_EMAIL}}"/>
+                        <br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>data de nascimento</label>
+                                <input type="date"
+                                       class="form-control"
+                                       ng-model="novoAluno.birthDate"
+                                       required
+                                       name="birthDate"
+                                       ng-class="{'error': studentRegister.birthDate.$invalid}"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
+                            </aside>
+                        </div>
+                        <label>endereço</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="novoAluno.address"
+                               ng-minlength="4"
+                               name="address"
+                               ng-class="{'error': studentRegister.address.$invalid}"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_ENDERECO}}"/>
+                        <br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>tel. residencial</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="novoAluno.phone"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"
+                                       numbers-only/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>celular</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="novoAluno.mobilePhone"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"
+                                       numbers-only/>
+                            </aside>
+                        </div>
+                        <label>turma</label>
+                        <br/>
+                        <select ng-model="novoAluno.class"
+                                ng-options="turma.name for turma in turmasCadastradas"></select>
+                        <br/><br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>disponibilidade</label>
+                                <input type="text"
+                                       class="form-control"
+                                       required
+                                       name="availabilty"
+                                       ng-class="{'error': studentRegister.availabilty.$invalid}"
+                                       ng-model="novoAluno.availability"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>status</label>
+                                <select ng-model="novoAluno.status"
+                                        required
+                                        name="status"
+                                        ng-class="{'error': studentRegister.status.$invalid}"
+                                        ng-options="s.nome for s in studentStatus"></select>
+                            </aside>
+                        </div>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>tipo de contrato</label>
+                                <select ng-model="novoAluno.contract"
+                                        ng-options="c.nome for c in contractsTypes">
+                                </select>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>data do contrato</label>
+                                <input type="date"
+                                       class="form-control"
+                                       name="contractDate"
+                                       ng-model="novoAluno.contractDate"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
+                            </aside>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                ng-disabled="studentRegister.$invalid"
+                                ng-click="registerNewStudent(novoAluno)"
+                                block-all-inputs-buttons-from="modal-register-student">
+                            cadastrar
+                        </button>
+                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <label>nome</label>
-                    <input type="text" class="form-control" ng-model="novoAluno.name" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}" autofocus/>
-                    <br/>
-                    <label>email</label>
-                    <input type="text" class="form-control" ng-model="novoAluno.email" maxlength="{{inputMaxLength.TAMANHO_CAMPO_EMAIL}}"/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>data de nascimento</label>
-                            <input type="date" class="form-control" ng-model="novoAluno.birthDate" maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
-                        </aside>
-                    </div>
-                    <label>endereço</label>
-                    <input type="text" class="form-control" ng-model="novoAluno.address" maxlength="{{inputMaxLength.TAMANHO_CAMPO_ENDERECO}}"/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>tel. residencial</label>
-                            <input type="text" class="form-control" ng-model="novoAluno.phone" maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>celular</label>
-                            <input type="text" class="form-control" ng-model="novoAluno.mobilePhone" maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
-                        </aside>
-                    </div>
-                    <label>turma</label>
-                    <br/>
-                    <select ng-model="novoAluno.class" ng-options="turma.name for turma in turmasCadastradas"></select>
-                    <br/><br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>disponibilidade</label>
-                            <input type="text" class="form-control" ng-model="novoAluno.availability" maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>status</label>
-                            <select ng-model="novoAluno.status" ng-options="s.nome for s in studentStatus"></select>
-                        </aside>
-                    </div>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>tipo de contrato</label>
-                            <select ng-model="novoAluno.contract" ng-options="c.nome for c in contractsTypes"></select>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>data do contrato</label>
-                            <input type="date" class="form-control" ng-model="novoAluno.contractDate" maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
-                        </aside>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            ng-disabled="!(!!novoAluno.name && novoAluno.birthDate && !!novoAluno.availability && !!novoAluno.status)"
-                            ng-click="registerNewStudent(novoAluno)"
-                            block-all-inputs-buttons-from="modal-register-student">
-                        cadastrar
-                    </button>
-                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
     <div class="modal fade" id="modal-edit-student">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Ediar aluno {{alunoEscolhido.name}}</h4>
+            <form name="studentEdit">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Ediar aluno {{alunoEscolhido.name}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>nome</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="alunoEscolhido.name"
+                               required
+                               nam="name"
+                               ng-class="{'error': studentEdit.name.$invalid}"
+                               ng-minlength="3"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"
+                               autofocus/>
+                        <br/>
+                        <label>email</label>
+                        <input type="email"
+                               class="form-control"
+                               ng-model="alunoEscolhido.email"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_EMAIL}}"/>
+                        <br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>data de nascimento</label>
+                                <input type="date"
+                                       class="form-control"
+                                       required
+                                       name="birthDate"
+                                       ng-class="{'error': studentEdit.birthDate.$invalid}"
+                                       ng-model="alunoEscolhido.birthDate"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
+                            </aside>
+                        </div>
+                        <label>endereço</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="alunoEscolhido.address"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_ENDERECO}}"/>
+                        <br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>tel. residencial</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="alunoEscolhido.phone"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"
+                                       numbers-only/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>celular</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="alunoEscolhido.mobilePhone"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"
+                                       numbers-only/>
+                            </aside>
+                        </div>
+                        <label>turma</label>
+                        <br/>
+                        <select ng-model="alunoEscolhido.class"
+                                ng-options="turma.name for turma in turmasCadastradas">
+
+                        </select>
+                        <br/><br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>disponibilidade</label>
+                                <input type="text"
+                                       class="form-control"
+                                       name="availabilty"
+                                       ng-class="{'error': studentEdit.availabilty.$invalid}"
+                                       ng-model="alunoEscolhido.availability"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>status</label>
+                                <select ng-model="alunoEscolhido.status"
+                                        required
+                                        name="status"
+                                        ng-class="{'error': studentEdit.status.$invalid}"
+                                        ng-options="s.nome for s in studentStatus">
+                                </select>
+                            </aside>
+                        </div>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>tipo de contrato</label>
+                                <select ng-model="alunoEscolhido.contract"
+                                        ng-options="c.nome for c in contractsTypes"></select>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>data do contrato</label>
+                                <input type="date"
+                                       class="form-control"
+                                       ng-model="alunoEscolhido.contractDate"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
+                            </aside>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                ng-disabled="studentEdit.$invalid"
+                                ng-click="editStudent(alunoEscolhido)"
+                                block-all-inputs-buttons-from="modal-edit-student">
+                            salvar alterações
+                        </button>
+                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <label>nome</label>
-                    <input type="text" class="form-control" ng-model="alunoEscolhido.name" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}" autofocus/>
-                    <br/>
-                    <label>email</label>
-                    <input type="text" class="form-control" ng-model="alunoEscolhido.email" maxlength="{{inputMaxLength.TAMANHO_CAMPO_EMAIL}}"/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>data de nascimento</label>
-                            <input type="date" class="form-control" ng-model="alunoEscolhido.birthDate" maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
-                        </aside>
-                    </div>
-                    <label>endereço</label>
-                    <input type="text" class="form-control" ng-model="alunoEscolhido.address" maxlength="{{inputMaxLength.TAMANHO_CAMPO_ENDERECO}}"/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>tel. residencial</label>
-                            <input type="text" class="form-control" ng-model="alunoEscolhido.phone" maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>celular</label>
-                            <input type="text" class="form-control" ng-model="alunoEscolhido.mobilePhone" maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
-                        </aside>
-                    </div>
-                    <label>turma</label>
-                    <br/>
-                    <select ng-model="alunoEscolhido.class" ng-options="turma.name for turma in turmasCadastradas"></select>
-                    <br/><br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>disponibilidade</label>
-                            <input type="text" class="form-control" ng-model="alunoEscolhido.availability" maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>status</label>
-                            <select ng-model="alunoEscolhido.status" ng-options="s.nome for s in studentStatus"></select>
-                        </aside>
-                    </div>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>tipo de contrato</label>
-                            <select ng-model="alunoEscolhido.contract" ng-options="c.nome for c in contractsTypes"></select>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>data do contrato</label>
-                            <input type="date" class="form-control" ng-model="alunoEscolhido.contractDate" maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
-                        </aside>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            ng-disabled="!(!!alunoEscolhido.name && alunoEscolhido.birthDate && !!alunoEscolhido.availability && !!alunoEscolhido.status)"
-                            ng-click="editStudent(alunoEscolhido)"
-                            block-all-inputs-buttons-from="modal-edit-student">
-                        salvar alterações
-                    </button>
-                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
-    <delete-info directiveid="modal-delete-student" title="aluno" objectname="{{alunoEscolhido.name}}" objectid="{{alunoEscolhido._id}}" delete="deleteStudent(id)"></delete-info>
+    <delete-info directiveid="modal-delete-student"
+                 title="aluno"
+                 objectname="{{alunoEscolhido.name}}"
+                 objectid="{{alunoEscolhido._id}}"
+                 delete="deleteStudent(id)">
+    </delete-info>
 
     <div class="info-card transition" ng-repeat="aluno in alunos | orderBy: 'name' | filter: alunoProcurado">
         <plus-less-info-element elementToToggle="student-toggle-{{$index}}"></plus-less-info-element>

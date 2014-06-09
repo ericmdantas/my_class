@@ -4,6 +4,7 @@
 #login .project, .navbar-brand, #about.jumbotron, #prices.jumbotron {font-family: "amao";}
 #login .project {font-size: 5.5em; text-shadow: 1px 1px #b2dba1; text-align: center; color: #333;}
 
+input.error, select.error, textarea.error {border: 1px solid red;}
 .select-data {border-radius: 4px; font-size: 1.2em;}
 .select-data input[type=text] {text-align: center;}
 .table thead {font-weight: bold;}

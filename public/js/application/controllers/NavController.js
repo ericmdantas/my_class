@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('NavController', ['$rootScope', '$scope', '$location', '$http', '$window', 'lib',
-                            function($rootScope, $scope, $location, $http, $window, lib)
+myClass.controller('NavController', ['$scope', '$location', '$http', '$window', 'lib',
+                            function($scope, $location, $http, $window, lib)
 {
     $scope.usuarioLogado = $window.localStorage.getItem('u');
 
@@ -10,19 +10,10 @@ myClass.controller('NavController', ['$rootScope', '$scope', '$location', '$http
         if (lib.isStringInvalid(usuario))
             throw new Error('Não foi possível deslogar o usuário. O Parâmetro foi informado incorretamente.');
 
-        _kickarSessao(usuario);
-    }
-
-    function _kickarSessao(usuario)
-    {
         $http.post('/api/logout', {user: usuario})
-            .finally(_redirecionaLogin)
+            .finally(function()
+            {
+                $window.location.href = '/';
+            })
     }
-
-    function _redirecionaLogin()
-    {
-        $window.location.href = '/';
-    }
-
-    //TODO: PUT THIS INSIDE THE NAVIGATION DIRECTIVE?
 }])

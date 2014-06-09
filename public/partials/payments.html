@@ -12,65 +12,77 @@
 
     <div class="modal fade" id="modal-pay">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">realizar pagamento</h4>
-                </div>
-                <div class="modal-body">
-                    <label>nome do aluno</label>
-                    <br/>
-                    <select ng-model="alunoPagando.name" ng-options="pagamento.name for pagamento in pagamentos"></select>
-                    <br/><br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>forma de pagamento</label>
-                            <input type="text" class="form-control" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}" ng-model="alunoPagando.paidWithWhat"/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>mês</label>
-                            <select ng-model="alunoPagando.paymentMonth" ng-options="m.nome for m in months"></select>
-                        </aside>
+            <form name="paymentRegister">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">realizar pagamento</h4>
                     </div>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>quantia</label>
-                            <input type="text" class="form-control" maxlength="{{inputMaxLength.TAMANHO_CAMPO_QUANTIA}}" ng-model="alunoPagando.amountPaid" numbers-only/>
-                        </aside>
+                    <div class="modal-body">
+                        <label>nome do aluno</label>
+                        <br/>
+                        <select ng-model="alunoPagando.name"
+                                required
+                                name="name"
+                                ng-class="{'error': paymentRegister.name.$invalid}"
+                                ng-options="pagamento.name for pagamento in pagamentos"></select>
+                        <br/><br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>forma de pagamento</label>
+                                <input type="text" class="form-control"
+                                       ng-model="alunoPagando.paidWithWhat"
+                                       required
+                                       name="paymentWay"
+                                       ng-class="{'error': paymentRegister.paymentWay.$invalid}"
+                                       ng-minlength="2"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>mês</label>
+                                <select ng-model="alunoPagando.paymentMonth"
+                                        required
+                                        name="month"
+                                        ng-class="{'error': paymentRegister.month.$invalid}"
+                                        ng-options="m.nome for m in months"></select>
+                            </aside>
+                        </div>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>quantia</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="alunoPagando.amountPaid"
+                                       required
+                                       name="amount"
+                                       ng-class="{'error': paymentRegister.amount.$invalid}"
+                                       ng-minlength="2"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_QUANTIA}}"
+                                       numbers-only/>
+                            </aside>
+                        </div>
+                        <label>observação</label>
+                        <textarea type="text"
+                                  class="form-control"
+                                  rows="5"
+                                  spellcheck="true"
+                                  ng-model="alunoPagando.observation"
+                                  maxlength="500">
+                          </textarea>
+                        <br/>
                     </div>
-                    <label>observação</label>
-                    <textarea type="text" class="form-control" rows="5" spellcheck="true" ng-model="alunoPagando.observation" maxlength="500"></textarea>
-                    <br/>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                ng-click="pay(alunoPagando)"
+                                ng-disabled="paymentRegister.$invalid"
+                                block-all-inputs-buttons-from="modal-pay">
+                            pagar
+                        </button>
+                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            ng-click="pay(alunoPagando)"
-                            ng-disabled="!(!!alunoPagando.name && !!alunoPagando.amountPaid && !!alunoPagando.paidWithWhat && !!alunoPagando.paymentMonth)"
-                            block-all-inputs-buttons-from="modal-pay">
-                        pagar
-                    </button>
-                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal-edit-payment">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Título</h4>
-                </div>
-                <div class="modal-body">
-                    <p>edit - fino body {{pagamentoEscolhido}}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default">continuar</button>
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -99,9 +111,7 @@
                     <p class="text-almost-invisible">forma de pagamento: <span class="text-almost-black">{{historico.paidWithWhat}}</span></p>
                     <p class="text-almost-invisible">observação: <span class="text-almost-black">{{historico.observation}}</span></p>
                 </div>
-            </div>
-            <button type="button" class="btn btn-link pull-right" ng-click="deleteBook(livro)">excluir</button>
-            <button type="button" class="btn btn-default pull-right" ng-click="editBook(livro)">editar</button>
+            </div>z
         </div>
     </div>
 </div>

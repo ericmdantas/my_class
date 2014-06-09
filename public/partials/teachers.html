@@ -12,129 +12,229 @@
 
     <div class="modal fade" id="modal-register-teacher">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Cadastrar professor {{novoProfessor.name}}</h4>
-                </div>
-                <div class="modal-body">
-                    <label>nome</label>
-                    <input type="text" class="form-control" ng-model="novoProfessor.name" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}" autofocus/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>data de nascimento</label>
-                            <input type="date" class="form-control" ng-model="novoProfessor.birthDate" maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>data de admissão</label>
-                            <input type="date" class="form-control" ng-model="novoProfessor.admission" maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
-                        </aside>
+            <form name="teacherRegister">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Cadastrar professor {{novoProfessor.name}}</h4>
                     </div>
-                    <br/>
-                    <label>email</label>
-                    <input type="text" class="form-control" ng-model="novoProfessor.email" maxlength="{{inputMaxLength.TAMANHO_CAMPO_EMAIL}}"/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>tel. residencial</label>
-                            <input type="text" class="form-control" ng-model="novoProfessor.phone" maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>celular</label>
-                            <input type="text" class="form-control" ng-model="novoProfessor.mobilePhone" maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}" numbers-only/>
-                        </aside>
+                    <div class="modal-body">
+                        <label>nome</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="novoProfessor.name"
+                               required
+                               name="name"
+                               ng-class="{'error': teacherRegister.name.$invalid}"
+                               ng-minlength="3"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"
+                               autofocus/>
+                        <br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>data de nascimento</label>
+                                <input type="date"
+                                       class="form-control"
+                                       ng-model="novoProfessor.birthDate"
+                                       required
+                                       name="birthDate"
+                                       ng-class="{'error': teacherRegister.birthDate.$invalid}"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>data de admissão</label>
+                                <input type="date"
+                                       class="form-control"
+                                       required
+                                       name="admissionDate"
+                                       ng-class="{'error': teacherRegister.admissionDate.$invalid}"
+                                       ng-model="novoProfessor.admission"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
+                            </aside>
+                        </div>
+                        <br/>
+                        <label>email</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="novoProfessor.email"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_EMAIL}}"/>
+                        <br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>tel. residencial</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="novoProfessor.phone"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"
+                                       numbers-only/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>celular</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="novoProfessor.mobilePhone"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"
+                                       numbers-only/>
+                            </aside>
+                        </div>
+                        <br/>
+                        <label>endereço</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="novoProfessor.address"
+                               required
+                               name="address"
+                               ng-class="{'error': teacherRegister.address.$invalid}"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
+                        <br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>disponibilidade</label>
+                                <input type="text"
+                                       class="form-control"
+                                       required
+                                       name="disponibility"
+                                       ng-class="{'error': teacherRegister.disponibility.$invalid}"
+                                       ng-model="novoProfessor.availability"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>salário</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="novoProfessor.salary"
+                                       numbers-only
+                                       required
+                                       name="salary"
+                                       ng-class="{'error': teacherRegister.salary.$invalid}"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_QUANTIA}}"/>
+                            </aside>
+                        </div>
                     </div>
-                    <br/>
-                    <label>endereço</label>
-                    <input type="text" class="form-control" ng-model="novoProfessor.address" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>disponibilidade</label>
-                            <input type="text" class="form-control" ng-model="novoProfessor.availability" maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>salário</label>
-                            <input type="text" class="form-control" ng-model="novoProfessor.salary" numbers-only maxlength="{{inputMaxLength.TAMANHO_CAMPO_QUANTIA}}"/>
-                        </aside>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                ng-disabled="teacherRegister.$invalid"
+                                ng-click="registerNewTeacher(novoProfessor)"
+                                block-all-inputs-buttons-from="modal-register-student">
+                            cadastrar
+                        </button>
+                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            ng-disabled="!(!!novoProfessor.name && novoProfessor.birthDate && !!novoProfessor.address)"
-                            ng-click="registerNewTeacher(novoProfessor)"
-                            block-all-inputs-buttons-from="modal-register-student">
-                        cadastrar
-                    </button>
-                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
     <div class="modal fade" id="modal-edit-teacher">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Editar {{professorEscolhido.name}}</h4>
-                </div>
-                <div class="modal-body">
-                    <label>nome</label>
-                    <input type="text" class="form-control" ng-model="professorEscolhido.name" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>data de nascimento</label>
-                            <input type="date" class="form-control" ng-model="professorEscolhido.birthDate" maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>data de admissão</label>
-                            <input type="date" class="form-control" ng-model="professorEscolhido.admission" maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
-                        </aside>
+            <form name="teacherEdit">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Editar {{professorEscolhido.name}}</h4>
                     </div>
-                    <br/>
-                    <label>email</label>
-                    <input type="text" class="form-control" ng-model="professorEscolhido.email" maxlength="{{inputMaxLength.TAMANHO_CAMPO_EMAIL}}"/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>tel. residencial</label>
-                            <input type="text" class="form-control" ng-model="professorEscolhido.phone" maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>celular</label>
-                            <input type="text" class="form-control" ng-model="professorEscolhido.mobilePhone" maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"/>
-                        </aside>
+                    <div class="modal-body">
+                        <label>nome</label>
+                        <input type="text"
+                               class="form-control"
+                               required
+                               name="name"
+                               ng-minlength="3"
+                               ng-class="{'error': teacherEdit.name.$invalid}"
+                               ng-model="professorEscolhido.name"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
+                        <br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>data de nascimento</label>
+                                <input type="date"
+                                       class="form-control"
+                                       ng-model="professorEscolhido.birthDate"
+                                       required
+                                       name="birthDate"
+                                       ng-class="{'error': teacherEdit.birthDate.$invalid}"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>data de admissão</label>
+                                <input type="date"
+                                       class="form-control"
+                                       ng-model="professorEscolhido.admission"
+                                       required
+                                       name="admissionDate"
+                                       ng-class="{'error': teacherEdit.admissionDate.$invalid}"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
+                            </aside>
+                        </div>
+                        <br/>
+                        <label>email</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="professorEscolhido.email"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_EMAIL}}"/>
+                        <br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>tel. residencial</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="professorEscolhido.phone"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>celular</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="professorEscolhido.mobilePhone"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"/>
+                            </aside>
+                        </div>
+                        <br/>
+                        <label>endereço</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="professorEscolhido.address"
+                               required
+                               name="address"
+                               ng-class="{'error': teacherEdit.address.$invalid}"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_ENDERECO}}"/>
+                        <br/>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>disponibilidade</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="professorEscolhido.availability"
+                                       required
+                                       name="disponibility"
+                                       ng-class="{'error': teacherEdit.disponibility.$invalid}"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
+                            </aside>
+                            <aside class="pull-right">
+                                <label>salário</label>
+                                <input type="text"
+                                       class="form-control"
+                                       required
+                                       name="salary"
+                                       ng-class="{'error': teacherEdit.salary.$invalid}"
+                                       ng-model="professorEscolhido.salary"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_QUANTIA}}"/>
+                            </aside>
+                        </div>
                     </div>
-                    <br/>
-                    <label>endereço</label>
-                    <input type="text" class="form-control" ng-model="professorEscolhido.address" maxlength="{{inputMaxLength.TAMANHO_CAMPO_ENDERECO}}"/>
-                    <br/>
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>disponibilidade</label>
-                            <input type="text" class="form-control" ng-model="professorEscolhido.availability" maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
-                        </aside>
-                        <aside class="pull-right">
-                            <label>salário</label>
-                            <input type="text" class="form-control" ng-model="professorEscolhido.salary" maxlength="{{inputMaxLength.TAMANHO_CAMPO_QUANTIA}}"/>
-                        </aside>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                ng-disabled="teacherEdit.$invalid"
+                                ng-click="editTeacher(professorEscolhido)"
+                                block-all-inputs-buttons-from="modal-edit-teacher">
+                            salvar alterações
+                        </button>
+                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            ng-disabled="!(!!professorEscolhido.name && !!professorEscolhido.birthDate && !!professorEscolhido.address)"
-                            ng-click="editTeacher(professorEscolhido)"
-                            block-all-inputs-buttons-from="modal-edit-teacher">
-                        salvar alterações
-                    </button>
-                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 

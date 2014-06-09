@@ -42,13 +42,13 @@ describe('block-all-inputs-buttons-from-directive', function()
             }
         })
 
-        // TODO: CHECK HOW TO TEST THIS - REMEMBER TO ADD .EACH()
-
-        /*it('should disable all the inputs when the click lands on the directive', function()
+        it('should disable all the inputs when the click lands on the directive', function()
         {
+            $('body').append(_element);
+
             _element.find('#click-me').eq(0).click();
             expect(_element.find('input').eq(0).prop('disabled')).toBeTruthy();
-        })*/
+        })
 
         it('should release the timeout without errors', function()
         {
@@ -56,12 +56,12 @@ describe('block-all-inputs-buttons-from-directive', function()
             _timeout.flush();
         })
 
-        //TODO: CHECK IF AFTER RELEASING TIMEOUT, THE INPUTS ARE ENABLED AGAIN
-
-        /*it('should disable all the inputs when the click lands on the directive', function()
+        it('should disable all the inputs when the click lands on the directive', function()
         {
+            $('body').append(_element);
+
             _element.find('#click-me').eq(0).click();
             expect($('#teste123 input').prop('disabled')).toBeTruthy();
-        })*/
+        })
     })
 })

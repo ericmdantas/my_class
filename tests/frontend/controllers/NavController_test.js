@@ -2,30 +2,41 @@
 
 describe('NAVCONTROLLER BEING TESTED', function()
 {
-    var rootScope, scope, locationMock, httpMock;
+    var _scope, _locationMock, _httpMock, _http;
 
     beforeEach(module('myClass'));
 
     beforeEach(inject(function($injector)
     {
-        rootScope = $injector.get('$rootScope').$new();
-        scope = rootScope;
-        locationMock = $injector.get('$location');
-        httpMock = $injector.get('$httpBackend');
+        _scope = $injector.get('$rootScope').$new();
+        _locationMock = $injector.get('$location');
+        _httpMock = $injector.get('$httpBackend');
+        _http = $injector.get('$http');
     }))
 
     describe('checks all elements creation', function()
     {
         it('checks if controller was created', inject(function($controller)
         {
-            $controller('NavController', {$scope: scope});
+            $controller('NavController', {$scope: _scope});
             expect('NavController').toBeDefined();
         }))
 
         it('checks if logout was created', inject(function($controller)
         {
-            $controller('NavController', {$scope: scope});
-            expect(scope.logout).toBeDefined();
+            $controller('NavController', {$scope: _scope});
+            expect(_scope.logout).toBeDefined();
+        }))
+    })
+
+    describe('user in storage', function()
+    {
+        it('should have usuarioLogado set with info that was in storage', inject(function($controller)
+        {
+            window.localStorage.setItem('u', 'a123');
+            $controller('NavController', {$scope: _scope});
+
+            expect(_scope.usuarioLogado).toEqual('a123');
         }))
     })
 
@@ -33,7 +44,7 @@ describe('NAVCONTROLLER BEING TESTED', function()
     {
         it('should throw error - wrong param usuario', inject(function($controller)
         {
-            $controller('NavController', {$scope: scope});
+            $controller('NavController', {$scope: _scope});
 
             var _wrongParams = [null, undefined, '   ', function(){}, true, false, 1, 0, {}, []];
 
@@ -41,11 +52,24 @@ describe('NAVCONTROLLER BEING TESTED', function()
             {
                 expect(function()
                 {
-                    scope.logout(_wrongParams[i]);
+                    _scope.logout(_wrongParams[i]);
                 }).toThrow(new Error('Não foi possível deslogar o usuário. O Parâmetro foi informado incorretamente.'));
             }
         }))
 
-        //TODO: ADD SUCCESS TESTS
+        /*
+
+        TODO: GET THIS TO WORK
+
+        it('http post', inject(function($controller)
+        {
+            $controller('NavController', {$scope: _scope});
+
+            spyOn(_http, 'post');
+
+            _scope.logout('usuario');
+
+            expect(_http.post).toHaveBeenCalled();
+        }))*/
     })
 })

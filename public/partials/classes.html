@@ -12,78 +12,115 @@
 
     <div class="modal fade" id="modal-register-class">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">cadastrar turma {{novaTurma.name}}</h4>
-                </div>
-                <div class="modal-body">
-                    <p>para cadastrar a turma, favor preencher as informações abaixo:</p>
-                    <label>nome</label>
-                    <input type="text" class="form-control" ng-model="novaTurma.name" autofocus maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
-                    <br/>
+            <form name="clazzRegister">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">cadastrar turma {{novaTurma.name}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>nome</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="novaTurma.name"
+                               name="name"
+                               required
+                               ng-minlength="3"
+                               autofocus
+                               ng-class="{'error': clazzRegister.name.$invalid}"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
+                        <br/>
 
-                    <label>alunos</label>
-                    <br/>
-                    <textarea type="text" class="form-control" ng-model="novaTurma.students" maxlength="500"></textarea>
-                    <br/>
+                        <label>alunos</label>
+                        <br/>
+                        <textarea type="text"
+                                  class="form-control"
+                                  ng-model="novaTurma.students"
+                                  maxlength="500"></textarea>
+                        <br/>
 
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>horário</label>
-                            <input type="time" class="form-control" ng-model="novaTurma.time" maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
-                        </aside>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>horário</label>
+                                <input type="time"
+                                       class="form-control"
+                                       ng-model="novaTurma.time"
+                                       required
+                                       name="time"
+                                       ng-class="{'error': clazzRegister.time.$invalid}"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
+                            </aside>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                ng-disabled="clazzRegister.$invalid"
+                                ng-click="registerClass (novaTurma)"
+                                block-all-inputs-buttons-from="modal-register-day">
+                            cadastrar
+                        </button>
+                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            ng-disabled="!(!!novaTurma.name && !!novaTurma.time)"
-                            ng-click="registerClass (novaTurma)"
-                            block-all-inputs-buttons-from="modal-register-day">
-                        cadastrar
-                    </button>
-                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
     <div class="modal fade" id="modal-edit-class">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">editar {{turmaEscolhida.name}}</h4>
-                </div>
-                <div class="modal-body">
-                    <label>nome</label>
-                    <input type="text" class="form-control" ng-model="turmaEscolhida.name" autofocus maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
-                    <br/>
+            <form name="clazzEdit">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">editar {{turmaEscolhida.name}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>nome</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="turmaEscolhida.name"
+                               required
+                               name="name"
+                               ng-class="{'error': clazzRegister.name.$invalid}"
+                               ng-minlength="3"
+                               autofocus
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
+                        <br/>
 
-                    <label>alunos</label>
-                    <br/>
-                    <textarea type="text" class="form-control" ng-model="turmaEscolhida.students" maxlength="500"></textarea>
-                    <br/>
+                        <label>alunos</label>
+                        <br/>
+                        <textarea type="text"
+                                  class="form-control"
+                                  ng-model="turmaEscolhida.students"
+                                  maxlength="500"></textarea>
+                        <br/>
 
-                    <div class="middle-modal">
-                        <aside class="pull-left">
-                            <label>horário</label>
-                            <input type="time" class="form-control" ng-model="turmaEscolhida.time" maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
-                        </aside>
+                        <div class="middle-modal">
+                            <aside class="pull-left">
+                                <label>horário</label>
+                                <input type="time"
+                                       class="form-control"
+                                       ng-model="turmaEscolhida.time"
+                                       required
+                                       name="time"
+                                       ng-class="{'error': clazzRegister.time.$invalid}"
+                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
+                            </aside>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                ng-disabled="clazzEdit.$invalid"
+                                ng-click="editClass(turmaEscolhida)"
+                                block-all-inputs-buttons-from="modal-edit-day">
+                            salvar alterações
+                        </button>
+                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                            ng-disabled="!(!!turmaEscolhida.name && !!turmaEscolhida.time)"
-                            ng-click="editClass(turmaEscolhida)"
-                            block-all-inputs-buttons-from="modal-edit-day">
-                        salvar alterações
-                    </button>
-                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 

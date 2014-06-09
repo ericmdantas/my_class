@@ -12,57 +12,86 @@
 
     <div class="modal fade" id="modal-clazz-day">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Dia {{hoje}}</h4>
-                </div>
-                <div class="modal-body">
-                    <label>turma</label>
-                    <br/>
-                    <select ng-model="turmaDiaDia" ng-options="turma.name for turma in clazzesNames" ng-change="getStudentsNamesByClass(turmaDiaDia.name)"></select>
-                    <br/><br/>
-                    <label>professor responsável</label>
-                    <br/>
-                    <select ng-model="turmaDiaDia.teacherName" ng-options="professor.name for professor in professores"></select>
-                    <br/><br/>
+            <form name="clazzDayRegister">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Dia {{hoje}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>turma</label>
+                        <br/>
+                        <select ng-model="turmaDiaDia"
+                                ng-options="turma.name for turma in clazzesNames"
+                                required
+                                name="clazz"
+                                ng-class="{'error': clazzDayRegister.clazz.$invalid}"
+                                ng-change="getStudentsNamesByClass(turmaDiaDia.name)"></select>
+                        <br/><br/>
+                        <label>professor responsável</label>
+                        <br/>
+                        <select ng-model="turmaDiaDia.teacherName"
+                                required
+                                name="teacher"
+                                ng-class="{'error': clazzDayRegister.teacher.$invalid}"
+                                ng-options="professor.name for professor in professores"></select>
+                        <br/><br/>
 
-                    <div ng-if="turmaDiaDia.name">
-                        <label>presença</label>
+                        <div ng-if="turmaDiaDia.name">
+                            <label>presença</label>
 
-                        <div ng-if="alunos.length === 0" align="center">
-                            <div class="alert alert-warning">Não existem alunos para a turma escolhida.</div>
+                            <div ng-if="alunos.length === 0" align="center">
+                                <div class="alert alert-warning">Não existem alunos para a turma escolhida.</div>
+                            </div>
+
+                            <p ng-repeat="aluno in alunos"
+                               class="presenca transition">{{aluno.name}}
+                                    <input type="checkbox"
+                                           class="pull-right"
+                                           required
+                                           name="student"
+                                           ng-class="{'error': clazzDayRegister.student.$invalid}"
+                                           ng-model="aluno.wasInClass"/>
+                            </p>
                         </div>
 
-                        <p ng-repeat="aluno in alunos" class="presenca transition">{{aluno.name}}
-                            <input type="checkbox" class="pull-right" ng-model="aluno.wasInClass"/>
-                        </p>
+                        <br/>
+                        <label>matéria</label>
+                        <input type="text"
+                               class="form-control"
+                               ng-model="turmaDiaDia.subject"
+                               required
+                               ng-minlength="3"
+                               name="subject"
+                               ng-class="{'error': clazzDayRegister.subject.$invalid}"
+                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
+                        <br/>
+                        <label>observação</label>
+                        <textarea type="text" rows="5" class="form-control" ng-model="turmaDiaDia.observation" spellcheck="true" max-length="500"></textarea>
+
                     </div>
-
-                    <br/>
-                    <label>matéria</label>
-                    <input type="text" class="form-control" ng-model="turmaDiaDia.subject" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
-                    <br/>
-                    <label>observação</label>
-                    <textarea type="text" rows="5" class="form-control" ng-model="turmaDiaDia.observation" spellcheck="true" max-length="500"></textarea>
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                ng-disabled="clazzDayRegister.$invalid"
+                                ng-click="registerClazzDay(turmaDiaDia, alunos)"
+                                block-all-inputs-buttons-from="modal-clazz-day">
+                            registrar
+                        </button>
+                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            ng-disabled="!(!!turmaDiaDia.teacherName && !!turmaDiaDia.subject && alunos.length > 0)"
-                            ng-click="registerClazzDay(turmaDiaDia, alunos)"
-                            block-all-inputs-buttons-from="modal-clazz-day">
-                        registrar
-                    </button>
-                    <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                    <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
-    <div class="info-card transition" ng-repeat="turma in informacaoDiaria | orderBy: 'name' | filter: turmaProcurada">
-        <plus-less-info-element elementToToggle="class-toggle-{{$index}}"></plus-less-info-element>
+    <div class="info-card transition"
+         ng-repeat="turma in informacaoDiaria | orderBy: 'name' | filter: turmaProcurada">
+
+        <plus-less-info-element
+                elementToToggle="class-toggle-{{$index}}">
+        </plus-less-info-element>
+
         <h3>{{turma.name}}</h3>
         <div id="class-toggle-{{$index}}" class="collapse">
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
