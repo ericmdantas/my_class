@@ -79,5 +79,5 @@ footer {border-left: 1px solid limegreen; color: #666; opacity: .3;}
 footer:hover {opacity: 1; cursor: pointer;}
 input, textarea {font-size: 1em !important;}
 textarea {max-width: 100%;}
-select {width: 100%; padding: 6px; border-color: #bbb;}
+select {border-color: #bbb;}
 button.close {margin-left: 1em;}

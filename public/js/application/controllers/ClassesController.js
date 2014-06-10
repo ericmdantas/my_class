@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('ClassesController', ['$scope', 'lib', 'pageConfig', 'inputMaxLength', 'ClazzService', 'StudentService', 'ModalHelper',
-                                function ($scope, lib, pageConfig, inputMaxLength, ClazzService, StudentService, ModalHelper)
+myClass.controller('ClassesController', ['$scope', '$timeout', 'lib', 'pageConfig', 'inputMaxLength', 'ClazzService', 'StudentService', 'ModalHelper',
+                                function ($scope, $timeout, lib, pageConfig, inputMaxLength, ClazzService, StudentService, ModalHelper)
 {
     $scope.turmas = [];
     $scope.cfg = pageConfig;
@@ -23,13 +23,19 @@ myClass.controller('ClassesController', ['$scope', 'lib', 'pageConfig', 'inputMa
 
     $scope.getStudentsNames = function()
     {
-        //TODO: CHECK SOME WAY TO ALLOW USER TO SELECT MORE THAN ONE STUDENT - SELECT2
-        //SO THAT THE FOLLOWING REQUEST IS USED CORRECTLY
-
         StudentService.getStudentsNames()
             .success(function(data)
             {
                 $scope.alunos = (data && data.students) ? data.students : [];
+
+                for (var i = 0; i < $scope.alunos.length; i++)
+                {
+                    $scope.alunos[i] = $scope.alunos[i].name;
+                }
+            })
+            .finally(function()
+            {
+                $('#alunos-nova-turma').select2();
             })
     }
 
@@ -37,7 +43,13 @@ myClass.controller('ClassesController', ['$scope', 'lib', 'pageConfig', 'inputMa
     {
         $scope.isLoadingVisible.modal = false;
         ModalHelper.open('#modal-edit-class');
+
         $scope.turmaEscolhida = myClass;
+
+        $timeout(function()
+        {
+            $('#alunos-turma-editada').select2().trigger('change');
+        }, 0);
     }
 
     $scope.openModalToDeleteClass = function(myClass)
@@ -58,10 +70,10 @@ myClass.controller('ClassesController', ['$scope', 'lib', 'pageConfig', 'inputMa
         if (lib.isObjectInvalid(turma))
             throw new Error('Não foi possível registrar esta turma.');
 
-        $scope.isLoadingVisible.modal = true;
+        if (lib.isObjectInvalid(turma.students))
+            throw new Error('Não foi possível registrar esta turma, objeto de alunos não informado corretamente.');
 
-        if (turma && turma.students && turma.students.indexOf(',') > -1)
-            turma.students = turma.students.split(',');
+        $scope.isLoadingVisible.modal = true;
 
         ClazzService.registerClazz(turma)
             .success(function()
@@ -77,10 +89,10 @@ myClass.controller('ClassesController', ['$scope', 'lib', 'pageConfig', 'inputMa
         if (lib.isObjectInvalid(turma) || lib.isStringInvalid(turma._id))
             throw new Error('Não foi possível editar esta turma.');
 
-        $scope.isLoadingVisible.modal = true;
+        if (lib.isObjectInvalid(turma.students))
+            throw new Error('Não foi possível editar esta turma, objeto de alunos não informado corretamente.');
 
-        if (turma && turma.students && turma.students.indexOf(',') > -1)
-            turma.students = turma.students.split(',');
+        $scope.isLoadingVisible.modal = true;
 
         ClazzService.editClazz(turma._id, turma)
              .success(function()

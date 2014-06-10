@@ -19,6 +19,7 @@ module.exports = function(config) {
 		'public/js/framework/bootstrap.min.js',
 		'public/js/framework/moment.min.js',
 		'public/js/framework/highcharts.js',
+        'public/js/framework/select2.min.js',
 
 		'public/js/application/services/config.js',
         'public/js/application/services/services.js',

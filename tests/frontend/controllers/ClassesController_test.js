@@ -105,6 +105,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             $controller('ClassesController', {$scope: _scope});
             var chosenClass = {};
             _scope.openModalToEditClass(chosenClass);
+
             expect(_scope.turmaEscolhida).toEqual(chosenClass);
         }))
 
@@ -113,6 +114,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             $controller('ClassesController', {$scope: _scope});
             var chosenClass = {_id: 'abc', name: 'Turma1'};
             _scope.openModalToEditClass(chosenClass);
+
             expect(_scope.turmaEscolhida).toEqual(chosenClass);
         }))
     })
@@ -124,6 +126,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             $controller('ClassesController', {$scope: _scope});
             var chosenClass = {};
             _scope.openModalToDeleteClass(chosenClass);
+
             expect(_scope.turmaEscolhida).toEqual(chosenClass);
         }))
 
@@ -173,14 +176,32 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(function(){_scope.registerClass(wrongParams[i])}).toThrow(new Error('Não foi possível registrar esta turma.'));
+                expect(function()
+                {
+                    _scope.registerClass(wrongParams[i])
+                }).toThrow(new Error('Não foi possível registrar esta turma.'));
+            }
+        }))
+
+        it('tries to register a class with wrong students', inject(function($controller)
+        {
+            $controller('ClassesController', {$scope: _scope});
+
+            var wrongParams = [[{students: []}], [{students: {}}]];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function()
+                {
+                    _scope.registerClass(wrongParams[i])
+                }).toThrow(new Error('Não foi possível registrar esta turma, objeto de alunos não informado corretamente.'));
             }
         }))
 
         it('checks if adding a class is working - if there were 3 classes, should be 4 after the adition', inject(function($controller)
         {
             $controller('ClassesController', {$scope: _scope});
-            _scope.turmas = [{name: 1}, {name: 2}, {name: 3}];
+            _scope.turmas = [{students: ['A', 'B', 'C']}];
             _scope.registerClass(_scope.turmas[0]);
             _httpMock.flush();
 
@@ -190,10 +211,10 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         it('should be able to register class successfully with students informed', inject(function($controller)
         {
             $controller('ClassesController', {$scope: _scope});
-            var _turma = {name: 'A', _id: '123', students: 'a1, a2, a3'};
+            var _turma = {name: 'A', _id: '123', students: ['a1', 'a2', 'a3']};
             _scope.registerClass(_turma);
             _httpMock.flush();
-            var _expected = {name: 'A', _id: '123', students: ['a1', ' a2', ' a3']};
+            var _expected = {name: 'A', _id: '123', students: ['a1', 'a2', 'a3']};
 
             expect(_turma).toEqual(_expected);
         }))
@@ -209,7 +230,25 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(function(){_scope.editClass(wrongParams[i])}).toThrow(new Error('Não foi possível editar esta turma.'));
+                expect(function()
+                {
+                    _scope.editClass(wrongParams[i]);
+                }).toThrow(new Error('Não foi possível editar esta turma.'));
+            }
+        }))
+
+        it('tries to edit a class with wrong students', inject(function($controller)
+        {
+            $controller('ClassesController', {$scope: _scope});
+
+            var wrongParams = [{_id: 'a123', students: []}, {_id: 'a123', students: {}}];
+
+            for (var i = 0; i < wrongParams.length; i++)
+            {
+                expect(function()
+                {
+                    _scope.editClass(wrongParams[i])
+                }).toThrow(new Error('Não foi possível editar esta turma, objeto de alunos não informado corretamente.'));
             }
         }))
 
@@ -218,13 +257,16 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             $controller('ClassesController', {$scope: _scope});
             var turma = {name: 'A'};
 
-            expect(function(){_scope.editClass(turma)}).toThrow(new Error('Não foi possível editar esta turma.'));
+            expect(function()
+            {
+                _scope.editClass(turma);
+            }).toThrow(new Error('Não foi possível editar esta turma.'));
         }))
 
         it('should be able to edit successfully', inject(function($controller)
         {
             $controller('ClassesController', {$scope: _scope});
-            var turma = {name: 'A', _id: '123'};
+            var turma = {_id: '123', students: [{name: 'A'}]};
             _scope.editClass(turma);
             _httpMock.flush();
         }))
@@ -232,10 +274,11 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         it('should be able to edit class successfully with students informed', inject(function($controller)
         {
             $controller('ClassesController', {$scope: _scope});
-            var _turma = {name: 'A', _id: '123', students: 'a1, a2, a3'};
+            var _turma = {name: 'A', _id: '123', students: ['a1', 'a2', 'a3']};
             _scope.editClass(_turma);
             _httpMock.flush();
-            var _expected = {name: 'A', _id: '123', students: ['a1', ' a2', ' a3']};
+
+            var _expected = {name: 'A', _id: '123', students: ['a1', 'a2', 'a3']};
 
             expect(_turma).toEqual(_expected);
         }))
@@ -251,7 +294,10 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(function(){_scope.deleteClass(wrongParams[i]);}).toThrow(new Error('Não foi possível deletar esta turma, pois o id está errado.'));
+                expect(function()
+                {
+                    _scope.deleteClass(wrongParams[i]);
+                }).toThrow(new Error('Não foi possível deletar esta turma, pois o id está errado.'));
             }
         }))
 

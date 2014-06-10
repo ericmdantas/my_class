@@ -39,6 +39,8 @@
 .alunos {display: block; margin-left: 2em;}
 .payment {display: inline-block; padding: .3em 1.3em 1em 1.3em; margin: 2em .5em; vertical-align: top;}
 .studentsInClass span {margin: 0 .2em;}
+.select2-search-choice div {padding: .3em;}
 
+select {width: 100%; padding: 6px;}
 footer {float: right; padding: 3px 7px; margin: 3em 1em 0;}
 input[type=checkbox] {width: 25px; height: 25px; margin: 0;}

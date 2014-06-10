@@ -99,7 +99,8 @@
             <a href data-toggle="collapse" data-target="#historico{{$index}}" ng-show="isHistoricoVisible(pagamento)">histórico de pagamento</a>
 
             <div ng-if="pagamento.payments.length === 0" align="center">
-                <div class="alert alert-warning">Aluno não pagou ainda.
+                <div class="alert alert-warning">
+                    <span>Aluno não pagou ainda.</span>
                     <a href class="alert-link" ng-click="openModalToRegisterPayment()">Clique aqui para realizar o pagamento.</a>
                 </div>
             </div>

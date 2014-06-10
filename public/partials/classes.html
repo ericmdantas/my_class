@@ -33,10 +33,15 @@
 
                         <label>alunos</label>
                         <br/>
-                        <textarea type="text"
-                                  class="form-control"
-                                  ng-model="novaTurma.students"
-                                  maxlength="500"></textarea>
+
+                        <div>
+                            <select id="alunos-nova-turma"
+                                    multiple
+                                    ng-model="novaTurma.students"
+                                    ng-options="aluno for aluno in alunos"
+                                    style="width: 100%;"></select>
+                        </div>
+
                         <br/>
 
                         <div class="middle-modal">
@@ -82,7 +87,7 @@
                                ng-model="turmaEscolhida.name"
                                required
                                name="name"
-                               ng-class="{'error': clazzRegister.name.$invalid}"
+                               ng-class="{'error': clazzEdit.name.$invalid}"
                                ng-minlength="3"
                                autofocus
                                maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
@@ -90,10 +95,15 @@
 
                         <label>alunos</label>
                         <br/>
-                        <textarea type="text"
-                                  class="form-control"
-                                  ng-model="turmaEscolhida.students"
-                                  maxlength="500"></textarea>
+
+                        <div>
+                            <select id="alunos-turma-editada"
+                                    multiple
+                                    style="width: 100%;"
+                                    ng-model="turmaEscolhida.students"
+                                    ng-options="aluno for aluno in alunos"></select>
+                        </div>
+
                         <br/>
 
                         <div class="middle-modal">
@@ -104,7 +114,7 @@
                                        ng-model="turmaEscolhida.time"
                                        required
                                        name="time"
-                                       ng-class="{'error': clazzRegister.time.$invalid}"
+                                       ng-class="{'error': clazzEdit.time.$invalid}"
                                        maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
                             </aside>
                         </div>
@@ -135,7 +145,7 @@
         <plus-less-info-element elementToToggle="class-toggle-{{$index}}"></plus-less-info-element>
         <h3>{{turma.name}}</h3>
         <div id="class-toggle-{{$index}}" class="collapse">
-            <p class="text-almost-invisible">alunos: <span class="text-almost-black alunos" ng-repeat="alunos in turma.students">{{alunos}}</span></p>
+            <p class="text-almost-invisible">alunos: <span class="text-almost-black alunos" ng-repeat="aluno in turma.students">{{aluno}}</span></p>
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
 
             <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteClass(turma)">fechar</button>
