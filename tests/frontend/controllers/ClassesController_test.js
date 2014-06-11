@@ -2,7 +2,7 @@
 
 describe('CLASSESCONTROLLER BEING TESTED', function()
 {
-    var _scope, _httpMock;
+    var _scope, _httpMock, _timeoutMock;
 
 	beforeEach(module('myClass'));
 
@@ -10,6 +10,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
     {
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
+        _timeoutMock = $injector.get('$timeout');
         _httpMock.when('GET', '/api/classes').respond({classes: [{name: 'a'}, {name: 'b'}]});
         _httpMock.when('GET', '/api/students/name').respond(200);
         _httpMock.when('POST', '/api/classes').respond(200);
@@ -98,7 +99,17 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('checks if opening modal to edit class is working properly', function()
+    describe('openModalToRegisterClass', function()
+    {
+        it('should call openModalToRegisterClass correctly', inject(function($controller)
+        {
+            $controller('ClassesController', {$scope: _scope});
+
+            _scope.openModalToRegisterClass();
+        }))
+    })
+
+    describe('openModalToEditClass', function()
     {
         it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
         {
@@ -117,9 +128,18 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
 
             expect(_scope.turmaEscolhida).toEqual(chosenClass);
         }))
+
+        it('should flush timeout correctly', inject(function($controller)
+        {
+            $controller('ClassesController', {$scope: _scope});
+            var _clazz = {_id: 'a123', name: 'Turma1'};
+
+            _scope.openModalToEditClass(_clazz);
+            _timeoutMock.flush();
+        }))
     })
 
-    describe('checks if opening modal to delete class is working properly', function()
+    describe('openModalToDeleteClass', function()
     {
         it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
         {
@@ -163,6 +183,36 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             $controller('ClassesController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.turmas).toEqual([{name: 'A'}, {name: 'B'}]);
+        }))
+    })
+
+    describe('GET /api/students/name', function()
+    {
+        it('should not throw error - no response from server', inject(function($controller)
+        {
+            _httpMock.expectGET('/api/students/name').respond();
+            $controller('ClassesController', {$scope: _scope});
+            _httpMock.flush();
+
+            expect(_scope.alunos).toEqual([]);
+        }))
+
+        it('should not throw error - partial response from server', inject(function($controller)
+        {
+            _httpMock.expectGET('/api/students/name').respond({students: []});
+            $controller('ClassesController', {$scope: _scope});
+            _httpMock.flush();
+
+            expect(_scope.alunos).toEqual([]);
+        }))
+
+        it('should fill the alunos array correctly - full response from server', inject(function($controller)
+        {
+            _httpMock.expectGET('/api/students/name').respond({students: [{name: 'Aluno1'}, {name: 'Aluno2'}]});
+            $controller('ClassesController', {$scope: _scope});
+            _httpMock.flush();
+
+            expect(_scope.alunos).toEqual(['Aluno1', 'Aluno2']);
         }))
     })
 

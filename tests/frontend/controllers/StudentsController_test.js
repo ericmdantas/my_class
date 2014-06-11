@@ -109,7 +109,17 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('checks if opening modal to edit student is working properly', function()
+    describe('openModalToRegisterStudent()', function()
+    {
+        it('should call openModalToRegisterStudent correctly', inject(function($controller)
+        {
+            $controller('StudentsController', {$scope: _scope});
+
+            _scope.openModalToRegisterStudent();
+        }))
+    })
+
+    describe('openModalToEditStudent()', function()
     {
         it('checks if opening student and passing an empty object is behaving ok', inject(function($controller)
         {
@@ -128,7 +138,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('checks if opening modal to delete class is working properly', function()
+    describe('openModalToDeleteStudent()', function()
     {
         it('checks if opening student and passing an empty object is behaving ok', inject(function($controller)
         {

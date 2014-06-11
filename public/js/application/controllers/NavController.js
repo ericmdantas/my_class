@@ -13,7 +13,7 @@ myClass.controller('NavController', ['$scope', '$location', '$http', '$window', 
         $http.post('/api/logout', {user: usuario})
             .finally(function()
             {
-                $window.location.href = '/';
+                $window.location.replace('/');
             })
     }
 }])

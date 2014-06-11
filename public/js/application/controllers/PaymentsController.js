@@ -53,15 +53,5 @@ myClass.controller('PaymentsController', ['$scope', 'lib', 'inputMaxLength', 'mo
                      })
     }
 
-    $scope.isHistoricoVisible = function(pagamento)
-    {
-        if (lib.isObjectInvalid(pagamento))
-            throw new Error('Não é possível exibir o histórico. Parâmetro passado incorretamente. Esperava um objeto.');
-
-        var quantidade = (pagamento && pagamento.payments) ? pagamento.payments.length : 0;
-
-        return quantidade > 0 ? true : false;
-    }
-
     $scope.getPayments();
 }])

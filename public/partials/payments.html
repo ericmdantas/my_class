@@ -96,7 +96,7 @@
             <p class="text-almost-invisible">tipo de contrato: <span class="text-almost-black">{{pagamento.contract}}</span></p>
             <p class="text-almost-invisible">data do contrato: <span class="text-almost-black">{{pagamento.contractDate}}</span></p>
             <p class="text-almost-invisible">vencimento: <span class="text-almost-black">{{pagamento.untilWhen}}</span></p>
-            <a href data-toggle="collapse" data-target="#historico{{$index}}" ng-show="isHistoricoVisible(pagamento)">histórico de pagamento</a>
+            <a href data-toggle="collapse" data-target="#historico{{$index}}" ng-show="pagamentos.length > 0">histórico de pagamento</a>
 
             <div ng-if="pagamento.payments.length === 0" align="center">
                 <div class="alert alert-warning">

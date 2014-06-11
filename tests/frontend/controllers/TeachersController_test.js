@@ -79,7 +79,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
             expect(typeof _scope.openModalToDeleteTeacher).toBe('function');
         }))
 
-        it('checks if the _scope.openModalToDeleteTeacher was created', inject(function($controller)
+        it('checks if the _scope.deleteTeacher was created', inject(function($controller)
         {
             $controller('TeachersController', {$scope: _scope});
             expect(_scope.deleteTeacher).toBeDefined();
@@ -91,20 +91,6 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
             $controller('TeachersController', {$scope: _scope});
             expect(_scope.registerNewTeacher).toBeDefined();
             expect(typeof _scope.registerNewTeacher).toBe('function');
-        }))
-
-        it('checks if modals are ready to be opened - openModalToDeleteTeacher', inject(function($controller)
-        {
-            $controller('TeachersController', {$scope: _scope});
-            expect(_scope.openModalToDeleteTeacher).toBeDefined();
-            expect(typeof _scope.openModalToDeleteTeacher).toEqual('function');
-        }))
-
-        it('checks if modals are ready to be opened - openModalToRegisterTeacher', inject(function($controller)
-        {
-            $controller('TeachersController', {$scope: _scope});
-            expect(_scope.openModalToRegisterTeacher).toBeDefined();
-            expect(typeof _scope.openModalToRegisterTeacher).toEqual('function');
         }))
 
         it('checks if modals are ready to be opened - openModalToEditTeacher', inject(function($controller)
@@ -122,7 +108,17 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('checks if the edition to open the modal is working', function()
+    describe('openModalToRegisterTeacher', function()
+    {
+        it('should openModalToRegisterTeacher correctly', inject(function($controller)
+        {
+            $controller('TeachersController', {$scope: _scope});
+
+            _scope.openModalToRegisterTeacher();
+        }))
+    })
+
+    describe('openModalToEditTeacher', function()
     {
         it('checks if a empty object is clicked, the professorEscolhido object is working', inject(function($controller)
         {
@@ -147,15 +143,13 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('checks if the deletion to open the modal is working', function()
+    describe('openModalToDeleteTeacher', function()
     {
         it('checks if a empty object is clicked, the professorEscolhido object is working', inject(function($controller)
         {
             $controller('TeachersController', {$scope: _scope});
-
             var professorEditado = {};
-
-            _scope.openModalToEditTeacher(professorEditado);
+            _scope.openModalToDeleteTeacher(professorEditado);
 
             expect(_scope.professorEscolhido).toEqual(professorEditado);
         }))
@@ -163,10 +157,8 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         it('checks if a empty object is clicked, the professorEscolhido object is working', inject(function($controller)
         {
             $controller('TeachersController', {$scope: _scope});
-
             var professorEditado = {_id: '123a'};
-
-            _scope.openModalToEditTeacher(professorEditado);
+            _scope.openModalToDeleteTeacher(professorEditado);
 
             expect(_scope.professorEscolhido).toEqual(professorEditado);
         }))
@@ -179,6 +171,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
             _httpMock.expectGET('/api/teachers').respond({});
             $controller('TeachersController', {$scope: _scope});
             _httpMock.flush();
+
             expect(_scope.professores.length).toBe(0);
         }))
 
@@ -187,6 +180,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
             _httpMock.expectGET('/api/teachers').respond({resultado: []});
             $controller('TeachersController', {$scope: _scope});
             _httpMock.flush();
+
             expect(_scope.professores.length).toBe(0);
         }))
 
@@ -195,6 +189,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
             _httpMock.expectGET('/api/teachers').respond({resultado: ['somebody here', 'somebody else in here']});
             $controller('TeachersController', {$scope: _scope});
             _httpMock.flush();
+
             expect(_scope.professores.length).toBe(2);
         }))
     })

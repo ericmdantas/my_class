@@ -7,7 +7,7 @@ myClass.directive('earningsStats', ['StatisticService', function(StatisticServic
                     '<div id="column-chart" class="chart"></div>'+
                '</div>';
 
-    var ctrl = ['$scope', '$http', function ($scope, $http)
+    var ctrl = ['$scope', function ($scope)
     {
         $scope.valoresTrimestre = [];
 

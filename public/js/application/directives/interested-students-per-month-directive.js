@@ -7,7 +7,7 @@ myClass.directive('interestedStudentsPerMonth', ['StatisticService', function(St
                         '<div id="pie-chart" class="chart" align="center"></div>' +
                     '</div>';
 
-    var _ctrl = ['$scope', '$http', function($scope, $http)
+    var _ctrl = ['$scope', function($scope)
     {
         $scope.alunosInteressadosPorMes = [];
 

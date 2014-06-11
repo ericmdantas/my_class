@@ -78,13 +78,24 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('checks if the modal opening to edit is working properly', function()
+    describe('openModalToRegisterBook', function()
+    {
+        it('should call openModalToRegisterBook correctly', inject(function($controller)
+        {
+            $controller('BooksController', {$scope: _scope});
+
+            _scope.openModalToRegisterBook();
+        }))
+    })
+
+    describe('openModalToEditBook', function()
     {
         it('checks if an empty object is being past correctly ', inject(function($controller)
         {
             $controller('BooksController', {$scope: _scope});
             var livroEditado = {};
             _scope.openModalToEditBook(livroEditado);
+
             expect(_scope.livroEscolhido).toEqual(livroEditado);
         }))
 
@@ -93,11 +104,12 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
             $controller('BooksController', {$scope: _scope});
             var livroEditado = {_id: 'a'};
             _scope.openModalToEditBook(livroEditado);
+
             expect(_scope.livroEscolhido).toEqual(livroEditado);
         }))
     })
 
-    describe('checks if modal opening to delete book is working properly', function()
+    describe('openModalToDeleteBook', function()
     {
         it('checks if an empty object is being past correctly ', inject(function($controller)
         {

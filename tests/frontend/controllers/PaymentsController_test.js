@@ -10,7 +10,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
     {
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
-        _httpMock.when('GET', '/api/students/payments').respond();
+        _httpMock.when('GET', '/api/students/payments').respond({resultado: [{name: 'Aluno1'}]});
         _httpMock.when('POST', '/api/students/payments', undefined).respond();
     }))
 
@@ -52,6 +52,40 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
             expect(_scope.months).toBeDefined();
             expect(_scope.months.length).toEqual(12);
         }))
+
+        it('checks if inputMaxLength was created', inject(function($controller)
+        {
+            $controller('PaymentsController', {$scope: _scope});
+
+            expect(_scope.inputMaxLength).toBeDefined();
+            expect(typeof _scope.inputMaxLength).toEqual('object');
+        }))
+
+        it('checks if isLoadingVisible was created', inject(function($controller)
+        {
+            $controller('PaymentsController', {$scope: _scope});
+
+            expect(_scope.isLoadingVisible).toBeDefined();
+            expect(typeof _scope.isLoadingVisible).toEqual('object');
+            expect(_scope.isLoadingVisible.modal).toBeFalsy();
+        }))
+
+        it('checks if openModalToRegister was created', inject(function($controller)
+        {
+            $controller('PaymentsController', {$scope: _scope});
+
+            expect(_scope.openModalToRegisterPayment).toBeDefined();
+            expect(typeof _scope.openModalToRegisterPayment).toEqual('function');
+        }))
+    })
+
+    describe('openModalToRegister', function()
+    {
+        it('should call openModalToRegister without a problem', inject(function($controller)
+        {
+            $controller('PaymentsController', {$scope: _scope});
+            _scope.openModalToRegisterPayment();
+        }))
     })
 
     describe('GET /api/students/payments', function()
@@ -67,7 +101,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
             $controller('PaymentsController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.pagamentos).toBeDefined();
-            expect(_scope.pagamentos.length).toEqual(0);
+            expect(_scope.pagamentos.length).toEqual(1);
         }))
 
         it('should fetch the get correctly - only resultado response', inject(function($controller)
@@ -111,9 +145,12 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
         {
             _httpMock.expectPOST('/api/students/payments').respond(200);
             $controller('PaymentsController', {$scope: _scope});
+
             var pagamento = {name: 'eric', class: '', paymentMonth: ''};
+
             _scope.pay(pagamento);
             _httpMock.flush();
+
             expect(_scope.pagamentoEscolhido).toEqual({});
         }))
 
@@ -122,42 +159,10 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
             _httpMock.expectPOST('/api/students/payments').respond(200);
             $controller('PaymentsController', {$scope: _scope});
 
-            var _pagamento = {name: {name: 'eric'}, class: {class: 'turma1'}, paymentMonth: {name: 'January'}};
+            var _pagamento = {name: {name: 'Aluno1'}, class: {class: 'turma1'}, paymentMonth: {name: 'January'}};
 
             _scope.pay(_pagamento);
             _httpMock.flush();
-        }))
-    })
-
-    describe('checks if historic visibility is working as expected', function()
-    {
-        it('checks historic visibility - should be false', inject(function($controller)
-        {
-            $controller('PaymentsController', {$scope: _scope});
-
-            var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, {}, []];
-
-            for (var i = 0; i < _wrongParams.length; i++)
-            {
-                expect(function()
-                {
-                    _scope.isHistoricoVisible(_wrongParams[i])
-                }).toThrow(new Error('Não é possível exibir o histórico. Parâmetro passado incorretamente. Esperava um objeto.'));
-            }
-        }))
-
-        it('checks historic visibility - should be false', inject(function($controller)
-        {
-            $controller('PaymentsController', {$scope: _scope});
-            var pagamento = {payments: []}
-            expect(_scope.isHistoricoVisible(pagamento)).toBeFalsy();
-        }))
-
-        it('checks historic visibility - should be true', inject(function($controller)
-        {
-            $controller('PaymentsController', {$scope: _scope});
-            var pagamento = {payments: [{a: 1}, {b: 2}]}
-            expect(_scope.isHistoricoVisible(pagamento)).toBeTruthy();
         }))
     })
 })

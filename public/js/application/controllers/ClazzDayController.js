@@ -14,11 +14,10 @@ myClass.controller('ClazzDayController', ['$scope', 'lib', 'pageConfig', 'inputM
     $scope.informacaoDiaria = [];
     var currentMonthYear = moment().format("MM/YYYY");
 
-    $scope.openModalToRegisterClazzDay = function(myClass)
+    $scope.openModalToRegisterClazzDay = function()
     {
         $scope.isLoadingVisible.modal = false;
         ModalHelper.open('#modal-clazz-day');
-        $scope.turmaDiaDia = myClass;
     }
 
     $scope.getClazzesNames = function()

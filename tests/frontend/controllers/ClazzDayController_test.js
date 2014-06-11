@@ -97,7 +97,10 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(function(){_scope.getClassesDailyInfo(wrongParams[i])}).toThrow(new Error('Não foi informado o ano e mês correto para consulta.'));
+                expect(function()
+                {
+                    _scope.getClassesDailyInfo(wrongParams[i])
+                }).toThrow(new Error('Não foi informado o ano e mês correto para consulta.'));
             }
         }))
 
@@ -376,17 +379,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
         {
             $controller('ClazzDayController', {$scope: _scope});
-            var chosenClass = {};
-            _scope.openModalToRegisterClazzDay(chosenClass);
-            expect(_scope.turmaDiaDia).toEqual(chosenClass);
-        }))
-
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: _scope});
-            var chosenClass = {_id: 'abc', name: 'Turma1'};
-            _scope.openModalToRegisterClazzDay(chosenClass);
-            expect(_scope.turmaDiaDia).toEqual(chosenClass);
+            _scope.openModalToRegisterClazzDay();
         }))
     })
 
