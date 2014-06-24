@@ -1,7 +1,7 @@
 "use strict";
 
-var session = require('../../../routes/session'),
-    isLoggedIn = require('assert');
+var expect = require('chai').expect;
+var session = require('../../../routes/session');
 
 describe('Session being tested', function()
 {
@@ -9,7 +9,8 @@ describe('Session being tested', function()
     {
         it('chcks if isLoggedIn was created', function()
         {
-            isLoggedIn.strictEqual(typeof session, "function");
+            expect(session).to.be.defined;
+            expect(session).to.be.a('function');
         })
     })
 })

@@ -1,9 +1,9 @@
 "use strict";
 
-var assert = require('assert');
+var expect = require('chai').expect;
 var BookController = require('../../../controllers/BookController');
 var mongoose = require('mongoose');
-var db = require('../config/db.json');
+var db = require('../helpers/db.json');
 var BookModel = require('../../../models/Book');
 
 describe('BookController being tested', function()
@@ -18,7 +18,8 @@ describe('BookController being tested', function()
     {
         describe('checks if BookController was created', function()
         {
-            assert.strictEqual(typeof BookController, "object");
+            expect(BookController).to.be.defined;
+            expect(BookController).to.be.an('object');
         })
     })
 
@@ -42,9 +43,10 @@ describe('BookController being tested', function()
         {
             var _res = {json: function(obj)
             {
-                assert.strictEqual(obj.books[0].name, "Livro1");
-                assert.strictEqual(obj.books[0].quantity, "1");
-                assert.strictEqual(obj.books[0].usersAllowed, undefined);
+                expect(obj).to.be.defined;
+                expect(obj.books[0].name).to.equal("Livro1");
+                expect(obj.books[0].quantity).to.equal("1");
+                expect(obj.books[0].usersAllowed).to.not.exist;
                 done();
             }};
 

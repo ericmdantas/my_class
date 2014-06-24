@@ -1,7 +1,7 @@
 "use strict";
 
+var expect = require('chai').expect;
 var libDB = require('../../../lib/libDB');
-var assert = require('assert');
 
 describe('db stuff', function()
 {
@@ -9,12 +9,14 @@ describe('db stuff', function()
     {
         it('checks if libDB was created', function()
         {
-            assert.strictEqual(typeof libDB, "object");
+            expect(libDB).to.be.defined;
+            expect(libDB).to.be.an('object');
         })
 
         it('checks if libDB.init was created', function()
         {
-            assert.strictEqual(typeof libDB.init, "function");
+            expect(libDB.init).to.be.defined;
+            expect(libDB.init).to.be.a('function');
         })
     })
 })

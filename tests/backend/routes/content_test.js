@@ -1,7 +1,7 @@
 "use strict";
 
+var expect = require('chai').expect;
 var content = require('../../../routes/content');
-var assert = require('assert');
 
 describe('content sender being tested', function()
 {
@@ -9,17 +9,20 @@ describe('content sender being tested', function()
     {
         it('content should be created', function()
         {
-            assert.strictEqual(typeof content, 'object');
+            expect(content).to.be.defined;
+            expect(content).to.be.an('object');
         })
 
         it('content.loginPage should be created', function()
         {
-            assert.strictEqual(typeof content.loginPage, 'function');
+            expect(content.loginPage).to.be.defined;
+            expect(content.loginPage).to.be.a('function');
         })
 
         it('content.mainPage should be created', function()
         {
-            assert.strictEqual(typeof content.mainPage, 'function');
+            expect(content.mainPage).to.be.defined;
+            expect(content.mainPage).to.be.a('function');
         })
     })
 })

@@ -3,7 +3,7 @@
 var assert = require('assert');
 var StudentModel = require('../../../models/Student');
 var mongoose = require('mongoose');
-var dburl = require('../config/db.json');
+var dburl = require('../helpers/db.json');
 var DBCreator = require('../helpers/DBCreator');
 
 describe('StudentsModel', function()

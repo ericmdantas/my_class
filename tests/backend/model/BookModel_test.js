@@ -3,7 +3,7 @@
 var assert = require('assert');
 var BookModel = require('../../../models/Book');
 var mongoose = require('mongoose');
-var dburl = require('../config/db.json');
+var dburl = require('../helpers/db.json');
 var DBCreator = require('../helpers/DBCreator');
 
 describe('BookModel', function()

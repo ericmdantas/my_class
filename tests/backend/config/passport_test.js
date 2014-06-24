@@ -1,7 +1,7 @@
 "use strict";
 
-var assert = require('assert'),
-    passport = require('../../../config/configurator');
+var expect = require('chai').expect;
+var passport = require('../../../config/configurator');
 
 describe('Configurator being tested', function()
 {
@@ -9,7 +9,10 @@ describe('Configurator being tested', function()
     {
         it('checks if configurator was created', function()
         {
-            assert.strictEqual(typeof passport, "object");
+            expect(passport).to.be.defined;
+            expect(passport).to.be.a('object');
         })
+
+        //TODO: CREATE MORE TESTS
     })
 })

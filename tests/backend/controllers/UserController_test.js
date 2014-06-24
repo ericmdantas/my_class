@@ -1,6 +1,6 @@
 "use strict";
 
-var assert = require('assert');
+var expect = require('chai').expect;
 var UserController = require('../../../controllers/UserController');
 
 describe('UserController being tested', function()
@@ -9,7 +9,8 @@ describe('UserController being tested', function()
     {
         describe('checks if UserController was created', function()
         {
-            assert.strictEqual(typeof UserController, "object");
+            expect(UserController).to.be.defined;
+            expect(UserController).to.be.an('object');
         })
     })
 })

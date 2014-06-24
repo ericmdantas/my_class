@@ -3,7 +3,7 @@
 var assert = require('assert');
 var mongoose = require('mongoose');
 var UserModel = require('../../../models/User');
-var dburl = require('../config/db.json');
+var dburl = require('../helpers/db.json');
 var DBCreator = require('../helpers/DBCreator');
 
 describe('UserModel', function()

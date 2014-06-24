@@ -13,7 +13,8 @@ myClass.directive('interestedStudentsPerMonth', ['StatisticService', function(St
 
         $scope.getInterestedStudentsPerMonth = function(drawGraphic)
         {
-            StatisticService.getInterestedStudents()
+            StatisticService
+                .getInterestedStudents()
                 .success(function(data)
                 {
                     if (!data || !data.resultado)
