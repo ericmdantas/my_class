@@ -1,6 +1,6 @@
 "use strict";
 
-var assert = require('assert');
+var expect = require('chai').expect;
 var ClazzModel = require('../../../models/Clazz');
 var mongoose = require('mongoose');
 var dburl = require('../helpers/db.json');
@@ -32,32 +32,7 @@ describe('ClazzModel', function()
     {
         it('checks if ClazzModel was created', function()
         {
-            assert.strictEqual(typeof ClazzModel, "function");
-        })
-
-        it('checks if ClazzModel.deleteClass was created', function()
-        {
-            assert.strictEqual(typeof _clazz.deleteClass, "function");
-        })
-
-        it('checks if ClazzModel.editClass was created', function()
-        {
-            assert.strictEqual(typeof _clazz.editClass, "function");
-        })
-
-        it('checks if ClazzModel.findAllClassesByUser was created', function()
-        {
-            assert.strictEqual(typeof _clazz.findAllClassesByUser, "function");
-        })
-
-        it('checks if ClazzModel.registerNewClass was created', function()
-        {
-            assert.strictEqual(typeof _clazz.registerNewClass, "function");
-        })
-
-        it('checks if ClazzModel.registerMomentInTime was created', function()
-        {
-            assert.strictEqual(typeof _clazz.registerClassMomentInTime, 'function');
+            expect(ClazzModel).to.be.an("function");
         })
     })
     
@@ -69,9 +44,9 @@ describe('ClazzModel', function()
             {
                 _clazz.findAllClassesByUser(wrongParams[i], function(err, clazzes)
                                                             {
-                                                                assert.notStrictEqual(err, null);
-                                                                assert.strictEqual(err instanceof Error, true);
-                                                                assert.strictEqual(clazzes, null);
+                                                                expect(err).to.not.equal(null);
+                                                                expect(err).to.be.an.instanceof(Error);
+                                                                expect(clazzes).to.equal(null);
                                                             })
             }
 
@@ -84,9 +59,9 @@ describe('ClazzModel', function()
 
             _clazz.findAllClassesByUser(_usuario, function(err, clazzes)
                                                   {
-                                                      assert.strictEqual(err, null);
-                                                      assert.strictEqual(typeof clazzes, "object");
-                                                      assert.strictEqual(clazzes.length, 0);
+                                                      expect(err).to.equal(null);
+                                                      expect(typeof clazzes).to.equal("object");
+                                                      expect(clazzes).to.have.length(0);
                                                   })
             done();
         })
@@ -97,14 +72,14 @@ describe('ClazzModel', function()
 
             _clazz.findAllClassesByUser(_usuario, function(err, clazzes)
                                                   {
-                                                      assert.strictEqual(err, null);
-                                                      assert.strictEqual(typeof clazzes, "object");
-                                                      assert.strictEqual(clazzes.length, 5);
-                                                      assert.strictEqual(clazzes[0].name, "Turma1");
-                                                      assert.strictEqual(clazzes[0].students[0], "Aluno1");
-                                                      assert.strictEqual(clazzes[0].time, "15:00");
-                                                      assert.strictEqual(clazzes[0].usersAllowed, undefined);
-                                                      assert.strictEqual(clazzes[0].dailyInfo, undefined);
+                                                      expect(err).to.equal(null);
+                                                      expect(typeof clazzes).to.equal("object");
+                                                      expect(clazzes).to.have.length(5);
+                                                      expect(clazzes[0].name).to.equal("Turma1");
+                                                      expect(clazzes[0].students[0]).to.equal("Aluno1");
+                                                      expect(clazzes[0].time).to.equal("15:00");
+                                                      expect(clazzes[0].usersAllowed).to.not.exist;
+                                                      expect(clazzes[0].dailyInfo).to.not.exist;
 
                                                       done();
                                                   })
@@ -120,9 +95,9 @@ describe('ClazzModel', function()
             {
                 _clazz.findAllClassesNamesByUser(wrongParams[i], function(err, clazzNames)
                                                                  {
-                                                                     assert.notStrictEqual(err, null);
-                                                                     assert.strictEqual(err instanceof Error, true);
-                                                                     assert.strictEqual(clazzNames, null);
+                                                                     expect(err).to.not.equal(null);
+                                                                     expect(err).to.be.an.instanceof(Error);
+                                                                     expect(clazzNames).to.equal(null);
                                                                  })
             }
 
@@ -135,9 +110,9 @@ describe('ClazzModel', function()
 
             _clazz.findAllClassesNamesByUser(_usuario, function(err, clazzNames)
                                                        {
-                                                           assert.strictEqual(err, null);
-                                                           assert.strictEqual(typeof clazzNames, "object");
-                                                           assert.strictEqual(clazzNames.length, 0);
+                                                           expect(err).to.equal(null);
+                                                           expect(typeof clazzNames).to.equal("object");
+                                                           expect(clazzNames).to.have.length(0);
                                                        })
 
             done();
@@ -149,9 +124,9 @@ describe('ClazzModel', function()
 
             _clazz.findAllClassesNamesByUser(_usuario, function(err, clazzNames)
                                                        {
-                                                           assert.strictEqual(err, null);
-                                                           assert.strictEqual(typeof clazzNames, "object");
-                                                           assert.strictEqual(clazzNames.length, 5);
+                                                           expect(err).to.equal(null);
+                                                           expect(typeof clazzNames).to.equal("object");
+                                                           expect(clazzNames).to.have.length(5);
                                                        })
 
             done();
@@ -168,9 +143,9 @@ describe('ClazzModel', function()
             {
                 _clazz.getClassesDailyInfo(wrongParams[i], _monthYear, function(err, clazzNames)
                 {
-                    assert.notStrictEqual(err, null);
-                    assert.strictEqual(err instanceof Error, true);
-                    assert.strictEqual(clazzNames, null);
+                    expect(err).to.not.equal(null);
+                    expect(err).to.be.an.instanceof(Error);
+                    expect(clazzNames).to.equal(null);
                 })
             }
 
@@ -185,9 +160,9 @@ describe('ClazzModel', function()
             {
                 _clazz.getClassesDailyInfo(_usuario, wrongParams[i], function(err, clazzNames)
                 {
-                    assert.notStrictEqual(err, null);
-                    assert.strictEqual(err instanceof Error, true);
-                    assert.strictEqual(clazzNames, null);
+                    expect(err).to.not.equal(null);
+                    expect(err).to.be.an.instanceof(Error);
+                    expect(clazzNames).to.equal(null);
                 })
             }
 
@@ -201,22 +176,22 @@ describe('ClazzModel', function()
 
             _clazz.getClassesDailyInfo(_usuario, _monthYear, function(err, clazzesInfo)
                                                              {
-                                                                assert.strictEqual(err, null);
-                                                                assert.strictEqual(clazzesInfo.length, 2);
-                                                                assert.strictEqual(clazzesInfo[0].name, "Turma1");
-                                                                assert.strictEqual(clazzesInfo[0].time, "15:00");
-                                                                assert.strictEqual(clazzesInfo[0].usersAllowed, undefined);
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo.length, 2);
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[0].day, "01");
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[1].day, "02");
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[0].monthYear, "04_2014");
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[1].monthYear, "04_2014");
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[0].teacherName, "Teacher1");
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[1].teacherName, "Teacher2");
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[0].subject, "matéria1");
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[1].subject, "matéria2");
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[0].studentByDay.length, 1);
-                                                                assert.strictEqual(clazzesInfo[0].dailyInfo[1].studentByDay.length, 1);
+                                                                expect(err).to.equal(null);
+                                                                expect(clazzesInfo).to.have.length(2);
+                                                                expect(clazzesInfo[0].name).to.equal("Turma1");
+                                                                expect(clazzesInfo[0].time).to.equal("15:00");
+                                                                expect(clazzesInfo[0].usersAllowed).to.not.exist;
+                                                                expect(clazzesInfo[0].dailyInfo).to.have.length(2);
+                                                                expect(clazzesInfo[0].dailyInfo[0].day).to.equal("01");
+                                                                expect(clazzesInfo[0].dailyInfo[1].day).to.equal("02");
+                                                                expect(clazzesInfo[0].dailyInfo[0].monthYear).to.equal("04_2014");
+                                                                expect(clazzesInfo[0].dailyInfo[1].monthYear).to.equal("04_2014");
+                                                                expect(clazzesInfo[0].dailyInfo[0].teacherName).to.equal("Teacher1");
+                                                                expect(clazzesInfo[0].dailyInfo[1].teacherName).to.equal("Teacher2");
+                                                                expect(clazzesInfo[0].dailyInfo[0].subject).to.equal("matéria1");
+                                                                expect(clazzesInfo[0].dailyInfo[1].subject).to.equal("matéria2");
+                                                                expect(clazzesInfo[0].dailyInfo[0].studentByDay).to.have.length(1);
+                                                                expect(clazzesInfo[0].dailyInfo[1].studentByDay).to.have.length(1);
                                                                 done();
                                                              })
         })
@@ -233,9 +208,9 @@ describe('ClazzModel', function()
             {
                 _clazz.getClassesDailyInfoByClass(wrongParams[i], _monthYear, _id, function(err, clazzNames)
                 {
-                    assert.notStrictEqual(err, null);
-                    assert.strictEqual(err instanceof Error, true);
-                    assert.strictEqual(clazzNames, null);
+                    expect(err).to.not.equal(null);
+                    expect(err).to.be.an.instanceof(Error);
+                    expect(clazzNames).to.equal(null);
                 })
             }
 
@@ -251,9 +226,9 @@ describe('ClazzModel', function()
             {
                 _clazz.getClassesDailyInfoByClass(_usuario, wrongParams[i], _id, function(err, clazzNames)
                 {
-                    assert.notStrictEqual(err, null);
-                    assert.strictEqual(err instanceof Error, true);
-                    assert.strictEqual(clazzNames, null);
+                    expect(err).to.not.equal(null);
+                    expect(err).to.be.an.instanceof(Error);
+                    expect(clazzNames).to.equal(null);
                 })
             }
 
@@ -269,9 +244,9 @@ describe('ClazzModel', function()
             {
                 _clazz.getClassesDailyInfoByClass(_usuario, _monthYear, wrongParams[i], function(err, clazzNames)
                 {
-                    assert.notStrictEqual(err, null);
-                    assert.strictEqual(err instanceof Error, true);
-                    assert.strictEqual(clazzNames, null);
+                    expect(err).to.not.equal(null);
+                    expect(err).to.be.an.instanceof(Error);
+                    expect(clazzNames).to.equal(null);
                 })
             }
 
@@ -286,17 +261,17 @@ describe('ClazzModel', function()
 
             _clazz.getClassesDailyInfoByClass(_usuario, _monthYear, _id, function(err, clazzesInfo)
                                                                          {
-                                                                             assert.strictEqual(err, null);
-                                                                             assert.notStrictEqual(clazzesInfo, undefined);
-                                                                             assert.strictEqual(clazzesInfo.name, "Turma3");
-                                                                             assert.strictEqual(clazzesInfo.time, "15:00");
-                                                                             assert.strictEqual(clazzesInfo.usersAllowed, undefined);
-                                                                             assert.strictEqual(clazzesInfo.dailyInfo.length, 1);
-                                                                             assert.strictEqual(clazzesInfo.dailyInfo[0].day, "01");
-                                                                             assert.strictEqual(clazzesInfo.dailyInfo[0].monthYear, "04_2014");
-                                                                             assert.strictEqual(clazzesInfo.dailyInfo[0].teacherName, "Teacher1");
-                                                                             assert.strictEqual(clazzesInfo.dailyInfo[0].subject, "matéria1");
-                                                                             assert.strictEqual(clazzesInfo.dailyInfo[0].studentByDay.length, 1);
+                                                                             expect(err).to.equal(null);
+                                                                             expect(clazzesInfo).to.be.defined;
+                                                                             expect(clazzesInfo.name).to.equal("Turma3");
+                                                                             expect(clazzesInfo.time).to.equal("15:00");
+                                                                             expect(clazzesInfo.usersAllowed).to.not.exist;
+                                                                             expect(clazzesInfo.dailyInfo).to.have.length(1);
+                                                                             expect(clazzesInfo.dailyInfo[0].day).to.equal("01");
+                                                                             expect(clazzesInfo.dailyInfo[0].monthYear).to.equal("04_2014");
+                                                                             expect(clazzesInfo.dailyInfo[0].teacherName).to.equal("Teacher1");
+                                                                             expect(clazzesInfo.dailyInfo[0].subject).to.equal("matéria1");
+                                                                             expect(clazzesInfo.dailyInfo[0].studentByDay).to.have.length(1);
                                                                              done();
                                                                          })
         })
@@ -312,8 +287,8 @@ describe('ClazzModel', function()
             {
                 _clazz.registerNewClass(wrongParams[i], _turma, function(err)
                                                                 {
-                                                                    assert.notStrictEqual(err, null);
-                                                                    assert.strictEqual(err instanceof Error, true);
+                                                                    expect(err).to.not.equal(null);
+                                                                    expect(err).to.be.an.instanceof(Error);
                                                                 })
             }
 
@@ -328,8 +303,8 @@ describe('ClazzModel', function()
             {
                 _clazz.registerNewClass(_usuario, wrongParams[i], function(err)
                                                                   {
-                                                                      assert.notStrictEqual(err, null);
-                                                                      assert.strictEqual(err instanceof Error, true);
+                                                                      expect(err).to.not.equal(null);
+                                                                      expect(err).to.be.an.instanceof(Error);
                                                                   })
             }
 
@@ -342,8 +317,8 @@ describe('ClazzModel', function()
             {
                 _clazz.registerNewClass(wrongParams[i], wrongParams[i], function(err)
                                                                         {
-                                                                            assert.notStrictEqual(err, null);
-                                                                            assert.strictEqual(err instanceof Error, true);
+                                                                            expect(err).to.not.equal(null);
+                                                                            expect(err).to.be.an.instanceof(Error);
                                                                         })
             }
 
@@ -357,8 +332,8 @@ describe('ClazzModel', function()
 
             _clazz.registerNewClass(_usuario, _turma, function(err)
                                                       {
-                                                          assert.notStrictEqual(err, null);
-                                                          assert.strictEqual(err instanceof Error, true);
+                                                          expect(err).to.not.equal(null);
+                                                          expect(err).to.be.an.instanceof(Error);
                                                           done();
                                                       })
         })
@@ -374,8 +349,8 @@ describe('ClazzModel', function()
             {
                 _clazz.registerClassMomentInTime(wrongParams[i], _turma, function(err)
                                                                          {
-                                                                            assert.notStrictEqual(err, null);
-                                                                            assert.strictEqual(err instanceof Error, true);
+                                                                            expect(err).to.not.equal(null);
+                                                                            expect(err).to.be.an.instanceof(Error);
                                                                          })
             }
 
@@ -390,8 +365,8 @@ describe('ClazzModel', function()
             {
                 _clazz.registerClassMomentInTime(_usuario, wrongParams[i], function(err)
                                                                            {
-                                                                                 assert.notStrictEqual(err, null);
-                                                                                 assert.strictEqual(err instanceof Error, true);
+                                                                                 expect(err).to.not.equal(null);
+                                                                                 expect(err).to.be.an.instanceof(Error);
                                                                            })
             }
 
@@ -404,8 +379,8 @@ describe('ClazzModel', function()
             {
                 _clazz.registerClassMomentInTime(wrongParams[i], wrongParams[i], function(err)
                                                                                  {
-                                                                                     assert.notStrictEqual(err, null);
-                                                                                     assert.strictEqual(err instanceof Error, true);
+                                                                                     expect(err).to.not.equal(null);
+                                                                                     expect(err).to.be.an.instanceof(Error);
                                                                                  })
             }
 
@@ -432,7 +407,7 @@ describe('ClazzModel', function()
 
             _clazz.registerClassMomentInTime(_usuario, _turma, function(err)
                                                                {
-                                                                   assert.strictEqual(err, null);
+                                                                   expect(err).to.equal(null);
                                                                    done();
                                                                })
         })
@@ -449,8 +424,8 @@ describe('ClazzModel', function()
             {
                 _clazz.editClass(wrongParams[i], _turma, _id, function(err)
                                                               {
-                                                                  assert.notStrictEqual(err, null);
-                                                                  assert.strictEqual(err instanceof Error, true);
+                                                                  expect(err).to.not.equal(null);
+                                                                  expect(err).to.be.an.instanceof(Error);
                                                               })
             }
 
@@ -466,8 +441,8 @@ describe('ClazzModel', function()
             {
                 _clazz.editClass(_usuario, wrongParams[i], _id, function(err)
                                                                 {
-                                                                     assert.notStrictEqual(err, null);
-                                                                     assert.strictEqual(err instanceof Error, true);
+                                                                     expect(err).to.not.equal(null);
+                                                                     expect(err).to.be.an.instanceof(Error);
                                                                 })
             }
 
@@ -483,8 +458,8 @@ describe('ClazzModel', function()
             {
                 _clazz.editClass(_usuario, _turma, wrongParams[i], function(err)
                                                                    {
-                                                                       assert.notStrictEqual(err, null);
-                                                                       assert.strictEqual(err instanceof Error, true);
+                                                                       expect(err).to.not.equal(null);
+                                                                       expect(err).to.be.an.instanceof(Error);
                                                                    })
             }
 
@@ -497,8 +472,8 @@ describe('ClazzModel', function()
             {
                 _clazz.editClass(wrongParams[i], wrongParams[i], wrongParams[i], function(err)
                                                                                  {
-                                                                                     assert.notStrictEqual(err, null);
-                                                                                     assert.strictEqual(err instanceof Error, true);
+                                                                                     expect(err).to.not.equal(null);
+                                                                                     expect(err).to.be.an.instanceof(Error);
                                                                                  })
             }
 
@@ -525,7 +500,7 @@ describe('ClazzModel', function()
 
             _clazz.editClass(_usuario, _turma, _id, function(err)
                                                     {
-                                                        assert.strictEqual(err, null);
+                                                        expect(err).to.equal(null);
                                                         done();
                                                     })
         })
@@ -541,8 +516,8 @@ describe('ClazzModel', function()
             {
                 _clazz.deleteClass(wrongParams[i], _id, function(err)
                                                         {
-                                                            assert.notStrictEqual(err, null);
-                                                            assert.strictEqual(err instanceof Error, true);
+                                                            expect(err).to.not.equal(null);
+                                                            expect(err).to.be.an.instanceof(Error);
                                                         })
             }
 
@@ -557,8 +532,8 @@ describe('ClazzModel', function()
             {
                 _clazz.deleteClass(_usuario, wrongParams[i], function(err)
                                                            {
-                                                               assert.notStrictEqual(err, null);
-                                                               assert.strictEqual(err instanceof Error, true);
+                                                               expect(err).to.not.equal(null);
+                                                               expect(err).to.be.an.instanceof(Error);
                                                            })
             }
 
@@ -571,8 +546,8 @@ describe('ClazzModel', function()
             {
                 _clazz.deleteClass(wrongParams[i], wrongParams[i], function(err)
                                                                  {
-                                                                     assert.notStrictEqual(err, null);
-                                                                     assert.strictEqual(err instanceof Error, true);
+                                                                     expect(err).to.not.equal(null);
+                                                                     expect(err).to.be.an.instanceof(Error);
                                                                  })
             }
 
@@ -586,7 +561,7 @@ describe('ClazzModel', function()
 
             _clazz.deleteClass(_usuario, _id, function(err)
                                               {
-                                                  assert.strictEqual(err, null);
+                                                  expect(err).to.equal(null);
                                                   done();
                                               })
         })

@@ -1,6 +1,8 @@
 var lib = require('../../../lib/lib');
 var assert = require('assert');
 
+//TODO: MIGRATE TO CHAI'S EXPECT
+
 describe('checks if lib\'s doing good', function()
 {
     describe('getValuesByTrimester', function()

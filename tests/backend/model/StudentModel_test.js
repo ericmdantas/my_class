@@ -1,6 +1,6 @@
 "use strict";
 
-var assert = require('assert');
+var expect = require('chai').expect;
 var StudentModel = require('../../../models/Student');
 var mongoose = require('mongoose');
 var dburl = require('../helpers/db.json');
@@ -32,32 +32,7 @@ describe('StudentsModel', function()
     {
         it('checks if StudentsModel was created', function()
         {
-            assert.strictEqual(typeof StudentModel, "function");
-        })
-
-        it('checks if StudentsModel findAllStudents was created', function()
-        {
-            assert.strictEqual(typeof _student.findAllStudentsByUser, "function");
-        })
-
-        it('checks if StudentsModel registerStudent was created', function()
-        {
-            assert.strictEqual(typeof _student.registerStudent, "function");
-        })
-
-        it('checks if StudentsModel editStudent was created', function()
-        {
-            assert.strictEqual(typeof _student.editStudent, "function");
-        })
-
-        it('checks if StudentsModel deleteStudent was created', function()
-        {
-            assert.strictEqual(typeof _student.deleteStudent, "function");
-        })
-
-        it('checks if StudentsModel findAllStudentsNames was created', function()
-        {
-            assert.strictEqual(typeof _student.findAllStudentsNamesByClass, "function");
+            expect(StudentModel).to.be.a("function");
         })
     })
 
@@ -71,9 +46,9 @@ describe('StudentsModel', function()
             {
                 _student.findAllStudentsByUser(_wrongParams[i], function(err, payments)
                                                                {
-                                                                   assert.notStrictEqual(err, null);
-                                                                   assert.strictEqual(err instanceof Error, true);
-                                                                   assert.strictEqual(payments, null);
+                                                                   expect(err).to.not.equal(null);
+                                                                   expect(err).to.be.an.instanceof(Error);
+                                                                   expect(payments).to.equal(null);
                                                                })
             }
 
@@ -86,8 +61,8 @@ describe('StudentsModel', function()
 
             _student.findAllStudentsByUser(_wrongUser , function(err, payments)
                                                         {
-                                                            assert.strictEqual(err, null);
-                                                            assert.strictEqual(payments.length, 0);
+                                                            expect(err).to.equal(null);
+                                                            expect(payments).to.have.length(0);
                                                             done();
                                                         })
         })
@@ -98,25 +73,25 @@ describe('StudentsModel', function()
 
             _student.findAllStudentsByUser(_usuario, function(err, payments)
                                                      {
-                                                         assert.strictEqual(err, null);
-                                                         assert.strictEqual(typeof payments, "object");
-                                                         assert.strictEqual(payments.length, 1);
-                                                         assert.notStrictEqual(payments[0]._id, undefined);
-                                                         assert.strictEqual(payments[0].name, "Aluno1");
-                                                         assert.strictEqual(payments[0].birthDate, "26/06/1989");
-                                                         assert.strictEqual(payments[0].email, "ericdantas0@hotmail.com");
-                                                         assert.strictEqual(payments[0].phone, "27417417");
-                                                         assert.strictEqual(payments[0].class, "Turma1");
-                                                         assert.strictEqual(payments[0].mobilePhone, "998989898");
-                                                         assert.strictEqual(payments[0].availability, "15:00, 18:00");
-                                                         assert.strictEqual(payments[0].contract, "monthly");
-                                                         assert.strictEqual(payments[0].contractDate, "01/01/2010");
-                                                         assert.strictEqual(payments[0].address, "Rua Avenida Estrada km 99");
-                                                         assert.strictEqual(payments[0].status, "Matriculado");
-                                                         assert.strictEqual(payments[0].lastModified instanceof Date, true);
-                                                         assert.strictEqual(payments[0].registered instanceof Date, true);
-                                                         assert.strictEqual(payments[0].usersAllowed, undefined);
-                                                         assert.strictEqual(payments[0].payments, undefined);
+                                                         expect(err).to.equal(null);
+                                                         expect(typeof payments).to.equal("object");
+                                                         expect(payments).to.have.length(1);
+                                                         expect(payments[0]._id).to.be.an('object');
+                                                         expect(payments[0].name).to.equal("Aluno1");
+                                                         expect(payments[0].birthDate).to.equal("26/06/1989");
+                                                         expect(payments[0].email).to.equal("ericdantas0@hotmail.com");
+                                                         expect(payments[0].phone).to.equal("27417417");
+                                                         expect(payments[0].class).to.equal("Turma1");
+                                                         expect(payments[0].mobilePhone).to.equal("998989898");
+                                                         expect(payments[0].availability).to.equal("15:00, 18:00");
+                                                         expect(payments[0].contract).to.equal("monthly");
+                                                         expect(payments[0].contractDate).to.equal("01/01/2010");
+                                                         expect(payments[0].address).to.equal("Rua Avenida Estrada km 99");
+                                                         expect(payments[0].status).to.equal("Matriculado");
+                                                         expect(payments[0].lastModified).to.be.an.instanceof(Date);
+                                                         expect(payments[0].registered).to.be.an.instanceof(Date);
+                                                         expect(payments[0].usersAllowed).to.not.exist;
+                                                         expect(payments[0].payments).to.not.exist;
                                                          done();
                                                      })
         })
@@ -132,9 +107,9 @@ describe('StudentsModel', function()
             {
                 _student.findAllStudentsNames(_wrongParams[i], function(err, paymentsNames)
                                                                {
-                                                                    assert.notStrictEqual(err, null);
-                                                                    assert.strictEqual(err instanceof Error, true);
-                                                                    assert.strictEqual(paymentsNames, null);
+                                                                    expect(err).to.not.equal(null);
+                                                                    expect(err).to.be.an.instanceof(Error);
+                                                                    expect(paymentsNames).to.equal(null);
                                                                })
             }
 
@@ -147,8 +122,8 @@ describe('StudentsModel', function()
 
             _student.findAllStudentsNames(_wrongUser, function(err, paymentsNames)
                                                       {
-                                                          assert.strictEqual(err, null);
-                                                          assert.strictEqual(paymentsNames.length, 0);
+                                                          expect(err).to.equal(null);
+                                                          expect(paymentsNames).to.have.length(0);
                                                           done();
                                                       })
         })
@@ -159,10 +134,9 @@ describe('StudentsModel', function()
 
             _student.findAllStudentsNames(_user, function(err, paymentsNames)
                                                  {
-                                                     assert.strictEqual(err, null);
-                                                     assert.strictEqual(typeof paymentsNames[0]._id, "object");
-                                                     assert.strictEqual(paymentsNames[0].name, "Aluno1");
-                                                     assert.strictEqual(paymentsNames[1], undefined);
+                                                     expect(err).to.equal(null);
+                                                     expect(paymentsNames[0]._id).to.be.an("object");
+                                                     expect(paymentsNames[0].name).to.equal("Aluno1");
                                                      done();
                                                  })
         })
@@ -173,13 +147,13 @@ describe('StudentsModel', function()
 
             _student.findAllStudentsNames(_user, function(err, paymentsNames)
                                                  {
-                                                     assert.strictEqual(err, null);
-                                                     assert.strictEqual(typeof paymentsNames[0]._id, "object");
-                                                     assert.strictEqual(paymentsNames[0].name, "Aluno2");
-                                                     assert.strictEqual(typeof paymentsNames[1]._id, "object");
-                                                     assert.strictEqual(paymentsNames[1].name, "Aluno3");
-                                                     assert.strictEqual(typeof paymentsNames[2]._id, "object");
-                                                     assert.strictEqual(paymentsNames[2].name, "Aluno4");
+                                                     expect(err).to.equal(null);
+                                                     expect(paymentsNames[0]._id).to.be.an("object");
+                                                     expect(paymentsNames[0].name).to.equal("Aluno2");
+                                                     expect(paymentsNames[1]._id).to.be.an("object");
+                                                     expect(paymentsNames[1].name).to.equal("Aluno3");
+                                                     expect(paymentsNames[2]._id).to.be.an("object");
+                                                     expect(paymentsNames[2].name).to.equal("Aluno4");
                                                      done();
                                                  })
         })
@@ -197,9 +171,9 @@ describe('StudentsModel', function()
             {
                 _student.findAllStudentsNamesByClass(_wrongParams[i], _clazz, function(err, paymentsNamesByClazz)
                                                                              {
-                                                                                 assert.notStrictEqual(err, null);
-                                                                                 assert.strictEqual(err instanceof Error, true);
-                                                                                 assert.strictEqual(paymentsNamesByClazz, null);
+                                                                                 expect(err).to.not.equal(null);
+                                                                                 expect(err).to.be.an.instanceof(Error);
+                                                                                 expect(paymentsNamesByClazz).to.equal(null);
                                                                              })
             }
 
@@ -216,9 +190,9 @@ describe('StudentsModel', function()
             {
                 _student.findAllStudentsNamesByClass(_user, _wrongParams[i], function(err, paymentsNamesByClazz)
                                                                              {
-                                                                                 assert.notStrictEqual(err, null);
-                                                                                 assert.strictEqual(err instanceof Error, true);
-                                                                                 assert.strictEqual(paymentsNamesByClazz, null);
+                                                                                 expect(err).to.not.equal(null);
+                                                                                 expect(err).to.be.an.instanceof(Error);
+                                                                                 expect(paymentsNamesByClazz).to.equal(null);
                                                                              })
             }
 
@@ -233,8 +207,8 @@ describe('StudentsModel', function()
 
             _student.findAllStudentsNamesByClass(_user, _clazz, function(err, paymentsNamesByClazz)
                                                                 {
-                                                                    assert.strictEqual(err, null);
-                                                                    assert.strictEqual(paymentsNamesByClazz.length, 0);
+                                                                    expect(err).to.equal(null);
+                                                                    expect(paymentsNamesByClazz).to.have.length(0);
                                                                     done();
                                                                 })
         })
@@ -247,8 +221,8 @@ describe('StudentsModel', function()
 
             _student.findAllStudentsNamesByClass(_user, _clazz, function(err, paymentsNamesByClazz)
                                                                 {
-                                                                    assert.strictEqual(err, null);
-                                                                    assert.strictEqual(paymentsNamesByClazz.length, 0);
+                                                                    expect(err).to.equal(null);
+                                                                    expect(paymentsNamesByClazz).to.have.length(0);
                                                                     done();
                                                                 })
         })
@@ -260,9 +234,9 @@ describe('StudentsModel', function()
 
             _student.findAllStudentsNamesByClass(_user, _clazz, function(err, paymentsNamesByClazz)
                                                                 {
-                                                                    assert.strictEqual(err, null);
-                                                                    assert.strictEqual(paymentsNamesByClazz.length, 1);
-                                                                    assert.strictEqual(paymentsNamesByClazz[0].name, "Aluno1");
+                                                                    expect(err).to.equal(null);
+                                                                    expect(paymentsNamesByClazz).to.have.length(1);
+                                                                    expect(paymentsNamesByClazz[0].name).to.equal("Aluno1");
                                                                     done();
                                                                 })
         })
@@ -274,9 +248,9 @@ describe('StudentsModel', function()
 
             _student.findAllStudentsNamesByClass(_user, _clazz, function(err, paymentsNamesByClazz)
                                                                 {
-                                                                    assert.strictEqual(err, null);
-                                                                    assert.strictEqual(paymentsNamesByClazz.length, 3);
-                                                                    assert.strictEqual(paymentsNamesByClazz[0].name, "Aluno2");
+                                                                    expect(err).to.equal(null);
+                                                                    expect(paymentsNamesByClazz).to.have.length(3);
+                                                                    expect(paymentsNamesByClazz[0].name).to.equal("Aluno2");
                                                                     done();
                                                                 })
         })
@@ -298,8 +272,8 @@ describe('StudentsModel', function()
             {
                 _student.registerNewPayment(_wrongParams[i], _pagamento, function(err)
                                                                          {
-                                                                             assert.notStrictEqual(err, null);
-                                                                             assert.strictEqual(err instanceof Error, true);
+                                                                             expect(err).to.not.equal(null);
+                                                                             expect(err).to.be.an.instanceof(Error);
                                                                          })
             }
 
@@ -315,8 +289,8 @@ describe('StudentsModel', function()
             {
                 _student.registerNewPayment(_user, _wrongParams[i], function(err)
                                                                     {
-                                                                        assert.notStrictEqual(err, null);
-                                                                        assert.strictEqual(err instanceof Error, true);
+                                                                        expect(err).to.not.equal(null);
+                                                                        expect(err).to.be.an.instanceof(Error);
                                                                     })
             }
 
@@ -331,8 +305,8 @@ describe('StudentsModel', function()
             {
                 _student.registerNewPayment(_wrongParams[i], _wrongParams[i], function(err)
                                                                               {
-                                                                                  assert.notStrictEqual(err, null);
-                                                                                  assert.strictEqual(err instanceof Error, true);
+                                                                                  expect(err).to.not.equal(null);
+                                                                                  expect(err).to.be.an.instanceof(Error);
                                                                               })
             }
 
@@ -346,7 +320,7 @@ describe('StudentsModel', function()
 
             _student.registerNewPayment(_user, _pagamento, function(err)
                                                            {
-                                                               assert.strictEqual(err, null);
+                                                               expect(err).to.equal(null);
                                                                done();
                                                            })
         })
@@ -362,9 +336,9 @@ describe('StudentsModel', function()
             {
                 _student.findAllPaymentsByUser(_wrongParams[i], function(err, payments)
                                                                 {
-                                                                    assert.notStrictEqual(err, null);
-                                                                    assert.strictEqual(err instanceof Error, true);
-                                                                    assert.strictEqual(payments, null);
+                                                                    expect(err).to.not.equal(null);
+                                                                    expect(err).to.be.an.instanceof(Error);
+                                                                    expect(payments).to.equal(null);
                                                                 })
             }
 
@@ -377,31 +351,30 @@ describe('StudentsModel', function()
 
             _student.findAllPaymentsByUser(_user, function(err, payments)
                                                   {
-                                                      assert.strictEqual(err, null);
-                                                      assert.strictEqual(typeof payments, "object");
-                                                      assert.strictEqual(payments.length, 1);
-                                                      assert.notStrictEqual(payments[0]._id, undefined);
-                                                      assert.strictEqual(payments[0].name, "Aluno1");
-                                                      assert.strictEqual(payments[0].birthDate, "26/06/1989");
-                                                      assert.strictEqual(payments[0].email, "ericdantas0@hotmail.com");
-                                                      assert.strictEqual(payments[0].phone, "27417417");
-                                                      assert.strictEqual(payments[0].class, "Turma1");
-                                                      assert.strictEqual(payments[0].mobilePhone, "998989898");
-                                                      assert.strictEqual(payments[0].availability, "15:00, 18:00");
-                                                      assert.strictEqual(payments[0].contract, "monthly");
-                                                      assert.strictEqual(payments[0].contractDate, "01/01/2010");
-                                                      assert.strictEqual(payments[0].address, "Rua Avenida Estrada km 99");
-                                                      assert.strictEqual(payments[0].status, "Matriculado");
-                                                      assert.strictEqual(typeof payments[0].lastModified, "object");
-                                                      assert.strictEqual(typeof payments[0].registered, "object");
-                                                      assert.strictEqual(payments[0].usersAllowed, undefined);
-                                                      assert.strictEqual(payments[0].payments[0].paymentMonth, "04/2999");
-                                                      assert.strictEqual(payments[0].payments[0].amountPaid, "123");
-                                                      assert.strictEqual(payments[0].payments[0].paidWithWhat, "Dinheiro");
-                                                      assert.strictEqual(payments[0].payments[0].untilWhen, "Junho");
-                                                      assert.strictEqual(typeof payments[0].payments[0].registered, "object");
-                                                      assert.strictEqual(typeof payments[0].payments[0].lastModified, "object");
-                                                      assert.strictEqual(payments[0].payments[0].observation, "Observation");
+                                                      expect(err).to.equal(null);
+                                                      expect(typeof payments).to.equal("object");
+                                                      expect(payments).to.have.length(1);
+                                                      expect(payments[0]._id).to.be.an('object');
+                                                      expect(payments[0].name).to.equal("Aluno1");
+                                                      expect(payments[0].birthDate).to.equal("26/06/1989");
+                                                      expect(payments[0].email).to.equal("ericdantas0@hotmail.com");
+                                                      expect(payments[0].phone).to.equal("27417417");
+                                                      expect(payments[0].class).to.equal("Turma1");
+                                                      expect(payments[0].mobilePhone).to.equal("998989898");
+                                                      expect(payments[0].availability).to.equal("15:00, 18:00");
+                                                      expect(payments[0].contract).to.equal("monthly");
+                                                      expect(payments[0].contractDate).to.equal("01/01/2010");
+                                                      expect(payments[0].address).to.equal("Rua Avenida Estrada km 99");
+                                                      expect(payments[0].status).to.equal("Matriculado");
+                                                      expect(payments[0].lastModified).to.be.an.instanceof(Date);
+                                                      expect(payments[0].registered).to.be.an.instanceof(Date)
+                                                      expect(payments[0].usersAllowed).to.not.exist;
+                                                      expect(payments[0].payments[0].paymentMonth).to.equal("04/2999");
+                                                      expect(payments[0].payments[0].amountPaid).to.equal("123");
+                                                      expect(payments[0].payments[0].paidWithWhat).to.equal("Dinheiro");
+                                                      expect(payments[0].payments[0].untilWhen).to.equal("Junho");
+                                                      expect(payments[0].payments[0].lastModified).to.be.an.instanceof(Date);
+                                                      expect(payments[0].payments[0].observation).to.equal("Observation");
                                                       done();
                                                   })
         })
@@ -423,8 +396,8 @@ describe('StudentsModel', function()
             {
                 _student.registerStudent(_wrongParams[i], _aluno, function(err)
                                                                   {
-                                                                        assert.notStrictEqual(err, null);
-                                                                        assert.strictEqual(err instanceof Error, true);
+                                                                        expect(err).to.not.equal(null);
+                                                                        expect(err).to.be.an.instanceof(Error);
                                                                   })
             }
 
@@ -440,8 +413,8 @@ describe('StudentsModel', function()
             {
                 _student.registerStudent(_user, _wrongParams[i], function(err)
                                                                  {
-                                                                     assert.notStrictEqual(err, null);
-                                                                     assert.strictEqual(err instanceof Error, true);
+                                                                     expect(err).to.not.equal(null);
+                                                                     expect(err).to.be.an.instanceof(Error);
                                                                  })
             }
 
@@ -456,8 +429,8 @@ describe('StudentsModel', function()
             {
                 _student.registerStudent(_wrongParams[i], _wrongParams[i], function(err)
                                                                            {
-                                                                               assert.notStrictEqual(err, null);
-                                                                               assert.strictEqual(err instanceof Error, true);
+                                                                               expect(err).to.not.equal(null);
+                                                                               expect(err).to.be.an.instanceof(Error);
                                                                            })
             }
 
@@ -471,7 +444,7 @@ describe('StudentsModel', function()
 
             _student.registerStudent(_user, _aluno, function(err)
                                                     {
-                                                        assert.strictEqual(err, null);
+                                                        expect(err).to.equal(null);
                                                         done();
                                                     })
 
@@ -491,8 +464,8 @@ describe('StudentsModel', function()
             {
                 _student.editStudent(_wrongParams[i], _aluno, _id, function(err)
                                                                    {
-                                                                        assert.notStrictEqual(err, null);
-                                                                        assert.strictEqual(err instanceof Error, true);
+                                                                        expect(err).to.not.equal(null);
+                                                                        expect(err).to.be.an.instanceof(Error);
                                                                    })
             }
 
@@ -510,8 +483,8 @@ describe('StudentsModel', function()
             {
                 _student.editStudent(_user, _wrongParams[i], _id, function(err)
                                                                   {
-                                                                      assert.notStrictEqual(err, null);
-                                                                      assert.strictEqual(err instanceof Error, true);
+                                                                      expect(err).to.not.equal(null);
+                                                                      expect(err).to.be.an.instanceof(Error);
                                                                   })
             }
 
@@ -529,8 +502,8 @@ describe('StudentsModel', function()
             {
                 _student.editStudent(_user, _aluno, _wrongParams[i], function(err)
                                                                      {
-                                                                         assert.notStrictEqual(err, null);
-                                                                         assert.strictEqual(err instanceof Error, true);
+                                                                         expect(err).to.not.equal(null);
+                                                                         expect(err).to.be.an.instanceof(Error);
                                                                      })
             }
 
@@ -545,8 +518,8 @@ describe('StudentsModel', function()
             {
                 _student.editStudent(_wrongParams[i], _wrongParams[i], _wrongParams[i], function(err)
                                                                                         {
-                                                                                            assert.notStrictEqual(err, null);
-                                                                                            assert.strictEqual(err instanceof Error, true);
+                                                                                            expect(err).to.not.equal(null);
+                                                                                            expect(err).to.be.an.instanceof(Error);
                                                                                         })
             }
 
@@ -562,7 +535,7 @@ describe('StudentsModel', function()
 
             _student.editStudent(_user, _aluno, _id, function(err)
             {
-                assert.strictEqual(err, null);
+                expect(err).to.equal(null);
                 done();
             })
         })
@@ -580,8 +553,8 @@ describe('StudentsModel', function()
             {
                 _student.deleteStudent(_wrongParams[i], _id, function(err)
                                                              {
-                                                                assert.notStrictEqual(err, null);
-                                                                assert.strictEqual(err instanceof Error, true);
+                                                                expect(err).to.not.equal(null);
+                                                                expect(err).to.be.an.instanceof(Error);
                                                              })
             }
 
@@ -598,8 +571,8 @@ describe('StudentsModel', function()
             {
                 _student.deleteStudent(_user, _wrongParams[i], function(err)
                                                                {
-                                                                   assert.notStrictEqual(err, null);
-                                                                   assert.strictEqual(err instanceof Error, true);
+                                                                   expect(err).to.not.equal(null);
+                                                                   expect(err).to.be.an.instanceof(Error);
                                                                })
             }
 
@@ -613,7 +586,7 @@ describe('StudentsModel', function()
 
             _student.deleteStudent(_user, _id, function(err)
                                                {
-                                                   assert.strictEqual(err, null);
+                                                   expect(err).to.equal(null);
                                                    done();
                                                })
         })

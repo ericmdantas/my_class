@@ -1,6 +1,6 @@
 "use strict";
 
-var assert = require('assert');
+var expect = require('chai').expect;
 var StatisticModel = require('../../../models/Statistic');
 var mongoose = require('mongoose');
 var dburl = require('../helpers/db.json');
@@ -23,17 +23,7 @@ describe('StatisticModel', function()
     {
         it('checks if StatisticModel was created', function()
         {
-            assert.strictEqual(typeof StatisticModel, "object");
-        })
-
-        it('checks if StatisticModel.findAllEarningsByTrimester was created', function()
-        {
-            assert.strictEqual(typeof StatisticModel.findAllEarningsByTrimester, "function");
-        })
-
-        it('checks if StatisticModel.findAllInterestedStudentsPerMonth was created', function()
-        {
-            assert.strictEqual(typeof StatisticModel.findAllInterestedStudentsPerMonth, "function");
+            expect(StatisticModel).to.be.an("object");
         })
     })
 
@@ -47,9 +37,9 @@ describe('StatisticModel', function()
             {
                 StatisticModel.findAllEarningsByTrimester(_wrongParams[i], function(err, earnings)
                                                                            {
-                                                                                assert.notStrictEqual(err, null);
-                                                                                assert.strictEqual(err instanceof Error, true);
-                                                                                assert.strictEqual(earnings, null);
+                                                                                expect(err).to.not.equal(null);
+                                                                                expect(err).to.be.an.instanceof(Error);
+                                                                                expect(earnings).to.equal(null);
                                                                            })
             }
 
@@ -62,12 +52,12 @@ describe('StatisticModel', function()
 
             StatisticModel.findAllEarningsByTrimester(_user, function(err, earnings)
                                                              {
-                                                                 assert.strictEqual(err, null);
-                                                                 assert.strictEqual(typeof earnings, "object");
-                                                                 assert.strictEqual(earnings.valorPrimeiroTrimestre, 0);
-                                                                 assert.strictEqual(earnings.valorSegundoTrimestre, 1122334455);
-                                                                 assert.strictEqual(earnings.valorTerceiroTrimestre, 0);
-                                                                 assert.strictEqual(earnings.valorQuartoTrimestre, 123);
+                                                                 expect(err).to.equal(null);
+                                                                 expect(typeof earnings).to.equal("object");
+                                                                 expect(earnings.valorPrimeiroTrimestre).to.equal(0);
+                                                                 expect(earnings.valorSegundoTrimestre).to.equal(1122334455);
+                                                                 expect(earnings.valorTerceiroTrimestre).to.equal(0);
+                                                                 expect(earnings.valorQuartoTrimestre).to.equal(123);
                                                                  done();
                                                              })
         })
@@ -83,9 +73,9 @@ describe('StatisticModel', function()
             {
                 StatisticModel.findAllInterestedStudentsPerMonth(_wrongParams[i], function(err, interest)
                                                                                   {
-                                                                                        assert.notStrictEqual(err, null);
-                                                                                        assert.strictEqual(err instanceof Error, true);
-                                                                                        assert.strictEqual(interest, null);
+                                                                                        expect(err).to.not.equal(null);
+                                                                                        expect(err).to.be.an.instanceof(Error);
+                                                                                        expect(interest).to.equal(null);
                                                                                   })
             }
 
@@ -98,8 +88,8 @@ describe('StatisticModel', function()
 
             StatisticModel.findAllInterestedStudentsPerMonth(_user, function(err, interest)
                                                                     {
-                                                                        assert.strictEqual(err, null);
-                                                                        assert.strictEqual(typeof interest, "object");
+                                                                        expect(err).to.equal(null);
+                                                                        expect(typeof interest).to.equal("object");
                                                                         done();
                                                                     })
         })

@@ -1,6 +1,6 @@
 "use strict";
 
-var assert = require('assert');
+var expect = require('chai').expect;
 var mongoose = require('mongoose');
 var UserModel = require('../../../models/User');
 var dburl = require('../helpers/db.json');
@@ -28,7 +28,7 @@ describe('UserModel', function()
     {
         it('checks if UserModel was created', function()
         {
-            assert.strictEqual(typeof UserModel, "function");
+              expect(UserModel).to.be.an("function");
         })
     })
 
@@ -39,11 +39,11 @@ describe('UserModel', function()
             UserModel.findOne({username: "eric3"})
                      .exec(function(err, found)
                           {
-                                assert.strictEqual(err, null);
-                                assert.strictEqual(typeof found, "object");
-                                assert.strictEqual(found.username, "eric3");
-                                assert.strictEqual(found.password, "112233");
-                                assert.strictEqual(found.payment, true);
+                                expect(err).to.equal(null);
+                                expect(found).to.be.an("object");
+                                expect(found.username).to.equal("eric3");
+                                expect(found.password).to.equal("112233");
+                                expect(found.payment).to.be.true;
                                 done();
                           })
         })
