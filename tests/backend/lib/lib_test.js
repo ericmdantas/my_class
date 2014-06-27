@@ -1,16 +1,16 @@
+"use strict";
+
 var lib = require('../../../lib/lib');
-var assert = require('assert');
+var expect = require('chai').expect;
 
-//TODO: MIGRATE TO CHAI'S EXPECT
-
-describe('checks if lib\'s doing good', function()
+describe('lib', function()
 {
     describe('getValuesByTrimester', function()
     {
         it('checks if getValuesByTrimester is working with empty obj', function()
         {
             var resultado = lib.getValuesByTrimester(undefined);
-            assert.equal(undefined, resultado);
+            expect(resultado).to.be.undefined;
         })
 
         it('checks if getValuesByTrimester is working with zero values', function()
@@ -22,17 +22,18 @@ describe('checks if lib\'s doing good', function()
 
             var resultado = lib.getValuesByTrimester(obj);
 
-            assert.strictEqual(0, resultado.valorPrimeiroTrimestre);
-            assert.strictEqual(0, resultado.valorSegundoTrimestre);
-            assert.strictEqual(0, resultado.valorTerceiroTrimestre);
-            assert.strictEqual(0, resultado.valorQuartoTrimestre);
+            expect(resultado.valorPrimeiroTrimestre).to.equal(0);
+            expect(resultado.valorSegundoTrimestre).to.equal(0);
+            expect(resultado.valorTerceiroTrimestre).to.equal(0);
+            expect(resultado.valorQuartoTrimestre).to.equal(0);
         })
 
         it('checks if return trimester is returning the first trimester correctly', function()
         {
             var obj = [{mes: "Janeiro", valor: 1}, {mes: "Fevereiro", valor: 1}, {mes: "Março", valor: 11}];
             var resultado = lib.getValuesByTrimester(obj);
-            assert.equal(13, resultado.valorPrimeiroTrimestre);
+
+            expect(resultado.valorPrimeiroTrimestre).to.equal(13);
         })
 
         it('checks if return trimester is returning the second trimester correctly', function()
@@ -40,7 +41,7 @@ describe('checks if lib\'s doing good', function()
             var obj = [{mes: "Abril", valor: 1}, {mes: "Maio", valor: 1}, {mes: "Junho", valor: 123123}];
             var resultado = lib.getValuesByTrimester(obj);
 
-            assert.strictEqual(123125, resultado.valorSegundoTrimestre);
+            expect(resultado.valorSegundoTrimestre).to.equal(123125);
         })
 
         it('checks if return trimester is returning the third trimester correctly', function()
@@ -48,7 +49,7 @@ describe('checks if lib\'s doing good', function()
             var obj = [{mes: "Julho", valor: 1}, {mes: "Agosto", valor: 1}, {mes: "Setembro", valor: 123123}];
             var resultado = lib.getValuesByTrimester(obj);
 
-            assert.equal(123125, resultado.valorTerceiroTrimestre);
+            expect(resultado.valorTerceiroTrimestre).to.equal(123125);
         })
 
         it('checks if return trimester is returning the third trimester correctly', function()
@@ -56,7 +57,7 @@ describe('checks if lib\'s doing good', function()
             var obj = [{mes: "Outubro", valor: 1}, {mes: "Novembro", valor: 1}, {mes: "Dezembro", valor: 123123}];
             var resultado = lib.getValuesByTrimester(obj);
 
-            assert.strictEqual(123125, resultado.valorQuartoTrimestre);
+            expect(resultado.valorQuartoTrimestre).to.equal(123125);
         })
     })
 
@@ -68,7 +69,7 @@ describe('checks if lib\'s doing good', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                assert.strictEqual(undefined, lib.getMonthInDate(_wrongParams[i]));
+                expect(lib.getMonthInDate(_wrongParams[i])).to.equal(undefined);
             }
         })
 
@@ -77,8 +78,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('January, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var janeiro = porcentagemAlunos[0];
-            assert.strictEqual(janeiro.contador, 1);
-            assert.strictEqual(janeiro.porcentagem, 100);
+
+            expect(janeiro.contador).to.equal(1);
+            expect(janeiro.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - February', function()
@@ -86,8 +88,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('February, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var fevereiro = porcentagemAlunos[1];
-            assert.strictEqual(fevereiro.contador, 1);
-            assert.strictEqual(fevereiro.porcentagem, 100);
+
+            expect(fevereiro.contador).to.equal(1);
+            expect(fevereiro.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - March', function()
@@ -95,8 +98,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('March, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var marco = porcentagemAlunos[2];
-            assert.strictEqual(marco.contador, 1);
-            assert.strictEqual(marco.porcentagem, 100);
+
+            expect(marco.contador).to.equal(1);
+            expect(marco.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - April', function()
@@ -104,8 +108,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('April, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var abril = porcentagemAlunos[3];
-            assert.strictEqual(abril.contador, 1);
-            assert.strictEqual(abril.porcentagem, 100);
+
+            expect(abril.contador).to.equal(1);
+            expect(abril.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - May', function()
@@ -113,8 +118,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('May, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var maio = porcentagemAlunos[4];
-            assert.strictEqual(maio.contador, 1);
-            assert.strictEqual(maio.porcentagem, 100);
+
+            expect(maio.contador).to.equal(1);
+            expect(maio.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - June', function()
@@ -122,8 +128,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('June, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var junho = porcentagemAlunos[5];
-            assert.strictEqual(junho.contador, 1);
-            assert.strictEqual(junho.porcentagem, 100);
+
+            expect(junho.contador).to.equal(1);
+            expect(junho.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - July', function()
@@ -131,8 +138,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('July, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var julho = porcentagemAlunos[6];
-            assert.strictEqual(julho.contador, 1);
-            assert.strictEqual(julho.porcentagem, 100);
+
+            expect(julho.contador).to.equal(1);
+            expect(julho.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - August', function()
@@ -140,8 +148,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('August, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var agosto = porcentagemAlunos[7];
-            assert.strictEqual(agosto.contador, 1);
-            assert.strictEqual(agosto.porcentagem, 100);
+
+            expect(agosto.contador).to.equal(1);
+            expect(agosto.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - September', function()
@@ -149,8 +158,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('September, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var setembro = porcentagemAlunos[8];
-            assert.strictEqual(setembro.contador, 1);
-            assert.strictEqual(setembro.porcentagem, 100);
+
+            expect(setembro.contador).to.equal(1);
+            expect(setembro.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - October', function()
@@ -158,8 +168,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('October, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var outubro = porcentagemAlunos[9];
-            assert.strictEqual(outubro.contador, 1);
-            assert.strictEqual(outubro.porcentagem, 100);
+
+            expect(outubro.contador).to.equal(1);
+            expect(outubro.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - November', function()
@@ -167,8 +178,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('November, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var novembro = porcentagemAlunos[10];
-            assert.strictEqual(novembro.contador, 1);
-            assert.strictEqual(novembro.porcentagem, 100);
+
+            expect(novembro.contador).to.equal(1);
+            expect(novembro.porcentagem).to.equal(100);
         })
 
         it('checks getMonthInDate when the parameter is correct - December', function()
@@ -176,8 +188,9 @@ describe('checks if lib\'s doing good', function()
             var objetoComInformacaoDeMeses = [{registered: new Date('December, 20 2014')}];
             var porcentagemAlunos = lib.getMonthInDate(objetoComInformacaoDeMeses);
             var dezembro = porcentagemAlunos[11];
-            assert.strictEqual(dezembro.contador, 1);
-            assert.strictEqual(dezembro.porcentagem, 100);
+
+            expect(dezembro.contador).to.equal(1);
+            expect(dezembro.porcentagem).to.equal(100);
         })
 
         it('checks if getMonthInDate is working when there are more than 3 months specified', function()
@@ -192,17 +205,17 @@ describe('checks if lib\'s doing good', function()
             var maio = porcentagemAlunos[4];
             var dezembro = porcentagemAlunos[11];
 
-            assert.strictEqual(janeiro.contador, 1);
-            assert.strictEqual(janeiro.porcentagem, 25);
+            expect(janeiro.contador).to.equal(1);
+            expect(janeiro.porcentagem).to.equal(25);
 
-            assert.strictEqual(junho.contador, 1);
-            assert.strictEqual(junho.porcentagem, 25);
+            expect(junho.contador).to.equal(1);
+            expect(junho.porcentagem).to.equal(25);
 
-            assert.strictEqual(maio.contador, 1);
-            assert.strictEqual(maio.porcentagem, 25);
+            expect(maio.contador).to.equal(1);
+            expect(maio.porcentagem).to.equal(25);
 
-            assert.strictEqual(dezembro.contador, 1);
-            assert.strictEqual(dezembro.porcentagem, 25);
+            expect(dezembro.contador).to.equal(1);
+            expect(dezembro.porcentagem).to.equal(25);
         })
 
         it('checks if getMonthInDate is working when there are more than one register for some month', function()
@@ -216,11 +229,11 @@ describe('checks if lib\'s doing good', function()
             var janeiro = porcentagemAlunos[0];
             var junho = porcentagemAlunos[5];
 
-            assert.strictEqual(janeiro.contador, 4);
-            assert.strictEqual(janeiro.porcentagem, 80);
+            expect(janeiro.contador).to.equal(4);
+            expect(janeiro.porcentagem).to.equal(80);
 
-            assert.strictEqual(junho.contador, 1);
-            assert.strictEqual(junho.porcentagem, 20);
+            expect(junho.contador).to.equal(1);
+            expect(junho.porcentagem).to.equal(20);
         })
 
         it('checks if getMonthInDate is working when there are decimal percentage', function()
@@ -235,14 +248,14 @@ describe('checks if lib\'s doing good', function()
             var maio = porcentagemAlunos[4];
 
 
-            assert.strictEqual(janeiro.contador, 1);
-            assert.strictEqual(janeiro.porcentagem, 33.33);
+            expect(janeiro.contador).to.equal(1);
+            expect(janeiro.porcentagem).to.equal(33.33);
 
-            assert.strictEqual(fevereiro.contador, 1);
-            assert.strictEqual(fevereiro.porcentagem, 33.33);
+            expect(fevereiro.contador).to.equal(1);
+            expect(fevereiro.porcentagem).to.equal(33.33);
 
-            assert.strictEqual(maio.contador, 1);
-            assert.strictEqual(maio.porcentagem, 33.33);
+            expect(maio.contador).to.equal(1);
+            expect(maio.porcentagem).to.equal(33.33);
         })
     })
 
@@ -250,21 +263,32 @@ describe('checks if lib\'s doing good', function()
     {
         it('checks if getPercentage is working with wrong parameters - should throw an error', function()
         {
-            assert.throws(function(){lib.getPercentage('not a number', {a: '1'})}, 'Não é possível retornar porcentagem de parâmetros não numéricos.');
-            assert.throws(function(){lib.getPercentage(undefined, null)}, 'Não é possível retornar porcentagem de parâmetros não numéricos.');
-            assert.throws(function(){lib.getPercentage([], true)}, 'Não é possível retornar porcentagem de parâmetros não numéricos.');
+            expect(function()
+            {
+                lib.getPercentage('not a number', {a: '1'})
+            }).to.throw(Error, /Não é possível retornar porcentagem .+ numéricos/);
+
+            expect(function()
+            {
+                lib.getPercentage(undefined, null)
+            }).to.throw(Error, /Não é possível retornar porcentagem .+ não numéricos/);
+
+            expect(function()
+            {
+                lib.getPercentage([], true)
+            }).to.throw(Error,/Não é possível retornar porcentagem.+ não numéricos/);
         })
 
         it('checks if getPercentage is working with wrong parameters - should return 0', function()
         {
-            assert.strictEqual(0, lib.getPercentage(0, 0));
-            assert.strictEqual(0, lib.getPercentage(-1, -100));
+            expect(lib.getPercentage(0, 0)).to.equal(0);
+            expect(lib.getPercentage(-1, -100)).to.equal(0);
         })
 
         it('checks if getPercentage is working with correct parameters', function()
         {
-            assert.strictEqual(100, lib.getPercentage(1000, 1000));
-            assert.strictEqual(true, (lib.getPercentage(120, 20) >= 16) && (lib.getPercentage(120, 20) <= 17));
+            expect(lib.getPercentage(1000, 1000)).to.equal(100);
+            expect((lib.getPercentage(120, 20) >= 16) && (lib.getPercentage(120, 20) <= 17)).to.be.true;
         })
     })
 
@@ -276,7 +300,7 @@ describe('checks if lib\'s doing good', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                assert.strictEqual(lib.isStringInvalid(_wrongParams[i]), true);
+                expect(lib.isStringInvalid(_wrongParams[i])).to.equal(true);
             }
         })
 
@@ -286,7 +310,7 @@ describe('checks if lib\'s doing good', function()
 
             for (var i = 0; i < _correctParams.length; i++)
             {
-                assert.strictEqual(lib.isStringInvalid(_correctParams[i]), false);
+                expect(lib.isStringInvalid(_correctParams[i])).to.equal(false);
             }
         })
     })
@@ -299,7 +323,7 @@ describe('checks if lib\'s doing good', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                assert.strictEqual(lib.isObjectInvalid(_wrongParams[i]), true);
+                expect(lib.isObjectInvalid(_wrongParams[i])).to.equal(true);
             }
         })
 
@@ -309,7 +333,7 @@ describe('checks if lib\'s doing good', function()
 
             for (var i = 0; i < _correctParams.length; i++)
             {
-                assert.strictEqual(lib.isObjectInvalid(_correctParams[i]), false);
+                expect(lib.isObjectInvalid(_correctParams[i])).to.equal(false);
             }
         })
     })
@@ -322,7 +346,7 @@ describe('checks if lib\'s doing good', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                assert.strictEqual(lib.isFunctionInvalid(_wrongParams[i]), true);
+                expect(lib.isFunctionInvalid(_wrongParams[i])).to.equal(true);
             }
         })
 
@@ -332,7 +356,7 @@ describe('checks if lib\'s doing good', function()
 
             for (var i = 0; i < _correctParams.length; i++)
             {
-                assert.strictEqual(lib.isFunctionInvalid(_correctParams[i]), false);
+                expect(lib.isFunctionInvalid(_correctParams[i])).to.equal(false);
             }
         })
     })
@@ -345,7 +369,7 @@ describe('checks if lib\'s doing good', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                assert.strictEqual(lib.isNumberInvalid(_wrongParams[i]), true);
+                expect(lib.isNumberInvalid(_wrongParams[i])).to.equal(true);
             }
         })
 
@@ -355,7 +379,7 @@ describe('checks if lib\'s doing good', function()
 
             for (var i = 0; i < _correctParams.length; i++)
             {
-                assert.strictEqual(lib.isNumberInvalid(_correctParams[i]), false);
+                expect(lib.isNumberInvalid(_correctParams[i])).to.equal(false);
             }
         })
     })
