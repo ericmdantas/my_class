@@ -17,7 +17,7 @@ function Statistics()
                 res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta informações por trimestre'));
             }
             else
-                res.json({resultado: doc});
+                res.json(doc);
         }
 
         StatisticsModel.findAllEarningsByTrimester(_usuario, callback);
@@ -35,7 +35,7 @@ function Statistics()
                 res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta interesse por mês'));
             }
             else
-                res.json({resultado: doc});
+                res.json(doc);
         }
 
         StatisticsModel.findAllInterestedStudentsPerMonth(_usuario, callback);

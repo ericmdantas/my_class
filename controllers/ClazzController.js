@@ -7,168 +7,226 @@ function Clazz()
 {
     function _getClassesInfo(req, res)
     {
+        var _onSuccess = function(clazzes)
+        {
+            res.json(clazzes);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _clazz = new ClazzModel();
 
-        function callback(error, clazzes)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta de turmas'));
-            }
-            else
-            {
-                clazzes ? res.json({classes: clazzes})
-                        : res.json({classes: []})
-            }
-        }
-
-        _clazz.findAllClassesByUser(_usuario, callback);
+        _clazz
+            .findAllClassesByUser(_usuario)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _getClassesNames(req, res)
     {
+        var _onSuccess = function(names)
+        {
+            res.json(names);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _clazz = new ClazzModel();
 
-        function callback(error, clazzes)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta dos nomes das turmas'));
-            }
-            else
-                clazzes ? res.json({classes: clazzes})
-                        : res.json({classes: []})
-        }
-
-        _clazz.findAllClassesNamesByUser(_usuario, callback);
+        _clazz
+            .findAllClassesNamesByUser(_usuario)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _getClassesDailyInfo(req, res)
     {
+        var _onSuccess = function(info)
+        {
+            res.json(info);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _monthYear = req.params.monthYear;
         var _clazz = new ClazzModel();
 
-        function callback(error, dailyInfo)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta das informações diárias das turmas'));
-            }
-            else
-                dailyInfo ? res.json({info: dailyInfo})
-                          : res.json({info: []});
-        }
-
-        _clazz.getClassesDailyInfo(_usuario, _monthYear, callback);
+        _clazz
+            .getClassesDailyInfo(_usuario, _monthYear)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _getClassesDailyInfoByClass(req, res)
     {
+        var _onSuccess = function(clazzes)
+        {
+            res.json(clazzes);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _monthYear = req.params.monthYear;
         var _clazzId = req.params.id;
         var _clazz = new ClazzModel();
 
-        function callback(error, dailyInfoByClass)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta das informações diárias da turma'));
-            }
-            else
-                dailyInfoByClass ? res.json({info: dailyInfoByClass})
-                                 : res.json({info: []});
-        }
-
-        _clazz.getClassesDailyInfoByClass(_usuario, _monthYear, _clazzId, callback);
+        _clazz
+            .getClassesDailyInfoByClass(_usuario, _monthYear, _clazzId)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _registerClassMomentInTime(req, res)
     {
+        var _onSuccess = function()
+        {
+            res.send(200);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _moment = req.body;
         var _clazz = new ClazzModel();
 
-        function callback(error)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(_errorHandler.createSimpleErrorObject(500, 'cadastro do dia a dia da turma'));
-            }
-            else
-                res.end();
-        }
-
-        _clazz.registerClassMomentInTime(_usuario, _moment, callback);
+        _clazz
+            .registerClassMomentInTime(_usuario, _moment)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _registerClass(req, res)
     {
+        var _onSuccess = function()
+        {
+            res.send(200);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _turma = req.body;
         var _clazz = new ClazzModel();
 
-        function callback(error)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(_errorHandler.createSimpleErrorObject(500, 'cadastro de turma'));
-            }
-            else
-                res.end()
-        }
-
-        _clazz.registerNewClass(_usuario, _turma, callback);
+        _clazz
+            .registerNewClass(_usuario, _turma)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _editClass(req, res)
     {
+        var _onSuccess = function()
+        {
+            res.send(200);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _turmaID = req.params.id;
         var _turma = req.body;
         var _clazz = new ClazzModel();
 
-        function callback(error)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(_errorHandler.createSimpleErrorObject(500, 'edição de turma'));
-            }
-            else
-                res.end();
-        }
-
-        _clazz.editClass(_usuario, _turma, _turmaID, callback);
+        _clazz
+            .editClass(_usuario, _turma, _turmaID)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _deleteClass(req, res)
     {
+        var _onSuccess = function()
+        {
+            res.send(200);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _identificacaoTurma = req.params.id;
         var _clazz = new ClazzModel();
 
-        function callback(error)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(_errorHandler.createSimpleErrorObject(500, 'deleção de turma'));
-            }
-            else
-                res.end();
-        }
-
-        _clazz.deleteClass(_usuario, _identificacaoTurma, callback);
+        _clazz
+            .deleteClass(_usuario, _identificacaoTurma)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     return {

@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.directive('earningsStats', ['StatisticService', function(StatisticService)
+myClass.directive('earningsStats', ['StatisticResource', function(StatisticResource)
 {
     var temp = '<div class="info-card transition">'+
                     '<h3>arrecadação por trimestre</h3>'+
@@ -11,25 +11,26 @@ myClass.directive('earningsStats', ['StatisticService', function(StatisticServic
     {
         $scope.valoresTrimestre = [];
 
-        $scope.getEarnings = function(drawGraphic)
+        $scope.getEarnings = function(desenhaGrafico)
         {
-            StatisticService.getEarnings()
-                .success(function(data)
-                {
-                    if (!data || !data.resultado || !Object.keys(data.resultado).length)
-                        return;
+            var _onSuccess = function(data)
+            {
+                if (!data)
+                    return;
 
-                    $scope.valoresTrimestre = [data.resultado.valorPrimeiroTrimestre,
-                                               data.resultado.valorSegundoTrimestre,
-                                               data.resultado.valorTerceiroTrimestre,
-                                               data.resultado.valorQuartoTrimestre];
+                $scope.valoresTrimestre = [data.valorPrimeiroTrimestre || 0,
+                                           data.valorSegundoTrimestre || 0,
+                                           data.valorTerceiroTrimestre || 0,
+                                           data.valorQuartoTrimestre || 0];
 
+                desenhaGrafico();
+            };
 
-                    drawGraphic();
-                })
+            StatisticResource
+                .get({graphic: 'earnings', period: 'trimester'}, _onSuccess);
         }
 
-        function _desenhaGrafico()
+        var _desenhaGrafico = function()
         {
             $('#column-chart').highcharts(
                 {

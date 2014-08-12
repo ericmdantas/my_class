@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.factory('LoginService', ['$http', 'lib', function($http, lib)
+myClass.service('LoginService', ['$http', 'lib', function($http, lib)
 {
     var URL = '/api/validateUser';
 
@@ -12,7 +12,5 @@ myClass.factory('LoginService', ['$http', 'lib', function($http, lib)
         return $http.post(URL, user);
     }
 
-    return {
-                validateUser: _validateUser
-           }
+    this.validateUser = _validateUser;
 }])

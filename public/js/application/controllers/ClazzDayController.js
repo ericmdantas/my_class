@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('ClazzDayController', ['$scope', 'lib', 'pageConfig', 'inputMaxLength', 'ClazzDayService', 'TeacherService', 'StudentService', 'ClazzService', 'ModalHelper',
-                                function ($scope, lib, pageConfig, inputMaxLength, ClazzDayService, TeacherService, StudentService, ClazzService, ModalHelper)
+myClass.controller('ClazzDayController', ['$scope', 'lib', 'pageConfig', 'inputMaxLength', 'ClazzDayResource', 'TeacherResource', 'StudentResource', 'ClazzResource', 'ModalHelper',
+                                function ($scope, lib, pageConfig, inputMaxLength, ClazzDayResource, TeacherResource, StudentResource, ClazzResource, ModalHelper)
 {
     $scope.cfg = pageConfig;
     $scope.aulaEscolhida = {};
@@ -20,13 +20,15 @@ myClass.controller('ClazzDayController', ['$scope', 'lib', 'pageConfig', 'inputM
         ModalHelper.open('#modal-clazz-day');
     }
 
-    $scope.getClazzesNames = function()
+    var _getClazzesNames = function()
     {
-        ClazzService.getClazzesNames()
-            .success(function(data)
-            {
-                $scope.clazzesNames = (data && data.classes) ? data.classes : [];
-            })
+        var _onSuccess = function(data)
+        {
+            $scope.clazzesNames = data || [];
+        }
+
+        ClazzResource
+            .query({property: 'name'}, _onSuccess);
     }
 
     $scope.getClassesDailyInfo = function(monthYear, id)
@@ -40,10 +42,8 @@ myClass.controller('ClazzDayController', ['$scope', 'lib', 'pageConfig', 'inputM
 
         monthYear = monthYear.replace('/', '_');
 
-        if (lib.isStringInvalid(id))
-            _getDailyInfoFromAllClazzes(monthYear);
-        else
-            _getDailyInfoByClass(monthYear, id);
+        lib.isStringInvalid(id) ? _getDailyInfoFromAllClazzes(monthYear)
+                                : _getDailyInfoByClass(monthYear, id);
     }
 
     $scope.getStudentsNamesByClass = function(turma)
@@ -51,25 +51,29 @@ myClass.controller('ClazzDayController', ['$scope', 'lib', 'pageConfig', 'inputM
         if (lib.isStringInvalid(turma))
             throw new Error('Não foi possível pegar os nomes dos alunos.');
 
-        StudentService.getStudentsNamesInClass(turma)
-             .success(function(data)
-                     {
-                         $scope.alunos = (data && data.students) ? data.students : [];
+        var _onSuccess = function(data)
+        {
+            $scope.alunos = data || [];
 
-                         for (var i = 0; i < $scope.alunos.length; i++)
-                         {
-                             $scope.alunos[i].wasInClass = true;
-                         }
-                     })
+            for (var i = 0; i < $scope.alunos.length; i++)
+            {
+                $scope.alunos[i].wasInClass = true;
+            }
+        }
+
+        StudentResource
+            .getNames({clazz: turma}, _onSuccess);
     }
 
-    $scope.getTeachersNames = function()
+    var _getTeachersNames = function()
     {
-        TeacherService.getTeachersNames()
-             .success(function(data)
-                     {
-                          $scope.professores = (data && data.resultado) ? data.resultado : [];
-                     })
+        var _onSuccess = function(data)
+        {
+            $scope.professores = data || [];
+        };
+
+        TeacherResource
+            .query({property: 'name'}, _onSuccess);
     }
 
     $scope.registerClazzDay = function(turma, alunos)
@@ -79,6 +83,13 @@ myClass.controller('ClazzDayController', ['$scope', 'lib', 'pageConfig', 'inputM
 
         if (_problemasAlunos || _problemasTurma)
             throw new Error('Não será possível continuar, pois alguns parâmetros não foram informados.');
+
+        var _onSuccess = function()
+        {
+            $scope.getClassesDailyInfo(currentMonthYear);
+            ModalHelper.close('#modal-clazz-day');
+            lib.emptyProperty($scope, 'turmaDiaDia', {});
+        };
 
         var _moment = {};
 
@@ -93,56 +104,55 @@ myClass.controller('ClazzDayController', ['$scope', 'lib', 'pageConfig', 'inputM
 
         $scope.isLoadingVisible.modal = true;
 
-        ClazzDayService.registerDailyInfo(_moment)
-             .success(function()
-                     {
-                         $scope.getClassesDailyInfo(currentMonthYear);
-                         ModalHelper.close('#modal-clazz-day');
-                         lib.emptyProperty($scope, 'turmaDiaDia', {});
-                     })
+        ClazzDayResource
+            .save(_moment, _onSuccess);
     }
 
-    function _getDailyInfoFromAllClazzes(monthYear)
+    var _getDailyInfoFromAllClazzes = function(monthYear)
     {
-        ClazzDayService.getDailyInfo(monthYear)
-            .success(function(data)
-            {
-                $scope.informacaoDiaria = (data && data.info) ? data.info : [];
-            })
+        var _onSuccess = function(data)
+        {
+            $scope.informacaoDiaria = data || [];
+        };
+
+        ClazzDayResource
+            .query({monthAndYear: monthYear}, _onSuccess)
     }
 
-    function _getDailyInfoByClass(monthYear, id)
+    var _getDailyInfoByClass = function(monthYear, id)
     {
-        ClazzDayService.getDailyInfoByClass(monthYear, id)
-            .success(function(data)
+        var _onSuccess = function(data)
+        {
+            var _informacaoDiaria;
+
+            if (data)
             {
-                var _informacaoDiaria;
+                _informacaoDiaria = data;
 
-                if (data && data.info && (Object.keys(data.info).length))
+                for (var i = 0; i < $scope.informacaoDiaria.length; i++)
                 {
-                    _informacaoDiaria = data.info;
-
-                    for (var i = 0; i < $scope.informacaoDiaria.length; i++)
+                    if (_informacaoDiaria._id === $scope.informacaoDiaria[i]._id)
                     {
-                        if (_informacaoDiaria._id === $scope.informacaoDiaria[i]._id)
-                        {
-                            $scope.informacaoDiaria[i] = _informacaoDiaria;
-                            break;
-                        }
+                        $scope.informacaoDiaria[i] = _informacaoDiaria;
+                        break;
                     }
                 }
-                else
+            }
+            else
+            {
+                for (var j = 0; j < $scope.informacaoDiaria.length; j++)
                 {
-                    for (var j = 0; j < $scope.informacaoDiaria.length; j++)
+                    if (id === $scope.informacaoDiaria[j]._id)
                     {
-                        if (id === $scope.informacaoDiaria[j]._id)
-                        {
-                            $scope.informacaoDiaria[j].dailyInfo = [];
-                            break;
-                        }
+                        $scope.informacaoDiaria[j].dailyInfo = [];
+                        break;
                     }
                 }
-            })
+            }
+        };
+
+        ClazzDayResource
+            .query({monthAndYear: monthYear, id: id}, _onSuccess);
     }
 
     $scope.isHistoricoVisible = function(historico)
@@ -151,7 +161,7 @@ myClass.controller('ClazzDayController', ['$scope', 'lib', 'pageConfig', 'inputM
         return periodoEscolhido > 0 ? true : false;
     }
 
-    $scope.getClazzesNames();
-    $scope.getTeachersNames();
+    _getClazzesNames();
+    _getTeachersNames();
     $scope.getClassesDailyInfo(currentMonthYear);
 }])

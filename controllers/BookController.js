@@ -7,86 +7,114 @@ function Book()
 {
     function _getBooksInfo(req, res)
     {
+        var _onSuccess = function(books)
+        {
+            res.json(books);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _book = new BookModel();
 
-        function callback(error, books)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta de livros'));
-            }
-
-            else
-            {
-                books ? res.json({books: books})
-                      : res.json({books: []})
-            }
-        }
-
-        _book.findAllBooksByUser(_usuario, callback)
+        _book
+            .findAllBooksByUser(_usuario)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _registerBook(req, res)
     {
+        var _onSuccess = function()
+        {
+            res.send(200);
+        }
+
+        var _onError = function(err)
+        {
+            res.json(400, err);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(500, ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _livro = req.body;
         var _book = new BookModel();
 
-        function callback(error)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'cadastro de livros'));
-            }
-            else
-                res.end();
-        }
-
-        _book.registerNewBook(_usuario, _livro, callback);
+        _book
+            .registerNewBook(_usuario, _livro)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _editBook(req, res)
     {
+        var _onSuccess = function()
+        {
+            res.send(200);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _livroID = req.params.id;
         var _livro = req.body;
         var _book = new BookModel();
 
-        function callback(error)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'edição de livros'));
-            }
-            else
-                res.end();
-        }
-
-        _book.editBook(_usuario, _livro, _livroID, callback);
+        _book
+            .editBook(_usuario, _livro, _livroID)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _deleteBook(req, res)
     {
+        var _onSuccess = function()
+        {
+            res.send(200);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _identificacaoLivro = req.params.id;
         var _book = new BookModel();
 
-        function callback(error)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'deleção de livros'));
-            }
-            else
-                res.end();
-        }
-
-        _book.deleteBook(_usuario, _identificacaoLivro, callback);
+        _book
+            .deleteBook(_usuario, _identificacaoLivro)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     return {

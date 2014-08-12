@@ -1,6 +1,6 @@
 "use strict";
 
-myClass.directive('interestedStudentsPerMonth', ['StatisticService', function(StatisticService)
+myClass.directive('interestedStudentsPerMonth', ['StatisticResource', function(StatisticResource)
 {
     var _template = '<div class="info-card transition">' +
                         '<h3>interesse por mês</h3>' +
@@ -11,31 +11,32 @@ myClass.directive('interestedStudentsPerMonth', ['StatisticService', function(St
     {
         $scope.alunosInteressadosPorMes = [];
 
-        $scope.getInterestedStudentsPerMonth = function(drawGraphic)
+        $scope.getInterestedStudentsPerMonth = function(desenhaGrafico)
         {
-            StatisticService
-                .getInterestedStudents()
-                .success(function(data)
+            var _onSuccess = function(data)
+            {
+                if (!data)
+                    return;
+
+                var contadorMes = [];
+
+                for (var i = 0; i < data.length; i++)
                 {
-                    if (!data || !data.resultado)
-                        return;
+                    data[i].porcentagem = (data[i].porcentagem >= 0) ? data[i].porcentagem : 0;
 
-                    var contadorMes = [];
+                    contadorMes = [data[i].nome, data[i].porcentagem];
+                    $scope.alunosInteressadosPorMes.push(contadorMes);
+                    contadorMes = [];
+                }
 
-                    for (var i = 0; i < data.resultado.length; i++)
-                    {
-                        data.resultado[i].porcentagem = (data.resultado[i].porcentagem >= 0) ? data.resultado[i].porcentagem : 0;
+                desenhaGrafico();
+            };
 
-                        contadorMes = [data.resultado[i].nome, data.resultado[i].porcentagem];
-                        $scope.alunosInteressadosPorMes.push(contadorMes);
-                        contadorMes = [];
-                    }
-
-                    drawGraphic();
-                })
+            StatisticResource
+                .query({graphic: 'interestedStudents', period: 'month'}, _onSuccess);
         }
 
-        function _desenhaGrafico()
+        var _desenhaGrafico = function()
         {
             $('#pie-chart').highcharts({
                 chart:
@@ -65,7 +66,7 @@ myClass.directive('interestedStudentsPerMonth', ['StatisticService', function(St
             });
         }
 
-        $scope.getInterestedStudentsPerMonth(_desenhaGrafico)
+        $scope.getInterestedStudentsPerMonth(_desenhaGrafico);
     }]
 
     return {

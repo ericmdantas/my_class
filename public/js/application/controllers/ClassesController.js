@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('ClassesController', ['$scope', '$timeout', 'lib', 'pageConfig', 'inputMaxLength', 'ClazzService', 'StudentService', 'ModalHelper',
-                                function ($scope, $timeout, lib, pageConfig, inputMaxLength, ClazzService, StudentService, ModalHelper)
+myClass.controller('ClassesController', ['$scope', '$timeout', 'lib', 'pageConfig', 'inputMaxLength', 'ClazzResource', 'StudentResource', 'ModalHelper',
+                                function ($scope, $timeout, lib, pageConfig, inputMaxLength, ClazzResource, StudentResource, ModalHelper)
 {
     $scope.turmas = [];
     $scope.cfg = pageConfig;
@@ -12,31 +12,33 @@ myClass.controller('ClassesController', ['$scope', '$timeout', 'lib', 'pageConfi
     $scope.professores = {};
     $scope.isLoadingVisible = {modal: false};
 
-    $scope.getClasses = function()
+    var _getClasses = function()
     {
-        ClazzService.getClazzes()
-             .success(function(data)
-                      {
-                          $scope.turmas = (data && data.classes) ? data.classes : [];
-                      })
+        var _onSuccess = function(data)
+        {
+            $scope.turmas = data || [];
+        };
+
+        ClazzResource
+            .query(_onSuccess)
     }
 
-    $scope.getStudentsNames = function()
+    var _getStudentsNames = function()
     {
-        StudentService.getStudentsNames()
-            .success(function(data)
-            {
-                $scope.alunos = (data && data.students) ? data.students : [];
+        var _onSuccess = function(data)
+        {
+            $scope.alunos = data || [];
 
-                for (var i = 0; i < $scope.alunos.length; i++)
-                {
-                    $scope.alunos[i] = $scope.alunos[i].name;
-                }
-            })
-            .finally(function()
+            for (var i = 0; i < $scope.alunos.length; i++)
             {
-                $('#alunos-nova-turma').select2();
-            })
+                $scope.alunos[i] = $scope.alunos[i].name;
+            }
+
+            $('#alunos-nova-turma').select2();
+        };
+
+        StudentResource
+            .query({property: 'name'}, _onSuccess);
     }
 
     $scope.openModalToEditClass = function(myClass)
@@ -73,15 +75,17 @@ myClass.controller('ClassesController', ['$scope', '$timeout', 'lib', 'pageConfi
         if (lib.isObjectInvalid(turma.students))
             throw new Error('Não foi possível registrar esta turma, objeto de alunos não informado corretamente.');
 
+        var _onSuccess = function()
+        {
+            _getClasses();
+            ModalHelper.close('#modal-register-class');
+            lib.emptyProperty($scope, 'novaTurma', {});
+        };
+
         $scope.isLoadingVisible.modal = true;
 
-        ClazzService.registerClazz(turma)
-            .success(function()
-            {
-                $scope.getClasses();
-                ModalHelper.close('#modal-register-class');
-                lib.emptyProperty($scope, 'novaTurma', {});
-            })
+        ClazzResource
+            .save(turma, _onSuccess)
     }
 
     $scope.editClass = function(turma)
@@ -92,15 +96,17 @@ myClass.controller('ClassesController', ['$scope', '$timeout', 'lib', 'pageConfi
         if (lib.isObjectInvalid(turma.students))
             throw new Error('Não foi possível editar esta turma, objeto de alunos não informado corretamente.');
 
+        var _onSuccess = function()
+        {
+            _getClasses();
+            ModalHelper.close('#modal-edit-class');
+            lib.emptyProperty($scope, 'turmaEscolhida', {});
+        };
+
         $scope.isLoadingVisible.modal = true;
 
-        ClazzService.editClazz(turma._id, turma)
-             .success(function()
-                     {
-                         $scope.getClasses();
-                         ModalHelper.close('#modal-edit-class');
-                         lib.emptyProperty($scope, 'turmaEscolhida', {});
-                     })
+        ClazzResource
+            .update({id: turma._id}, turma, _onSuccess)
     }
 
     $scope.deleteClass = function(id)
@@ -108,17 +114,19 @@ myClass.controller('ClassesController', ['$scope', '$timeout', 'lib', 'pageConfi
         if (lib.isStringInvalid(id))
             throw new Error('Não foi possível deletar esta turma, pois o id está errado.');
 
+        var _onSuccess = function()
+        {
+            _getClasses();
+            ModalHelper.close('#modal-delete-class');
+            lib.emptyProperty($scope, 'turmaEscolhida', {});
+        };
+
         $scope.isLoadingVisible.modal = true;
 
-        ClazzService.deleteClazz(id)
-            .success(function()
-                    {
-                        $scope.getClasses();
-                        ModalHelper.close('#modal-delete-class');
-                        lib.emptyProperty($scope, 'turmaEscolhida', {});
-                    })
+        ClazzResource
+            .remove({id: id}, _onSuccess);
     }
 
-    $scope.getClasses();
-    $scope.getStudentsNames();
+    _getClasses();
+    _getStudentsNames();
 }])

@@ -1,8 +1,8 @@
 ﻿<div ng-controller="StudentsController">
-    <div id="alunos-container" class="topic transition selected {{cfg.information.alunos.classeBorda}}">
-        <h1>{{cfg.information.alunos.nome}} <span class="text-almost-invisible">{{alunos.length}} alunos</span></h1>
+    <div id="alunos-container" class="topic transition selected {{cfg.alunos.classeBorda}}">
+        <h1>{{cfg.alunos.nome}} <span class="text-almost-invisible">{{alunos.length}} alunos</span></h1>
         <p>tenha total controle sobre todas as informações dos alunos cadastrados.</p>
-        <p>{{cfg.information.alunos.resumo}}</p>
+        <p>{{cfg.alunos.resumo}}</p>
         <button type="button" class="btn btn-default pull-right" id="#adicionarAluno"
                 ng-click="openModalToRegisterStudent()">
             cadastrar aluno

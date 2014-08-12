@@ -4,13 +4,16 @@ describe('interested students per month being tested', function()
 {
     var _httpMock, _compile, _scope, _element;
 
+    $('body').append('<div id="pie-chart"></div>');
+
     beforeEach(module('myClass'));
+
     beforeEach(inject(function($injector)
     {
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
         _compile = $injector.get('$compile');
-        _httpMock.when('GET', '/api/interestedStudents/month').respond({});
+        _httpMock.when('GET', '/api/protected/interestedStudents/month').respond([]);
 
         var _html = '<interested-students-per-month></interested-students-per-month>';
 
@@ -38,29 +41,29 @@ describe('interested students per month being tested', function()
         })
     })
 
-    describe('GET /api/interestedStudents/month', function()
+    describe('GET /api/protected/interestedStudents/month', function()
     {
         it('should work even if the server doesn\'t return anything', function()
         {
-            _httpMock.expectGET('/api/interestedStudents/month').respond();
+            _httpMock.expectGET('/api/protected/interestedStudents/month').respond([]);
             _element.scope().getInterestedStudentsPerMonth(function(){});
             _httpMock.flush();
 
-            expect(_element.scope().alunosInteressadosPorMes).toEqual([]);
+            expect(_element.scope().alunosInteressadosPorMes.length).toEqual(0);
         })
 
         it('should work even if the server doesn\'t return the full response', function()
         {
-            _httpMock.expectGET('/api/interestedStudents/month').respond({resultado: []});
+            _httpMock.expectGET('/api/protected/interestedStudents/month').respond([]);
             _element.scope().getInterestedStudentsPerMonth(function(){});
             _httpMock.flush();
 
-            expect(_element.scope().alunosInteressadosPorMes).toEqual([]);
+            expect(_element.scope().alunosInteressadosPorMes.length).toEqual(0);
         })
 
         it('should work even if the server doesn\'t return invalid percentage - should turn -1 into 0', function()
         {
-            _httpMock.expectGET('/api/interestedStudents/month').respond({resultado: [{nome: 'Janeiro', porcentagem: -1}]});
+            _httpMock.expectGET('/api/protected/interestedStudents/month').respond([{nome: 'Janeiro', porcentagem: -1}]);
             _element.scope().getInterestedStudentsPerMonth(function(){});
             _httpMock.flush();
 
@@ -69,7 +72,7 @@ describe('interested students per month being tested', function()
 
         it('should work correctly when the server returns a small response', function()
         {
-            _httpMock.expectGET('/api/interestedStudents/month').respond({resultado: [{nome: 'Janeiro', porcentagem: 10}]});
+            _httpMock.expectGET('/api/protected/interestedStudents/month').respond([{nome: 'Janeiro', porcentagem: 10}]);
             _element.scope().getInterestedStudentsPerMonth(function(){});
             _httpMock.flush();
 
@@ -93,7 +96,7 @@ describe('interested students per month being tested', function()
                                  {nome: 'Novembro', porcentagem: 3},
                                  {nome: 'Dezembro', porcentagem: 6}];
 
-            _httpMock.expectGET('/api/interestedStudents/month').respond({resultado: _fullResponse});
+            _httpMock.expectGET('/api/protected/interestedStudents/month').respond(_fullResponse);
             _element.scope().getInterestedStudentsPerMonth(function(){});
             _httpMock.flush();
 

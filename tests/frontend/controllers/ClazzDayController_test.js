@@ -11,11 +11,12 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
-        _httpMock.when('GET', '/api/classes/name').respond();
-        _httpMock.when('GET', '/api/classes/dailyInfo/'+_currentMonthYear).respond();
-        _httpMock.when('GET', '/api/students/name/turma1').respond({});
-        _httpMock.when('GET', '/api/teachers/name').respond({});
-        _httpMock.when('POST', '/api/classes/dailyInfo').respond(200);
+
+        _httpMock.when('GET', '/api/protected/classes/name').respond([]);
+        _httpMock.when('POST', '/api/protected/classes/dailyInfo').respond(200);
+        _httpMock.when('GET', '/api/protected/classes/dailyInfo/'+_currentMonthYear).respond([]);
+        _httpMock.when('GET', '/api/protected/students/name/turma1').respond([]);
+        _httpMock.when('GET', '/api/protected/teachers/name').respond([]);
     }))
 
     describe('checks elements creation', function()
@@ -65,20 +66,6 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
             expect(typeof _scope.getStudentsNamesByClass).toEqual('function');
         }))
 
-        it('checks if getTeachersNames is defined', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: _scope});
-            expect(_scope.getTeachersNames).toBeDefined();
-            expect(typeof _scope.getTeachersNames).toEqual('function');
-        }))
-
-        it('checks if getClassesDailyInfo is defined', inject(function($controller)
-        {
-            $controller('ClazzDayController', {$scope: _scope});
-            expect(_scope.getClassesDailyInfo).toBeDefined();
-            expect(typeof _scope.getClassesDailyInfo).toEqual('function');
-        }))
-
         it('checks if inputMaxController was created', inject(function($controller)
         {
             $controller('ClazzDayController', {$scope: _scope});
@@ -87,7 +74,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('GET /api/classes/dailyInfo/monthYear', function()
+    describe('GET /api/protected/classes/dailyInfo/monthYear', function()
     {
         it('should throw exception - passing wrong params to the get', inject(function($controller)
         {
@@ -106,21 +93,21 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         it('should get a response from the server with nothing', inject(function($controller)
         {
-            _httpMock.expectGET('/api/classes/dailyInfo/'+_currentMonthYear).respond();
+            _httpMock.expectGET('/api/protected/classes/dailyInfo/'+_currentMonthYear).respond();
             $controller('ClazzDayController', {$scope: _scope});
             expect(_scope.informacaoDiaria).toEqual([]);
         }))
 
         it('should get a response from the server with empty object', inject(function($controller)
         {
-            _httpMock.expectGET('/api/classes/dailyInfo').respond({info: []});
+            _httpMock.expectGET('/api/protected/classes/dailyInfo').respond({info: []});
             $controller('ClazzDayController', {$scope: _scope});
             expect(_scope.informacaoDiaria).toEqual([]);
         }))
 
         it('should get a filled response from the server', inject(function($controller)
         {
-            _httpMock.expectGET('/api/classes/dailyInfo/'+_currentMonthYear).respond({info: [{_id: {name: "Aluno2"}, dailyInfo: [{year: 2014, month: 4, day: 10, wasInClass: false}]}]});
+            _httpMock.expectGET('/api/protected/classes/dailyInfo/'+_currentMonthYear).respond([{_id: {name: "Aluno2"}, dailyInfo: [{year: 2014, month: 4, day: 10, wasInClass: false}]}]);
             $controller('ClazzDayController', {$scope: _scope});
             _httpMock.flush();
 
@@ -132,11 +119,11 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('GET /api/classes/dailyInfo/:id/:monthYear', function()
+    describe('GET /api/protected/classes/dailyInfo/:id/:monthYear', function()
     {
         it('should fetch request correctly', inject(function($controller)
         {
-            _httpMock.expectGET('/api/classes/dailyInfo/a123/04_2014').respond();
+            _httpMock.expectGET('/api/protected/classes/dailyInfo/a123/04_2014').respond([]);
             $controller('ClazzDayController', {$scope: _scope});
             _scope.getClassesDailyInfo('04/2014', 'a123');
             _httpMock.flush();
@@ -144,40 +131,43 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         it('should empty dailyInfo, server returned empty object', inject(function($controller)
         {
-            _httpMock.expectGET('/api/classes/dailyInfo/a123/05_2099').respond();
+            _httpMock.expectGET('/api/protected/classes/dailyInfo/a123/05_2099').respond([]);
             $controller('ClazzDayController', {$scope: _scope});
             _scope.informacaoDiaria = [{name: "Algum Nome", id: 'abc1'}, {name: "Outro nome", id: 'abc2'}, {name: "Turma1", id: 'n3wId'}];
             _scope.getClassesDailyInfo('05/2099', 'a123');
             _httpMock.flush();
-            expect(_scope.informacaoDiaria).toEqual([]);
+            expect(_scope.informacaoDiaria.length).toEqual(0);
         }))
 
         it('should empty dailyInfo, server returned empty array', inject(function($controller)
         {
-            _httpMock.expectGET('/api/classes/dailyInfo/a123/05_2099').respond({info: {}});
+            _httpMock.expectGET('/api/protected/classes/dailyInfo/a123/05_2099').respond([]);
             $controller('ClazzDayController', {$scope: _scope});
             _scope.informacaoDiaria = [{name: "Algum Nome", id: 'abc1'}, {name: "Outro nome", id: 'abc2'}, {name: "Turma1", id: 'n3wId'}];
             _scope.getClassesDailyInfo('05/2099', 'a123');
             _httpMock.flush();
-            expect(_scope.informacaoDiaria).toEqual([]);
+            expect(_scope.informacaoDiaria.length).toEqual(0);
         }))
 
         it('should replace informacaoDiaria correctly', inject(function($controller)
         {
-            var _responseCompleteRequest = {info: [{name: "Algum Nome", _id: 'abc1'}, {name: "Outro nome", _id: 'abc2'}, {name: "Turma1", _id: 'a123', anotherInfo: '567'}]};
-            var _responseSpecificRequest = {info: {name: "Turma1", _id: 'a123', anotherInfo: '123'}};
+            var _responseCompleteRequest = [{name: "Algum Nome", _id: 'abc1'}, {name: "Outro nome", _id: 'abc2'}, {name: "Turma1", _id: 'a123', anotherInfo: '567'}];
+            var _responseSpecificRequest = [{name: "Turma1", _id: 'a123', anotherInfo: '123'}];
 
-            _httpMock.expectGET('/api/classes/dailyInfo/'+_currentMonthYear).respond(_responseCompleteRequest);
-            _httpMock.expectGET('/api/classes/dailyInfo/a123/'+_currentMonthYear).respond(_responseSpecificRequest);
+            _httpMock.expectGET('/api/protected/classes/dailyInfo/'+_currentMonthYear).respond(_responseCompleteRequest);
+            _httpMock.expectGET('/api/protected/classes/dailyInfo/a123/'+_currentMonthYear).respond(_responseSpecificRequest);
+
             $controller('ClazzDayController', {$scope: _scope});
             _scope.getClassesDailyInfo(_currentMonthYear.replace('_', '/'), 'a123');
             _httpMock.flush();
 
-            expect(_scope.informacaoDiaria[2]).toEqual({name: "Turma1", _id: 'a123', anotherInfo: '123'});
+            expect(_scope.informacaoDiaria[2].name).toEqual("Turma1");
+            expect(_scope.informacaoDiaria[2]._id).toEqual("a123");
+            expect(_scope.informacaoDiaria[2].anotherInfo).toEqual("567");
         }))
     })
 
-    describe('GET /api/classes/name', function()
+    describe('GET /api/protected/classes/name', function()
     {
         it('should fetch request right away', inject(function($controller)
         {
@@ -189,20 +179,20 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         {
             $controller('ClazzDayController', {$scope: _scope});
             _httpMock.flush();
-            expect(_scope.clazzesNames).toEqual([]);
+            expect(_scope.clazzesNames.length).toEqual(0);
         }))
 
         it('should fetch request right away - partial response from server', inject(function($controller)
         {
-            _httpMock.expectGET('/api/classes/name').respond({classes: []});
+            _httpMock.expectGET('/api/protected/classes/name').respond([]);
             $controller('ClazzDayController', {$scope: _scope});
             _httpMock.flush();
-            expect(_scope.clazzesNames).toEqual([]);
+            expect(_scope.clazzesNames.length).toEqual(0);
         }))
 
         it('should fetch request right away - complete response from server', inject(function($controller)
         {
-            _httpMock.expectGET('/api/classes/name').respond({classes: [{name: "Turma1"}, {name: "Turma2"}]});
+            _httpMock.expectGET('/api/protected/classes/name').respond([{name: "Turma1"}, {name: "Turma2"}]);
             $controller('ClazzDayController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.clazzesNames[0].name).toEqual("Turma1");
@@ -210,7 +200,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('POST /api/classes/dailyInfo', function()
+    describe('POST /api/protected/classes/dailyInfo', function()
     {
         it('shouldn\'t fetch request - empty parameters', inject(function($controller)
         {
@@ -227,7 +217,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         it('should throw error - wrong turmaDia.teacherName param', inject(function($controller)
         {
-            _httpMock.expectGET('/api/classes/dailyInfo').respond();
+            _httpMock.expectGET('/api/protected/classes/dailyInfo').respond();
             $controller('ClazzDayController', {$scope: _scope});
 
             var _turma = {name: 'Turma1', teacherName: 'Something wrong'};
@@ -280,7 +270,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('GET /api/students/name/:turma', function()
+    describe('GET /api/protected/students/name/:turma', function()
     {
         it('tries to make a request passing the wrong parameters', inject(function($controller)
         {
@@ -296,7 +286,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         it('checks if the request is being made', inject(function($controller)
         {
-            _httpMock.expectGET('/api/students/name/turma1').respond({});
+            _httpMock.expectGET('/api/protected/students/name/turma1').respond([]);
             $controller('ClazzDayController', {$scope: _scope});
             _scope.getStudentsNamesByClass('turma1');
             _httpMock.flush();
@@ -304,7 +294,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         it('checks if /students/name/:turma is working even when there\'s no response', inject(function($controller)
         {
-            _httpMock.expectGET('/api/students/name/turma1').respond({});
+            _httpMock.expectGET('/api/protected/students/name/turma1').respond([]);
             $controller('ClazzDayController', {$scope: _scope});
             _scope.getStudentsNamesByClass('turma1');
             _httpMock.flush();
@@ -314,7 +304,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         it('checks if /getStudentsNamesByClass is working even when the response isn\'t complete', inject(function($controller)
         {
-            _httpMock.expectGET('/api/students/name/turma1').respond({students: []});
+            _httpMock.expectGET('/api/protected/students/name/turma1').respond([]);
             $controller('ClazzDayController', {$scope: _scope});
             _scope.getStudentsNamesByClass('turma1');
             _httpMock.flush();
@@ -324,7 +314,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         it('checks if /getStudentsNamesByClass is working when the response is complete', inject(function($controller)
         {
-            _httpMock.expectGET('/api/students/name/turma1').respond({students: [{name: 'turma1'}]});
+            _httpMock.expectGET('/api/protected/students/name/turma1').respond([{name: 'turma1'}]);
             $controller('ClazzDayController', {$scope: _scope});
             _scope.getStudentsNamesByClass('turma1');
             _httpMock.flush();
@@ -335,18 +325,18 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('GET /api/teachers/name', function()
+    describe('GET /api/protected/teachers/name', function()
     {
         it('checks if the request is being made', inject(function($controller)
         {
-            _httpMock.expectGET('/api/teachers/name').respond({});
+            _httpMock.expectGET('/api/protected/teachers/name').respond([]);
             $controller('ClazzDayController', {$scope: _scope});
             _httpMock.flush();
         }))
 
         it('checks if /getTeachersNames is working even when there\'s no response', inject(function($controller)
         {
-            _httpMock.expectGET('/api/teachers/name').respond({});
+            _httpMock.expectGET('/api/protected/teachers/name').respond([]);
             $controller('ClazzDayController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.professores).toBeDefined();
@@ -355,7 +345,7 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         it('checks if /getTeachersNames is working even when the response isn\'t complete', inject(function($controller)
         {
-            _httpMock.expectGET('/api/teachers/name').respond({students: []});
+            _httpMock.expectGET('/api/protected/teachers/name').respond([]);
             $controller('ClazzDayController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.professores).toBeDefined();
@@ -364,13 +354,13 @@ describe('CLAZZDAYCONTROLLER BEING TESTED', function()
 
         it('checks if /getTeachersNames is working when the response is complete', inject(function($controller)
         {
-            _httpMock.expectGET('/api/teachers/name').respond({resultado: [{name: 'professor1'}]});
+            _httpMock.expectGET('/api/protected/teachers/name').respond([{name: 'professor1'}]);
             $controller('ClazzDayController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.professores).toBeDefined();
             expect(typeof _scope.professores).toEqual('object');
-            expect(_scope.professores[0].name).toEqual('professor1');
             expect(_scope.professores.length).toEqual(1);
+            expect(_scope.professores[0].name).toEqual('professor1');
         }))
     })
 

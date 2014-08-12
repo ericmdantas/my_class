@@ -19,8 +19,7 @@ function Student()
             }
             else
             {
-                students ? res.json({students: students})
-                         : res.json({students: []});
+                res.json(students);
             }
         }
 
@@ -41,8 +40,7 @@ function Student()
             }
             else
             {
-                students ? res.json({students: students})
-                    : res.json({students: []});
+                res.json(students);
             }
         }
 
@@ -64,8 +62,7 @@ function Student()
             }
             else
             {
-                students ? res.json({students: students})
-                         : res.json({students: []});
+                res.json(students);
             }
         }
 
@@ -86,8 +83,7 @@ function Student()
             }
             else
             {
-                students ? res.json({resultado: students})
-                         : res.json({resultado: []});
+                res.json(students);
             }
         }
 
@@ -169,7 +165,7 @@ function Student()
                 res.json(500, _errorHandler.createSimpleErrorObject(500, 'deleção de alunos'));
             }
             else
-                res.end()
+                res.end();
         }
 
         _student.deleteStudent(_usuario, _identificacaoAluno, callback);

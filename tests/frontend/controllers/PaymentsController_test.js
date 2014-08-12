@@ -10,8 +10,8 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
     {
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
-        _httpMock.when('GET', '/api/students/payments').respond({resultado: [{name: 'Aluno1'}]});
-        _httpMock.when('POST', '/api/students/payments', undefined).respond();
+        _httpMock.when('GET', '/api/protected/students/payments').respond([{name: 'Aluno1', payments: []}]);
+        _httpMock.when('POST', '/api/protected/students/payments').respond([]);
     }))
 
     describe('checks elements creation', function()
@@ -88,7 +88,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('GET /api/students/payments', function()
+    describe('GET /api/protected/students/payments', function()
     {
         it('should fetch the get correctly', inject(function($controller)
         {
@@ -106,7 +106,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
 
         it('should fetch the get correctly - only resultado response', inject(function($controller)
         {
-            _httpMock.expectGET('/api/students/payments').respond({resultado: []});
+            _httpMock.expectGET('/api/protected/students/payments').respond([]);
             $controller('PaymentsController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.pagamentos).toBeDefined();
@@ -115,7 +115,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
 
         it('should fetch the get correctly - only complete response', inject(function($controller)
         {
-            _httpMock.expectGET('/api/students/payments').respond({resultado: [{name: 'aluno'}]});
+            _httpMock.expectGET('/api/protected/students/payments').respond([{name: 'aluno'}]);
             $controller('PaymentsController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.pagamentos).toBeDefined();
@@ -124,7 +124,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('POST /api/payments', function()
+    describe('POST /api/protected/payments', function()
     {
         it('shouldn\'t continue, because payment is undefined', inject(function($controller)
         {
@@ -143,7 +143,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
 
         it('should registerPayment successfully', inject(function($controller)
         {
-            _httpMock.expectPOST('/api/students/payments').respond(200);
+            _httpMock.expectPOST('/api/protected/students/payments').respond(200);
             $controller('PaymentsController', {$scope: _scope});
 
             var pagamento = {name: 'eric', class: '', paymentMonth: ''};
@@ -156,7 +156,7 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
 
         it('should register payments successfully - nested objects because of the use of selects', inject(function($controller)
         {
-            _httpMock.expectPOST('/api/students/payments').respond(200);
+            _httpMock.expectPOST('/api/protected/students/payments').respond(200);
             $controller('PaymentsController', {$scope: _scope});
 
             var _pagamento = {name: {name: 'Aluno1'}, class: {class: 'turma1'}, paymentMonth: {name: 'January'}};

@@ -7,107 +7,141 @@ function Teacher()
 {
     function _getTeachersInfo(req, res)
     {
+        var _onSuccess = function(teachers)
+        {
+            res.json(teachers);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _teacher = new TeacherModel();
 
-        function callback(error, teachers)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta de professores'));
-            }
-            else
-            {
-                teachers ? res.json({resultado: teachers})
-                         : res.json({resultado: []});
-            }
-        }
-
-        _teacher.findAllTeachersByUser(_usuario, callback);
+        _teacher
+            .findAllTeachersByUser(_usuario)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _getTeachersNames(req, res)
     {
+        var _onSuccess = function(names)
+        {
+            res.json(names);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _teacher = new TeacherModel();
 
-        function callback(error, teachers)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta dos nomes dos professores'));
-            }
-            else
-            {
-                teachers ? res.json({resultado: teachers})
-                         : res.json({resultado: []});
-            }
-        }
-
-        _teacher.findAllTeachersNames(_usuario, callback);
+        _teacher
+            .findAllTeachersNames(_usuario)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _registerTeacher(req, res)
     {
+        var _onSuccess = function()
+        {
+            res.send(200);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _professor = req.body;
         var _teacher = new TeacherModel();
 
-        function callback(error)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'cadastro de professor'));
-            }
-            else
-                res.end();
-        }
-
-        _teacher.registerNewTeacher(_usuario, _professor, callback);
+        _teacher
+            .registerNewTeacher(_usuario, _professor)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _editTeacher(req, res)
     {
+        var _onSuccess = function()
+        {
+            res.send(200);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _professorID = req.params.id;
         var _professor = req.body;
         var _teacher = new TeacherModel();
 
-        function callback(error)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'edição de professor'));
-            }
-            else
-                res.end();
-        }
-
-        _teacher.editTeacher(_usuario, _professor, _professorID, callback);
+        _teacher
+            .editTeacher(_usuario, _professor, _professorID)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     function _deleteTeacher(req, res)
     {
+        var _onSuccess = function()
+        {
+            res.send(200);
+        }
+
+        var _onError = function(error)
+        {
+            res.json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(ex);
+        }
+
         var _usuario = req.session.passport.user;
         var _identificacaoProfessor = req.params.id;
         var _teacher = new TeacherModel();
 
-        function callback(error)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'deleção de professor'));
-            }
-            else
-                res.end();
-        }
-
-        _teacher.deleteTeacher(_usuario, _identificacaoProfessor, callback);
+        _teacher
+            .deleteTeacher(_usuario, _identificacaoProfessor)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
     }
 
     return {

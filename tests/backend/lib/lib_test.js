@@ -1,7 +1,7 @@
 "use strict";
 
-var lib = require('../../../lib/lib');
 var expect = require('chai').expect;
+var lib = require('../../../lib/lib');
 
 describe('lib', function()
 {

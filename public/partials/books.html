@@ -1,8 +1,8 @@
 ﻿<div ng-controller="BooksController">
-    <div id="livros-container" class="topic transition selected {{cfg.information.livros.classeBorda}}">
-        <h1>{{cfg.information.livros.nome}} <span class="text-almost-invisible">{{livros.length}} livros</span></h1>
+    <div id="livros-container" class="topic transition selected {{cfg.livros.classeBorda}}">
+        <h1>{{cfg.livros.nome}} <span class="text-almost-invisible">{{livros.length}} livros</span></h1>
         <p>tenha total controle sobre todos os livros cadastrados.</p>
-        <p>{{cfg.information.livros.resumo}}</p>
+        <p>{{cfg.livros.resumo}}</p>
         <button type="button" class="btn btn-default pull-right" id="#adicionarLivro"
                 ng-click="openModalToRegisterBook()">
             cadastrar livro

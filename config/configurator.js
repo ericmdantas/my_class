@@ -1,17 +1,18 @@
-(function()
+(function(morgan, bodyParser, cookieParser, expressSession)
 {
-    function configure(application, exp, passport, dir)
+    function configure(dir, application, exp, passport)
     {
         application.use(exp.static(dir + '/public'));
-        application.use(exp.logger());
-        application.use(exp.compress());
-        application.use(exp.bodyParser());
-        application.use(exp.cookieParser('112233'));
-        application.use(exp.session({secret: 'somethingthatshouldbeasecr3t'}));
+        application.use(morgan('dev'));
+        application.use(bodyParser());
+        application.use(cookieParser('112233'));
+        application.use(expressSession({secret: 'somethingthatshouldbeasecr3t'}));
         application.use(passport.initialize());
         application.use(passport.session());
-        application.use(exp.favicon(dir+'/public/img/favicon.ico'));
     }
 
     exports.me = configure;
-}())
+}(require('morgan'),
+  require('body-parser'),
+  require('cookie-parser'),
+  require('express-session')))

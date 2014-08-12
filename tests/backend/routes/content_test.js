@@ -1,7 +1,7 @@
 "use strict";
 
 var expect = require('chai').expect;
-var content = require('../../../routes/content');
+var content = require('../../../controllers/ContentController');
 
 describe('content sender being tested', function()
 {

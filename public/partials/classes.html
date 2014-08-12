@@ -1,8 +1,8 @@
 ﻿<div ng-controller="ClassesController">
-    <div id="turmas-container" class="topic transition selected {{cfg.information.turmas.classeBorda}}">
-        <h1>{{cfg.information.turmas.nome}} <span class="text-almost-invisible">{{turmas.length}} turmas</span></h1>
+    <div id="turmas-container" class="topic transition selected {{cfg.turmas.classeBorda}}">
+        <h1>{{cfg.turmas.nome}} <span class="text-almost-invisible">{{turmas.length}} turmas</span></h1>
         <p>Tenha total controle sobre toda a informação das turmas cadastradas.</p>
-        <p>{{cfg.information.turmas.resumo}}</p>
+        <p>{{cfg.turmas.resumo}}</p>
         <button type="button" class="btn btn-default pull-right" id="#adicionarTurma"
                 ng-click="openModalToRegisterClass()">
             cadastrar turma

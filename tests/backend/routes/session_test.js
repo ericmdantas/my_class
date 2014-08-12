@@ -1,7 +1,7 @@
 "use strict";
 
 var expect = require('chai').expect;
-var session = require('../../../routes/session');
+var session = require('../../../services/SessionService');
 
 describe('Session being tested', function()
 {

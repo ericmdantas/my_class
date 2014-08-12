@@ -2,35 +2,17 @@
 
 //classes
 
-(function(mongoose, lib)
+(function(mongoose, lib, Q, clazzSchema)
 {
-    var dailyInformation = mongoose.Schema
-    ({
-        day: {type: String, trim: true, required: true, index: true},
-        monthYear: {type: String, trim: true, required: true, index: true},
-        teacherName: {type: String, trim: true, required: true},
-        subject: {type: String, trim: true, required: true},
-        studentByDay: [{
-                            name: {type: String, trim: true},
-                            wasInClass: {type: Boolean, required: true}
-                      }]
-    })
-
-    var clazzSchema = mongoose.Schema
-    ({
-        name: {type: String, trim: true, required: true, index: true},
-        students: [{type: String, trim: true, required: true}],
-        time: {type: String, required: true},
-        registered: {type: Date, default: new Date},
-        lastModified: Date,
-        usersAllowed: [],
-        dailyInfo: [dailyInformation]
-    });
-
-    clazzSchema.methods.findAllClassesByUser = function(user, done)
+    clazzSchema.methods.findAllClassesByUser = function(user)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error("Não foi encontrado o usuário para buscar as turmas."), null);
+        {
+            deferred.reject(new Error("Não foi encontrado o usuário para buscar as turmas."));
+            return deferred.promise;
+        }
 
         var _query = {usersAllowed: {$in: [user]}};
         var _projection = {usersAllowed: 0, dailyInfo: 0};
@@ -39,17 +21,22 @@
              .sort('name')
              .exec(function(err, clazzes)
                    {
-                       if (err)
-                           return done(err, null);
-
-                        done(null, clazzes);
+                       err ? deferred.reject(err)
+                           : deferred.resolve(clazzes);
                    })
+
+        return deferred.promise;
     }
 
-    clazzSchema.methods.findAllClassesNamesByUser = function(user, done)
+    clazzSchema.methods.findAllClassesNamesByUser = function(user)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error("Não foi encontrado o usuário para buscar os nomes das turmas."), null);
+        {
+            deferred.reject(new Error("Não foi encontrado o usuário para buscar os nomes das turmas."));
+            return deferred.promise;
+        }
 
         var _query = {usersAllowed: {$in: [user]}};
         var _projection = {name: 1};
@@ -58,20 +45,28 @@
             .sort('name')
             .exec(function(err, classes)
             {
-                if (err)
-                    return done(err, null);
-
-                done(null, classes);
+                err ? deferred.reject(err)
+                    : deferred.resolve(classes);
             })
+
+        return deferred.promise;
     }
 
-    clazzSchema.methods.getClassesDailyInfo = function(user, monthYear, done)
+    clazzSchema.methods.getClassesDailyInfo = function(user, monthYear)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error("Não foi encontrado o usuário para buscar as informações de todas as turma."), null);
+        {
+            deferred.reject(new Error("Não foi encontrado o usuário para buscar as informações de todas as turma."));
+            return deferred.promise;
+        }
 
         if (lib.isStringInvalid(monthYear))
-            return done(new Error("Não foi encontrado o mês e ano para buscar as informações de todas as turma."), null);
+        {
+            deferred.reject(new Error("Não foi encontrado o mês e ano para buscar as informações de todas as turma."));
+            return deferred.promise;
+        }
 
         var _query = {usersAllowed: {$in: [user]}, "dailyInfo.monthYear": monthYear};
         var _projection = {usersAllowed: 0};
@@ -81,27 +76,43 @@
             .exec(function(err, found)
             {
                 if (err)
-                    return done(err, null);
+                {
+                    deferred.reject(err);
+                    return;
+                }
 
                 var _isArray = true;
 
                 if (found && found.length > 0)
                     _removeDifferentMonths(found, monthYear, _isArray);
 
-                return done(null, found);
+                deferred.resolve(found);
             })
+
+        return deferred.promise;
     }
 
-    clazzSchema.methods.getClassesDailyInfoByClass = function(user, monthYear, id, done)
+    clazzSchema.methods.getClassesDailyInfoByClass = function(user, monthYear, id)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error("Não foi encontrado o usuário para buscar as informações da turma."), null);
+        {
+            deferred.reject(new Error("Não foi encontrado o usuário para buscar as informações da turma."));
+            return deferred.promise;
+        }
 
         if (lib.isStringInvalid(monthYear))
-            return done(new Error("Não foi encontrado o mês e ano para buscar as informações da turma."), null);
+        {
+            deferred.reject(new Error("Não foi encontrado o mês e ano para buscar as informações da turma."));
+            return deferred.promise;
+        }
 
         if (lib.isStringInvalid(id))
-            return done(new Error("Não foi encontrado o ID para buscar as informações da turma."), null);
+        {
+            deferred.reject(new Error("Não foi encontrado o ID para buscar as informações da turma."));
+            return deferred.promise;
+        }
 
         var _query = {usersAllowed: {$in: [user]}, _id: id, "dailyInfo.monthYear": monthYear};
         var _projection = {usersAllowed: 0};
@@ -110,24 +121,37 @@
              .exec(function(err, found)
                   {
                       if (err)
-                          return done(err, null);
+                      {
+                          deferred.reject(err);
+                          return;
+                      }
 
                       var _isArray = false;
 
                       if (!lib.isObjectInvalid(found))
                           _removeDifferentMonths(found, monthYear, _isArray);
 
-                      return done(null, found);
+                      deferred.resolve(found);
                   })
+
+        return deferred.promise;
     }
 
-    clazzSchema.methods.registerNewClass = function(usuario, turma, done)
+    clazzSchema.methods.registerNewClass = function(usuario, turma)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(usuario))
-            return done(new Error("Não foi encontrado o usuário para cadastrar a turma."));
+        {
+            deferred.reject(new Error("Não foi encontrado o usuário para cadastrar a turma."));
+            return deferred.promise;
+        }
 
         if (lib.isObjectInvalid(turma))
-            return done(new Error("Não foi encontrada a turma a ser cadastrada."));
+        {
+            deferred.reject(new Error("Não foi encontrada a turma a ser cadastrada."));
+            return deferred.promise;
+        }
 
         turma.usersAllowed = [usuario];
 
@@ -135,20 +159,28 @@
 
         _clazz.save(function(err, saved)
         {
-            if (err)
-                return done(err);
-
-            return done(null);
+            err ? deferred.reject(err)
+                : deferred.resolve();
         })
+
+        return deferred.promise;
     }
 
-    clazzSchema.methods.registerClassMomentInTime = function(user, moment, done)
+    clazzSchema.methods.registerClassMomentInTime = function(user, moment)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error("Não foi encontrado o usuário para cadastro da aula."));
+        {
+            deferred.reject(new Error("Não foi encontrado o usuário para cadastro da aula."));
+            return deferred.promise;
+        }
 
         if (lib.isObjectInvalid(moment))
-            return done(new Error("Não foi encontrada a turma referente a aula para o cadastro."));
+        {
+            deferred.reject(new Error("Não foi encontrada a turma referente a aula para o cadastro."));
+            return deferred.promise;
+        }
 
         var _query = {usersAllowed: {$in: [user]}, name: moment.clazzName};
         var _updt = {$addToSet: {dailyInfo: moment.dailyInfo}};
@@ -156,23 +188,34 @@
         Clazz.update(_query, _updt)
              .exec(function(err, found)
                   {
-                      if (err)
-                          return done(err);
-
-                      return done(null);
+                      err ? deferred.reject(err)
+                          : deferred.resolve();
                   })
+
+        return deferred.promise;
     }
 
     clazzSchema.methods.editClass = function(usuario, turma, id, done)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(usuario))
-            return done(new Error("Não foi encontrado o usuário para a edição da turma."));
+        {
+            deferred.reject(new Error("Não foi encontrado o usuário para a edição da turma."));
+            return deferred.promise;
+        }
 
         if (lib.isObjectInvalid(turma))
-            return done(new Error("Não foi encontrada a turma referente a aula para a edição."));
+        {
+            deferred.reject(new Error("Não foi encontrada a turma referente a aula para a edição."));
+            return deferred.promise;
+        }
 
         if (lib.isStringInvalid(id))
-            return done(new Error("Não foi encontrado o id para edição da turma."));
+        {
+            deferred.reject(new Error("Não foi encontrado o id para edição da turma."));
+            return deferred.promise;
+        }
 
         var _query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete turma._id;
@@ -181,31 +224,39 @@
         Clazz.findOneAndUpdate(_query, _updt)
              .exec(function(err, updated)
                    {
-                      if (err)
-                          return done(err);
-
-                      done(null);
+                       err ? deferred.reject(err)
+                           : deferred.resolve();
                    })
+
+        return deferred.promise;
     }
 
-    clazzSchema.methods.deleteClass = function(user, id, done)
+    clazzSchema.methods.deleteClass = function(user, id)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error("Não foi encontrado o usuário para a deleção da turma."));
-{
+        {
+            deferred.reject(new Error("Não foi encontrado o usuário para a deleção da turma."));
+            return deferred.promise;
+        }
+
         if (lib.isStringInvalid(id))
-            return done(new Error("Não foi encontrado o id para a deleção da turma."));}
+        {
+            deferred.reject(new Error("Não foi encontrado o id para a deleção da turma."));
+            return deferred.promise;
+        }
 
         var _query = {usersAllowed: {$in: [user]}, _id: id};
 
         Clazz.findOneAndRemove(_query)
              .exec(function(err, deleted)
                   {
-                     if (err)
-                         return done(err);
-
-                     done(null);
+                      err ? deferred.reject(err)
+                          : deferred.resolve();
                   })
+
+        return deferred.promise;
     }
 
     function _removeDifferentMonths(found, monthYear, isArray)
@@ -242,4 +293,6 @@
     module.exports = Clazz;
 
 }(require('mongoose'),
-  require('../lib/lib')))
+  require('../lib/lib'),
+  require('q'),
+  require('../schemas/ClazzSchema').clazzSchema))

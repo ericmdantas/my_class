@@ -1,8 +1,8 @@
 <div ng-controller="ClazzDayController">
-    <div id="turmas-container" class="topic transition selected {{cfg.information.aulas.classeBorda}}">
-        <h1>{{cfg.information.aulas.nome}}</h1>
+    <div id="turmas-container" class="topic transition selected {{cfg.aulas.classeBorda}}">
+        <h1>{{cfg.aulas.nome}}</h1>
         <p>Tenha total controle sobre toda a informação das aulas.</p>
-        <p>{{cfg.information.aulas.resumo}}</p>
+        <p>{{cfg.aulas.resumo}}</p>
         <button type="button" class="btn btn-default pull-right" id="#adicionarTurma"
                 ng-click="openModalToRegisterClazzDay()">
             registrar aula

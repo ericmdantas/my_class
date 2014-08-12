@@ -6,6 +6,8 @@ describe('constants', function()
     var _contracts;
     var _months;
     var _studentStatus;
+    var _baseAPI;
+    var _author;
 
     beforeEach(module('myClass'));
 
@@ -15,6 +17,8 @@ describe('constants', function()
         _contracts = $injector.get('contractsTypes');
         _months = $injector.get('months');
         _studentStatus = $injector.get('studentStatus');
+        _baseAPI = $injector.get('baseAPI');
+        _author = $injector.get('author');
     }))
 
     describe('checks elements creation', function()
@@ -101,6 +105,27 @@ describe('constants', function()
             expect(_studentStatus[1].nome).toEqual('matriculado');
             expect(_studentStatus[2].nome).toEqual('desistente');
             expect(_studentStatus[3].nome).toEqual('outro');
+        })
+    })
+
+    describe('baseAPI', function()
+    {
+        it('should have the right path', function()
+        {
+            expect(_baseAPI).toBe('/api/protected/');
+        })
+    })
+
+    describe('author', function()
+    {
+        it('should have the author name correct', function()
+        {
+            expect(_author.name).toBe('eric mendes dantas');
+        })
+
+        it('should have the github correct', function()
+        {
+            expect(_author.github).toBe('https://github.com/ericmdantas/my_class');
         })
     })
 })

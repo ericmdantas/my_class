@@ -10,10 +10,10 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
     {
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
-        _httpMock.when('GET', '/api/books').respond({books: [{name: 'A', quantity: 5}]});;
-        _httpMock.when('POST', '/api/books').respond(200);
-        _httpMock.when('PUT', '/api/books/123').respond({});
-        _httpMock.when('DELETE', '/api/books/livro1').respond(200);
+        _httpMock.when('GET', '/api/protected/books').respond([{name: 'A', quantity: 5}]);
+        _httpMock.when('POST', '/api/protected/books').respond(200);
+        _httpMock.when('PUT', '/api/protected/books/123').respond({});
+        _httpMock.when('DELETE', '/api/protected/books/livro1').respond(200);
     }))
 
     describe('elements creation', function()
@@ -40,13 +40,6 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         {
             $controller('BooksController', {$scope: _scope});
             expect(_scope.cfg).toBeDefined();
-        }))
-
-        it('check if _scope.getBooks was created', inject(function($controller)
-        {
-            $controller('BooksController', {$scope: _scope});
-            expect(_scope.getBooks).toBeDefined();
-            expect(typeof _scope.getBooks).toBe('function');
         }))
 
         it('checks if modals are ready to be opened - openModalToDeleteBook', inject(function($controller)
@@ -128,11 +121,11 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('GET /api/books', function()
+    describe('GET /api/protected/books', function()
     {
         it('_scope.livros should be an empty array', inject(function($controller)
         {
-            _httpMock.expectGET('/api/books').respond();
+            _httpMock.expectGET('/api/protected/books').respond();
             $controller('BooksController', {$scope: _scope});
             expect(_scope.livros.length).toEqual(0);
         }))
@@ -148,14 +141,14 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
 
         it('should return an empty string', inject(function($controller)
         {
-            _httpMock.expectGET('/api/books');
+            _httpMock.expectGET('/api/protected/books');
             $controller('BooksController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.livros).toBeDefined();
         }))
     })
 
-    describe('POST /api/books', function()
+    describe('POST /api/protected/books', function()
     {
         it('should not register a book with empty object', inject(function($controller)
         {
@@ -177,7 +170,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('PUT /api/books/:id', function()
+    describe('PUT /api/protected/books/:id', function()
     {
         it('should throw an exception when trying to edit a non existed book', inject(function($controller)
         {
@@ -206,7 +199,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('DELETE /api/books/:id', function()
+    describe('DELETE /api/protected/books/:id', function()
     {
         it('trying to delete book without _id', inject(function($controller)
         {

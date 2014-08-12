@@ -10,10 +10,10 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
     {
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
-        _httpMock.when('GET', '/api/teachers').respond();
-        _httpMock.when('POST', '/api/teachers').respond();
-        _httpMock.when('PUT', '/api/teachers/123').respond();
-        _httpMock.when('DELETE', '/api/teachers').respond();
+        _httpMock.when('GET', '/api/protected/teachers').respond();
+        _httpMock.when('POST', '/api/protected/teachers').respond();
+        _httpMock.when('PUT', '/api/protected/teachers/123').respond();
+        _httpMock.when('DELETE', '/api/protected/teachers').respond();
     }))
 
     describe('checks elements creation', function()
@@ -164,11 +164,11 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('GET /api/teachers', function()
+    describe('GET /api/protected/teachers', function()
     {
         it('checks if the get is being used - respond nothing', inject(function($controller)
         {
-            _httpMock.expectGET('/api/teachers').respond({});
+            _httpMock.expectGET('/api/protected/teachers').respond([]);
             $controller('TeachersController', {$scope: _scope});
             _httpMock.flush();
 
@@ -177,7 +177,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if the get is being used - respond with resultado only', inject(function($controller)
         {
-            _httpMock.expectGET('/api/teachers').respond({resultado: []});
+            _httpMock.expectGET('/api/protected/teachers').respond([]);
             $controller('TeachersController', {$scope: _scope});
             _httpMock.flush();
 
@@ -186,7 +186,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if the get is being used', inject(function($controller)
         {
-            _httpMock.expectGET('/api/teachers').respond({resultado: ['somebody here', 'somebody else in here']});
+            _httpMock.expectGET('/api/protected/teachers').respond(['somebody here', 'somebody else in here']);
             $controller('TeachersController', {$scope: _scope});
             _httpMock.flush();
 
@@ -194,7 +194,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('POST /api/teachers', function()
+    describe('POST /api/protected/teachers', function()
     {
         it('try to post a teacher without any info - throws error', inject(function($controller)
         {
@@ -218,7 +218,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('PUT /api/teachers/:id', function()
+    describe('PUT /api/protected/teachers/:id', function()
     {
         it('try to edit a teacher without any info', inject(function($controller)
         {
@@ -249,7 +249,7 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         }))
     })
 
-    describe('DELETE /api/teachers/:id', function()
+    describe('DELETE /api/protected/teachers/:id', function()
     {
         it('tries to delete a teacher with wrong id', inject(function($controller)
         {
@@ -265,8 +265,8 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if the deletion is working', inject(function($controller)
         {
-            _httpMock.expectGET('/api/teachers').respond({resultado: {teachers: []}});
-            _httpMock.expectDELETE('/api/teachers/123').respond({});
+            _httpMock.expectGET('/api/protected/teachers').respond([]);
+            _httpMock.expectDELETE('/api/protected/teachers/123').respond({});
             $controller('TeachersController', {$scope: _scope});
 
             var professor = {nome: "fulano", _id: "123"};

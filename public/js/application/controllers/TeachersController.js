@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLength', 'lib', 'TeacherService', 'ModalHelper',
-                                  function($scope, pageConfig, inputMaxLength, lib, TeacherService, ModalHelper)
+myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLength', 'lib', 'TeacherResource', 'ModalHelper',
+                                  function($scope, pageConfig, inputMaxLength, lib, TeacherResource, ModalHelper)
 {
     $scope.cfg = pageConfig;
     $scope.professores = [];
@@ -10,13 +10,15 @@ myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLengt
     $scope.professorEscolhido = {};
     $scope.isLoadingVisible = {modal: false};
 
-    $scope.getTeachers = function()
+    var _getTeachers = function()
     {
-        TeacherService.getTeachers()
-             .success(function(data)
-                      {
-                          $scope.professores = (data && data.resultado) ? data.resultado : [];
-                      })
+        var _onSuccess = function(data)
+        {
+            $scope.professores = data || [];
+        }
+
+        TeacherResource
+            .query(_onSuccess);
     }
 
     $scope.openModalToRegisterTeacher = function()
@@ -46,15 +48,17 @@ myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLengt
         if (lib.isObjectInvalid(professor))
             throw new Error('Não é possível cadastrar um professor sem informações.');
 
+        var _onSuccess = function()
+        {
+            _getTeachers();
+            ModalHelper.close('#modal-register-teacher');
+            lib.emptyProperty($scope, 'novoProfessor', {});
+        };
+
         professor = lib.removeWhiteSpaces(professor);
 
-        TeacherService.registerTeacher(professor)
-            .success(function()
-            {
-                $scope.getTeachers();
-                ModalHelper.close('#modal-register-teacher');
-                lib.emptyProperty($scope, 'novoProfessor', {});
-            })
+        TeacherResource
+            .save(professor, _onSuccess);
     }
 
     $scope.editTeacher = function(professor)
@@ -64,15 +68,17 @@ myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLengt
         if (lib.isObjectInvalid(professor) || lib.isStringInvalid(professor._id))
             throw new Error('Não é possível editar um professor sem informações.');
 
+        var _onSuccess = function()
+        {
+            _getTeachers();
+            ModalHelper.close('#modal-edit-teacher');
+            lib.emptyProperty($scope, 'professorEscolhido', {});
+        };
+
         professor = lib.removeWhiteSpaces(professor);
 
-        TeacherService.editTeacher(professor._id, professor)
-             .success(function()
-                       {
-                           $scope.getTeachers();
-                           ModalHelper.close('#modal-edit-teacher');
-                           lib.emptyProperty($scope, 'professorEscolhido', {});
-                       })
+        TeacherResource
+            .update({id: professor._id}, professor, _onSuccess);
     }
 
     $scope.deleteTeacher = function(id)
@@ -80,16 +86,18 @@ myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLengt
         if (lib.isStringInvalid(id))
             throw new Error('Não foi possível deletar este professor. Pois o ID está errado.');
 
+        var _onSuccess = function()
+        {
+            _getTeachers();
+            ModalHelper.close('#modal-delete-teacher');
+            lib.emptyProperty($scope, 'professorEscolhido', {});
+        };
+
         $scope.isLoadingVisible.modal = true;
 
-        TeacherService.deleteTeacher(id)
-             .success(function()
-                     {
-                         $scope.getTeachers();
-                         ModalHelper.close('#modal-delete-teacher');
-                         lib.emptyProperty($scope, 'professorEscolhido', {});
-                     })
+        TeacherResource
+            .remove({id: id}, _onSuccess);
     }
 
-    $scope.getTeachers();
+    _getTeachers();
 }])

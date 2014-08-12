@@ -44,9 +44,9 @@ describe('BookController being tested', function()
             var _res = {json: function(obj)
             {
                 expect(obj).to.be.defined;
-                expect(obj.books[0].name).to.equal("Livro1");
-                expect(obj.books[0].quantity).to.equal("1");
-                expect(obj.books[0].usersAllowed).to.not.exist;
+                expect(obj[0].name).to.equal("Livro1");
+                expect(obj[0].quantity).to.equal("1");
+                expect(obj[0].usersAllowed).to.not.exist;
                 done();
             }};
 
