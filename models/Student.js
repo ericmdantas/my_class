@@ -1,11 +1,16 @@
 "use strict";
 
-(function(mongoose, lib, studentSchema)
+(function(mongoose, lib, Q, studentSchema)
 {
-    studentSchema.methods.findAllStudentsByUser = function(user, done)
+    studentSchema.methods.findAllStudentsByUser = function(user)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error('Não é possível buscar todos os alunos sem que o usuário seja informado.'), null);
+        {
+            deferred.reject(new Error('Não é possível buscar todos os alunos sem que o usuário seja informado.'));
+            return deferred.promise;
+        }
 
         var query = {usersAllowed: {$in: [user]}};
         var projection = {usersAllowed: 0, payments: 0};
@@ -14,17 +19,22 @@
                .sort('name')
                .exec(function(err, students)
                     {
-                        if (err)
-                            return done(err, null);
-
-                        return done(null, students);
+                        err ? deferred.reject(err)
+                            : deferred.resolve(students);
                     })
+
+        return deferred.promise;
     }
 
-    studentSchema.methods.findAllStudentsNames = function(user, done)
+    studentSchema.methods.findAllStudentsNames = function(user)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error('Não é possível buscar os nomes de todos os alunos sem que o usuário seja informado.'), null);
+        {
+            deferred.reject(new Error('Não é possível buscar os nomes de todos os alunos sem que o usuário seja informado.'));
+            return deferred.promise;
+        }
 
         var query = {usersAllowed: {$in: [user]}};
         var projection = {name: 1};
@@ -33,20 +43,28 @@
             .sort('name')
             .exec(function(err, students)
             {
-                if (err)
-                    return done(err, null);
-
-                return done(null, students);
+                err ? deferred.reject(err)
+                    : deferred.resolve(students);
             })
+
+        return deferred.promise;
     }
 
-    studentSchema.methods.findAllStudentsNamesByClass = function(user, turma, done)
+    studentSchema.methods.findAllStudentsNamesByClass = function(user, turma)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error('Não é possível buscar os nomes de alunos para esta determinada turma, pois o usuário não foi informado.'), null);
+        {
+            deferred.reject(new Error('Não é possível buscar os nomes de alunos para esta determinada turma, pois o usuário não foi informado.'));
+            return deferred.promise;
+        }
 
         if (lib.isStringInvalid(turma))
-            return done(new Error('Não é possível buscar os nomes de alunos para esta determinada turma, pois a turma não foi informada.'), null);
+        {
+            deferred.reject(new Error('Não é possível buscar os nomes de alunos para esta determinada turma, pois a turma não foi informada.'));
+            return deferred.promise;
+        }
 
         var query = {usersAllowed: {$in: [user]}, class: turma};
         var projection = {name: 1};
@@ -55,17 +73,22 @@
                .sort('name')
                .exec(function(err, students)
                {
-                   if (err)
-                       return done(err, null);
-
-                   done(null, students)
+                   err ? deferred.reject(err)
+                       : deferred.resolve(students);
                })
+
+        return deferred.promise;
     }
 
-    studentSchema.methods.findAllPaymentsByUser = function(user, done)
+    studentSchema.methods.findAllPaymentsByUser = function(user)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error('Não é possível buscar os pagamentos dos alunos, pois o usuário não foi informado.'), null);
+        {
+            deferred.reject(new Error('Não é possível buscar os pagamentos dos alunos, pois o usuário não foi informado.'));
+            return deferred.promise;
+        }
 
         var query = {usersAllowed: {$in: [user]}};
         var projection = {usersAllowed: 0};
@@ -74,20 +97,28 @@
             .sort('name')
             .exec(function(err, doc)
             {
-                if (err)
-                    return done(err, null);
-
-                return done(null, doc);
+                err ? deferred.reject(err)
+                    : deferred.resolve(doc);
             })
+
+        return deferred.promise;
     }
 
     studentSchema.methods.registerNewPayment = function(usuario, pagamento, done)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(usuario))
-            return done(new Error("Não é possível realizar pagamento sem que o usuário tenha sido informado"));
+        {
+            deferred.reject(new Error("Não é possível realizar pagamento sem que o usuário tenha sido informado"));
+            return deferred.promise;
+        }
 
         if (lib.isObjectInvalid(pagamento))
-            return done(new Error("Não é possível realizar pagamento sem que o pagamento tenha sido informado"));
+        {
+            deferred.reject(new Error("Não é possível realizar pagamento sem que o pagamento tenha sido informado"));
+            return deferred.promise;
+        }
 
         var query = {usersAllowed: {$in: [usuario]}, "name": pagamento.name};
         var updt = {$push: {"payments": pagamento}};
@@ -95,11 +126,11 @@
         Student.update(query, updt)
             .exec(function(err, updated)
             {
-                if (err)
-                    return done(err);
-
-                return done(null);
+                err ? deferred.reject(err)
+                    : deferred.resolve();
             })
+
+        return deferred.promise;
     }
 
     studentSchema.methods.registerStudent = function(usuario, aluno, done)
@@ -122,16 +153,27 @@
                     })
     }
 
-    studentSchema.methods.editStudent = function(usuario, aluno, id, done)
+    studentSchema.methods.editStudent = function(usuario, aluno, id)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(usuario))
-            return done(new Error("Não é possível editar aluno sem que o usuário tenha sido informado"));
+        {
+            deferred.reject(new Error("Não é possível editar aluno sem que o usuário tenha sido informado"));
+            return deferred.promise;
+        }
 
         if (lib.isObjectInvalid(aluno))
-            return done(new Error("Não é possível editar aluno sem que o aluno tenha sido informado"));
+        {
+            deferred.reject(new Error("Não é possível editar aluno sem que o aluno tenha sido informado"));
+            return deferred.promise;
+        }
 
         if (lib.isStringInvalid(id))
-            return done(new Error("Não é possível editar aluno sem que o ID tenha sido informado"));
+        {
+            deferred.reject(new Error("Não é possível editar aluno sem que o ID tenha sido informado"));
+            return deferred.promise;
+        }
 
         var query = {usersAllowed: {$in: [usuario]}, _id: id};
         delete aluno._id;
@@ -140,31 +182,39 @@
         Student.findOneAndUpdate(query, updt)
                .exec(function(err, updated)
                      {
-                         if (err)
-                             return done(err);
-
-                         return done(null);
+                         err ? deferred.reject(err)
+                             : deferred.resolve();
                      })
+
+        return deferred.promise;
     }
 
     studentSchema.methods.deleteStudent = function(user, id, done)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(user))
-            return done(new Error("Não é possível deletar aluno sem que o usuário tenha sido informado"));
+        {
+            deferred.reject(new Error("Não é possível deletar aluno sem que o usuário tenha sido informado"));
+            return deferred.promise;
+        }
 
         if (lib.isStringInvalid(id))
-            return done(new Error("Não é possível deletar aluno sem que o ID tenha sido informado"));
+        {
+            deferred.reject(new Error("Não é possível deletar aluno sem que o ID tenha sido informado"));
+            return deferred.promise;
+        }
 
         var query = {usersAllowed: {$in: [user]}, _id: id};
 
         Student.findOneAndRemove(query)
                .exec(function(err, foundDoc)
                     {
-                        if (err)
-                            return done(err);
-
-                        return done(null);
+                        err ? deferred.reject(err)
+                            : deferred.resolve();
                     })
+
+        return deferred.promise;
     }
 
     var Student = mongoose.model('Student', studentSchema);
@@ -173,4 +223,5 @@
 
 }(require('mongoose'),
   require('../lib/lib'),
+  require('q'),
   require('../schemas/StudentSchema').studentSchema))
