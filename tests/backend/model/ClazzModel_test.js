@@ -12,6 +12,7 @@ describe('ClazzModel', function()
 
     before(function()
     {
+        mongoose.models = {};
         mongoose.connect(dburl.db.test.url);
         mongoose.connection.on('error', function(){});
     })
@@ -196,7 +197,7 @@ describe('ClazzModel', function()
 
         it('should return document correctly', function(done)
         {
-            var _onSuccess = function(err, clazzesInfo)
+            var _onSuccess = function(clazzesInfo)
             {
                 expect(clazzesInfo).to.have.length(2);
                 expect(clazzesInfo[0].name).to.equal("Turma1");
@@ -385,7 +386,7 @@ describe('ClazzModel', function()
             };
 
             var _usuario = "eric3";
-            var _turma = {name: "Turma1", students: ["eu", "fulano"]};
+            var _turma = {name: "Turma1", students: ["eu", "fulano"], time: "00:22:33"};
 
             _clazz
                 .registerNewClass(_usuario, _turma)

@@ -13,6 +13,7 @@ describe('BookModel', function()
 
     before(function()
     {
+        mongoose.models = {};
         mongoose.connect(dburl.db.test.url);
         mongoose.connection.on('error', function(){});
     })
@@ -166,9 +167,8 @@ describe('BookModel', function()
 
         it('should register a book correctly', function(done)
         {
-            var _onSuccess = function(err)
+            var _onSuccess = function()
             {
-                expect(err).to.not.be.defined;
                 done();
             };
 

@@ -39,7 +39,8 @@
         var query = {usersAllowed: {$in: [user]}};
         var projection = {name: 1};
 
-        Student.find(query, projection)
+        Student
+            .find(query, projection)
             .sort('name')
             .exec(function(err, students)
             {
@@ -69,13 +70,14 @@
         var query = {usersAllowed: {$in: [user]}, class: turma};
         var projection = {name: 1};
 
-        Student.find(query, projection)
-               .sort('name')
-               .exec(function(err, students)
-               {
-                   err ? deferred.reject(err)
-                       : deferred.resolve(students);
-               })
+        Student
+            .find(query, projection)
+            .sort('name')
+            .exec(function(err, students)
+            {
+                err ? deferred.reject(err)
+                    : deferred.resolve(students);
+            })
 
         return deferred.promise;
     }
@@ -93,7 +95,8 @@
         var query = {usersAllowed: {$in: [user]}};
         var projection = {usersAllowed: 0};
 
-        Student.find(query, projection)
+        Student
+            .find(query, projection)
             .sort('name')
             .exec(function(err, doc)
             {
@@ -104,7 +107,7 @@
         return deferred.promise;
     }
 
-    studentSchema.methods.registerNewPayment = function(usuario, pagamento, done)
+    studentSchema.methods.registerNewPayment = function(usuario, pagamento)
     {
         var deferred = Q.defer();
 
@@ -123,7 +126,8 @@
         var query = {usersAllowed: {$in: [usuario]}, "name": pagamento.name};
         var updt = {$push: {"payments": pagamento}};
 
-        Student.update(query, updt)
+        Student
+            .update(query, updt)
             .exec(function(err, updated)
             {
                 err ? deferred.reject(err)
@@ -133,24 +137,34 @@
         return deferred.promise;
     }
 
-    studentSchema.methods.registerStudent = function(usuario, aluno, done)
+    studentSchema.methods.registerStudent = function(usuario, aluno)
     {
+        var deferred = Q.defer();
+
         if (lib.isStringInvalid(usuario))
-            return done(new Error("Não é possível cadastrar aluno sem que o usuário tenha sido informado"));
+        {
+            deferred.reject(new Error("Não é possível cadastrar aluno sem que o usuário tenha sido informado"));
+            return deferred.promise;
+        }
 
         if (lib.isObjectInvalid(aluno))
-            return done(new Error("Não é possível cadastrar aluno sem que o aluno tenha sido informado"));
+        {
+            deferred.reject(new Error("Não é possível cadastrar aluno sem que o aluno tenha sido informado"));
+            return deferred.promise;
+        }
 
         aluno.usersAllowed = [usuario];
+
         var student = new Student(aluno);
 
-        student.save(function(err, saved)
-                    {
-                        if (err)
-                            return done(err);
+        student
+            .save(function(err, saved)
+                 {
+                      err ? deferred.reject(err)
+                          : deferred.resolve();
+                 })
 
-                        return done(null);
-                    })
+        return deferred.promise;
     }
 
     studentSchema.methods.editStudent = function(usuario, aluno, id)
@@ -179,17 +193,18 @@
         delete aluno._id;
         var updt = aluno;
 
-        Student.findOneAndUpdate(query, updt)
-               .exec(function(err, updated)
-                     {
-                         err ? deferred.reject(err)
-                             : deferred.resolve();
-                     })
+        Student
+            .findOneAndUpdate(query, updt)
+            .exec(function(err, updated)
+                  {
+                       err ? deferred.reject(err)
+                           : deferred.resolve();
+                  })
 
         return deferred.promise;
     }
 
-    studentSchema.methods.deleteStudent = function(user, id, done)
+    studentSchema.methods.deleteStudent = function(user, id)
     {
         var deferred = Q.defer();
 
@@ -207,12 +222,13 @@
 
         var query = {usersAllowed: {$in: [user]}, _id: id};
 
-        Student.findOneAndRemove(query)
-               .exec(function(err, foundDoc)
-                    {
-                        err ? deferred.reject(err)
-                            : deferred.resolve();
-                    })
+        Student
+            .findOneAndRemove(query)
+            .exec(function(err, foundDoc)
+                 {
+                     err ? deferred.reject(err)
+                         : deferred.resolve();
+                 })
 
         return deferred.promise;
     }

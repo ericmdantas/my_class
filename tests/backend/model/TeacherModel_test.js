@@ -13,6 +13,7 @@ describe('TeacherModel', function()
 
     before(function()
     {
+        mongoose.models = {};
         mongoose.connect(dburl.db.test.url);
         mongoose.connection.on('error', function(){});
     })
@@ -231,7 +232,7 @@ describe('TeacherModel', function()
             };
 
             var _user = "eric3";
-            var _professor = {name: 'Professor Qualquer'};
+            var _professor = {name: 'Professor Qualquer', birthDate: "26/06/1989", salary: "123", address: "Rua Abc123"};
 
             _teacher
                 .registerNewTeacher(_user, _professor)

@@ -12,6 +12,7 @@ describe('StudentsModel', function()
 
     before(function(done)
     {
+        mongoose.models = {};
         mongoose.connect(dburl.db.test.url);
         mongoose.connection.on('error', function(){});
         done();
@@ -75,7 +76,7 @@ describe('StudentsModel', function()
 
         it('should return document correctly', function(done)
         {
-            var _onSuccess = function(err, payments)
+            var _onSuccess = function(payments)
             {
                 expect(typeof payments).to.equal("object");
                 expect(payments).to.have.length(1);
@@ -229,9 +230,8 @@ describe('StudentsModel', function()
 
         it('should not return anything - non existant user param', function(done)
         {
-            var _onError = function(err, paymentsNamesByClazz)
+            var _onSuccess = function(paymentsNamesByClazz)
             {
-                expect(err).to.equal(null);
                 expect(paymentsNamesByClazz).to.have.length(0);
                 done();
             };
@@ -239,17 +239,15 @@ describe('StudentsModel', function()
             var _user = "NON_ECXISTE";
             var _clazz = "Turma1";
 
-
             _student
                 .findAllStudentsNamesByClass(_user, _clazz)
-                .then(undefined, _onError);
+                .then(_onSuccess);
         })
 
         it('should not return anything - non existant class param', function(done)
         {
             var _onSuccess = function(paymentsNamesByClazz)
             {
-                expect(err).to.equal(null);
                 expect(paymentsNamesByClazz).to.have.length(0);
                 done();
             };
@@ -379,7 +377,7 @@ describe('StudentsModel', function()
 
             _student
                 .registerNewPayment(_user, _pagamento)
-                .then(undefined, _onSuccess);
+                .then(_onSuccess);
         })
     })
 
@@ -387,11 +385,10 @@ describe('StudentsModel', function()
     {
         it('shouldn\'t find all payments - wrong user param', function(done)
         {
-            var _onError = function(err, payments)
+            var _onError = function(err)
             {
                 expect(err).to.not.equal(null);
                 expect(err).to.be.an.instanceof(Error);
-                expect(payments).to.equal(null);
             };
 
             var _wrongParams = ["", null, function(){}, undefined, true, false, 1, 0, {}, []];
@@ -408,7 +405,7 @@ describe('StudentsModel', function()
 
         it('should find all payments correctly', function(done)
         {
-            var _onSuccess = function(err, payments)
+            var _onSuccess = function(payments)
             {
                 expect(typeof payments).to.equal("object");
                 expect(payments).to.have.length(1);
