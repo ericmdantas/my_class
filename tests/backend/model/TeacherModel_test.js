@@ -86,7 +86,7 @@ describe('TeacherModel', function()
                 expect(teachers[0].email).to.equal("ericdantas0@hotmail.com");
                 expect(teachers[0].mobilePhone).to.equal("98969896");
                 expect(teachers[0].phone).to.equal("27410707");
-                expect(teachers[0].salary).to.equal("123123");
+                expect(teachers[0].salary).to.equal(123123);
                 expect(teachers[0].address).to.equal("Rua Endereço Qualquer");
                 expect(teachers[0].usersAllowed).to.not.exist;
                 done();

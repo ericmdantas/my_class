@@ -1,7 +1,6 @@
 "use strict";
 
 var ClazzModel = require('../models/Clazz');
-var ErrorHandler = require('../lib/ErrorHandler');
 
 function Clazz()
 {

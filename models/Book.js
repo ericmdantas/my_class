@@ -91,7 +91,7 @@
         return deferred.promise;
     }
 
-    bookSchema.methods.deleteBook = function(usuario, id, done)
+    bookSchema.methods.deleteBook = function(usuario, id)
     {
         var deferred = Q.defer();
 

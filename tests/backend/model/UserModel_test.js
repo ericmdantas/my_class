@@ -10,6 +10,7 @@ describe('UserModel', function()
 {
     before(function()
     {
+        mongoose.models = {};
         mongoose.connect(dburl.db.test.url);
         mongoose.connection.on('error', function(){});
     })

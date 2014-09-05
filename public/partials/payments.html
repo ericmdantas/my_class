@@ -1,13 +1,20 @@
 ﻿<div ng-controller="PaymentsController">
     <div id="pagamentos-container" class="topic transition selected {{cfg.pagamentos.classeBorda}}">
         <h1>{{cfg.pagamentos.nome}}</h1>
-        <p>tenha total controle sobre todos os pagamentos que são feitos.</p>
-        <p>{{cfg.estatisticas.resumo}}</p>
-        <button type="button" class="btn btn-default pull-right" id="#adicionarLivro"
-                ng-click="openModalToRegisterPayment()">
+
+        <button type="button"
+                class="btn btn-default pull-right"
+                id="#adicionarLivro"
+                modal-opener="#modal-pay">
             realizar pagamento
         </button>
-        <input type="text" class="form-control fc-search" placeholder="procurar pagamento" ng-model="pagamentoProcurado" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}" autofocus/>
+
+        <input type="text"
+               class="form-control fc-search"
+               placeholder="procurar pagamento"
+               ng-model="pagamentoProcurado"
+               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"
+               autofocus/>
     </div>
 
     <div class="modal fade" id="modal-pay">
@@ -21,7 +28,7 @@
                     <div class="modal-body">
                         <label>nome do aluno</label>
                         <br/>
-                        <select ng-model="alunoPagando.name"
+                        <select ng-model="alunoPagamento.name"
                                 required
                                 name="name"
                                 ng-class="{'error': paymentRegister.name.$invalid}"
@@ -31,7 +38,7 @@
                             <aside class="pull-left">
                                 <label>forma de pagamento</label>
                                 <input type="text" class="form-control"
-                                       ng-model="alunoPagando.paidWithWhat"
+                                       ng-model="alunoPagamento.paidWithWhat"
                                        required
                                        name="paymentWay"
                                        ng-class="{'error': paymentRegister.paymentWay.$invalid}"
@@ -40,7 +47,7 @@
                             </aside>
                             <aside class="pull-right">
                                 <label>mês</label>
-                                <select ng-model="alunoPagando.paymentMonth"
+                                <select ng-model="alunoPagamento.paymentMonth"
                                         required
                                         name="month"
                                         ng-class="{'error': paymentRegister.month.$invalid}"
@@ -52,7 +59,7 @@
                                 <label>quantia</label>
                                 <input type="text"
                                        class="form-control"
-                                       ng-model="alunoPagando.amountPaid"
+                                       ng-model="alunoPagamento.amountPaid"
                                        required
                                        name="amount"
                                        ng-class="{'error': paymentRegister.amount.$invalid}"
@@ -66,19 +73,28 @@
                                   class="form-control"
                                   rows="5"
                                   spellcheck="true"
-                                  ng-model="alunoPagando.observation"
+                                  ng-model="alunoPagamento.observation"
                                   maxlength="500">
                           </textarea>
                         <br/>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
-                                ng-click="pay(alunoPagando)"
+                                ng-click="pay(alunoPagamento)"
                                 ng-disabled="paymentRegister.$invalid"
-                                block-all-inputs-buttons-from="modal-pay">
+                                block-all-inputs-buttons-from="modal-pay"
+                                ng-show="alunoPagamento.isNew()">
                             pagar
                         </button>
-                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+
+                        <button type="button" class="btn btn-default"
+                                ng-click="editPayment(alunoPagamento)"
+                                ng-disabled="paymentRegister.$invalid"
+                                block-all-inputs-buttons-from="modal-pay"
+                                ng-hide="alunoPagamento.isNew()">
+                            salvar alterações
+                        </button>
+
                         <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
                     </div>
                 </div>
@@ -98,7 +114,7 @@
             <p class="text-almost-invisible">vencimento: <span class="text-almost-black">{{pagamento.untilWhen}}</span></p>
             <a href data-toggle="collapse" data-target="#historico{{$index}}" ng-show="pagamentos.length > 0">histórico de pagamento</a>
 
-            <div ng-if="pagamento.payments.length === 0" align="center">
+            <div ng-if="!pagamento.payments.length" align="center">
                 <div class="alert alert-warning">
                     <span>Aluno não pagou ainda.</span>
                     <a href class="alert-link" ng-click="openModalToRegisterPayment()">Clique aqui para realizar o pagamento.</a>

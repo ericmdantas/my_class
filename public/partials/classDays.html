@@ -1,13 +1,18 @@
 <div ng-controller="ClazzDayController">
     <div id="turmas-container" class="topic transition selected {{cfg.aulas.classeBorda}}">
         <h1>{{cfg.aulas.nome}}</h1>
-        <p>Tenha total controle sobre toda a informação das aulas.</p>
-        <p>{{cfg.aulas.resumo}}</p>
+
         <button type="button" class="btn btn-default pull-right" id="#adicionarTurma"
-                ng-click="openModalToRegisterClazzDay()">
+                modal-opener="#modal-clazz-day">
             registrar aula
         </button>
-        <input type="text" class="form-control fc-search" placeholder="procurar aula" ng-model="turmaProcurada" maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}" autofocus/>
+
+        <input type="text"
+               class="form-control fc-search"
+               placeholder="procurar aula"
+               ng-model="turmaProcurada"
+               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"
+               autofocus/>
     </div>
 
     <div class="modal fade" id="modal-clazz-day">
@@ -21,23 +26,23 @@
                     <div class="modal-body">
                         <label>turma</label>
                         <br/>
-                        <select ng-model="turmaDiaDia"
+                        <select ng-model="turma"
                                 ng-options="turma.name for turma in clazzesNames"
                                 required
                                 name="clazz"
                                 ng-class="{'error': clazzDayRegister.clazz.$invalid}"
-                                ng-change="getStudentsNamesByClass(turmaDiaDia.name)"></select>
+                                ng-change="getStudentsNamesByClass(turma.name)"></select>
                         <br/><br/>
                         <label>professor responsável</label>
                         <br/>
-                        <select ng-model="turmaDiaDia.teacherName"
+                        <select ng-model="turma.teacherName"
                                 required
                                 name="teacher"
                                 ng-class="{'error': clazzDayRegister.teacher.$invalid}"
                                 ng-options="professor.name for professor in professores"></select>
                         <br/><br/>
 
-                        <div ng-if="turmaDiaDia.name">
+                        <div ng-if="turma.name">
                             <label>presença</label>
 
                             <div ng-if="alunos.length === 0" align="center">
@@ -59,7 +64,7 @@
                         <label>matéria</label>
                         <input type="text"
                                class="form-control"
-                               ng-model="turmaDiaDia.subject"
+                               ng-model="turma.subject"
                                required
                                ng-minlength="3"
                                name="subject"
@@ -67,13 +72,18 @@
                                maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
                         <br/>
                         <label>observação</label>
-                        <textarea type="text" rows="5" class="form-control" ng-model="turmaDiaDia.observation" spellcheck="true" max-length="500"></textarea>
+                        <textarea type="text"
+                                  rows="5"
+                                  class="form-control"
+                                  ng-model="turma.observation"
+                                  spellcheck="true"
+                                  max-length="500"></textarea>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
                                 ng-disabled="clazzDayRegister.$invalid"
-                                ng-click="registerClazzDay(turmaDiaDia, alunos)"
+                                ng-click="registerClazzDay(turma, alunos)"
                                 block-all-inputs-buttons-from="modal-clazz-day">
                             registrar
                         </button>

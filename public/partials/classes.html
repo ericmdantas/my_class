@@ -1,28 +1,42 @@
 ﻿<div ng-controller="ClassesController">
     <div id="turmas-container" class="topic transition selected {{cfg.turmas.classeBorda}}">
         <h1>{{cfg.turmas.nome}} <span class="text-almost-invisible">{{turmas.length}} turmas</span></h1>
-        <p>Tenha total controle sobre toda a informação das turmas cadastradas.</p>
-        <p>{{cfg.turmas.resumo}}</p>
-        <button type="button" class="btn btn-default pull-right" id="#adicionarTurma"
-                ng-click="openModalToRegisterClass()">
+
+        <button type="button"
+                class="btn btn-default pull-right"
+                id="#adicionarTurma"
+                modal-opener="#modal-clazz"
+                ng-click="resetClazz()">
             cadastrar turma
         </button>
-        <input type="text" class="form-control fc-search" placeholder="procurar turma" ng-model="turmaProcurada" maxlength="100" autofocus/>
+
+        <input type="text"
+               class="form-control fc-search"
+               placeholder="procurar turma"
+               ng-model="turmaProcurada"
+               maxlength="100"
+               autofocus/>
     </div>
 
-    <div class="modal fade" id="modal-register-class">
+    <div class="modal fade" id="modal-clazz">
         <div class="modal-dialog">
             <form name="clazzRegister">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">cadastrar turma {{novaTurma.name}}</h4>
+
+                        <h4 class="modal-title"
+                            ng-show="turma.isNew()">cadastrar turma {{turma.name}}</h4>
+
+                        <h4 class="modal-title"
+                            ng-hide="turma.isNew()">editar turma {{turma.name}}</h4>
+
                     </div>
                     <div class="modal-body">
                         <label>nome</label>
                         <input type="text"
                                class="form-control"
-                               ng-model="novaTurma.name"
+                               ng-model="turma.name"
                                name="name"
                                required
                                ng-minlength="3"
@@ -37,7 +51,7 @@
                         <div>
                             <select id="alunos-nova-turma"
                                     multiple
-                                    ng-model="novaTurma.students"
+                                    ng-model="turma.students"
                                     ng-options="aluno for aluno in alunos"
                                     style="width: 100%;"></select>
                         </div>
@@ -49,7 +63,7 @@
                                 <label>horário</label>
                                 <input type="time"
                                        class="form-control"
-                                       ng-model="novaTurma.time"
+                                       ng-model="turma.time"
                                        required
                                        name="time"
                                        ng-class="{'error': clazzRegister.time.$invalid}"
@@ -60,73 +74,20 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
                                 ng-disabled="clazzRegister.$invalid"
-                                ng-click="registerClass (novaTurma)"
-                                block-all-inputs-buttons-from="modal-register-day">
+                                ng-click="registerClass(turma)"
+                                block-all-inputs-buttons-from="modal-clazz"
+                                ng-show="turma.isNew()">
                             cadastrar
                         </button>
-                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <div class="modal fade" id="modal-edit-class">
-        <div class="modal-dialog">
-            <form name="clazzEdit">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">editar {{turmaEscolhida.name}}</h4>
-                    </div>
-                    <div class="modal-body">
-                        <label>nome</label>
-                        <input type="text"
-                               class="form-control"
-                               ng-model="turmaEscolhida.name"
-                               required
-                               name="name"
-                               ng-class="{'error': clazzEdit.name.$invalid}"
-                               ng-minlength="3"
-                               autofocus
-                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
-                        <br/>
-
-                        <label>alunos</label>
-                        <br/>
-
-                        <div>
-                            <select id="alunos-turma-editada"
-                                    multiple
-                                    style="width: 100%;"
-                                    ng-model="turmaEscolhida.students"
-                                    ng-options="aluno for aluno in alunos"></select>
-                        </div>
-
-                        <br/>
-
-                        <div class="middle-modal">
-                            <aside class="pull-left">
-                                <label>horário</label>
-                                <input type="time"
-                                       class="form-control"
-                                       ng-model="turmaEscolhida.time"
-                                       required
-                                       name="time"
-                                       ng-class="{'error': clazzEdit.time.$invalid}"
-                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
-                            </aside>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
-                                ng-disabled="clazzEdit.$invalid"
-                                ng-click="editClass(turmaEscolhida)"
-                                block-all-inputs-buttons-from="modal-edit-day">
+                        <button type="button" class="btn btn-default"
+                                ng-disabled="clazzRegister.$invalid"
+                                ng-click="editClass(turma)"
+                                block-all-inputs-buttons-from="modal-clazz"
+                                ng-hide="turma.isNew()">
                             salvar alterações
                         </button>
-                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
+
                         <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
                     </div>
                 </div>
@@ -136,8 +97,8 @@
 
     <delete-info directiveid="modal-delete-class"
                 title="turma"
-                objectname="{{turmaEscolhida.name}}"
-                objectid="{{turmaEscolhida._id}}"
+                objectname="{{turma.name}}"
+                objectid="{{turma._id}}"
                 delete="deleteClass(id)">
     </delete-info>
 
@@ -148,8 +109,15 @@
             <p class="text-almost-invisible">alunos: <span class="text-almost-black alunos" ng-repeat="aluno in turma.students">{{aluno}}</span></p>
             <p class="text-almost-invisible">horário: <span class="text-almost-black">{{turma.time | date: 'hh:mm:ss'}}</span></p>
 
-            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteClass(turma)">fechar</button>
-            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditClass(turma)">editar</button>
+            <button type="button"
+                    class="btn btn-link pull-right"
+                    ng-click="openModalToDeleteClass(turma); setClazz(turma);"
+                    modal-opener="#modal-delete-class">fechar</button>
+
+            <button type="button"
+                    class="btn btn-default pull-right"
+                    ng-click="startSelect2(); setClazz(turma);"
+                    modal-opener="#modal-clazz">editar</button>
         </div>
     </div>
 </div>

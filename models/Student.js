@@ -224,7 +224,7 @@
 
         Student
             .findOneAndRemove(query)
-            .exec(function(err, foundDoc)
+            .exec(function(err, deleted)
                  {
                      err ? deferred.reject(err)
                          : deferred.resolve();

@@ -1,28 +1,40 @@
 <div ng-controller="TeachersController">
     <div id="alunos-container" class="topic transition selected {{cfg.professores.classeBorda}}">
         <h1>{{cfg.professores.nome}} <span class="text-almost-invisible">{{professores.length}} professores</span></h1>
-        <p>tenha total controle sobre todas as informações dos professores cadastrados.</p>
-        <p>{{cfg.professores.resumo}}</p>
-        <button type="button" class="btn btn-default pull-right"
-                ng-click="openModalToRegisterTeacher()">
+
+        <button type="button"
+                class="btn btn-default pull-right"
+                ng-click="resetTeacher()"
+                modal-opener="#modal-teacher">
             cadastrar professor
         </button>
-        <input type="text" class="form-control fc-search" placeholder="procurar professor" ng-model="professorProcurado" maxlength="100" autofocus/>
+
+        <input type="text"
+               class="form-control fc-search"
+               placeholder="procurar professor"
+               ng-model="professorProcurado"
+               maxlength="100"
+               autofocus/>
     </div>
 
-    <div class="modal fade" id="modal-register-teacher">
+    <div class="modal fade" id="modal-teacher">
         <div class="modal-dialog">
             <form name="teacherRegister">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Cadastrar professor {{novoProfessor.name}}</h4>
+
+                        <h4 class="modal-title"
+                            ng-show="professor.isNew()">Cadastrar professor {{professor.name}}</h4>
+
+                        <h4 class="modal-title"
+                            ng-hide="professor.isNew()">Editar professor {{professor.name}}</h4>
                     </div>
                     <div class="modal-body">
                         <label>nome</label>
                         <input type="text"
                                class="form-control"
-                               ng-model="novoProfessor.name"
+                               ng-model="professor.name"
                                required
                                name="name"
                                ng-class="{'error': teacherRegister.name.$invalid}"
@@ -35,7 +47,7 @@
                                 <label>data de nascimento</label>
                                 <input type="date"
                                        class="form-control"
-                                       ng-model="novoProfessor.birthDate"
+                                       ng-model="professor.birthDate"
                                        required
                                        name="birthDate"
                                        ng-class="{'error': teacherRegister.birthDate.$invalid}"
@@ -48,7 +60,7 @@
                                        required
                                        name="admissionDate"
                                        ng-class="{'error': teacherRegister.admissionDate.$invalid}"
-                                       ng-model="novoProfessor.admission"
+                                       ng-model="professor.admission"
                                        maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
                             </aside>
                         </div>
@@ -56,7 +68,7 @@
                         <label>email</label>
                         <input type="text"
                                class="form-control"
-                               ng-model="novoProfessor.email"
+                               ng-model="professor.email"
                                maxlength="{{inputMaxLength.TAMANHO_CAMPO_EMAIL}}"/>
                         <br/>
                         <div class="middle-modal">
@@ -64,7 +76,7 @@
                                 <label>tel. residencial</label>
                                 <input type="text"
                                        class="form-control"
-                                       ng-model="novoProfessor.phone"
+                                       ng-model="professor.phone"
                                        maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"
                                        numbers-only/>
                             </aside>
@@ -72,7 +84,7 @@
                                 <label>celular</label>
                                 <input type="text"
                                        class="form-control"
-                                       ng-model="novoProfessor.mobilePhone"
+                                       ng-model="professor.mobilePhone"
                                        maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"
                                        numbers-only/>
                             </aside>
@@ -81,7 +93,7 @@
                         <label>endereço</label>
                         <input type="text"
                                class="form-control"
-                               ng-model="novoProfessor.address"
+                               ng-model="professor.address"
                                required
                                name="address"
                                ng-class="{'error': teacherRegister.address.$invalid}"
@@ -95,14 +107,14 @@
                                        required
                                        name="disponibility"
                                        ng-class="{'error': teacherRegister.disponibility.$invalid}"
-                                       ng-model="novoProfessor.availability"
+                                       ng-model="professor.availability"
                                        maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
                             </aside>
                             <aside class="pull-right">
                                 <label>salário</label>
                                 <input type="text"
                                        class="form-control"
-                                       ng-model="novoProfessor.salary"
+                                       ng-model="professor.salary"
                                        numbers-only
                                        required
                                        name="salary"
@@ -114,120 +126,17 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
                                 ng-disabled="teacherRegister.$invalid"
-                                ng-click="registerNewTeacher(novoProfessor)"
-                                block-all-inputs-buttons-from="modal-register-student">
+                                ng-click="registerNewTeacher(professor)"
+                                block-all-inputs-buttons-from="modal-teacher"
+                                ng-show="professor.isNew()">
                             cadastrar
                         </button>
-                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <div class="modal fade" id="modal-edit-teacher">
-        <div class="modal-dialog">
-            <form name="teacherEdit">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Editar {{professorEscolhido.name}}</h4>
-                    </div>
-                    <div class="modal-body">
-                        <label>nome</label>
-                        <input type="text"
-                               class="form-control"
-                               required
-                               name="name"
-                               ng-minlength="3"
-                               ng-class="{'error': teacherEdit.name.$invalid}"
-                               ng-model="professorEscolhido.name"
-                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"/>
-                        <br/>
-                        <div class="middle-modal">
-                            <aside class="pull-left">
-                                <label>data de nascimento</label>
-                                <input type="date"
-                                       class="form-control"
-                                       ng-model="professorEscolhido.birthDate"
-                                       required
-                                       name="birthDate"
-                                       ng-class="{'error': teacherEdit.birthDate.$invalid}"
-                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
-                            </aside>
-                            <aside class="pull-right">
-                                <label>data de admissão</label>
-                                <input type="date"
-                                       class="form-control"
-                                       ng-model="professorEscolhido.admission"
-                                       required
-                                       name="admissionDate"
-                                       ng-class="{'error': teacherEdit.admissionDate.$invalid}"
-                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_DATA}}"/>
-                            </aside>
-                        </div>
-                        <br/>
-                        <label>email</label>
-                        <input type="text"
-                               class="form-control"
-                               ng-model="professorEscolhido.email"
-                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_EMAIL}}"/>
-                        <br/>
-                        <div class="middle-modal">
-                            <aside class="pull-left">
-                                <label>tel. residencial</label>
-                                <input type="text"
-                                       class="form-control"
-                                       ng-model="professorEscolhido.phone"
-                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"/>
-                            </aside>
-                            <aside class="pull-right">
-                                <label>celular</label>
-                                <input type="text"
-                                       class="form-control"
-                                       ng-model="professorEscolhido.mobilePhone"
-                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_TELEFONE}}"/>
-                            </aside>
-                        </div>
-                        <br/>
-                        <label>endereço</label>
-                        <input type="text"
-                               class="form-control"
-                               ng-model="professorEscolhido.address"
-                               required
-                               name="address"
-                               ng-class="{'error': teacherEdit.address.$invalid}"
-                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_ENDERECO}}"/>
-                        <br/>
-                        <div class="middle-modal">
-                            <aside class="pull-left">
-                                <label>disponibilidade</label>
-                                <input type="text"
-                                       class="form-control"
-                                       ng-model="professorEscolhido.availability"
-                                       required
-                                       name="disponibility"
-                                       ng-class="{'error': teacherEdit.disponibility.$invalid}"
-                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_HORARIO}}"/>
-                            </aside>
-                            <aside class="pull-right">
-                                <label>salário</label>
-                                <input type="text"
-                                       class="form-control"
-                                       required
-                                       name="salary"
-                                       ng-class="{'error': teacherEdit.salary.$invalid}"
-                                       ng-model="professorEscolhido.salary"
-                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_QUANTIA}}"/>
-                            </aside>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
                         <button type="button" class="btn btn-default"
-                                ng-disabled="teacherEdit.$invalid"
-                                ng-click="editTeacher(professorEscolhido)"
-                                block-all-inputs-buttons-from="modal-edit-teacher">
+                                ng-disabled="teacherRegister.$invalid"
+                                ng-click="editTeacher(professor)"
+                                block-all-inputs-buttons-from="modal-teacher"
+                                ng-hide="professor.isNew()">
                             salvar alterações
                         </button>
                         <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
@@ -238,7 +147,11 @@
         </div>
     </div>
 
-    <delete-info directiveid="modal-delete-teacher" title="professor" objectname="{{professorEscolhido.name}}" objectid="{{professorEscolhido._id}}" delete="deleteTeacher(id)"></delete-info>
+    <delete-info directiveid="modal-delete-teacher"
+                 title="professor"
+                 objectname="{{professor.name}}"
+                 objectid="{{professor._id}}"
+                 delete="deleteTeacher(id)"></delete-info>
 
     <div class="info-card transition" ng-repeat="professor in professores | orderBy: 'name' | filter: professorProcurado">
         <plus-less-info-element elementToToggle="teacher-toggle-{{$index}}"></plus-less-info-element>
@@ -252,8 +165,16 @@
             <p class="text-almost-invisible">endereço: <span class="text-almost-black">{{professor.address}}</span></p>
             <p class="text-almost-invisible">salário: <span class="text-almost-black">{{professor.salary}}</span></p>
             <p class="text-almost-invisible">disponilibidade: <span class="text-almost-black">{{professor.availability}}</span></p>
-            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteTeacher(professor)">excluir</button>
-            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditTeacher(professor)">editar</button>
+
+            <button type="button"
+                    class="btn btn-link pull-right"
+                    ng-click="setTeacher(professor)"
+                    modal-opener="#modal-delete-teacher">excluir</button>
+
+            <button type="button"
+                    class="btn btn-default pull-right"
+                    ng-click="setTeacher(professor)"
+                    modal-opener="#modal-teacher">editar</button>
         </div>
     </div>
 </div>

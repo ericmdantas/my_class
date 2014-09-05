@@ -1,28 +1,39 @@
 ﻿<div ng-controller="BooksController">
     <div id="livros-container" class="topic transition selected {{cfg.livros.classeBorda}}">
         <h1>{{cfg.livros.nome}} <span class="text-almost-invisible">{{livros.length}} livros</span></h1>
-        <p>tenha total controle sobre todos os livros cadastrados.</p>
-        <p>{{cfg.livros.resumo}}</p>
+
         <button type="button" class="btn btn-default pull-right" id="#adicionarLivro"
-                ng-click="openModalToRegisterBook()">
+                modal-opener="#modal-book"
+                ng-click="resetBook()">
             cadastrar livro
         </button>
-        <input type="text" class="form-control fc-search" placeholder="procurar livro" ng-model="livroProcurado" maxlength="100" autofocus/>
+
+        <input type="text"
+               class="form-control fc-search"
+               placeholder="procurar livro"
+               ng-model="livroProcurado"
+               maxlength="100"
+               autofocus />
     </div>
 
-    <div class="modal fade" id="modal-register-book">
+    <div class="modal fade" id="modal-book">
         <div class="modal-dialog">
             <form name="bookRegister">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">cadastrar {{novoLivro.name}}</h4>
+
+                        <h4 class="modal-title"
+                            ng-show="livro.isNew()">cadastrar {{livro.name}}</h4>
+
+                        <h4 class="modal-title"
+                            ng-hide="livro.isNew()">editar {{livro.name}}</h4>
                     </div>
                     <div class="modal-body">
                         <label>nome</label>
                         <input type="text"
                                class="form-control"
-                               ng-model="novoLivro.name"
+                               ng-model="livro.name"
                                maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"
                                required
                                ng-class="{'error': bookRegister.name.$invalid}"
@@ -35,7 +46,7 @@
                                 <label>quantidade</label>
                                 <input type="text"
                                        class="form-control"
-                                       ng-model="novoLivro.quantity"
+                                       ng-model="livro.quantity"
                                        name="quantity"
                                        ng-minlength=1
                                        required
@@ -48,61 +59,22 @@
                     <div class="modal-footer">
                         <button type="button"
                                 class="btn btn-default"
-                                ng-click="registerBook(novoLivro)"
+                                ng-click="registerBook(livro)"
                                 block-all-inputs-buttons-from="modal-register-book"
-                                ng-disabled="bookRegister.$invalid">
+                                ng-disabled="bookRegister.$invalid"
+                                ng-show="livro.isNew()">
                             cadastrar
                         </button>
-                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
-                        <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <div class="modal fade" id="modal-edit-book">
-        <div class="modal-dialog">
-            <form name="bookEdit">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">editar {{livroEscolhido.name}}</h4>
-                    </div>
-                    <div class="modal-body">
-                        <label>nome</label>
-                        <input type="text"
-                               class="form-control"
-                               ng-class="{'error': bookEdit.name.$invalid}"
-                               ng-model="livroEscolhido.name"
-                               name="name"
-                               required
-                               ng-minlength="3"
-                               maxlength="{{inputMaxLength.TAMANHO_CAMPO_NOME}}"
-                               autofocus/>
-                        <br/>
-                        <div class="middle-modal">
-                            <aside class="pull-left">
-                                <label>quantidade</label>
-                                <input type="text"
-                                       class="form-control"
-                                       ng-model="livroEscolhido.quantity"
-                                       required
-                                       ng-class="{'error': bookEdit.quantity.$invalid}"
-                                       name="quantity"
-                                       ng-minlength="1"
-                                       maxlength="{{inputMaxLength.TAMANHO_CAMPO_QUANTIA}}"
-                                       numbers-only/>
-                            </aside>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"
-                                ng-click="editBook(livroEscolhido)"
-                                ng-disabled="bookEdit.$invalid"
-                                block-all-inputs-buttons-from="modal-edit-book">
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-click="editBook(livro)"
+                                block-all-inputs-buttons-from="modal-register-book"
+                                ng-disabled="bookRegister.$invalid"
+                                ng-hide="livro.isNew()">
                             salvar alterações
                         </button>
+
                         <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
                         <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
                     </div>
@@ -113,8 +85,8 @@
 
     <delete-info directiveid="modal-delete-book"
                  title="livros"
-                 objectname="{{livroEscolhido.name}}"
-                 objectid="{{livroEscolhido._id}}"
+                 objectname="{{livro.name}}"
+                 objectid="{{livro._id}}"
                  delete="deleteBook(id)">
      </delete-info>
 
@@ -123,8 +95,15 @@
         <h3 class="titulo">{{livro.name}}</h3>
         <div id="book-toggle-{{$index}}" class="collapse">
             <p class="text-almost-invisible">quantidade: <span class="text-almost-black">{{livro.quantity}}</span></p>
-            <button type="button" class="btn btn-link pull-right" ng-click="openModalToDeleteBook(livro)">excluir</button>
-            <button type="button" class="btn btn-default pull-right" ng-click="openModalToEditBook(livro)">editar</button>
+            <button type="button"
+                    class="btn btn-link pull-right"
+                    ng-click="setBook(livro)"
+                    modal-opener="#modal-delete-book">excluir</button>
+
+            <button type="button"
+                    class="btn btn-default pull-right"
+                    ng-click="setBook(livro)"
+                    modal-opener="#modal-book">editar</button>
         </div>
     </div>
 </div>

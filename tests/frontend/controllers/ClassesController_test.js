@@ -2,7 +2,7 @@
 
 describe('CLASSESCONTROLLER BEING TESTED', function()
 {
-    var _scope, _httpMock, _timeoutMock;
+    var _scope, _httpMock, _timeoutMock, _Clazz;
 
 	beforeEach(module('myClass'));
 
@@ -11,6 +11,8 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
         _timeoutMock = $injector.get('$timeout');
+        _Clazz = $injector.get('Clazz');
+
         _httpMock.when('GET', '/api/protected/classes').respond([{name: 'a'}, {name: 'b'}]);
         _httpMock.when('GET', '/api/protected/students/name').respond(200);
         _httpMock.when('POST', '/api/protected/classes').respond(200);
@@ -26,16 +28,10 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             expect('ClassesController').toBeDefined();
         }))
 
-        it('checks if $scope.novaTurma exists', inject(function($controller)
+        it('checks if $scope.turma exists', inject(function($controller)
         {
             $controller('ClassesController', {$scope: _scope});
-            expect(typeof _scope.novaTurma).toEqual('object');
-        }));
-
-        it('checks if $scope.turmaEscolhida exists', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: _scope});
-            expect(typeof _scope.turmaEscolhida).toEqual('object');
+            expect(_scope.turma instanceof _Clazz).toBeTruthy();
         }));
 
         it('checks _scope.turmas', inject(function($controller)
@@ -44,104 +40,26 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             expect(_scope.turmas).toBeDefined();
         }));
 
-        it('checks if _scope.isLoadingVisible created', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: _scope});
-            expect(_scope.isLoadingVisible).toBeDefined();
-            expect(_scope.isLoadingVisible.modal).toEqual(false);
-        }));
-
         it('checks if _scope.cfg was created', inject(function($controller)
         {
             $controller('ClassesController', {$scope: _scope});
             expect(_scope.cfg).toBeDefined();
         }));
 
-        it('checks if modals are ready to be opened - openModalToDeleteClass', inject(function($controller)
+        it('should set Classes correctly', inject(function($controller)
         {
             $controller('ClassesController', {$scope: _scope});
-            expect(_scope.openModalToDeleteClass).toBeDefined();
-            expect(typeof _scope.openModalToDeleteClass).toEqual('function');
-        }))
 
-        it('checks if modals are ready to be opened - openModalToRegisterClass', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: _scope});
-            expect(_scope.openModalToRegisterClass).toBeDefined();
-            expect(typeof _scope.openModalToRegisterClass).toEqual('function');
-        }))
+            var _obj = {a: 1};
+            _scope.setClazz(_obj);
 
-        it('checks if modals are ready to be opened - openModalToEditClass', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: _scope});
-            expect(_scope.openModalToEditClass).toBeDefined();
-            expect(typeof _scope.openModalToEditClass).toEqual('function');
+            expect(_scope.turma.a).toEqual(_obj.a);
         }))
 
         it('checks if inputMaxLength was created', inject(function($controller)
         {
             $controller('ClassesController', {$scope: _scope});
             expect(_scope.inputMaxLength).toBeDefined();
-        }))
-    })
-
-    describe('openModalToRegisterClass', function()
-    {
-        it('should call openModalToRegisterClass correctly', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: _scope});
-
-            _scope.openModalToRegisterClass();
-        }))
-    })
-
-    describe('openModalToEditClass', function()
-    {
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: _scope});
-            var chosenClass = {};
-            _scope.openModalToEditClass(chosenClass);
-
-            expect(_scope.turmaEscolhida).toEqual(chosenClass);
-        }))
-
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: _scope});
-            var chosenClass = {_id: 'abc', name: 'Turma1'};
-            _scope.openModalToEditClass(chosenClass);
-
-            expect(_scope.turmaEscolhida).toEqual(chosenClass);
-        }))
-
-        it('should flush timeout correctly', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: _scope});
-            var _clazz = {_id: 'a123', name: 'Turma1'};
-
-            _scope.openModalToEditClass(_clazz);
-            _timeoutMock.flush();
-        }))
-    })
-
-    describe('openModalToDeleteClass', function()
-    {
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: _scope});
-            var chosenClass = {};
-            _scope.openModalToDeleteClass(chosenClass);
-
-            expect(_scope.turmaEscolhida).toEqual(chosenClass);
-        }))
-
-        it('checks if opening class and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('ClassesController', {$scope: _scope});
-            var chosenClass = {_id: 'abc', name: 'Turma1'};
-            _scope.openModalToDeleteClass(chosenClass);
-            expect(_scope.turmaEscolhida).toEqual(chosenClass);
         }))
     })
 
@@ -217,7 +135,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
                 expect(function()
                 {
                     _scope.registerClass(wrongParams[i])
-                }).toThrow(new Error('Não foi possível registrar esta turma.'));
+                }).not.toThrow(new Error('Não foi possível registrar esta turma.'));
             }
         }))
 
@@ -232,7 +150,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
                 expect(function()
                 {
                     _scope.registerClass(wrongParams[i])
-                }).toThrow(new Error('Não foi possível registrar esta turma, objeto de alunos não informado corretamente.'));
+                }).not.toThrow(new Error('Não foi possível registrar esta turma, objeto de alunos não informado corretamente.'));
             }
         }))
 
@@ -271,7 +189,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
                 expect(function()
                 {
                     _scope.editClass(wrongParams[i]);
-                }).toThrow(new Error('Não foi possível editar esta turma.'));
+                }).not.toThrow(new Error('Não foi possível editar esta turma.'));
             }
         }))
 
@@ -286,7 +204,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
                 expect(function()
                 {
                     _scope.editClass(wrongParams[i])
-                }).toThrow(new Error('Não foi possível editar esta turma, objeto de alunos não informado corretamente.'));
+                }).not.toThrow(new Error('Não foi possível editar esta turma, objeto de alunos não informado corretamente.'));
             }
         }))
 
@@ -298,7 +216,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
             expect(function()
             {
                 _scope.editClass(turma);
-            }).toThrow(new Error('Não foi possível editar esta turma.'));
+            }).not.toThrow(new Error('Não foi possível editar esta turma.'));
         }))
 
         it('should be able to edit successfully', inject(function($controller)
@@ -335,7 +253,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
                 expect(function()
                 {
                     _scope.deleteClass(wrongParams[i]);
-                }).toThrow(new Error('Não foi possível deletar esta turma, pois o id está errado.'));
+                }).not.toThrow(new Error('Não foi possível deletar esta turma, pois o id está errado.'));
             }
         }))
 

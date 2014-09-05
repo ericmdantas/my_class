@@ -195,7 +195,7 @@
         return deferred.promise;
     }
 
-    clazzSchema.methods.editClass = function(usuario, turma, id, done)
+    clazzSchema.methods.editClass = function(usuario, turma, id)
     {
         var deferred = Q.defer();
 

@@ -1,102 +1,92 @@
 "use strict";
 
-myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLength', 'lib', 'TeacherResource', 'ModalHelper',
-                                  function($scope, pageConfig, inputMaxLength, lib, TeacherResource, ModalHelper)
+myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLength', 'lib', 'Teacher', 'TeacherService', 'ModalHelper',
+                                  function($scope, pageConfig, inputMaxLength, lib, Teacher, TeacherService,ModalHelper)
 {
+    $scope.professor = new Teacher();
     $scope.cfg = pageConfig;
     $scope.professores = [];
-    $scope.novoProfessor = {};
     $scope.inputMaxLength = inputMaxLength;
-    $scope.professorEscolhido = {};
-    $scope.isLoadingVisible = {modal: false};
 
     var _getTeachers = function()
     {
-        var _onSuccess = function(data)
+        var _onSuccess = function(professores)
         {
-            $scope.professores = data || [];
+            $scope.professores = professores;
         }
 
-        TeacherResource
-            .query(_onSuccess);
+        var _onError = function(error)
+        {
+            lib.createAlert(null, 'Houve um erro no momento da consulta de todos os professores.');
+        }
+
+        TeacherService
+            .getAll()
+            .then(_onSuccess, _onError);
     }
 
-    $scope.openModalToRegisterTeacher = function()
+    $scope.resetTeacher = function()
     {
-        $scope.isLoadingVisible.modal = false;
-        ModalHelper.open('#modal-register-teacher');
+        $scope.professor = new Teacher();
     }
 
-    $scope.openModalToEditTeacher = function(professor)
+    $scope.setTeacher = function(professor)
     {
-        $scope.isLoadingVisible.modal = false;
-        ModalHelper.open('#modal-edit-teacher');
-        $scope.professorEscolhido = professor;
-    }
-
-    $scope.openModalToDeleteTeacher = function(professor)
-    {
-        $scope.isLoadingVisible.modal = false;
-        ModalHelper.open('#modal-delete-teacher');
-        $scope.professorEscolhido = professor;
+        $scope.professor = new Teacher(professor);
     }
 
     $scope.registerNewTeacher = function(professor)
     {
-        $scope.isLoadingVisible.modal = true;
-
-        if (lib.isObjectInvalid(professor))
-            throw new Error('Não é possível cadastrar um professor sem informações.');
-
         var _onSuccess = function()
         {
             _getTeachers();
-            ModalHelper.close('#modal-register-teacher');
-            lib.emptyProperty($scope, 'novoProfessor', {});
-        };
+            ModalHelper.close('#modal-teacher');
+        }
 
-        professor = lib.removeWhiteSpaces(professor);
+        var _onError = function()
+        {
+            lib.createAlert(null, error.message);
+        }
 
-        TeacherResource
-            .save(professor, _onSuccess);
+        TeacherService
+            .save(professor)
+            .then(_onSuccess, _onError);
     }
 
     $scope.editTeacher = function(professor)
     {
-        $scope.isLoadingVisible.modal = true;
-
-        if (lib.isObjectInvalid(professor) || lib.isStringInvalid(professor._id))
-            throw new Error('Não é possível editar um professor sem informações.');
-
         var _onSuccess = function()
         {
             _getTeachers();
-            ModalHelper.close('#modal-edit-teacher');
-            lib.emptyProperty($scope, 'professorEscolhido', {});
-        };
+            ModalHelper.close('#modal-teacher');
+        }
 
-        professor = lib.removeWhiteSpaces(professor);
+        var _onError = function(error)
+        {
+            lib.createAlert(null, 'Houve um erro no momento da edição do professor.');
+        }
 
-        TeacherResource
-            .update({id: professor._id}, professor, _onSuccess);
+        TeacherService
+            .update(professor)
+            .then(_onSuccess, _onError);
     }
 
     $scope.deleteTeacher = function(id)
     {
-        if (lib.isStringInvalid(id))
-            throw new Error('Não foi possível deletar este professor. Pois o ID está errado.');
-
         var _onSuccess = function()
         {
             _getTeachers();
             ModalHelper.close('#modal-delete-teacher');
-            lib.emptyProperty($scope, 'professorEscolhido', {});
         };
 
-        $scope.isLoadingVisible.modal = true;
+        var _onError = function()
+        {
+            lib.createAlert(null, 'Houve um erro no momento da deleção do professor.');
+        }
 
-        TeacherResource
-            .remove({id: id}, _onSuccess);
+        TeacherService
+            .remove(id)
+            .then(_onSuccess, _onError);
     }
 
     _getTeachers();

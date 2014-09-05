@@ -72,7 +72,7 @@ myClass.directive('navigation', ['$rootScope', '$location', function($rootScope,
 
             scope.$apply(function()
             {
-                $location.path('/'+_nomeLiClickado);
+                $location.path('/' + _nomeLiClickado);
             })
 
             document.title = 'my class | ' + _nomeLiClickado;

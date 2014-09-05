@@ -2,7 +2,7 @@
 
 myClass.factory('lib', function()
 {
-    function _removeWhiteSpaces(obj)
+    var _removeWhiteSpaces = function(obj)
     {
         if (_isObjectInvalid(obj))
             throw new Error('problema na remoção de espaços em branco (obj == undefined)');
@@ -16,7 +16,7 @@ myClass.factory('lib', function()
         return obj;
     }
 
-    function _createAlert(status, mensagem)
+    var _createAlert = function(status, mensagem)
     {
         if ($('.alert').length)
             return;
@@ -34,17 +34,25 @@ myClass.factory('lib', function()
         $('.alert').alert();
     }
 
-    function _isStringInvalid(text)
+    var _isStringInvalid = function(text)
     {
         return ((!text) || ("string" !== typeof text) || (text.length === 0) || (text.trim().length === 0));
     }
 
-    function _isObjectInvalid(obj)
+    var _isObjectInvalid = function(obj)
     {
         return ((!obj) || ("object" !== typeof obj) || (!Object.keys(obj).length));
     }
 
-    function _isMonthYearInvalid(monthYear)
+    var _isNumberInvalid = function(num)
+    {
+        if (num === 0)
+            return false;
+
+        return ((!num) || ("number" !== typeof num));
+    }
+
+    var _isMonthYearInvalid = function(monthYear)
     {
         var SEPARATOR = "/";
 
@@ -72,7 +80,7 @@ myClass.factory('lib', function()
         return false;
     }
 
-    function _emptyProperty(parent, propertyToBeEmpty, withWhat)
+    var _emptyProperty = function(parent, propertyToBeEmpty, withWhat)
     {
         if (_isObjectInvalid(parent))
             throw new Error('Objeto pai não é um objeto válido para ter sua propriedade limpa.');
@@ -88,6 +96,7 @@ myClass.factory('lib', function()
                createAlert: _createAlert,
                isStringInvalid: _isStringInvalid,
                isObjectInvalid: _isObjectInvalid,
+               isNumberInvalid: _isNumberInvalid,
                isMonthYearInvalid: _isMonthYearInvalid,
                emptyProperty: _emptyProperty
            }

@@ -1,59 +1,42 @@
 "use strict";
 
-myClass.controller('PaymentsController', ['$scope', 'lib', 'inputMaxLength', 'months', 'pageConfig', 'PaymentResource', 'ModalHelper',
-                                function ($scope, lib, inputMaxLength, months, pageConfig, PaymentResource, ModalHelper)
+myClass.controller('PaymentsController', ['$scope', 'lib', 'inputMaxLength', 'months', 'pageConfig', 'Payment', 'PaymentService', 'ModalHelper',
+                                function ($scope, lib, inputMaxLength, months, pageConfig, Payment, PaymentService, ModalHelper)
 {
+    $scope.alunoPagamento = new Payment();
     $scope.pagamentos = [];
-    $scope.pagamentoEscolhido = {};
     $scope.inputMaxLength = inputMaxLength;
-    $scope.isLoadingVisible = {modal: false};
     $scope.cfg = pageConfig;
     $scope.months = months;
 
-    $scope.getPayments = function()
+    var _getPayments = function()
     {
-        var _onSuccess = function(data)
+        var _onSuccess = function(pagamentos)
         {
-            $scope.pagamentos = data || [];
+            $scope.pagamentos = pagamentos;
         };
 
-        PaymentResource
-            .query(_onSuccess);
-    }
-
-    $scope.openModalToRegisterPayment = function()
-    {
-        $scope.isLoadingVisible.modal = false;
-        ModalHelper.open('#modal-pay');
+        PaymentService
+            .getAll()
+            .then(_onSuccess);
     }
 
     $scope.pay = function(pagamento)
     {
-        if (lib.isObjectInvalid(pagamento))
-            throw new Error('Não foi possível realizar o pagamento.');
-
         var _onSuccess = function()
         {
-            $scope.isLoadingVisible.modal = false;
+            _getPayments
             ModalHelper.close('#modal-pay');
-            lib.emptyProperty($scope, 'alunoPagando', {});
-
-            for (var i = 0; i < $scope.pagamentos.length; i++)
-            {
-                if ($scope.pagamentos[i].name === pagamento.name)
-                    $scope.pagamentos[i].payments.push(pagamento);
-            }
-        };
-
-        $scope.isLoadingVisible.modal = true;
+        }
 
         pagamento.name = pagamento.name ? pagamento.name.name : '';
         pagamento.class = pagamento.class ? pagamento.class.class : '';
         pagamento.paymentMonth = pagamento.paymentMonth ? pagamento.paymentMonth.nome : '';
 
-        PaymentResource
-            .save(pagamento, _onSuccess, _onSuccess);
+        PaymentService
+            .save(pagamento)
+            .then(_onSuccess);
     }
 
-    $scope.getPayments();
+    _getPayments();
 }])

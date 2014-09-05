@@ -28,6 +28,8 @@ module.exports = function(config) {
 		'public/js/application/services/*Service.js',
 		'public/js/application/**/*.js',
 
+        'tests/frontend/helpers/helper.js',
+
         'tests/frontend/mocks/angular-mocks.js',
 
 		'tests/frontend/**/*_test.js'

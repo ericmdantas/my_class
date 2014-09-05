@@ -27,7 +27,7 @@
         return deferred.promise;
     }
 
-    teacherSchema.methods.findAllTeachersNames = function(usuario, done)
+    teacherSchema.methods.findAllTeachersNames = function(usuario)
     {
         var deferred = Q.defer();
 

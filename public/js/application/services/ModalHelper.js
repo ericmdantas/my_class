@@ -1,8 +1,8 @@
 "use strict";
 
-myClass.factory('ModalHelper', ['lib', function(lib)
+myClass.service('ModalHelper', ['lib', function(lib)
 {
-    function _closeModal(modalID)
+    var _closeModal = function (modalID)
     {
         if (lib.isStringInvalid(modalID) || ("#" !== modalID.substring(0, 1)))
             throw new Error('Não será possível fechar o modal. ID informado de forma incorreta');
@@ -10,7 +10,7 @@ myClass.factory('ModalHelper', ['lib', function(lib)
         $(modalID).modal('hide');
     }
 
-    function _openModal(modalID)
+    var _openModal = function (modalID)
     {
         if (lib.isStringInvalid(modalID) || ("#" !== modalID.substring(0, 1)))
             throw new Error('Não será possível fechar o modal. ID informado de forma incorreta');
@@ -18,8 +18,6 @@ myClass.factory('ModalHelper', ['lib', function(lib)
         $(modalID).modal('show');
     }
 
-    return {
-                close: _closeModal,
-                open: _openModal
-           }
+    this.close = _closeModal;
+    this.open = _openModal;
 }])

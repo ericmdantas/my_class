@@ -199,4 +199,27 @@ describe('_lib BEING TESTED', function()
             _lib.createAlert();
         })
     })
+
+    describe('isNumberInvalid', function()
+    {
+        it('should return true - wrong object param', function()
+        {
+            var _wrongParams = [null, true, false, undefined, {}, [], !1, !0, '    '];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(_lib.isNumberInvalid(_wrongParams[i])).toBeTruthy();
+            }
+        })
+
+        it('should return false - right string params', function()
+        {
+            var _correctParams = [0, -1, -9999999999, 99999999, 2, 99, 3.14];
+
+            for (var i = 0; i < _correctParams.length; i++)
+            {
+                expect(_lib.isNumberInvalid(_correctParams[i])).toBeFalsy();
+            }
+        })
+    })
 })

@@ -2,7 +2,7 @@
 
 describe('PAYMENTSCONTROLLER BEING TESTED', function()
 {
-    var _scope, _httpMock;
+    var _scope, _httpMock, _Payment, _paymentInstance;
 
     beforeEach(module('myClass'))
 
@@ -10,6 +10,9 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
     {
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
+        _Payment = $injector.get('Payment');
+        _paymentInstance = new _Payment();
+
         _httpMock.when('GET', '/api/protected/students/payments').respond([{name: 'Aluno1', payments: []}]);
         _httpMock.when('POST', '/api/protected/students/payments').respond([]);
     }))
@@ -28,16 +31,10 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
             expect(_scope.pagamentos).toBeDefined();
         }))
 
-        it('checks if the pagamentoEscolhido object was created', inject(function($controller)
+        it('checks if the alunoPagamento object was created', inject(function($controller)
         {
             $controller('PaymentsController', {$scope: _scope});
-            expect(_scope.pagamentoEscolhido).toBeDefined();
-        }))
-
-        it('checks if the pagamentoEscolhido object was created', inject(function($controller)
-        {
-            $controller('PaymentsController', {$scope: _scope});
-            expect(_scope.pagamentoEscolhido).toBeDefined();
+            expect(_scope.alunoPagamento instanceof _Payment).toBeTruthy();
         }))
 
         it('checks if the _scope.cfg was created', inject(function($controller)
@@ -59,32 +56,6 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
 
             expect(_scope.inputMaxLength).toBeDefined();
             expect(typeof _scope.inputMaxLength).toEqual('object');
-        }))
-
-        it('checks if isLoadingVisible was created', inject(function($controller)
-        {
-            $controller('PaymentsController', {$scope: _scope});
-
-            expect(_scope.isLoadingVisible).toBeDefined();
-            expect(typeof _scope.isLoadingVisible).toEqual('object');
-            expect(_scope.isLoadingVisible.modal).toBeFalsy();
-        }))
-
-        it('checks if openModalToRegister was created', inject(function($controller)
-        {
-            $controller('PaymentsController', {$scope: _scope});
-
-            expect(_scope.openModalToRegisterPayment).toBeDefined();
-            expect(typeof _scope.openModalToRegisterPayment).toEqual('function');
-        }))
-    })
-
-    describe('openModalToRegister', function()
-    {
-        it('should call openModalToRegister without a problem', inject(function($controller)
-        {
-            $controller('PaymentsController', {$scope: _scope});
-            _scope.openModalToRegisterPayment();
         }))
     })
 
@@ -126,21 +97,6 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
 
     describe('POST /api/protected/payments', function()
     {
-        it('shouldn\'t continue, because payment is undefined', inject(function($controller)
-        {
-            $controller('PaymentsController', {$scope: _scope});
-
-            var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, {}, []];
-
-            for (var i = 0; i < _wrongParams.length; i++)
-            {
-                expect(function()
-                {
-                    _scope.pay(_wrongParams[i])
-                }).toThrow(new Error('Não foi possível realizar o pagamento.'));
-            }
-        }))
-
         it('should registerPayment successfully', inject(function($controller)
         {
             _httpMock.expectPOST('/api/protected/students/payments').respond(200);
@@ -150,8 +106,6 @@ describe('PAYMENTSCONTROLLER BEING TESTED', function()
 
             _scope.pay(pagamento);
             _httpMock.flush();
-
-            expect(_scope.pagamentoEscolhido).toEqual({});
         }))
 
         it('should register payments successfully - nested objects because of the use of selects', inject(function($controller)

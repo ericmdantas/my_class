@@ -19,7 +19,13 @@ myClass.config(['$provide', '$httpProvider', function($provide, $httpProvider)
                                          },
                                          responseError: function(rejection)
                                          {
-                                             lib.createAlert(rejection.data.errorStatus, rejection.data.errorMessage);
+                                             var _status = (rejection && rejection.data && rejection.data.errorStatus) ? rejection.data.errorStatus
+                                                                                                                       : null;
+
+                                             var _message = (rejection && rejection.data && rejection.data.errorMessage) ? rejection.data.errorMessage
+                                                                                                                         : null;
+
+                                             lib.createAlert(_status, _message);
                                              return $q.reject(rejection);
                                          }
                                     };

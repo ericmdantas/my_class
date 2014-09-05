@@ -1,6 +1,7 @@
 describe('STUDENTSCONTROLLER BEING TESTED', function()
 {
-    var _scope, _httpMock;
+    var _scope, _httpMock, _StudentService, _Student;
+    var WEBSERVICE = '/api/protected/students';
 
     beforeEach(module('myClass'));
 
@@ -8,11 +9,14 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
     {
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
-        _httpMock.when('GET', '/api/protected/students').respond([{nome: 'aluno qualquer'}]);
+        _Student = $injector.get('Student');
+        _StudentService = $injector.get('StudentService');
+
+        _httpMock.when('GET', WEBSERVICE).respond([{nome: 'aluno qualquer'}]);
         _httpMock.when('GET', '/api/protected/classes/name').respond([{name: 'turma qualquer'}]);
-        _httpMock.when('POST', '/api/protected/students').respond(200);
+        _httpMock.when('POST', WEBSERVICE).respond();
         _httpMock.when('PUT', '/api/protected/students/1').respond();
-        _httpMock.when('DELETE', '/api/protected/students/1').respond(200);
+        _httpMock.when('DELETE', '/api/protected/students/1').respond();
     }))
 
     describe('elements creation', function()
@@ -29,50 +33,16 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
             expect(_scope.alunos).toBeDefined();
         }))
 
-        it('checks if $scope.novoAluno is created', inject(function($controller)
+        it('checks if $scope.aluno is created', inject(function($controller)
         {
             $controller('StudentsController', {$scope: _scope});
-            expect(_scope.novoAluno).toBeDefined();
-        }))
-
-        it('checks if $scope.alunoEscolhido is created', inject(function($controller)
-        {
-            $controller('StudentsController', {$scope: _scope});
-            expect(_scope.alunoEscolhido).toBeDefined();
+            expect(_scope.aluno instanceof _Student).toBeTruthy();
         }))
 
         it('checks if $scope.turmasCadastradas is created', inject(function($controller)
         {
             $controller('StudentsController', {$scope: _scope});
             expect(_scope.turmasCadastradas).toBeDefined();
-        }))
-
-        it('checks if $scope.isLoadingVisible is created', inject(function($controller)
-        {
-            $controller('StudentsController', {$scope: _scope});
-            expect(_scope.isLoadingVisible).toBeDefined();
-            expect(_scope.isLoadingVisible.modal).toEqual(false);
-        }))
-
-        it('checks if modals are ready to be opened - openModalToDeleteStudent', inject(function($controller)
-        {
-            $controller('StudentsController', {$scope: _scope});
-            expect(_scope.openModalToDeleteStudent).toBeDefined();
-            expect(typeof _scope.openModalToDeleteStudent).toEqual('function');
-        }))
-
-        it('checks if modals are ready to be opened - openModalToRegisterStudent', inject(function($controller)
-        {
-            $controller('StudentsController', {$scope: _scope});
-            expect(_scope.openModalToRegisterStudent).toBeDefined();
-            expect(typeof _scope.openModalToRegisterStudent).toEqual('function');
-        }))
-
-        it('checks if modals are ready to be opened - openModalToEditStudent', inject(function($controller)
-        {
-            $controller('StudentsController', {$scope: _scope});
-            expect(_scope.openModalToEditStudent).toBeDefined();
-            expect(typeof _scope.openModalToEditStudent).toEqual('function');
         }))
 
         it('checks if inputMaxLength was created', inject(function($controller)
@@ -95,53 +65,28 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
             expect(_scope.contractsTypes).toBeDefined();
         }))
-    })
 
-    describe('openModalToRegisterStudent()', function()
-    {
-        it('should call openModalToRegisterStudent correctly', inject(function($controller)
+        it('should setStudent correctly', inject(function($controller)
         {
             $controller('StudentsController', {$scope: _scope});
 
-            _scope.openModalToRegisterStudent();
+            var _obj = {a: 1};
+            _scope.setStudent(_obj);
+
+            expect(_scope.aluno.a).toEqual(_obj.a);
         }))
     })
 
-    describe('openModalToEditStudent()', function()
+    describe('resetStudent', function()
     {
-        it('checks if opening student and passing an empty object is behaving ok', inject(function($controller)
+        it('should have a brand new student', inject(function($controller)
         {
             $controller('StudentsController', {$scope: _scope});
-            var chosenStudent = {};
-            _scope.openModalToEditStudent(chosenStudent);
-            expect(_scope.alunoEscolhido).toEqual(chosenStudent);
-        }))
 
-        it('checks if opening student and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('StudentsController', {$scope: _scope});
-            var chosenStudent = {_id: 'abc', name: 'Turma1'};
-            _scope.openModalToEditStudent(chosenStudent);
-            expect(_scope.alunoEscolhido).toEqual(chosenStudent);
-        }))
-    })
+            _scope.aluno = {a: 1};
+            _scope.resetStudent();
 
-    describe('openModalToDeleteStudent()', function()
-    {
-        it('checks if opening student and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('StudentsController', {$scope: _scope});
-            var chosenStudent = {};
-            _scope.openModalToDeleteStudent(chosenStudent);
-            expect(_scope.alunoEscolhido).toEqual(chosenStudent);
-        }))
-
-        it('checks if opening student and passing an empty object is behaving ok', inject(function($controller)
-        {
-            $controller('StudentsController', {$scope: _scope});
-            var chosenStudent = {_id: 'abc', name: 'Turma1'};
-            _scope.openModalToDeleteStudent(chosenStudent);
-            expect(_scope.alunoEscolhido).toEqual(chosenStudent);
+            expect(_scope.aluno instanceof _Student).toBeTruthy();
         }))
     })
 
@@ -149,7 +94,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
     {
         it('checks if _scope.alunos is being fed correctly even when there\'s no response', inject(function($controller)
         {
-            _httpMock.expectGET('/api/protected/students').respond([]);
+            _httpMock.expectGET(WEBSERVICE).respond([]);
             $controller('StudentsController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.alunos.length).toEqual(0);
@@ -157,7 +102,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
         it('checks if _scope.alunos is being fed correctly even when there\'s only the object students - no array', inject(function($controller)
         {
-            _httpMock.expectGET('/api/protected/students').respond([]);
+            _httpMock.expectGET(WEBSERVICE).respond([]);
             $controller('StudentsController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.alunos.length).toEqual(0);
@@ -177,27 +122,32 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         {
             $controller('StudentsController', {$scope: _scope});
 
-            var wrongParams = [null, undefined, 1, true, false, [], {}];
+            var wrongParams = helper.invalidObjects();
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(function(){_scope.registerNewStudent(wrongParams[i])}).toThrow(new Error('erro: aluno nao informado - registerNewStudent'));
+                expect(function()
+                {
+                    _scope.registerNewStudent(wrongParams[i])
+                }).not.toThrow(new Error('erro: aluno nao informado - registerNewStudent'));
             }
         }))
 
         it('checks if after registering, the _scope.novoAluno is an empty object', inject(function($controller)
         {
             $controller('StudentsController', {$scope: _scope});
-            _scope.registerNewStudent({nome: 123});
+
+            var _aluno = {name: 'Abc', birthDate: '26/06/1989', };
+
+            _scope.registerNewStudent(_aluno);
             _httpMock.flush();
-            expect(_scope.novoAluno).toEqual({});
         }))
 
         it('checks if addition is working', inject(function($controller)
         {
-            _httpMock.expectGET('/api/protected/students').respond([{name: 'A'}]);
+            _httpMock.expectGET(WEBSERVICE).respond([{name: 'A'}]);
             $controller('StudentsController', {$scope: _scope});
-            var obj = {name: 'A', class: {name: 'B'}, status: {nome: 'C'}, availability: 'D'};
+            var obj = {name: 'A', class: {name: 'B'}, status: {nome: 'C'}, availability: 'D', birthDate: '26/06/1989'};
             _scope.registerNewStudent(obj);
             _httpMock.flush();
             var quantidadeDeAlunosDepoisDaAdicao = _scope.alunos.length;
@@ -211,11 +161,14 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         {
             $controller('StudentsController', {$scope: _scope});
 
-            var wrongParams = [null, undefined, {}, [], true, false, '', 1];
+            var wrongParams = helper.invalidObjects();
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(function(){_scope.editStudent(wrongParams[i])}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
+                expect(function()
+                {
+                    _scope.editStudent(wrongParams[i])
+                }).not.toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
             }
         }))
 
@@ -224,20 +177,23 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
             $controller('StudentsController', {$scope: _scope});
             var studentWithoutId = {name: 'A', age: '123'};
 
-            expect(function(){_scope.editStudent(studentWithoutId)}).toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
+            expect(function()
+            {
+                _scope.editStudent(studentWithoutId)
+            }).not.toThrow(new Error('Não foi possível editar este aluno. Tente mais tarde.'));
         }))
 
         it('should edit successfully and return students on /api/protected/students', inject(function($controller)
         {
-            _httpMock.expectPUT('/api/protected/students/1').respond();
-            _httpMock.expectGET('/api/protected/students').respond([{name: 'nome'}]);
+            var student = {_id: "1", name: 'e', class: '', status: '', contract: '', birthDate: '26/06/1989'};
+
+            _httpMock.expectPUT(WEBSERVICE + '/' + student._id, student).respond();
+            _httpMock.expectGET(WEBSERVICE).respond([{name: 'nome'}]);
             $controller('StudentsController', {$scope: _scope});
-            var student = {_id: "1", name: 'e', class: '', status: '', contract: ''};
             _scope.editStudent(student);
             _httpMock.flush();
             expect(_scope.alunos).toBeDefined();
             expect(_scope.alunos[0].name).toBe('nome');
-            expect(_scope.alunoEscolhido).toEqual({});
         }))
     })
 
@@ -251,13 +207,16 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
             for (var i = 0; i < wrongParams.length; i++)
             {
-                expect(function(){_scope.deleteStudent(wrongParams[i])}).toThrow(new Error('Não foi possível realizar a deleção do aluno. O ID está errado.'));
+                expect(function()
+                {
+                    _scope.deleteStudent(wrongParams[i])
+                }).not.toThrow(new Error('Não foi possível realizar a deleção do aluno. O ID está errado.'));
             }
         }))
 
         it('checks if deletion is working - if there were 3 students, should be 2 after deletion', inject(function($controller)
         {
-            _httpMock.expectGET('/api/protected/students').respond([]);
+            _httpMock.expectGET(WEBSERVICE).respond([]);
             $controller('StudentsController', {$scope: _scope});
 
             _scope.alunos = [{name: 1, idade: 1, _id: "1"}];
@@ -266,7 +225,6 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
             _httpMock.flush();
 
             expect(quantidadeDeAlunosAntesDaDelecao).toBeGreaterThan(0);
-            expect(_scope.alunoEscolhido).toEqual({});
         }))
     })
 })

@@ -1,7 +1,6 @@
 "use strict";
 
 var StudentModel = require('../models/Student');
-var ErrorHandler = require('../lib/ErrorHandler');
 
 function Student()
 {
@@ -51,19 +50,6 @@ function Student()
 
         var _usuario = req.session.passport.user;
         var _student = new StudentModel();
-
-        function callback(error, students)
-        {
-            if (error)
-            {
-                var _errorHandler = new ErrorHandler();
-                res.json(500, _errorHandler.createSimpleErrorObject(500, 'consulta de nomes de alunos'));
-            }
-            else
-            {
-                res.json(students);
-            }
-        }
 
         _student
             .findAllStudentsNames(_usuario)

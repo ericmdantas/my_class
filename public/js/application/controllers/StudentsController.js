@@ -1,13 +1,11 @@
 "use strict";
 
-myClass.controller('StudentsController', ['$scope', 'pageConfig', 'inputMaxLength', 'studentStatus', 'contractsTypes', 'lib', 'StudentResource', 'ClazzResource', 'ModalHelper',
-                                function ($scope, pageConfig, inputMaxLength, studentStatus, contractsTypes, lib, StudentResource, ClazzResource, ModalHelper)
+myClass.controller('StudentsController', ['$scope', 'pageConfig', 'inputMaxLength', 'studentStatus', 'contractsTypes', 'lib', 'Student', 'StudentService', 'ClazzService', 'ModalHelper',
+                                function ($scope, pageConfig, inputMaxLength, studentStatus, contractsTypes, lib, Student, StudentService, ClazzService, ModalHelper)
 {
+    $scope.aluno = new Student();
     $scope.alunos = [];
     $scope.turmasCadastradas = [];
-    $scope.isLoadingVisible = {modal: false};
-    $scope.novoAluno = {};
-    $scope.alunoEscolhido = {};
     $scope.inputMaxLength = inputMaxLength;
     $scope.studentStatus = studentStatus;
     $scope.contractsTypes = contractsTypes;
@@ -15,107 +13,96 @@ myClass.controller('StudentsController', ['$scope', 'pageConfig', 'inputMaxLengt
 
     var _getStudents = function()
     {
-        var _onSuccess = function(data)
+        var _onSuccess = function(alunos)
         {
-            $scope.alunos = data || [];
+            $scope.alunos = alunos;
         };
 
-        StudentResource
-            .query(_onSuccess)
+        StudentService
+            .getAll()
+            .then(_onSuccess);
     }
 
     var _getClassesNames = function()
     {
-        var _onSuccess = function(data)
+        var _onSuccess = function(nomes)
         {
-            $scope.turmasCadastradas = data || [];
+            $scope.turmasCadastradas = nomes;
         }
 
-        ClazzResource
-            .query({property: 'name'}, _onSuccess);
+        ClazzService
+            .getAllClazzesProp('name')
+            .then(_onSuccess);
     }
 
-    $scope.openModalToDeleteStudent = function(aluno)
+    $scope.resetStudent = function()
     {
-        $scope.isLoadingVisible.modal = false;
-        ModalHelper.open('#modal-delete-student');
-        $scope.alunoEscolhido = aluno;
+        $scope.aluno = new Student();
     }
 
-    $scope.openModalToEditStudent = function(aluno)
+    $scope.setStudent = function(aluno)
     {
-        $scope.isLoadingVisible.modal = false;
-        ModalHelper.open('#modal-edit-student');
-        $scope.alunoEscolhido = aluno;
-    }
-
-    $scope.openModalToRegisterStudent = function()
-    {
-        $scope.isLoadingVisible.modal = false;
-        ModalHelper.open('#modal-register-student');
+        $scope.aluno = new Student(aluno);
     }
 
     $scope.registerNewStudent = function(aluno)
     {
-        if (lib.isObjectInvalid(aluno))
-            throw new Error('erro: aluno nao informado - registerNewStudent');
-
         var _onSuccess = function()
         {
             _getStudents();
-            ModalHelper.close('#modal-register-student');
-            lib.emptyProperty($scope, 'novoAluno', {});
+            ModalHelper.close('#modal-student');
         }
 
-        $scope.isLoadingVisible.modal = true;
+        var _onError = function(error)
+        {
+            lib.createAlert(null, 'Houve um problema no momento do cadastro do aluno.');
+        }
 
-        aluno.class = aluno.class ? aluno.class.name : '';
-        aluno.status = aluno.status ? aluno.status.nome : '';
-        aluno.contract = aluno.contract ? aluno.contract.nome : '';
-        aluno = lib.removeWhiteSpaces(aluno);
+        aluno = $scope.aluno.normalizeStudent(aluno);
 
-        StudentResource
-            .save(aluno, _onSuccess);
+        StudentService
+            .save(aluno)
+            .then(_onSuccess, _onError);
     }
 
     $scope.editStudent = function(aluno)
     {
-        if (lib.isObjectInvalid(aluno) || (lib.isStringInvalid(aluno._id)))
-            throw new Error('Não foi possível editar este aluno. Tente mais tarde.');
-
         var _onSuccess = function()
         {
             _getStudents();
-            ModalHelper.close('#modal-edit-student');
+            ModalHelper.close('#modal-student');
             lib.emptyProperty($scope, 'alunoEscolhido', {});
-        };
+        }
 
-        $scope.isLoadingVisible.modal = true;
+        var _onError = function(error)
+        {
+            lib.createAlert(null, 'Houve um problema no momento da edição do aluno.');
+        }
 
-        aluno.class = aluno.class ? aluno.class.name : '';
-        aluno.status = aluno.status ? aluno.status.nome : '';
-        aluno.contract = aluno.contract ? aluno.contract.nome : '';
+        aluno = $scope.aluno.normalizeStudent(aluno);
 
-        StudentResource
-            .update({id: aluno._id}, aluno, _onSuccess);
+        StudentService
+            .update(aluno)
+            .then(_onSuccess, _onError);
     }
 
     $scope.deleteStudent = function(id)
     {
-        if (lib.isStringInvalid(id))
-            throw new Error('Não foi possível realizar a deleção do aluno. O ID está errado.');
-
         var _onSuccess = function()
         {
             _getStudents();
             ModalHelper.close('#modal-delete-student');
             lib.emptyProperty($scope, 'alunoEscolhido', {});
-        };
+        }
 
-        $scope.isLoadingVisible.modal = true;
+        var _onError = function(error)
+        {
+            lib.createAlert(null, 'Houve um problema no momento da exclusão do aluno.');
+        }
 
-        StudentResource
-            .remove({id: id}, _onSuccess)
+        StudentService
+            .remove(id)
+            .then(_onSuccess, _onError);
     }
 
     _getStudents();

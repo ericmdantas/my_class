@@ -1,98 +1,87 @@
 "use strict";
 
-myClass.controller('BooksController', ['$scope', 'BookResource', 'pageConfig', 'inputMaxLength', 'lib', 'ModalHelper',
-                               function($scope, BookResource, pageConfig, inputMaxLength, lib, ModalHelper)
+myClass.controller('BooksController', ['$scope', 'BookService', 'Book', 'pageConfig', 'inputMaxLength', 'lib', 'ModalHelper',
+                               function($scope, BookService, Book, pageConfig, inputMaxLength, lib, ModalHelper)
 {
+    $scope.livro = new Book();
     $scope.livros = [];
     $scope.cfg = pageConfig;
     $scope.inputMaxLength = inputMaxLength;
-    $scope.livroEscolhido = {};
-    $scope.novoLivro = {};
-    $scope.isLoadingVisible = {modal: false};
 
     var _getBooks = function()
     {
-        var _onSuccess = function(data)
+        var _onSuccess = function(livros)
         {
-            $scope.livros = data || [];
+            $scope.livros = livros;
         }
 
-        BookResource
-            .query(_onSuccess);
+        BookService
+            .getAll()
+            .then(_onSuccess);
     }
 
-    $scope.openModalToEditBook = function(livro)
+    $scope.resetBook = function()
     {
-        $scope.isLoadingVisible.modal = false;
-        ModalHelper.open('#modal-edit-book');
-        $scope.livroEscolhido = livro;
+        $scope.livro = new Book();
     }
 
-    $scope.openModalToDeleteBook = function(livro)
+    $scope.setBook = function(livro)
     {
-        $scope.isLoadingVisible.modal = false;
-        ModalHelper.open('#modal-delete-book');
-        $scope.livroEscolhido = livro;
-    }
-
-    $scope.openModalToRegisterBook = function()
-    {
-        $scope.isLoadingVisible.modal = false;
-        ModalHelper.open('#modal-register-book');
+        $scope.livro = new Book(livro);
     }
 
     $scope.registerBook = function(livro)
     {
-        if (lib.isObjectInvalid(livro))
-           throw new Error('Não foi possível cadastrar este livro, pois o mesmo não existe.')
-
         var _onSuccess = function()
         {
             _getBooks();
-            ModalHelper.close('#modal-register-book');
-            lib.emptyProperty($scope, 'novoLivro', {});
-        };
+            ModalHelper.close('#modal-book');
+        }
 
-        $scope.isLoadingVisible.modal = true;
+        var _onError = function(error)
+        {
+            lib.createAlert(null, error.message);
+        }
 
-        BookResource
-            .save(livro, _onSuccess);
+        BookService
+            .save(livro)
+            .then(_onSuccess, _onError);
     }
 
     $scope.editBook = function(livro)
     {
-        if (lib.isObjectInvalid(livro) || (lib.isStringInvalid(livro._id)))
-            throw new Error('Ocorreu um erro na edição do livro. Não foi especificado um livro.');
-
         var _onSuccess = function()
         {
             _getBooks();
-            ModalHelper.close('#modal-edit-book');
-            lib.emptyProperty($scope, 'livroEscolhido', {});
+            ModalHelper.close('#modal-book');
         }
 
-        $scope.isLoadingVisible.modal = true;
+        var _onError = function(error)
+        {
+            lib.createAlert(null, error.message);
+        }
 
-        BookResource
-            .update({id: livro._id}, livro, _onSuccess);
+        BookService
+            .update(livro)
+            .then(_onSuccess, _onError);
     }
 
     $scope.deleteBook = function(id)
     {
-        if (lib.isStringInvalid(id))
-            throw new Error('Ocorreu um erro na deleção do livro. Não há um id identificado.');
-
         var _onSuccess = function()
         {
             _getBooks();
             ModalHelper.close('#modal-delete-book');
-            lib.emptyProperty($scope, 'livroEscolhido', {});
         };
 
-        $scope.isLoadingVisible.modal = true;
+        var _onError = function(error)
+        {
+            lib.createAlert(null, error.message);
+        }
 
-        BookResource
-            .remove({id: id}, _onSuccess);
+        BookService
+            .remove(id)
+            .then(_onSuccess, _onError);
     }
 
     _getBooks();

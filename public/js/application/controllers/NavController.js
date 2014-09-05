@@ -1,7 +1,7 @@
 "use strict";
 
-myClass.controller('NavController', ['$scope', '$location', '$http', '$window', 'lib',
-                            function($scope, $location, $http, $window, lib)
+myClass.controller('NavController', ['$scope', '$http', '$window', 'lib',
+                            function($scope, $http, $window, lib)
 {
     $scope.usuarioLogado = $window.localStorage.getItem('u');
 
@@ -10,7 +10,8 @@ myClass.controller('NavController', ['$scope', '$location', '$http', '$window', 
         if (lib.isStringInvalid(usuario))
             throw new Error('Não foi possível deslogar o usuário. O Parâmetro foi informado incorretamente.');
 
-        $http.post('/api/logout', {user: usuario})
+        $http
+            .post('/api/logout', {user: usuario})
             .finally(function()
             {
                 $window.location.replace('/');

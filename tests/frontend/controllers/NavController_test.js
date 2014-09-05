@@ -57,19 +57,22 @@ describe('NAVCONTROLLER BEING TESTED', function()
             }
         }))
 
-        /*
-
-        TODO: GET THIS TO WORK
-
-        it('http post', inject(function($controller)
+        it('post - server returns error', inject(function($controller)
         {
-            $controller('NavController', {$scope: _scope});
-
-            spyOn(_http, 'post');
+            _httpMock.expectPOST('/api/logout', {user: 'usuario'}).respond(500);
+            $controller('NavController', {$scope: _scope, $window: helper.mockaWindow()});
 
             _scope.logout('usuario');
+            _httpMock.flush();
+        }))
 
-            expect(_http.post).toHaveBeenCalled();
-        }))*/
+        it('post successfully', inject(function($controller)
+        {
+            _httpMock.expectPOST('/api/logout', {user: 'usuario'}).respond(200);
+            $controller('NavController', {$scope: _scope, $window: helper.mockaWindow()});
+
+            _scope.logout('usuario');
+            _httpMock.flush();
+        }))
     })
 })
