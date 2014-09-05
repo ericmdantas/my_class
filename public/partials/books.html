@@ -2,7 +2,7 @@
     <div id="livros-container" class="topic transition selected {{cfg.livros.classeBorda}}">
         <h1>{{cfg.livros.nome}} <span class="text-almost-invisible">{{livros.length}} livros</span></h1>
 
-        <button type="button" class="btn btn-default pull-right" id="#adicionarLivro"
+        <button type="button" class="btn btn-default pull-right" id="adicionarLivro"
                 modal-opener="#modal-book"
                 ng-click="resetBook()">
             cadastrar livro
@@ -62,7 +62,8 @@
                                 ng-click="registerBook(livro)"
                                 block-all-inputs-buttons-from="modal-register-book"
                                 ng-disabled="bookRegister.$invalid"
-                                ng-show="livro.isNew()">
+                                ng-show="livro.isNew()"
+                                id="register-book-button">
                             cadastrar
                         </button>
 

@@ -39,6 +39,7 @@ myClass.directive('navigation', ['$rootScope', '$location', function($rootScope,
         $rootScope.$on('$locationChangeSuccess', function()
         {
             var _li = element.find('#nav-header li');
+            var _title = null;
 
             for (var i = 0; i < _li.length; i++)
             {
@@ -46,9 +47,12 @@ myClass.directive('navigation', ['$rootScope', '$location', function($rootScope,
                 {
                     _li.removeClass('active');
                     _li.eq(i).addClass('active');
+                    _title = _li.eq(i).text().trim();
                     break;
                 }
             }
+
+            document.title = _title || 'principal';
         })
 
         element.find('.navbar-brand').on('click', function()
