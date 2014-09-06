@@ -35,10 +35,22 @@ var helper = (function()
         return _window;
     }
 
+    var _mockHighchartsContainer = function(id)
+    {
+        $('body').append('<div id="' + id + '"></div>');
+    }
+
+    var _removeElement = function(id)
+    {
+        $(id).remove();
+    }
+
     return {
                 invalidObjects: _invalidObjects,
                 invalidStrings: _invalidStrings,
                 invalidNumbers: _invalidNumbers,
-                mockaWindow: _mockaWindow
+                mockaWindow: _mockaWindow,
+                mockHighchartsContainer: _mockHighchartsContainer,
+                removeElement: _removeElement
            }
 }())

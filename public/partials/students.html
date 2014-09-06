@@ -6,7 +6,8 @@
                 class="btn btn-default pull-right"
                 id="adicionarAluno"
                 modal-opener="#modal-student"
-                ng-click="resetStudent()">
+                ng-click="resetStudent()"
+                id="adicionar-aluno">
             cadastrar aluno
         </button>
 
@@ -45,7 +46,7 @@
                                autofocus/>
                         <br/>
                         <label>email</label>
-                        <input type="email"
+                        <input type="text"
                                class="form-control"
                                ng-model="aluno.email"
                                ng-minlength="3"
@@ -56,7 +57,7 @@
                         <div class="middle-modal">
                             <aside class="pull-left">
                                 <label>data de nascimento</label>
-                                <input type="date"
+                                <input type="text"
                                        class="form-control"
                                        ng-model="aluno.birthDate"
                                        required
@@ -126,7 +127,7 @@
                             </aside>
                             <aside class="pull-right">
                                 <label>data do contrato</label>
-                                <input type="date"
+                                <input type="text"
                                        class="form-control"
                                        name="contractDate"
                                        ng-model="aluno.contractDate"
@@ -139,7 +140,8 @@
                                 ng-disabled="studentRegister.$invalid"
                                 ng-click="registerNewStudent(aluno)"
                                 block-all-inputs-buttons-from="modal-student"
-                                ng-show="aluno.isNew()">
+                                ng-show="aluno.isNew()"
+                                id="register-student-button">
                             cadastrar
                         </button>
 
@@ -147,7 +149,8 @@
                                 ng-disabled="studentRegister.$invalid"
                                 ng-click="editStudent(aluno)"
                                 block-all-inputs-buttons-from="modal-student"
-                                ng-hide="aluno.isNew()">
+                                ng-hide="aluno.isNew()"
+                                id="edit-student-button">
                             salvar alterações
                         </button>
 

@@ -15,7 +15,7 @@ myClass.directive('blockAllInputsButtonsFrom', ['$timeout', function($timeout)
             $timeout(function()
             {
                 $(_toDisable).prop('disabled', false);
-            }, 5555)
+            }, 2000)
         })
     }
 

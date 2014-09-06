@@ -72,11 +72,11 @@
                                 ng-click="editBook(livro)"
                                 block-all-inputs-buttons-from="modal-register-book"
                                 ng-disabled="bookRegister.$invalid"
-                                ng-hide="livro.isNew()">
+                                ng-hide="livro.isNew()"
+                                id="edit-book-button">
                             salvar alterações
                         </button>
 
-                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
                         <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
                     </div>
                 </div>

@@ -4,7 +4,7 @@
 
         <button type="button"
                 class="btn btn-default pull-right"
-                id="adicionarLivro"
+                id="adicionar-pagamento"
                 modal-opener="#modal-pay">
             realizar pagamento
         </button>
@@ -83,7 +83,8 @@
                                 ng-click="pay(alunoPagamento)"
                                 ng-disabled="paymentRegister.$invalid"
                                 block-all-inputs-buttons-from="modal-pay"
-                                ng-show="alunoPagamento.isNew()">
+                                ng-show="alunoPagamento.isNew()"
+                                id="register-payment-button">
                             pagar
                         </button>
 
@@ -91,7 +92,8 @@
                                 ng-click="editPayment(alunoPagamento)"
                                 ng-disabled="paymentRegister.$invalid"
                                 block-all-inputs-buttons-from="modal-pay"
-                                ng-hide="alunoPagamento.isNew()">
+                                ng-hide="alunoPagamento.isNew()"
+                                id="edit-payment-button">
                             salvar alterações
                         </button>
 

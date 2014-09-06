@@ -14,8 +14,7 @@ myClass.directive('deleteInfo', function()
                                 '<p>Esta ação é <strong>irreversível</strong>.</p>'+
                             '</div>'+
                             '<div class="modal-footer">'+
-                                '<button type="button" class="btn btn-default" ng-click="delete({id: objectid})" data-dismiss="modal">sim, excluir</button>'+
-                                '<img src="img/loading.gif" ng-show=isLoadingVisible.modal />'+
+                                '<button type="button" class="btn btn-default" id="to-be-deleted" ng-click="delete({id: objectid})" data-dismiss="modal">sim, excluir</button>'+
                                 '<button type="button" class="btn btn-link" data-dismiss="modal">não, cancelar ação</button>'+
                             '</div>'+
                         '</div>'+

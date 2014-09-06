@@ -9,6 +9,8 @@ describe('EARNINGSTATS BEING TESTED', function()
     beforeEach(module('myClass'));
     beforeEach(inject(function($injector)
     {
+        helper.mockHighchartsContainer('column-chart');
+
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
         _compile = $injector.get('$compile');
@@ -22,6 +24,11 @@ describe('EARNINGSTATS BEING TESTED', function()
         _compile(_element)(_scope);
         _scope.$digest();
     }))
+
+    afterEach(function()
+    {
+        helper.removeElement('#column-chart');
+    })
 
     describe('checks elements creation', function()
     {

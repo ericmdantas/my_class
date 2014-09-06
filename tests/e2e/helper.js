@@ -10,7 +10,7 @@ var helper = (function()
 
     var _login = function()
     {
-        _clearLoginForm();
+        _clearInputs('user', ['username', 'password']);
 
         element(by.model('user.username')).sendKeys('eric3');
         element(by.model('user.password')).sendKeys('112233');
@@ -22,25 +22,65 @@ var helper = (function()
     {
         var _where = where.toLowerCase();
 
-        switch(_where)
+        if(_where === "main")
         {
-            case "main": $('.navbar-brand').click();
-                         break;
+            $('.navbar-brand').click();
+            return;
+        }
 
-            case "livros": _router(where);
-                           break;
+        _router(_where);
+    }
 
-            default: throw new Error('Destination not found, captain.');
+    var _clickOnDelete = function(id)
+    {
+        browser.sleep(1000);
+
+        var _id = id || '#to-be-deleted';
+
+        element
+            .all(by.css(_id))
+            .get(0)
+            .click();
+    }
+
+    var _clickToDeleteFirstElement = function(path)
+    {
+        browser.sleep(1000);
+
+        var _path = path || '.info-card .btn-link';
+
+        return element
+                .all(by.css(_path))
+                .get(0)
+                .click();
+    }
+
+    var _clickToEditFirstElement = function(path)
+    {
+        browser.sleep(1000);
+
+        var _path = path || '.info-card .btn-default';
+
+        return element
+                .all(by.css(_path))
+                .get(0)
+                .click();
+    }
+
+    var _clearInputs = function(mainObj, array)
+    {
+        var _model = mainObj + '.';
+
+        for (var i = 0; i < array.length; i++)
+        {
+            element(by.model(_model + array[i])).clear();
         }
     }
 
-    var _clearLoginForm = function()
-    {
-        element(by.model('user.username')).clear();
-        element(by.model('user.password')).clear();
-    }
-
-    exports.clearLoginForm = _clearLoginForm;
     exports.login = _login;
     exports.goTo = _goTo;
+    exports.clickOnDelete = _clickOnDelete;
+    exports.clickToDeleteFirstElement = _clickToDeleteFirstElement;
+    exports.clickToEditFirstElement = _clickToEditFirstElement;
+    exports.clearInputs = _clearInputs;
 }())

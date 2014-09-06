@@ -52,7 +52,8 @@ myClass.directive('navigation', ['$rootScope', '$location', function($rootScope,
                 }
             }
 
-            document.title = _title || 'principal';
+            _title = 'my class | ' + (_title) ? _title : 'principal';
+            document.title = _title;
         })
 
         element.find('.navbar-brand').on('click', function()

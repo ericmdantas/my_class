@@ -4,8 +4,6 @@ describe('interested students per month being tested', function()
 {
     var _httpMock, _compile, _scope, _element;
 
-    $('body').append('<div id="pie-chart"></div>');
-
     beforeEach(module('myClass'));
 
     beforeEach(inject(function($injector)
@@ -19,9 +17,15 @@ describe('interested students per month being tested', function()
 
         _element = angular.element(_html);
         _compile(_element)(_scope);
+        helper.mockHighchartsContainer('pie-chart');
 
         _scope.$digest();
     }))
+
+    afterEach(function()
+    {
+        helper.removeElement('#pie-chart');
+    })
 
     describe('checks elements creation', function()
     {

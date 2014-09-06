@@ -6,7 +6,7 @@
                 class="btn btn-default pull-right"
                 ng-click="resetTeacher()"
                 modal-opener="#modal-teacher"
-                id="register-teacher-button">
+                id="adicionar-professor">
             cadastrar professor
         </button>
 
@@ -46,7 +46,7 @@
                         <div class="middle-modal">
                             <aside class="pull-left">
                                 <label>data de nascimento</label>
-                                <input type="date"
+                                <input type="text"
                                        class="form-control"
                                        ng-model="professor.birthDate"
                                        required
@@ -56,7 +56,7 @@
                             </aside>
                             <aside class="pull-right">
                                 <label>data de admissão</label>
-                                <input type="date"
+                                <input type="text"
                                        class="form-control"
                                        required
                                        name="admissionDate"
@@ -129,7 +129,8 @@
                                 ng-disabled="teacherRegister.$invalid"
                                 ng-click="registerNewTeacher(professor)"
                                 block-all-inputs-buttons-from="modal-teacher"
-                                ng-show="professor.isNew()">
+                                ng-show="professor.isNew()"
+                                id="register-teacher-button">
                             cadastrar
                         </button>
 
@@ -137,7 +138,8 @@
                                 ng-disabled="teacherRegister.$invalid"
                                 ng-click="editTeacher(professor)"
                                 block-all-inputs-buttons-from="modal-teacher"
-                                ng-hide="professor.isNew()">
+                                ng-hide="professor.isNew()"
+                                id="edit-teacher-button">
                             salvar alterações
                         </button>
                         <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
