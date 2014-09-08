@@ -77,10 +77,29 @@ var helper = (function()
         }
     }
 
+    var _doTheDeleteOfFirstItem = function(path)
+    {
+        var _path = path || '.plus-less-info';
+
+        element
+            .all(by.css(_path))
+            .get(0)
+            .click()
+            .then(function()
+            {
+                _clickToDeleteFirstElement();
+            })
+            .then(function()
+            {
+                _clickOnDelete();
+            })
+    }
+
     exports.login = _login;
     exports.goTo = _goTo;
     exports.clickOnDelete = _clickOnDelete;
     exports.clickToDeleteFirstElement = _clickToDeleteFirstElement;
     exports.clickToEditFirstElement = _clickToEditFirstElement;
     exports.clearInputs = _clearInputs;
+    exports.doTheDeleteOfFirstItem = _doTheDeleteOfFirstItem;
 }())

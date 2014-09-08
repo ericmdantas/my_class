@@ -47,18 +47,7 @@ describe('book', function()
 
         it('should delete the book recently added', function()
         {
-            element
-                .all(by.css('.plus-less-info'))
-                .get(0)
-                .click()
-                .then(function()
-                {
-                    helper.clickToDeleteFirstElement();
-                })
-                .then(function()
-                {
-                    helper.clickOnDelete();
-                })
+            helper.doTheDeleteOfFirstItem();
         })
     })
 })

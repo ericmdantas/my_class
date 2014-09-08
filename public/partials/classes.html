@@ -4,9 +4,9 @@
 
         <button type="button"
                 class="btn btn-default pull-right"
-                id="adicionarTurma"
                 modal-opener="#modal-clazz"
-                ng-click="resetClazz()">
+                ng-click="resetClazz()"
+                id="adicionar-turma">
             cadastrar turma
         </button>
 
@@ -61,7 +61,7 @@
                         <div class="middle-modal">
                             <aside class="pull-left">
                                 <label>horário</label>
-                                <input type="time"
+                                <input type="text"
                                        class="form-control"
                                        ng-model="turma.time"
                                        required
@@ -76,7 +76,8 @@
                                 ng-disabled="clazzRegister.$invalid"
                                 ng-click="registerClass(turma)"
                                 block-all-inputs-buttons-from="modal-clazz"
-                                ng-show="turma.isNew()">
+                                ng-show="turma.isNew()"
+                                id="register-clazz-button">
                             cadastrar
                         </button>
 
@@ -84,7 +85,8 @@
                                 ng-disabled="clazzRegister.$invalid"
                                 ng-click="editClass(turma)"
                                 block-all-inputs-buttons-from="modal-clazz"
-                                ng-hide="turma.isNew()">
+                                ng-hide="turma.isNew()"
+                                id="edit-clazz-button">
                             salvar alterações
                         </button>
 

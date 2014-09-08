@@ -1,6 +1,6 @@
 "use strict";
 
-describe('CLAZZDAYCONTROLLER BEING TESTED', function()
+describe('ClazzDayController', function()
 {
     var _scope, _httpMock, _currentMonthYear, _ClazzDay;
 

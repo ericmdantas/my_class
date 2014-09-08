@@ -2,8 +2,10 @@
     <div id="turmas-container" class="topic transition selected {{cfg.aulas.classeBorda}}">
         <h1>{{cfg.aulas.nome}}</h1>
 
-        <button type="button" class="btn btn-default pull-right" id="adicionarTurma"
-                modal-opener="#modal-clazz-day">
+        <button type="button"
+                class="btn btn-default pull-right"
+                modal-opener="#modal-clazz-day"
+                id="adicionar-aula">
             registrar aula
         </button>
 
@@ -26,7 +28,7 @@
                     <div class="modal-body">
                         <label>turma</label>
                         <br/>
-                        <select ng-model="turma"
+                        <select ng-model="turma.name"
                                 ng-options="turma.name for turma in clazzesNames"
                                 required
                                 name="clazz"
@@ -84,10 +86,10 @@
                         <button type="button" class="btn btn-default"
                                 ng-disabled="clazzDayRegister.$invalid"
                                 ng-click="registerClazzDay(turma, alunos)"
-                                block-all-inputs-buttons-from="modal-clazz-day">
+                                block-all-inputs-buttons-from="modal-clazz-day"
+                                id="register-clazzday-button">
                             registrar
                         </button>
-                        <img src="img/loading.gif" ng-show=isLoadingVisible.modal />
                         <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
                     </div>
                 </div>

@@ -24,7 +24,7 @@ describe('student', function()
                     element(by.model('aluno.mobilePhone')).sendKeys('998966240');
                     element(by.model('aluno.address')).sendKeys('Rua rua rua estrada 123');
                     element(by.model('aluno.availability')).sendKeys('10h, 22h e 9h');
-                    element(by.model('turma.name')).sendKeys('Turma5');
+                    element(by.model('aluno.class')).sendKeys('Turma5');
                     element(by.model('aluno.status')).sendKeys('interessado');
                     element(by.model('aluno.contract')).sendKeys('mensal');
                     element(by.model('aluno.contractDate')).sendKeys('30/06/1990');
@@ -45,11 +45,11 @@ describe('student', function()
                 })
                 .then(function()
                 {
-                    var _arrayStudent = ['name', 'birthDate', 'email', 'status', 'phone', 'mobilePhone', 'address', 'availability', 'contract', 'contractDate'];
-                    helper.clearInputs('aluno', _arrayStudent);
+                    //TODO: FIX STUDENT_CONTROLLER TO FILL THE SELECTS CORRECTLY, AND THEN UNCOMMENT STATUS AND CONTRACT
 
-                    var _arrayTurma = ['name'];
-                    helper.clearInputs('turma', _arrayTurma);
+                    //var _array = ['name', 'birthDate', 'email', /*'status',*/ 'phone', 'mobilePhone', 'address', 'availability', /*'contract',*/ 'contractDate'/*, 'class'*/];
+                    var _array = ['name', 'birthDate', 'email', 'phone', 'mobilePhone', 'address', 'availability', 'contractDate'];
+                    helper.clearInputs('aluno', _array);
 
                     element(by.model('aluno.name')).sendKeys('1 *EDITED* STUDENT_BY_PROTRACTOR! :D');
                     element(by.model('aluno.email')).sendKeys('ericdantas0@hotmail.com');
@@ -58,7 +58,7 @@ describe('student', function()
                     element(by.model('aluno.mobilePhone')).sendKeys('9989662425');
                     element(by.model('aluno.address')).sendKeys('Rua rua rua estrada 1235');
                     element(by.model('aluno.availability')).sendKeys('10h');
-                    element(by.model('turma.name')).sendKeys('Turma6');
+                    element(by.model('aluno.class')).sendKeys('Turma6');
                     element(by.model('aluno.status')).sendKeys('desistente');
                     element(by.model('aluno.contract')).sendKeys('quinzenal');
                     element(by.model('aluno.contractDate')).sendKeys('30/06/1999');
@@ -69,18 +69,7 @@ describe('student', function()
 
         it('should delete the student recently added', function()
         {
-            element
-                .all(by.css('.plus-less-info'))
-                .get(0)
-                .click()
-                .then(function()
-                {
-                    helper.clickToDeleteFirstElement();
-                })
-                .then(function()
-                {
-                    helper.clickOnDelete();
-                })
+            helper.doTheDeleteOfFirstItem();
         })
     })
 })
