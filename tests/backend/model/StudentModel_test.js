@@ -696,4 +696,91 @@ describe('StudentsModel', function()
                 .then(_onSuccess);
         })
     })
+
+    describe('deletePayment', function()
+    {
+        it('should throw an error - user is not valid', function(done)
+        {
+            var _onError = function(error)
+            {
+                expect(error).to.be.defined;
+                expect(error).to.be.an.instanceof(Error);
+                expect(error).to.match(/Não é possível deletar o pagamento. Usuário passado não é válido/);
+
+                done();
+            }
+
+            var _user = null;
+
+            _student
+                .deletePayment(_user, null)
+                .then(null, _onError);
+        })
+
+        it('should throw an error - object payment is not valid', function(done)
+        {
+            var _onError = function(error)
+            {
+                expect(error).to.be.defined;
+                expect(error).to.be.an.instanceof(Error);
+                expect(error).to.match(/Não é possível deletar o pagamento. Objeto passado não é válido/);
+
+                done();
+            }
+
+            var _user = 'eric3';
+
+            _student
+                .deletePayment(_user, null)
+                .then(null, _onError);
+        })
+
+        it('should not delete the payment correctly - user doesn\'t exist', function(done)
+        {
+            var _onSuccess = function()
+            {
+                expect(false).to.be.true;
+            }
+
+            var _onError = function(error)
+            {
+                expect(error).to.be.defined;
+                expect(error).to.be.an.instanceof(Error);
+                expect(error).to.match(/Nenhum pagamento encontrado para deleção./);
+                done();
+            }
+
+            var _user = 'NO_ECZISTE';
+            var _payment = {student: "Aluno4",
+                month: "04/2999",
+                amount: "123"};
+
+            _student
+                .deletePayment(_user, _payment)
+                .then(_onSuccess, _onError);
+        })
+
+        it('should delete the payment correctly', function(done)
+        {
+            var _onSuccess = function()
+            {
+                expect(true).to.be.true;
+                done();
+            }
+
+            var _onError = function()
+            {
+                expect(false).to.be.true();
+            }
+
+            var _user = 'outro';
+            var _payment = {student: "Aluno4",
+                            month: "04/2999",
+                            amount: "123"};
+
+            _student
+                .deletePayment(_user, _payment)
+                .then(_onSuccess, _onError);
+        })
+    })
 })

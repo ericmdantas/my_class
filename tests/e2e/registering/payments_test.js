@@ -27,4 +27,25 @@ describe('payment', function()
                 });
         })
     })
+
+    describe('delete', function()
+    {
+        it('should delete the first payment', function()
+        {
+            helper
+                .clickOnThePlusLess()
+                .then(function()
+                {
+                    browser.sleep(1000);
+                    return element(by.css('.lista-pagamentos')).click();
+                })
+                .then(function()
+                {
+                    element
+                        .all(by.css('.removedor'))
+                        .get(0)
+                        .click();
+                })
+        })
+    })
 })

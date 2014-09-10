@@ -127,4 +127,46 @@ describe('PaymentService', function()
                 .then(_onSuccess, _onError);
         })
     })
+
+    describe('remove', function()
+    {
+        it('should throw an error - object is invalid', function()
+        {
+            var _invalidPayments = helper.invalidObjects();
+
+            var _onError = function(error)
+            {
+                expect(error).toBeDefined();
+                expect(error instanceof Error).toBeTruthy();
+                expect(error).toContain('Não é possível remover o pagamento. Objeto informado é inválido.');
+            }
+
+            for (var i = 0; i < _invalidPayments.length; i++)
+            {
+                _PaymentService
+                    .remove(_invalidPayments[i])
+                    .then(null, _onError);
+            }
+        })
+
+        it('should make the request correctly', function()
+        {
+            _httpMock.expectDELETE(WEBSERVICE + '/aluno1/janeiro/1.99').respond(200);
+            var _payment = {studentName: 'aluno1', month: 'janeiro', amount: '1.99'};
+
+            var _onSuccess = function()
+            {
+                expect(true).toBeTruthy();
+            }
+
+            var _onError = function()
+            {
+                expect(false).toBeTruthy();
+            }
+
+            _PaymentService
+                .remove(_payment)
+                .then(_onSuccess, _onError);
+        })
+    })
 })

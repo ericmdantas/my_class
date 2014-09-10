@@ -233,6 +233,65 @@
         return deferred.promise;
     }
 
+    studentSchema.methods.deletePayment = function(user, payment)
+    {
+        var deferred = Q.defer();
+
+        if (lib.isStringInvalid(user))
+        {
+            deferred.reject(new Error('Não é possível deletar o pagamento. Usuário passado não é válido.'));
+            return deferred.promise;
+        }
+
+        if (lib.isObjectInvalid(payment))
+        {
+            deferred.reject(new Error('Não é possível deletar o pagamento. Objeto passado não é válido.'));
+            return deferred.promise;
+        }
+
+        var _query = {usersAllowed: {$in: [user]},
+                      "name": payment.student,
+                      "payments.paymentMonth": payment.month,
+                      "payments.amountPaid": payment.amount};
+
+        Student
+            .findOne(_query)
+            .exec(function(err, found)
+            {
+                if (err)
+                {
+                    deferred.reject(err);
+                    return;
+                }
+
+                if (!found)
+                {
+                    deferred.reject(new Error('Nenhum pagamento encontrado para deleção.'));
+                    return;
+                }
+
+                for (var i = 0; i < found.payments.length; i++)
+                {
+                    if (payment.student === found.name &&
+                        payment.month === found.payments[i].paymentMonth &&
+                        payment.amount === found.payments[i].amountPaid)
+                    {
+                        found.payments.splice(i, 1);
+                        break;
+                    }
+                }
+
+                found
+                    .save(function(err, saved)
+                    {
+                        err ? deferred.reject(err)
+                            : deferred.resolve();
+                    })
+            })
+
+        return deferred.promise;
+    }
+
     var Student = mongoose.model('Student', studentSchema);
 
     module.exports = Student;

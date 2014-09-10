@@ -3,8 +3,8 @@
 myClass
     .factory('PaymentResource', ['$resource', 'baseAPI', function($resource, baseAPI)
     {
-        var _url = baseAPI + 'students/payments';
-        var _params = {};
+        var _url = baseAPI + 'students/payments/:studentName/:month/:amount';
+        var _params = {studentName: '@studentName', month: '@month', amount: '@amount'};
         var _methods = {};
 
         return $resource(_url, _params, _methods);
@@ -68,6 +68,35 @@ myClass
             return deferred.promise;
         }
 
+        var _remove = function(payment)
+        {
+            var deferred = $q.defer();
+
+            if (lib.isObjectInvalid(payment))
+            {
+                deferred.reject(new Error('Não é possível remover o pagamento. Objeto informado é inválido.'));
+                return deferred.promise;
+            }
+
+            var _onSuccess = function()
+            {
+                deferred.resolve();
+            }
+
+            var _onError = function(error)
+            {
+                deferred.reject(error);
+            }
+
+            PaymentResource
+                .remove(payment)
+                .$promise
+                .then(_onSuccess, _onError);
+
+            return deferred.promise;
+        }
+
         this.getAll = _getAll;
         this.save = _save;
+        this.remove = _remove;
     }])

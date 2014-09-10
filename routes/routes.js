@@ -106,6 +106,10 @@
             .get(students.getPaymentsInfo)
             .post(students.registerPayment);
 
+        router
+            .route('/api/protected/students/payments/:student/:month/:amount')
+            .delete(students.deletePayment);
+
 
         //BOOKS
         router

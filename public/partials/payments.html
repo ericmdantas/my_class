@@ -114,22 +114,25 @@
             <p class="text-almost-invisible">tipo de contrato: <span class="text-almost-black">{{pagamento.contract}}</span></p>
             <p class="text-almost-invisible">data do contrato: <span class="text-almost-black">{{pagamento.contractDate}}</span></p>
             <p class="text-almost-invisible">vencimento: <span class="text-almost-black">{{pagamento.untilWhen}}</span></p>
-            <a href data-toggle="collapse" data-target="#historico{{$index}}" ng-show="pagamentos.length > 0">histórico de pagamento</a>
 
-            <div ng-if="!pagamento.payments.length" align="center">
-                <div class="alert alert-warning">
+            <a href
+               data-toggle="collapse"
+               data-target="#historico{{$index}}"
+               ng-show="pagamentos.length > 0"
+               ng-if="pagamento.payments.length"
+               class="lista-pagamentos">histórico de pagamento</a>
+
+            <div ng-if="!pagamento.payments.length">
+                <div class="alert alert-warning" align="center">
                     <span>Aluno não pagou ainda.</span>
-                    <a href class="alert-link" ng-click="openModalToRegisterPayment()">Clique aqui para realizar o pagamento.</a>
+                    <a href class="alert-link"
+                       modal-opener="#modal-pay">Clique aqui para realizar o pagamento.</a>
                 </div>
             </div>
 
             <div id="historico{{$index}}" class="collapse historico">
-                <div ng-repeat="historico in pagamento.payments" class="payment transition">
-                    <h3>{{historico.paymentMonth}}</h3>
-                    <p class="text-almost-invisible">quantia: <span class="text-almost-black">{{historico.amountPaid}}</span></p>
-                    <p class="text-almost-invisible">forma de pagamento: <span class="text-almost-black">{{historico.paidWithWhat}}</span></p>
-                    <p class="text-almost-invisible">observação: <span class="text-almost-black">{{historico.observation}}</span></p>
-                </div>
+                <historico-pagamento pagamentos="pagamento.payments"
+                                     aluno="{{pagamento.name}}"></historico-pagamento>
             </div>
         </div>
     </div>

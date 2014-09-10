@@ -17,6 +17,8 @@ describe('student', function()
                 .click()
                 .then(function()
                 {
+                    browser.sleep(1000);
+
                     element(by.model('aluno.name')).sendKeys('1 STUDENT_BY_PROTRACTOR! :D');
                     element(by.model('aluno.email')).sendKeys('ericdantas0@gmail.com');
                     element(by.model('aluno.birthDate')).sendKeys('26/06/1989');

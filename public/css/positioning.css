@@ -10,6 +10,8 @@
 #password {margin-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-top: 0;}
 #username {border-bottom-left-radius: 0; border-bottom-right-radius: 0;}
 
+.payment {position: relative;}
+.removedor {position: absolute; right: 0; top: 0; opacity: .8;}
 .big-espaco-top {margin-top: 2em;}
 .info-card, .topic {margin-bottom: .4em;}
 .info-card.titulo {display: inline-block;}

@@ -95,6 +95,16 @@ var helper = (function()
             })
     }
 
+    var _clickOnThePlusLess = function(path)
+    {
+        var _path = path || '.plus-less-info';
+
+        return element
+                .all(by.css(_path))
+                .get(0)
+                .click();
+    }
+
     exports.login = _login;
     exports.goTo = _goTo;
     exports.clickOnDelete = _clickOnDelete;
@@ -102,4 +112,5 @@ var helper = (function()
     exports.clickToEditFirstElement = _clickToEditFirstElement;
     exports.clearInputs = _clearInputs;
     exports.doTheDeleteOfFirstItem = _doTheDeleteOfFirstItem;
+    exports.clickOnThePlusLess = _clickOnThePlusLess;
 }())

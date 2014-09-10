@@ -4,7 +4,7 @@ var StudentModel = require('../models/Student');
 
 function Student()
 {
-    function _getInfoFromAllStudents(req, res)
+    var _getInfoFromAllStudents = function(req, res)
     {
         var _onSuccess = function(students)
         {
@@ -31,7 +31,7 @@ function Student()
             .done();
     }
 
-    function _getStudentsNames(req, res)
+    var _getStudentsNames = function(req, res)
     {
         var _onSuccess = function(names)
         {
@@ -58,7 +58,7 @@ function Student()
             .done();
     }
 
-    function _getStudentsNamesByClass(req, res)
+    var _getStudentsNamesByClass = function(req, res)
     {
         var _onSuccess = function(names)
         {
@@ -86,7 +86,7 @@ function Student()
             .done();
     }
 
-    function _getPaymentsInfo(req, res)
+    var _getPaymentsInfo = function(req, res)
     {
         var _onSuccess = function(payments)
         {
@@ -113,7 +113,7 @@ function Student()
             .done();
     }
 
-    function _registerStudent(req, res)
+    var _registerStudent = function(req, res)
     {
         var _onSuccess = function()
         {
@@ -141,7 +141,7 @@ function Student()
             .done();
     }
 
-    function _registerPayment(req, res)
+    var _registerPayment = function(req, res)
     {
         var _onSuccess = function()
         {
@@ -169,7 +169,7 @@ function Student()
             .done();
     }
 
-    function _editStudent(req, res)
+    var _editStudent = function(req, res)
     {
         var _onSuccess = function()
         {
@@ -198,7 +198,7 @@ function Student()
             .done();
     }
 
-    function _deleteStudent(req, res)
+    var _deleteStudent = function(req, res)
     {
         var _onSuccess = function()
         {
@@ -226,6 +226,41 @@ function Student()
             .done();
     }
 
+    var _deletePayment = function(req, res)
+    {
+        var _onSuccess = function()
+        {
+            res
+                .status(200)
+                .end();
+        }
+
+        var _onError = function(error)
+        {
+            res.json(400, error);
+        }
+
+        var _onException = function(ex)
+        {
+            res.json(500, ex)
+        };
+
+        var _student = new StudentModel();
+
+        var _user = req.session.passport.user;
+        var _studentName = req.params.student;
+        var _month = req.params.month;
+        var _amount = req.params.amount;
+
+        var _payment = {student: _studentName, month: _month, amount: _amount};
+
+        _student
+            .deletePayment(_user, _payment)
+            .then(_onSuccess, _onError)
+            .fail(_onException)
+            .done();
+    }
+
     return {
                 getInfoFromAllStudents: _getInfoFromAllStudents,
                 getStudentsNames: _getStudentsNames,
@@ -234,7 +269,8 @@ function Student()
                 editStudent: _editStudent,
                 deleteStudent: _deleteStudent,
                 getPaymentsInfo: _getPaymentsInfo,
-                registerPayment: _registerPayment
+                registerPayment: _registerPayment,
+                deletePayment: _deletePayment
            }
 }
 

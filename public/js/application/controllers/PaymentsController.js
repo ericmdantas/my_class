@@ -25,7 +25,7 @@ myClass.controller('PaymentsController', ['$scope', 'lib', 'inputMaxLength', 'mo
     {
         var _onSuccess = function()
         {
-            _getPayments
+            _getPayments();
             ModalHelper.close('#modal-pay');
         }
 
