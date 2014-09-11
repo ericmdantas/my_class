@@ -13,9 +13,9 @@ describe('historico-pagamento-directive', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
         _httpMock = $injector.get('$httpBackend');
+        _scope.teste = [{amountPaid: 1, paymentMonth: 'Janeiro'}];
 
-        var _html = '<historico-pagamento pagamentos="[{amountPaid: 1, paymentMonth: \'Janeiro\'}]"' +
-                                          'aluno="eric"></historico-pagamento>';
+        var _html = '<historico-pagamento pagamentos="teste" aluno="eric"></historico-pagamento>';
 
         _element = angular.element(_html);
         _compile(_element)(_scope);
@@ -33,6 +33,11 @@ describe('historico-pagamento-directive', function()
         it('should have the controller created', function()
         {
             expect(_element.controller('historicoPagamento')).toBeDefined();
+        })
+
+        it('should have aluno name set correctly', function()
+        {
+            expect(_element.isolateScope().aluno).toEqual('eric');
         })
     })
 
@@ -58,7 +63,6 @@ describe('historico-pagamento-directive', function()
             _httpMock.expectDELETE(WEBSERVICE + '/eric/Janeiro/1').respond(500);
 
             var _payment = {amountPaid: 1, paymentMonth: 'Janeiro'};
-            _scope.aluno = 'eric';
 
             _element
                 .isolateScope()
@@ -71,12 +75,12 @@ describe('historico-pagamento-directive', function()
         {
             _httpMock.expectDELETE(WEBSERVICE + '/eric/Janeiro/1').respond(200);
 
-            var _payment = {amountPaid: 1, paymentMonth: 'Janeiro'};
-            _scope.aluno = 'eric';
+            expect(_element.isolateScope().pagamentos.length).toEqual(1);
 
             _element
-                .isolateScope()
-                .deletePayment(_payment, 0);
+                .find('.removedor')
+                .eq(0)
+                .click();
 
             _httpMock.flush();
 

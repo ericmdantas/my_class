@@ -37,10 +37,7 @@ describe('payment', function()
                 .then(function()
                 {
                     browser.sleep(1000);
-                    return element(by.css('.lista-pagamentos')).click();
-                })
-                .then(function()
-                {
+
                     element
                         .all(by.css('.removedor'))
                         .get(0)

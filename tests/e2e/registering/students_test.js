@@ -47,9 +47,6 @@ describe('student', function()
                 })
                 .then(function()
                 {
-                    //TODO: FIX STUDENT_CONTROLLER TO FILL THE SELECTS CORRECTLY, AND THEN UNCOMMENT STATUS AND CONTRACT
-
-                    //var _array = ['name', 'birthDate', 'email', /*'status',*/ 'phone', 'mobilePhone', 'address', 'availability', /*'contract',*/ 'contractDate'/*, 'class'*/];
                     var _array = ['name', 'birthDate', 'email', 'phone', 'mobilePhone', 'address', 'availability', 'contractDate'];
                     helper.clearInputs('aluno', _array);
 

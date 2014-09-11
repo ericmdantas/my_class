@@ -113,14 +113,7 @@
             <p class="text-almost-invisible">celular: <span class="text-almost-black">{{pagamento.mobilePhone}}</span></p>
             <p class="text-almost-invisible">tipo de contrato: <span class="text-almost-black">{{pagamento.contract}}</span></p>
             <p class="text-almost-invisible">data do contrato: <span class="text-almost-black">{{pagamento.contractDate}}</span></p>
-            <p class="text-almost-invisible">vencimento: <span class="text-almost-black">{{pagamento.untilWhen}}</span></p>
-
-            <a href
-               data-toggle="collapse"
-               data-target="#historico{{$index}}"
-               ng-show="pagamentos.length > 0"
-               ng-if="pagamento.payments.length"
-               class="lista-pagamentos">histórico de pagamento</a>
+            <p class="text-almost-invisible">vencimento: <span class="text-almost-black">{{pagamento.untilWhen || 'não informado'}}</span></p>
 
             <div ng-if="!pagamento.payments.length">
                 <div class="alert alert-warning" align="center">
@@ -130,10 +123,7 @@
                 </div>
             </div>
 
-            <div id="historico{{$index}}" class="collapse historico">
-                <historico-pagamento pagamentos="pagamento.payments"
-                                     aluno="{{pagamento.name}}"></historico-pagamento>
-            </div>
+            <historico-pagamento pagamentos="pagamento.payments" aluno="{{pagamento.name}}"></historico-pagamento>
         </div>
     </div>
 </div>

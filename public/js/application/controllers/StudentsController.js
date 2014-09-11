@@ -43,6 +43,10 @@ myClass.controller('StudentsController', ['$scope', 'pageConfig', 'inputMaxLengt
     $scope.setStudent = function(aluno)
     {
         $scope.aluno = new Student(aluno);
+
+        $scope.aluno.class = _selectHelper($scope.aluno.class, $scope.turmasCadastradas, 'name');
+        $scope.aluno.status = _selectHelper($scope.aluno.status, $scope.studentStatus, 'nome');
+        $scope.aluno.contract = _selectHelper($scope.aluno.contract, $scope.contractsTypes, 'nome');
     }
 
     $scope.registerNewStudent = function(aluno)
@@ -103,6 +107,17 @@ myClass.controller('StudentsController', ['$scope', 'pageConfig', 'inputMaxLengt
         StudentService
             .remove(id)
             .then(_onSuccess, _onError);
+    }
+
+    var _selectHelper = function(comparer, array, prop)
+    {
+        for (var i = 0; i < array.length; i++)
+        {
+            if (comparer === array[i][prop])
+            {
+                return array[i];
+            }
+        }
     }
 
     _getStudents();
