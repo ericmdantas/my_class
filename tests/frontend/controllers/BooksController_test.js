@@ -2,7 +2,7 @@
 
 describe('BOOKSCONTROLLER BEING TESTED', function()
 {
-    var _scope, _httpMock, _Book;
+    var _scope, _httpMock, _Book, _ModalHelper;
 
     beforeEach(module('myClass'));
 
@@ -11,6 +11,8 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
         _Book = $injector.get('Book');
+        _ModalHelper = $injector.get('ModalHelper');
+
         _httpMock.when('GET', '/api/protected/books').respond([{name: 'A', quantity: 5}]);
         _httpMock.when('POST', '/api/protected/books').respond(200);
         _httpMock.when('PUT', '/api/protected/books/123').respond({});
@@ -61,8 +63,6 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
         it('should reset the properties of Book', inject(function($controller)
         {
             $controller('BooksController', {$scope: _scope});
-
-
         }))
     })
 
@@ -70,13 +70,20 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
     {
         it('_scope.livros should be an empty array', inject(function($controller)
         {
-            _httpMock.expectGET('/api/protected/books').respond();
+            spyOn(_ModalHelper, 'open').andCallThrough();
+
             $controller('BooksController', {$scope: _scope});
+            _httpMock.expectGET('/api/protected/books').respond([]);
+
+            _httpMock.flush();
+
             expect(_scope.livros.length).toEqual(0);
+            expect(_ModalHelper.open).toHaveBeenCalledWith('#modal-book');
         }))
 
         it('should get what\'s being returned', inject(function($controller)
         {
+            _httpMock.expectGET('/api/protected/books').respond([{name: 'A', quantity: 5}]);
             $controller('BooksController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.livros[0].name).toBe('A');
@@ -86,7 +93,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
 
         it('should return an empty string', inject(function($controller)
         {
-            _httpMock.expectGET('/api/protected/books');
+            _httpMock.expectGET('/api/protected/books').respond([{name: 'A', quantity: 5}]);
             $controller('BooksController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.livros).toBeDefined();
@@ -112,9 +119,10 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
 
         it('registering books should work', inject(function($controller)
         {
+            var _book = {name: 'A', quantity: 10};
             $controller('BooksController', {$scope: _scope});
-            var obj = {name: 'A', quantity: 10};
-            _scope.registerBook(obj);
+
+            _scope.registerBook(_book);
             _httpMock.flush();
             var quantidadeDeLivrosDepoisDoCadastro = _scope.livros.length;
             expect(quantidadeDeLivrosDepoisDoCadastro).toBeGreaterThan(0);
@@ -140,6 +148,7 @@ describe('BOOKSCONTROLLER BEING TESTED', function()
 
         it('should change the book name', inject(function($controller)
         {
+            _httpMock.expectGET('/api/protected/books').respond([{name: 'A', quantity: 5}]);
             $controller('BooksController', {$scope: _scope});
             var livroEditado = {_id: "123", name: 'outro nome', quantity: 7};
             _scope.editBook(livroEditado);

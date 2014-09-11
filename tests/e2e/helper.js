@@ -12,8 +12,8 @@ var helper = (function()
     {
         _clearInputs('user', ['username', 'password']);
 
-        element(by.model('user.username')).sendKeys('eric3');
-        element(by.model('user.password')).sendKeys('112233');
+        element(by.model('user.username')).sendKeys('protractor');
+        element(by.model('user.password')).sendKeys('protractor123');
         $('#btnLogar').click();
         browser.sleep(333);
     }

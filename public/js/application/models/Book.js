@@ -1,3 +1,4 @@
+
 "use strict";
 
 myClass.factory('Book', ['lib', function(lib)

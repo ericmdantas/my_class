@@ -1,6 +1,6 @@
 describe('STUDENTSCONTROLLER BEING TESTED', function()
 {
-    var _scope, _httpMock, _StudentService, _Student;
+    var _scope, _httpMock, _StudentService, _Student, _ModalHelper;
     var WEBSERVICE = '/api/protected/students';
 
     beforeEach(module('myClass'));
@@ -11,6 +11,7 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
         _httpMock = $injector.get('$httpBackend');
         _Student = $injector.get('Student');
         _StudentService = $injector.get('StudentService');
+        _ModalHelper = $injector.get('ModalHelper');
 
         _httpMock.when('GET', WEBSERVICE).respond([{nome: 'aluno qualquer'}]);
         _httpMock.when('GET', '/api/protected/classes/name').respond([{name: 'turma qualquer'}]);
@@ -102,10 +103,14 @@ describe('STUDENTSCONTROLLER BEING TESTED', function()
 
         it('checks if _scope.alunos is being fed correctly even when there\'s only the object students - no array', inject(function($controller)
         {
+            spyOn(_ModalHelper, 'open').andCallThrough();
+
             _httpMock.expectGET(WEBSERVICE).respond([]);
             $controller('StudentsController', {$scope: _scope});
             _httpMock.flush();
+
             expect(_scope.alunos.length).toEqual(0);
+            expect(_ModalHelper.open).toHaveBeenCalledWith('#modal-student');
         }))
 
         it('checks if _scope.alunos is being fed correctly', inject(function($controller)

@@ -2,7 +2,7 @@
 
 describe('TEACHERSCONTROLLER BEING TESTED', function()
 {
-    var _scope, _httpMock, _lib, _Teacher;
+    var _scope, _httpMock, _lib, _Teacher, _ModalHelper;
     var NOME_CONTROLLER = 'TeachersController';
     var WEBSERVICE = '/api/protected/teachers';
 
@@ -14,6 +14,8 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
         _lib = $injector.get('lib');
         _Teacher = $injector.get('Teacher');
         _httpMock = $injector.get('$httpBackend');
+        _ModalHelper = $injector.get('ModalHelper');
+
         _httpMock.when('GET', WEBSERVICE).respond();
         _httpMock.when('POST', WEBSERVICE).respond();
         _httpMock.when('PUT', WEBSERVICE + '/123').respond();
@@ -104,11 +106,15 @@ describe('TEACHERSCONTROLLER BEING TESTED', function()
 
         it('checks if the get is being used - respond with resultado only', inject(function($controller)
         {
+            spyOn(_ModalHelper, 'open').andCallThrough();
+
             _httpMock.expectGET(WEBSERVICE).respond([]);
             $controller(NOME_CONTROLLER, {$scope: _scope});
             _httpMock.flush();
 
             expect(_scope.professores.length).toBe(0);
+
+            expect(_ModalHelper.open).toHaveBeenCalledWith('#modal-teacher');
         }))
 
         it('checks if the get is being used', inject(function($controller)

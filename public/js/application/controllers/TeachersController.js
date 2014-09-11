@@ -13,6 +13,11 @@ myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLengt
         var _onSuccess = function(professores)
         {
             $scope.professores = professores;
+
+            if (!$scope.professor.length)
+            {
+                ModalHelper.open('#modal-teacher');
+            }
         }
 
         var _onError = function(error)

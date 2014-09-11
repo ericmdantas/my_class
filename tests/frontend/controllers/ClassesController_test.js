@@ -2,7 +2,7 @@
 
 describe('CLASSESCONTROLLER BEING TESTED', function()
 {
-    var _scope, _httpMock, _timeoutMock, _Clazz;
+    var _scope, _httpMock, _timeoutMock, _Clazz, _ModalHelper;
 
 	beforeEach(module('myClass'));
 
@@ -12,6 +12,7 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
         _httpMock = $injector.get('$httpBackend');
         _timeoutMock = $injector.get('$timeout');
         _Clazz = $injector.get('Clazz');
+        _ModalHelper = $injector.get('ModalHelper');
 
         _httpMock.when('GET', '/api/protected/classes').respond([{name: 'a'}, {name: 'b'}]);
         _httpMock.when('GET', '/api/protected/students/name').respond(200);
@@ -75,10 +76,14 @@ describe('CLASSESCONTROLLER BEING TESTED', function()
 
         it('should get response from the server with filled object', inject(function($controller)
         {
+            spyOn(_ModalHelper, 'open').andCallThrough();
+
             _httpMock.expectGET('/api/protected/classes').respond([]);
             $controller('ClassesController', {$scope: _scope});
             _httpMock.flush();
+
             expect(_scope.turmas.length).toEqual(0);
+            expect(_ModalHelper.open).toHaveBeenCalledWith('#modal-clazz');
         }))
 
         it('should get response from the server with filled object and subdocs', inject(function($controller)

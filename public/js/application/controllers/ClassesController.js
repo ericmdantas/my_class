@@ -15,6 +15,11 @@ myClass.controller('ClassesController', ['$scope', '$timeout', 'lib', 'pageConfi
         var _onSuccess = function(turmas)
         {
             $scope.turmas = turmas;
+
+            if (!$scope.turmas.length)
+            {
+                ModalHelper.open('#modal-clazz');
+            }
         };
 
         ClazzService

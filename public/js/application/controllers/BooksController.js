@@ -13,6 +13,11 @@ myClass.controller('BooksController', ['$scope', 'BookService', 'Book', 'pageCon
         var _onSuccess = function(livros)
         {
             $scope.livros = livros;
+
+            if (!$scope.livros.length)
+            {
+                ModalHelper.open('#modal-book');
+            }
         }
 
         BookService

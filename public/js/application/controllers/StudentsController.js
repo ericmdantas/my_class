@@ -16,6 +16,11 @@ myClass.controller('StudentsController', ['$scope', 'pageConfig', 'inputMaxLengt
         var _onSuccess = function(alunos)
         {
             $scope.alunos = alunos;
+
+            if (!$scope.alunos.length)
+            {
+                ModalHelper.open('#modal-student');
+            }
         };
 
         StudentService
