@@ -6,17 +6,6 @@ myClass.controller('MainController', ['$scope', '$location', '$interval', 'pageC
     $scope.cfg = pageConfig;
     var TEMPO_ATUALIZACAO_CUMPRIMENTO = 60000; //1 minuto
 
-    $scope.redirectTo = function(url)
-    {
-        if (lib.isStringInvalid(url))
-        {
-            $location.path('principal');
-            return;
-        }
-
-        $location.path(url);
-    }
-
     $scope.getPeriodDay = function()
     {
         var hora  = new Date().getHours();

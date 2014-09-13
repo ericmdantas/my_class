@@ -47,8 +47,13 @@
                         <div ng-if="turma.name">
                             <label>presença</label>
 
-                            <div ng-if="alunos.length === 0" align="center">
-                                <div class="alert alert-warning">Não existem alunos para a turma escolhida.</div>
+                            <div ng-if="!alunos.length" align="center">
+                                <div class="alert alert-warning">Não existem alunos para a turma escolhida.
+                                    <span emd-change-location-to="/alunos"
+                                            reload-whole-page="true"
+                                          class="hand"> <strong>Clique aqui para cadastrar.</strong>
+                                    </span>
+                                </div>
                             </div>
 
                             <p ng-repeat="aluno in alunos"

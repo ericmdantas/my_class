@@ -14,7 +14,7 @@ myClass.controller('TeachersController', ['$scope', 'pageConfig', 'inputMaxLengt
         {
             $scope.professores = professores;
 
-            if (!$scope.professor.length)
+            if (!$scope.professores.length)
             {
                 ModalHelper.open('#modal-teacher');
             }
