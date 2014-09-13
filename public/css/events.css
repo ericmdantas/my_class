@@ -1,1 +1,29 @@
 .hand:hover {cursor: pointer;}
+.table tbody tr:hover, .presenca:hover {background-color: rgba(0, 152, 10, .1);}
+.plus-less-info:hover {cursor: pointer;}
+.plus-less-info:active {background-color: #b2dba1; color: #fff;}
+.to-the-top:hover {cursor: pointer; opacity: .7;}
+.border-left-color-verde:hover {border-left-color: rgba(0, 100, 0, .6);}
+.border-left-color-azul:hover {border-left-color: rgba(0, 0, 255, .6);}
+.border-left-color-marrom:hover {border-left-color: rgba(184, 134, 11, .6);}
+.border-left-color-laranja:hover {border-left-color: rgba(255, 80, 0, .5);}
+.border-left-color-roxo:hover {border-left-color: rgba(128, 0, 128, .6);}
+.border-left-color-rosa:hover {border-left-color: rgba(255, 13, 97, .6);}
+.border-left-color-avermelhado:hover {border-left-color: rgba(128, 0, 0, .6);}
+.navbar-brand:hover {cursor: pointer;}
+.topic:hover {cursor: pointer; opacity: 1; border-left-width: 5px;}
+.topic:hover .container-icon {opacity: .7}
+.topic.selected:hover {cursor: auto;}
+.info-card:hover .plus-less-info {opacity: .9;}
+
+.payment:hover
+{
+    background-color: white; box-shadow: 1px 1px 10px green;
+    -webkit-transform: scale(1.03);
+    -moz-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    -o-transform: scale(1.03);
+    transform: scale(1.03);
+}
+
+footer:hover {opacity: 1; cursor: pointer;}

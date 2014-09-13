@@ -48,6 +48,58 @@ var myClass = angular.module('myClass', ['ngRoute', 'ngResource'])
                             classeBorda: 'border-left-color-roxo'
                         }
                      })
+                     .constant('topicos',
+                     [
+                         {id: 'aulas-container',
+                          classeBorda: 'border-left-color-avermelhado',
+                          location: '/aulas',
+                          img: "../img/clazzDay.png",
+                          nome: 'aulas',
+                          resumo: 'gerencie informações como: professores que deram aulas, alunos presentes, matérias, etc.'},
+
+                         {id: 'turmas-container',
+                          classeBorda: 'border-left-color-verde',
+                          location: '/turmas',
+                          img: "../img/clazz.png",
+                          nome: 'turmas',
+                          resumo: 'gerencie informações como: nível, número de alunos, horário, histórico, etc.'},
+
+                         {id: 'professores-container',
+                          classeBorda: 'border-left-color-rosa',
+                          location: '/professores',
+                          img: "../img/teacher.png",
+                          nome: 'professores',
+                          resumo: 'gerencie informações como: número de professores, aulas dadas, salário, tempo de casa, etc.'},
+
+                         {id: 'alunos-container',
+                          classeBorda: 'border-left-color-azul',
+                          location: '/alunos',
+                          img: "../img/student.png",
+                          nome: 'alunos',
+                          resumo: 'gerencie informações como: nome, idade, email, telefone, endereço, status, etc.'},
+
+                         {id: 'livros-container',
+                          classeBorda: 'border-left-color-marrom',
+                          location: '/livros',
+                          img: "../img/book.png",
+                          nome: 'livros',
+                          resumo: 'gerencie informações como: quantidade de livros em estoque, nome dos mesmos, etc.'},
+
+                         {id: 'pagamentos-container',
+                          classeBorda: 'border-left-color-laranja',
+                          location: '/pagamentos',
+                          img: "../img/payment.png",
+                          nome: 'pagamentos',
+                          resumo: 'gerencie informações como: aluno que pagou, forma de pagamento, quantia, data, etc.'},
+
+                         {id: 'estatisticas-container',
+                          classeBorda: 'border-left-color-roxo',
+                          location: '/estatisticas',
+                          img: "../img/statistics.png",
+                          nome: 'estatisticas',
+                          resumo: 'gerencie informações como: números de alunos cadastrados por mês, períodos de melhor arrecadação, etc.'}
+
+                     ])
                      .constant('inputMaxLength',
                      {
                          TAMANHO_CAMPO_NOME: "80",

@@ -1,9 +1,10 @@
 "use strict";
 
-myClass.controller('NavController', ['$scope', '$http', '$window', 'lib',
-                            function($scope, $http, $window, lib)
+myClass.controller('NavController', ['$scope', '$http', '$window', 'lib', 'topicos',
+                            function($scope, $http, $window, lib, topicos)
 {
     $scope.usuarioLogado = $window.localStorage.getItem('u');
+    $scope.topicos = topicos;
 
     $scope.logout = function(usuario)
     {

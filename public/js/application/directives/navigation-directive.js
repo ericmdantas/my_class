@@ -11,17 +11,13 @@ myClass.directive('navigation', ['$rootScope', '$location', function($rootScope,
                                     '<span class="icon-bar"></span>'+
                                     '<span class="icon-bar"></span>'+
                                 '</button>'+
-                                '<a class="navbar-brand">my class</a>'+
+                                '<a class="navbar-brand" emd-change-location-to="/principal">my class</a>'+
                             '</div>'+
                             '<div class="collapse navbar-collapse transition" id="nav-header">'+
                                 '<ul class="nav navbar-nav">'+
-                                    '<li class="activable"><a href ng-cloak>aulas</a></li>'+
-                                    '<li class="activable"><a href ng-cloak>turmas</a></li>'+
-                                    '<li class="activable"><a href ng-cloak>professores</a></li>'+
-                                    '<li class="activable"><a href ng-cloak>alunos</a></li>'+
-                                    '<li class="activable"><a href ng-cloak>livros</a></li>'+
-                                    '<li class="activable"><a href ng-cloak>pagamentos</a></li>'+
-                                    '<li class="activable"><a href ng-cloak>estatisticas</a></li>'+
+                                    '<li class="activable" ng-repeat="topico in topicos" emd-change-location-to="{{topico.location}}">' +
+                                        '<a href ng-cloak>{{topico.nome}}</a>' +
+                                    '</li>' +
                                 '</ul>'+
                                 '<ul class="nav navbar-nav navbar-right">'+
                                     '<li ng-click="logout(usuarioLogado)"><a href>sair</a></li>'+
@@ -32,8 +28,6 @@ myClass.directive('navigation', ['$rootScope', '$location', function($rootScope,
 
     var _link = function(scope, element, attrs)
     {
-        var _nomeLiClickado = '';
-
         document.title = 'my class | principal';
 
         $rootScope.$on('$locationChangeSuccess', function()
@@ -58,12 +52,6 @@ myClass.directive('navigation', ['$rootScope', '$location', function($rootScope,
         element.find('.navbar-brand').on('click', function()
         {
             element.find('#nav-header li').removeClass('active');
-
-            scope.$apply(function()
-            {
-                $location.path('/principal');
-            })
-
             document.title = 'my class | principal';
         })
 
@@ -72,14 +60,7 @@ myClass.directive('navigation', ['$rootScope', '$location', function($rootScope,
             element.find('#nav-header li.activable').removeClass('active');
             element.find(this).addClass('active');
 
-            _nomeLiClickado = element.find(this).text().trim();
-
-            scope.$apply(function()
-            {
-                $location.path('/' + _nomeLiClickado);
-            })
-
-            document.title = 'my class | ' + _nomeLiClickado;
+            document.title = 'my class | ' + element.find(this).text().trim();
         })
     }
 

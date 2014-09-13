@@ -2,7 +2,7 @@
 
 describe('location-changer-directive', function()
 {
-    var _scope, _element, _compile, _windowMock;
+    var _scope, _element, _compile, _windowMock, _locationMock;
 
     beforeEach(module('myClass', function($provide)
     {
@@ -14,11 +14,12 @@ describe('location-changer-directive', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
         _windowMock = $injector.get('$window');
+        _locationMock = $injector.get('$location');
     }))
 
     describe('error', function()
     {
-        beforeEach(function()
+        it('should throw an error - no path specified - location', function()
         {
             var _html = '<div emd-change-location-to></div>';
 
@@ -26,10 +27,22 @@ describe('location-changer-directive', function()
             _compile(_element)(_scope);
 
             _scope.$digest();
+
+            expect(function()
+            {
+                _element.click();
+            }).toThrow(new Error('Não é possível trocar a localização. Caminho passado não é válido.'));
         })
 
-        it('should throw an error - no path specified', function()
+        it('should throw an error - no path specified - window', function()
         {
+            var _html = '<div emd-change-location-to reload-whole-page="true"></div>';
+
+            _element = angular.element(_html);
+            _compile(_element)(_scope);
+
+            _scope.$digest();
+
             expect(function()
             {
                 _element.click();
@@ -37,11 +50,40 @@ describe('location-changer-directive', function()
         })
     })
 
-    describe('success', function()
+    describe('success - location', function()
     {
         it('should change the location correctly - hue', function()
         {
             var _html = '<div emd-change-location-to="hue"></div>';
+
+            _element = angular.element(_html);
+            _compile(_element)(_scope);
+
+            _scope.$digest();
+
+            _element.click();
+            expect(_locationMock.path()).toEqual('/hue');
+        })
+
+        it('should change the location correctly - /hue', function()
+        {
+            var _html = '<div emd-change-location-to="/hue"></div>';
+
+            _element = angular.element(_html);
+            _compile(_element)(_scope);
+
+            _scope.$digest();
+
+            _element.click();
+            expect(_locationMock.path()).toEqual('/hue');
+        })
+    })
+
+    describe('success - window', function()
+    {
+        it('should change the location correctly - hue', function()
+        {
+            var _html = '<div emd-change-location-to="hue" reload-whole-page="true"></div>';
 
             _element = angular.element(_html);
             _compile(_element)(_scope);
@@ -54,7 +96,7 @@ describe('location-changer-directive', function()
 
         it('should change the location correctly - /hue', function()
         {
-            var _html = '<div emd-change-location-to="/hue"></div>';
+            var _html = '<div emd-change-location-to="/hue" reload-whole-page="true"></div>';
 
             _element = angular.element(_html);
             _compile(_element)(_scope);

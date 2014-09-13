@@ -8,59 +8,13 @@
 
     <br/>
 
-    <div id="aulas-container"
-         class="topic transition {{cfg.aulas.classeBorda}}"
-         emd-change-location-to="/aulas">
-            <img src="../img/clazzDay.png" class="pull-right transition container-icon hidden-xs"/>
-            <h1>{{cfg.aulas.nome}}</h1>
-            <p class="hidden-small-phone">{{cfg.aulas.resumo}}</p>
+    <div ng-repeat="topico in topicos">
+        <div id="{{topico.id}}"
+             class="topic transition {{topico.classeBorda}}"
+             emd-change-location-to="{{topico.location}}">
+                <img ng-src="{{topico.img}}" class="pull-right transition container-icon hidden-xs"/>
+                <h1>{{topico.nome}}</h1>
+                <p class="hidden-small-phone">{{topico.resumo}}</p>
+        </div>
     </div>
-
-	<div id="turmas-container"
-         class="topic transition {{cfg.turmas.classeBorda}}"
-         emd-change-location-to="/turmas">
-            <img src="../img/clazz.png" class="pull-right transition container-icon hidden-xs"/>
-            <h1>{{cfg.turmas.nome}}</h1>
-            <p class="hidden-small-phone">{{cfg.turmas.resumo}}</p>
-	</div>
-
-    <div id="professores-container"
-         class="topic transition {{cfg.professores.classeBorda}}"
-         emd-change-location-to="/professores">
-            <img src="../img/teacher.png" class="pull-right transition container-icon hidden-xs"/>
-            <h1>{{cfg.professores.nome}}</h1>
-            <p class="hidden-small-phone">{{cfg.professores.resumo}}</p>
-    </div>
-
-	<div id="alunos-container"
-         class="topic transition {{cfg.alunos.classeBorda}}"
-         emd-change-location-to="/alunos">
-            <img src="../img/student.png" class="pull-right transition container-icon hidden-xs"/>
-            <h1>{{cfg.alunos.nome}}</h1>
-            <p class="hidden-small-phone">{{cfg.alunos.resumo}}</p>
-	</div>
-
-	<div id="livros-container"
-         class="topic transition {{cfg.livros.classeBorda}}"
-         emd-change-location-to="/livros">
-            <img src="../img/book.png" class="pull-right transition container-icon hidden-xs"/>
-            <h1>{{cfg.livros.nome}}</h1>
-            <p class="hidden-small-phone">{{cfg.livros.resumo}}</p>
-	</div>
-
-	<div id="pagamentos-container"
-         class="topic transition {{cfg.pagamentos.classeBorda}}"
-         emd-change-location-to="/pagamentos">
-            <img src="../img/payment.png" class="pull-right transition container-icon hidden-xs"/>
-            <h1>{{cfg.pagamentos.nome}}</h1>
-            <p class="hidden-small-phone">{{cfg.pagamentos.resumo}}</p>
-	</div>
-
-	<div id="estatisticas-container"
-         class="topic transition {{cfg.estatisticas.classeBorda}}"
-         emd-change-location-to="/estatisticas">
-            <img src="../img/statistics.png" class="pull-right transition container-icon hidden-xs"/>
-            <h1>estatísticas</h1>
-            <p class="hidden-small-phone">{{cfg.estatisticas.resumo}}</p>
-	</div>
 </div>
